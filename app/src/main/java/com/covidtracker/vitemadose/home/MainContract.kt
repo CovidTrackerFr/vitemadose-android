@@ -21,6 +21,8 @@ interface MainContract {
          * Open link
          */
         fun openLink(url: String)
+
+        fun showCentersError()
     }
 
     interface Presenter {

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -62,5 +63,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         } catch (e: ActivityNotFoundException) {
             e.printStackTrace()
         }
+    }
+
+    override fun showCentersError() {
+        Snackbar.make(container, getString(R.string.centers_error), Snackbar.LENGTH_SHORT).show()
     }
 }

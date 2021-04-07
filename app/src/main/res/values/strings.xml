@@ -8,4 +8,5 @@
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Vérifier ce centre</string>
     <string name="partner_placeholder">avec %s</string>
+    <string name="centers_error">Erreur lors de la récupération des centres. Réessayez</string>
 </resources>
