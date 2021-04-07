@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="RegularButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:textSize">16sp</item>
+        <item name="android:padding">12dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:includeFontPadding">false</item>
+        <item name="cornerRadius">8dp</item>
+    </style>
+
+    <style name="CustomCardView" parent="Base.CardView">
+        <item name="cardUseCompatPadding">true</item>
+        <item name="cornerRadius">3dp</item>
+        <item name="cardBackgroundColor">@color/white</item>
+        <item name="contentPadding">16dp</item>
+    </style>
+</resources>
