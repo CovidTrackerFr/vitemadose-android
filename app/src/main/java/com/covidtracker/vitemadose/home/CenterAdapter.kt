@@ -5,6 +5,7 @@ import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.DisplayItem
@@ -52,8 +53,22 @@ class CenterAdapter(
                 } else {
                     dateView.text = context.getString(R.string.no_slots_available)
                 }
-                partnerView.text =
-                    String.format(context.getString(R.string.partner_placeholder), center.platform)
+
+                center.platformEnum?.let { partner ->
+                    partnerView.text =
+                        String.format(
+                            context.getString(R.string.partner_placeholder),
+                            partner.label
+                        )
+                    partnerView.isVisible = true
+
+                    partnerImageView?.setImageResource(partner.logo)
+                    partnerImageView?.isVisible = true
+                } ?: run {
+                    partnerView.isVisible = false
+                    partnerImageView?.isVisible = true
+                }
+
                 bookButton.setOnClickListener { onClicked.invoke(center, position) }
             }
         }
@@ -75,7 +90,12 @@ class CenterAdapter(
         ) {
         fun bind(header: DisplayItem.AvailableCenterHeader) {
             itemView.sectionLibelleView.text =
-                String.format(context.getString(R.string.disponibilities_placeholder), header.count)
+                String.format(
+                    context.resources.getQuantityString(
+                        R.plurals.disponibilities,
+                        header.count, header.count
+                    )
+                )
         }
     }
 

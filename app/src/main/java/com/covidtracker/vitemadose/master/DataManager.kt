@@ -2,6 +2,8 @@ package com.covidtracker.vitemadose.master
 
 import com.covidtracker.vitemadose.data.CenterResponse
 import com.covidtracker.vitemadose.data.Department
+import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.json.Json
@@ -28,11 +30,15 @@ object DataManager {
             .addInterceptor(logging)
             .build()
 
+        val gson: Gson = GsonBuilder()
+            .setDateFormat("yyyy-MM-dd'T'HH:mm:ss")
+            .create()
+
         val retrofit = Retrofit.Builder()
             .baseUrl(URL_BASE)
             .client(client)
             .addCallAdapterFactory(CoroutineCallAdapterFactory())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(gson))
             .addConverterFactory(
                 Json(JsonConfiguration(strictMode = false)).asConverterFactory(
                     MediaType.get("application/json")

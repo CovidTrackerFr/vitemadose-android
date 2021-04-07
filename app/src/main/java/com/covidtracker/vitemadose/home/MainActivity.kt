@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.text.format.DateFormat
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,6 +13,7 @@ import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -25,7 +27,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         presenter.loadCenters()
     }
 
-    override fun showCenters(list: List<DisplayItem>) {
+    override fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date) {
+        lastUpdated.text = getString(
+            R.string.last_updated, DateFormat.format(
+                "EEEE dd MMMM à kk'h'mm",
+                lastUpdatedDate
+            ).toString().capitalize(Locale.FRANCE)
+        )
+
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(this, list) { center, index ->
             presenter.onCenterClicked(center)
@@ -33,7 +42,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun setupSelector(items: List<Department>, indexSelected: Int) {
-        val array = items.map { "${it.codeDepartement} - ${it.nomDepartement}" }.toTypedArray()
+        val array = items.map { "${it.departmentCode} - ${it.departmentName}" }.toTypedArray()
         departmentSelector.setOnClickListener {
             AlertDialog.Builder(this)
                 .setTitle(R.string.choose_department_title)
@@ -48,7 +57,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private fun displaySelectedDepartment(department: Department?) {
         selectedDepartment.text = if (department != null) {
-            "${department.codeDepartement} - ${department.nomDepartement}"
+            "${department.departmentCode} - ${department.departmentName}"
         } else {
             getString(R.string.choose_department_title)
         }
