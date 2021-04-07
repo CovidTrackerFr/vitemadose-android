@@ -55,17 +55,17 @@ class CenterAdapter(
                 }
 
                 center.platformEnum?.let { partner ->
-                    partnerView.text =
+                    partnerView?.text =
                         String.format(
                             context.getString(R.string.partner_placeholder),
                             partner.label
                         )
-                    partnerView.isVisible = true
+                    partnerView?.isVisible = true
 
                     partnerImageView?.setImageResource(partner.logo)
                     partnerImageView?.isVisible = true
                 } ?: run {
-                    partnerView.isVisible = false
+                    partnerView?.isVisible = false
                     partnerImageView?.isVisible = true
                 }
 
