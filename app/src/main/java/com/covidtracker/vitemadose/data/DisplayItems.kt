@@ -57,7 +57,7 @@ sealed class DisplayItem {
                 val dimanche: String?,
             ) {
 
-                val description: String
+                val description: String?
                     get() {
                         return ((lundi?.takeIf { it.isNotBlank() }?.let { "Lundi : $it\n" } ?: "") +
                                 (mardi?.takeIf { it.isNotBlank() }?.let { "Mardi : $it\n" } ?: "") +
@@ -65,7 +65,9 @@ sealed class DisplayItem {
                                 (jeudi?.takeIf { it.isNotBlank() }?.let { "Jeudi : $it\n" } ?: "") +
                                 (vendredi?.takeIf { it.isNotBlank() }?.let { "Vendredi : $it\n" } ?: "") +
                                 (samedi?.takeIf { it.isNotBlank() }?.let { "Samedi : $it\n" } ?: "") +
-                                (dimanche?.takeIf { it.isNotBlank() }?.let { "Dimanche : $it" } ?: "")).removeSuffix("\n")
+                                (dimanche?.takeIf { it.isNotBlank() }?.let { "Dimanche : $it" } ?: ""))
+                            .removeSuffix("\n")
+                            .takeIf { it.isNotBlank() }
                     }
             }
         }
