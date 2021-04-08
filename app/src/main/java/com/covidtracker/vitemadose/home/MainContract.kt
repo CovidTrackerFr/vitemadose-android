@@ -11,7 +11,7 @@ interface MainContract {
         /**
          * Display main list of centers (available/unavailable)
          */
-        fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date)
+        fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date? = null)
 
         /**
          * Setup department selectors with retrieved departments
@@ -24,6 +24,7 @@ interface MainContract {
         fun openLink(url: String)
 
         fun showCentersError()
+        fun setLoading(loading: Boolean)
     }
 
     interface Presenter {
