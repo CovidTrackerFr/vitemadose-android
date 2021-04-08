@@ -74,6 +74,7 @@ dependencies {
     implementation(Libs.constraintLayout)
     implementation(Libs.design)
     implementation(Libs.core)
+    implementation(Libs.swipeRefreshLayout)
 
     implementation(Libs.timber)
 

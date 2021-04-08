@@ -60,24 +60,31 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/lastUpdated"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="italic"
-        android:textColor="@color/black"
         app:layout_constraintTop_toBottomOf="@id/departmentSelector"
         tools:text="@string/last_updated" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/centersRecyclerView"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/refreshLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/lastUpdated" />
+        app:layout_constraintTop_toBottomOf="@id/lastUpdated">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/centersRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

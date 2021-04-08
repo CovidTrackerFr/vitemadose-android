@@ -15,6 +15,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         GlobalScope.launch(Dispatchers.Main) {
             PrefHelper.favDepartmentCode?.let { department ->
                 try {
+                    view.setLoading(true)
                     DataManager.getCenters(department).let {
                         val list = mutableListOf<DisplayItem>()
                         if (it.availableCenters.isNotEmpty()) {
@@ -30,6 +31,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                 }catch (e: Exception){
                     Timber.e(e)
                     view.showCentersError()
+                }finally {
+                    view.setLoading(false)
                 }
             }
         }
@@ -50,7 +53,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun onDepartmentSelected(department: Department) {
-        PrefHelper.favDepartmentCode = department.departmentCode
+        if(department.departmentCode != PrefHelper.favDepartmentCode) {
+            PrefHelper.favDepartmentCode = department.departmentCode
+            view.showCenters(emptyList())
+        }
         loadCenters()
     }
 

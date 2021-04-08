@@ -14,6 +14,7 @@ object Libs {
     const val core = "androidx.core:core:_"
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:_"
     const val androidKtx = "androidx.core:core-ktx:_"
+    const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:_"
 
     //Log
     const val timber = "com.jakewharton.timber:timber:_"
