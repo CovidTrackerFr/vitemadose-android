@@ -13,7 +13,7 @@ sealed class DisplayItem {
             @SerializedName("plateforme")
             val platform: String,
             @SerializedName("metadata")
-            val metadata: Metadata,
+            val metadata: Metadata?,
             @SerializedName("prochain_rdv")
             val nextSlot: String,
             var available: Boolean = false
@@ -22,9 +22,15 @@ sealed class DisplayItem {
         val platformEnum: Plateform?
             get() = Plateform.fromId(platform)
 
+        val displayName: String
+            get() {
+                val additionalInfo = metadata?.address?.replace(",", "\n")
+                return name + (if(additionalInfo != null) "\n" + additionalInfo else "")
+            }
+
         class Metadata(
                 @SerializedName("address")
-                val address: String
+                val address: String?
         )
     }
 
