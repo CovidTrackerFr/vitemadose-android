@@ -38,7 +38,7 @@ class CenterAdapter(
     ) {
         fun bind(center: DisplayItem.Center, position: Int) {
             with(itemView) {
-                centerNameView.text = "${center.name}\n${center.metadata.address.replace(",", "\n")}"
+                centerNameView.text = center.displayName
                 if (center.available) {
                     dateView.text = try {
                         /** I have not found the exact parser for all date format returned by the API
