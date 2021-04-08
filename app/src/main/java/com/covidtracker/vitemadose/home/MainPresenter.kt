@@ -25,7 +25,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             list.add(DisplayItem.UnavailableCenterHeader)
                             list.addAll(it.unavailableCenters.onEach { it.available = false })
                         }
-                        view.showCenters(list)
+                        view.showCenters(list, it.lastUpdated)
                     }
                 }catch (e: Exception){
                     Timber.e(e)
@@ -41,7 +41,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                 val items = DataManager.getDepartments()
                 view.setupSelector(
                     items,
-                    items.indexOfFirst { PrefHelper.favDepartmentCode == it.codeDepartement })
+                    items.indexOfFirst { PrefHelper.favDepartmentCode == it.departmentCode })
             }catch (e: Exception){
                 Timber.e(e)
                 /** Do we want to display an error if we have departments cache ? **/
@@ -50,7 +50,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun onDepartmentSelected(department: Department) {
-        PrefHelper.favDepartmentCode = department.codeDepartement
+        PrefHelper.favDepartmentCode = department.departmentCode
         loadCenters()
     }
 

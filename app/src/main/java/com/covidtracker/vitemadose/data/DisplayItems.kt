@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 sealed class DisplayItem {
     class Center(
         @SerializedName("departement")
-        val departement: String,
+        val department: String,
         @SerializedName("nom")
         val name: String,
         @SerializedName("url")
@@ -15,7 +15,12 @@ sealed class DisplayItem {
         @SerializedName("prochain_rdv")
         val nextSlot: String,
         var available: Boolean = false
-    ) : DisplayItem()
+    ) : DisplayItem() {
+
+        val platformEnum: Plateform?
+            get() = Plateform.fromId(platform)
+
+    }
 
     object UnavailableCenterHeader : DisplayItem()
 

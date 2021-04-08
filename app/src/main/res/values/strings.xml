@@ -1,8 +1,13 @@
 <resources>
     <string name="app_name">ViteMaDose</string>
-    <string name="prompt_location">J\'habite en :</string>
+    <string name="prompt_location">J\'habite en</string>
     <string name="choose_department_title">Choix du département</string>
     <string name="appointement">Prendre rendez-vous</string>
+    <string name="last_updated">Dernière mise à jour : %s</string>
+    <plurals name="disponibilities">
+        <item quantity="one">%s centre ayant des disponibilités</item>
+        <item quantity="other">%s centres ayant des disponibilités</item>
+    </plurals>
     <string name="disponibilities_placeholder">%s Centre(s) ayant des disponibilités</string>
     <string name="no_slots_available_center_header">Autres centres sans créneaux de vaccination détecté</string>
     <string name="no_slots_available">Aucun RDV détecté</string>

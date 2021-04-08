@@ -4,11 +4,11 @@ import com.google.gson.annotations.SerializedName
 
 class Department(
     @SerializedName("code_departement")
-    val codeDepartement: String,
+    val departmentCode: String,
     @SerializedName("nom_departement")
-    val nomDepartement: String,
+    val departmentName: String,
     @SerializedName("code_region")
-    val codeRegion: Int,
+    val regionCode: Int,
     @SerializedName("nom_region")
-    val nomRegion: String
+    val regionName: String
 )

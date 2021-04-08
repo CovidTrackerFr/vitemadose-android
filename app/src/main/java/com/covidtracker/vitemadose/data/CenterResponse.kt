@@ -1,10 +1,13 @@
 package com.covidtracker.vitemadose.data
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 class CenterResponse(
+    @SerializedName("version")
+    val version: String,
     @SerializedName("last_updated")
-    val codeDepartement: String,
+    val lastUpdated: Date,
     @SerializedName("centres_disponibles")
     val availableCenters: List<DisplayItem.Center>,
     @SerializedName("centres_indisponibles")

@@ -8,28 +8,17 @@
     android:paddingTop="32dp"
     android:paddingBottom="16dp">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/sectionIconView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toStartOf="@id/sectionLibelleView"
-        app:layout_constraintHorizontal_chainStyle="packed"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_check" />
-
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/sectionLibelleView"
         style="@style/TextStyle_header_available"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
+        android:drawableStart="@drawable/ic_check"
+        android:drawablePadding="8dp"
         android:gravity="center"
-        app:layout_constraintBottom_toBottomOf="@id/sectionIconView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/sectionIconView"
-        app:layout_constraintTop_toTopOf="@id/sectionIconView"
-        app:layout_constraintWidth_default="wrap"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="@string/disponibilities_placeholder" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
