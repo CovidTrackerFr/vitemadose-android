@@ -14,8 +14,10 @@ import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import java.net.URLEncoder
 import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -49,12 +51,59 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
-        centersRecyclerView.adapter = CenterAdapter(this, list) { center, index ->
-            presenter.onCenterClicked(center)
-        }
+        centersRecyclerView.adapter = CenterAdapter(
+            context = this,
+            items = list,
+            onClicked = { center ->
+                presenter.onCenterClicked(center)
+            },
+            onInfoClicked = { center ->
+                showInfoDialogForCenter(center)
+            })
     }
 
-    override fun setLoading(loading: Boolean){
+    private fun showInfoDialogForCenter(center: DisplayItem.Center) {
+        val builder = MaterialAlertDialogBuilder(this).apply {
+            setTitle(center.name)
+            setNeutralButton(R.string.close) { dialog, _ ->
+                dialog.dismiss()
+            }
+            val description = StringBuilder()
+            center.metadata?.address?.let {
+                setNegativeButton(R.string.maps) { dialog, _ ->
+                    val intent = Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse("geo:0,0?q=${URLEncoder.encode(it, "utf-8")}")
+                    }
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
+                description.append(it.replace(", ", "\n"))
+            }
+            center.metadata?.businessHours?.description?.let {
+                if(description.isNotBlank()){
+                    description.append("\n\n")
+                }
+                description.append(it)
+            }
+            center.metadata?.phoneNumber?.let {
+                setPositiveButton(R.string.call) { dialog, _ ->
+                    val intent = Intent(Intent.ACTION_DIAL).apply {
+                        data = Uri.parse("tel:$it")
+                    }
+                    startActivity(intent)
+                    dialog.dismiss()
+                }
+                if(description.isNotBlank()){
+                    description.append("\n\n")
+                }
+                description.append("Téléphone : $it")
+            }
+            setMessage(description.toString())
+        }
+        builder.create().show()
+    }
+
+    override fun setLoading(loading: Boolean) {
         refreshLayout.isRefreshing = loading
     }
 

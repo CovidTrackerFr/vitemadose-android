@@ -14,4 +14,7 @@
     <string name="check_center">Vérifier ce centre</string>
     <string name="partner_placeholder">avec %s</string>
     <string name="centers_error">Erreur lors de la récupération des centres. Réessayez</string>
+    <string name="close">Fermer</string>
+    <string name="call">Appeler</string>
+    <string name="maps">Maps</string>
 </resources>

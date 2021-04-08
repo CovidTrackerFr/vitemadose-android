@@ -3,6 +3,7 @@ package com.covidtracker.vitemadose.home
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.core.view.isVisible
@@ -17,7 +18,8 @@ import java.util.*
 class CenterAdapter(
     private val context: Context,
     private val items: List<DisplayItem>,
-    private val onClicked: (DisplayItem.Center, Int) -> Unit
+    private val onClicked: (DisplayItem.Center) -> Unit,
+    private val onInfoClicked: (DisplayItem.Center) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
@@ -69,7 +71,14 @@ class CenterAdapter(
                     partnerImageView?.isVisible = true
                 }
 
-                bookButton.setOnClickListener { onClicked.invoke(center, position) }
+                bookButton.setOnClickListener { onClicked.invoke(center) }
+
+                if(center.metadata?.hasMoreInfoToShow == true){
+                    infoView.visibility = View.VISIBLE
+                    infoView.setOnClickListener{ onInfoClicked.invoke(center)}
+                }else{
+                    infoView.visibility = View.GONE
+                }
             }
         }
     }
