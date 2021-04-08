@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -33,12 +34,15 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date?) {
         lastUpdatedDate?.let { date ->
+            lastUpdated.visibility = View.VISIBLE
             lastUpdated.text = getString(
                 R.string.last_updated, DateFormat.format(
                     "EEEE dd MMMM à kk'h'mm",
                     date
                 ).toString().capitalize(Locale.FRANCE)
             )
+        } ?: run {
+            lastUpdated.visibility = View.GONE
         }
 
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
