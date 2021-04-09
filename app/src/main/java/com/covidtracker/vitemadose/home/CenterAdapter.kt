@@ -4,7 +4,6 @@ import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.DisplayItem
@@ -77,12 +76,12 @@ class CenterAdapter(
                         context.getString(R.string.partner_placeholder),
                         partner.label
                     )
-                    partnerView.isVisible = true
                     partnerImageView.setImageResource(partner.logo)
-                    partnerImageView.isVisible = true
+                    partnerView.show()
+                    partnerImageView.show()
                 } ?: run {
-                    partnerView.isVisible = false
-                    partnerImageView.isVisible = true
+                    partnerView.hide()
+                    partnerImageView.hide()
                 }
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
