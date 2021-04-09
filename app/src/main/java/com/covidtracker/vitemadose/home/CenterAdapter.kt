@@ -11,6 +11,7 @@ import com.covidtracker.vitemadose.extensions.hide
 import com.covidtracker.vitemadose.extensions.show
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
+import kotlinx.android.synthetic.main.item_last_updated.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -27,6 +28,7 @@ class CenterAdapter(
         const val TYPE_CENTER_UNAVAILABLE = 1
         const val TYPE_AVAILABLE_HEADER = 3
         const val TYPE_UNAVAILABLE_HEADER = 4
+        const val TYPE_LAST_UPDATED = 5
     }
 
     private val dateParser: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.FRANCE)
@@ -37,7 +39,7 @@ class CenterAdapter(
     ) : RecyclerView.ViewHolder(
         LayoutInflater.from(context).inflate(R.layout.item_center, parent, false)
     ) {
-        fun bind(center: DisplayItem.Center, position: Int) {
+        fun bind(center: DisplayItem.Center) {
             with(itemView) {
                 centerNameView.text = center.displayName
                 if (center.available && center.url.isNotBlank()) {
@@ -45,7 +47,7 @@ class CenterAdapter(
                         /** I have not found the exact parser for all date format returned by the API
                          * Then I take only the string until minutes. This is sub-optimal */
                         DateFormat.format(
-                            "EEEE dd MMMM à kk'h'mm",
+                            "EEEE d MMMM à kk'h'mm",
                             dateParser.parse(center.nextSlot.substring(0, 16))
                         ).toString().capitalize(Locale.FRANCE)
                     } catch (e: Exception) {
@@ -122,6 +124,23 @@ class CenterAdapter(
         }
     }
 
+    inner class LastUpdatedViewHolder(context: Context, parent: ViewGroup) :
+        RecyclerView.ViewHolder(
+            LayoutInflater.from(context)
+                .inflate(R.layout.item_last_updated, parent, false)
+        ) {
+        fun bind(item: DisplayItem.LastUpdated) {
+            with(itemView) {
+                lastUpdated.text = context.getString(
+                    R.string.last_updated, DateFormat.format(
+                        "EEEE d MMMM à kk'h'mm",
+                        item.date
+                    ).toString().capitalize(Locale.FRANCE)
+                )
+            }
+        }
+    }
+
     inner class AvailableCenterHeaderViewHolder(context: Context, parent: ViewGroup) :
         RecyclerView.ViewHolder(
             LayoutInflater.from(context)
@@ -144,6 +163,7 @@ class CenterAdapter(
             TYPE_CENTER_UNAVAILABLE -> UnavailableCenterViewHolder(context, parent)
             TYPE_UNAVAILABLE_HEADER -> UnavailableCenterHeaderViewHolder(context, parent)
             TYPE_AVAILABLE_HEADER -> AvailableCenterHeaderViewHolder(context, parent)
+            TYPE_LAST_UPDATED -> LastUpdatedViewHolder(context, parent)
             else -> throw IllegalArgumentException("Type not supported")
         }
     }
@@ -159,13 +179,14 @@ class CenterAdapter(
             }
             is DisplayItem.UnavailableCenterHeader -> TYPE_UNAVAILABLE_HEADER
             is DisplayItem.AvailableCenterHeader -> TYPE_AVAILABLE_HEADER
+            is DisplayItem.LastUpdated -> TYPE_LAST_UPDATED
         }
     }
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is AvailableCenterViewHolder -> {
-                holder.bind(items[position] as DisplayItem.Center, position)
+                holder.bind(items[position] as DisplayItem.Center)
             }
             is UnavailableCenterViewHolder -> {
                 holder.bind(items[position] as DisplayItem.Center)
@@ -175,6 +196,9 @@ class CenterAdapter(
             }
             is AvailableCenterHeaderViewHolder -> {
                 holder.bind(items[position] as DisplayItem.AvailableCenterHeader)
+            }
+            is LastUpdatedViewHolder -> {
+                holder.bind(items[position] as DisplayItem.LastUpdated)
             }
         }
     }

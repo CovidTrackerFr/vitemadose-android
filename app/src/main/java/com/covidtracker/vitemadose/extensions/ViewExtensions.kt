@@ -2,6 +2,7 @@ package com.covidtracker.vitemadose.extensions
 
 import android.app.Activity
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.util.TypedValue
 import android.view.View
 import androidx.annotation.AttrRes
@@ -42,4 +43,8 @@ fun View.hide(){
 
 fun View.mask(){
     visibility = View.INVISIBLE
+}
+
+fun Resources.dpToPx(dp: Float): Int {
+    return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, displayMetrics).toInt()
 }

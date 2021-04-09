@@ -19,6 +19,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                     view.setLoading(true)
                     DataManager.getCenters(department).let {
                         val list = mutableListOf<DisplayItem>()
+                        list.add(DisplayItem.LastUpdated(it.lastUpdated))
                         if (it.availableCenters.isNotEmpty()) {
                             list.add(DisplayItem.AvailableCenterHeader(it.availableCenters.size))
                             list.addAll(it.availableCenters.onEach { it.available = true })
@@ -31,7 +32,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             }
                             list.addAll(it.unavailableCenters.onEach { it.available = false })
                         }
-                        view.showCenters(list, it.lastUpdated)
+                        view.showCenters(list)
                     }
                 } catch (e: Exception) {
                     Timber.e(e)

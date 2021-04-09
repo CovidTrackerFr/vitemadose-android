@@ -2,8 +2,12 @@ package com.covidtracker.vitemadose.data
 
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 sealed class DisplayItem {
+
+    class LastUpdated(val date: Date): DisplayItem()
+
     class Center(
         @SerializedName("departement")
         val department: String,

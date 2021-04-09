@@ -2,7 +2,6 @@ package com.covidtracker.vitemadose.home
 
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
-import java.util.*
 
 interface MainContract {
 
@@ -11,7 +10,7 @@ interface MainContract {
         /**
          * Display main list of centers (available/unavailable)
          */
-        fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date? = null)
+        fun showCenters(list: List<DisplayItem>)
 
         /**
          * Setup department selectors with retrieved departments

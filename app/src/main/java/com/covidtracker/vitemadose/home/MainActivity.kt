@@ -1,11 +1,12 @@
 package com.covidtracker.vitemadose.home
 
+import android.animation.ArgbEvaluator
+import android.animation.ValueAnimator
 import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
-import android.text.format.DateFormat
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +15,11 @@ import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
-import com.covidtracker.vitemadose.extensions.hide
-import com.covidtracker.vitemadose.extensions.show
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import java.net.URLEncoder
-import java.util.*
+
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -36,21 +36,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         refreshLayout.setOnRefreshListener {
             presenter.loadCenters()
         }
+
+        appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+            val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
+            headerLayout.alpha = 1 - progress
+            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                ValueAnimator.ofObject(
+                    ArgbEvaluator(),
+                    color(R.color.grey_2),
+                    color(R.color.corail)
+                ).apply {
+                    setCurrentFraction(progress)
+                    backgroundSelectorView.setBackgroundColor(animatedValue as Int)
+                    appBarLayout.setBackgroundColor(animatedValue as Int)
+                }
+            }
+        })
     }
 
-    override fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date?) {
-        lastUpdatedDate?.let { date ->
-            lastUpdated.show()
-            lastUpdated.text = getString(
-                R.string.last_updated, DateFormat.format(
-                    "EEEE dd MMMM à kk'h'mm",
-                    date
-                ).toString().capitalize(Locale.FRANCE)
-            )
-        } ?: run {
-            lastUpdated.hide()
-        }
-
+    override fun showCenters(list: List<DisplayItem>) {
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(
             context = this,
@@ -61,13 +65,13 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         )
     }
 
-    private fun startPhoneActivity(phoneNumber: String){
+    private fun startPhoneActivity(phoneNumber: String) {
         val intent = Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:$phoneNumber")
         }
         try {
             startActivity(intent)
-        }catch (e: ActivityNotFoundException){
+        } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
         }
     }
@@ -78,7 +82,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
         try {
             startActivity(intent)
-        }catch (e: ActivityNotFoundException){
+        } catch (e: ActivityNotFoundException) {
             Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
         }
     }
