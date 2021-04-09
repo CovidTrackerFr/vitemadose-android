@@ -3,13 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/lastUpdated"
-    tools:text="@string/last_updated"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginTop="8dp"
     android:fontFamily="@font/sf_pro"
     android:gravity="center"
-    android:textColor="@color/black"
+    android:padding="4dp"
+    android:textColor="@color/scorpion"
     android:textSize="14sp"
-    android:textStyle="italic"
-    app:layout_constraintTop_toBottomOf="@id/departmentSelector" />
+    app:layout_constraintTop_toBottomOf="@id/departmentSelector"
+    tools:text="@string/last_updated" />

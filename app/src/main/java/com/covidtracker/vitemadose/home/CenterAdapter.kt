@@ -47,7 +47,7 @@ class CenterAdapter(
                         /** I have not found the exact parser for all date format returned by the API
                          * Then I take only the string until minutes. This is sub-optimal */
                         DateFormat.format(
-                            "EEEE dd MMMM à kk'h'mm",
+                            "EEEE d MMMM à kk'h'mm",
                             dateParser.parse(center.nextSlot.substring(0, 16))
                         ).toString().capitalize(Locale.FRANCE)
                     } catch (e: Exception) {
@@ -133,7 +133,7 @@ class CenterAdapter(
             with(itemView) {
                 lastUpdated.text = context.getString(
                     R.string.last_updated, DateFormat.format(
-                        "EEEE dd MMMM à kk'h'mm",
+                        "EEEE d MMMM à kk'h'mm",
                         item.date
                     ).toString().capitalize(Locale.FRANCE)
                 )

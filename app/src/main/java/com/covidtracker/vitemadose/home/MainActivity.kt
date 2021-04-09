@@ -10,15 +10,11 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
-import com.covidtracker.vitemadose.extensions.dpToPx
-import com.covidtracker.vitemadose.extensions.hide
-import com.covidtracker.vitemadose.extensions.show
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -42,15 +38,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val progress = -verticalOffset / appBarLayout.measuredHeight.toFloat()
-            val width = (resources.dpToPx(40f) * progress).toInt()
-            selectorCollapsedIconView.apply {
-                /** Constraint the width of the icon **/
-                if (width == 0) hide() else show()
-                (layoutParams as ConstraintLayout.LayoutParams).matchConstraintMaxWidth = width
-                alpha = progress
-                requestLayout()
-            }
+            val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
+            headerLayout.alpha = 1 - progress
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
                 ValueAnimator.ofObject(
                     ArgbEvaluator(),
@@ -59,6 +48,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 ).apply {
                     setCurrentFraction(progress)
                     backgroundSelectorView.setBackgroundColor(animatedValue as Int)
+                    appBarLayout.setBackgroundColor(animatedValue as Int)
                 }
             }
         })
