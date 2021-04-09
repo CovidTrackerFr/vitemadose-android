@@ -58,6 +58,8 @@ class CenterAdapter(
 
                 center.metadata?.address?.let { address ->
                     centerNameView.setOnClickListener { onAddressClicked(address) }
+                } ?: run {
+                    centerNameView.setOnClickListener(null)
                 }
 
                 center.metadata?.phoneNumber?.let { phoneNumber ->
@@ -99,6 +101,12 @@ class CenterAdapter(
                 centerNameView.text = center.displayName
                 dateView.text = context.getString(R.string.no_slots_available)
                 bookButton.setOnClickListener { onClicked.invoke(center) }
+
+                center.metadata?.address?.let { address ->
+                    centerNameView.setOnClickListener { onAddressClicked(address) }
+                } ?: run {
+                    centerNameView.setOnClickListener(null)
+                }
             }
         }
     }
