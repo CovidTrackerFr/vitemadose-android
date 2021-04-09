@@ -3,16 +3,17 @@
 
     <style name="TextStyle_date">
         <item name="fontFamily">@font/sf_pro</item>
+        <item name="android:textScaleX">1.05</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/mine_shaft</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="TextStyle_center">
         <item name="fontFamily">@font/sf_pro</item>
         <item name="android:textColor">@color/scorpion</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="TextStyle_header_available">
