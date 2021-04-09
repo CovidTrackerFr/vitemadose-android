@@ -31,3 +31,15 @@ fun Activity.color(@ColorRes resId: Int) = ContextCompat.getColor(this, resId)
 fun Activity.isDarkTheme(): Boolean {
     return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
+
+fun View.show(){
+    visibility = View.VISIBLE
+}
+
+fun View.hide(){
+    visibility = View.GONE
+}
+
+fun View.mask(){
+    visibility = View.INVISIBLE
+}
