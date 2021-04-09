@@ -32,16 +32,51 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Lundi 27 septembre à 8h30" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iconPlaceView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingEnd="10dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/centerNameView"
+                app:srcCompat="@drawable/ic_place" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerNameView"
                 style="@style/TextStyle_center"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="16dp"
+                android:background="?attr/selectableItemBackground"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/iconPlaceView"
                 app:layout_constraintTop_toBottomOf="@id/dateView"
                 tools:text="Centre de vaccination de Pontarlier" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iconPhoneView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingEnd="6dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/phoneView"
+                app:srcCompat="@drawable/ic_phone" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/phoneView"
+                style="@style/TextStyle_center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="?attr/selectableItemBackground"
+                android:text="02 25 25 25 25"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/iconPhoneView"
+                app:layout_constraintTop_toBottomOf="@id/centerNameView" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookButton"
@@ -56,13 +91,13 @@
                 app:backgroundTint="@color/blue_main"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/centerNameView" />
+                app:layout_constraintTop_toBottomOf="@id/phoneView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/partnerView"
-                android:textColor="@color/black"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textColor="@color/black"
                 app:layout_constraintBottom_toBottomOf="@id/partnerImageView"
                 app:layout_constraintEnd_toStartOf="@id/partnerImageView"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -72,11 +107,10 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/partnerImageView"
-                android:padding="10dp"
-                android:adjustViewBounds="true"
-                android:layout_width="96dp"
+                android:layout_width="84dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginStart="6dp"
+                android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/partnerView"

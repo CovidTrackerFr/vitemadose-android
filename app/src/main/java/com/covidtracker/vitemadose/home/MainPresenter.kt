@@ -1,5 +1,6 @@
 package com.covidtracker.vitemadose.home
 
+import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.master.DataManager
@@ -23,15 +24,19 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             list.addAll(it.availableCenters.onEach { it.available = true })
                         }
                         if (it.unavailableCenters.isNotEmpty()) {
-                            list.add(DisplayItem.UnavailableCenterHeader)
+                            if (list.isEmpty()) {
+                                list.add(DisplayItem.UnavailableCenterHeader(R.string.no_slots_available_center_header))
+                            } else {
+                                list.add(DisplayItem.UnavailableCenterHeader(R.string.no_slots_available_center_header_others))
+                            }
                             list.addAll(it.unavailableCenters.onEach { it.available = false })
                         }
                         view.showCenters(list, it.lastUpdated)
                     }
-                }catch (e: Exception){
+                } catch (e: Exception) {
                     Timber.e(e)
                     view.showCentersError()
-                }finally {
+                } finally {
                     view.setLoading(false)
                 }
             }
@@ -40,12 +45,12 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun loadDepartments() {
         GlobalScope.launch(Dispatchers.Main) {
-            try{
+            try {
                 val items = DataManager.getDepartments()
                 view.setupSelector(
                     items,
                     items.indexOfFirst { PrefHelper.favDepartmentCode == it.departmentCode })
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Timber.e(e)
                 /** Do we want to display an error if we have departments cache ? **/
             }
@@ -53,7 +58,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun onDepartmentSelected(department: Department) {
-        if(department.departmentCode != PrefHelper.favDepartmentCode) {
+        if (department.departmentCode != PrefHelper.favDepartmentCode) {
             PrefHelper.favDepartmentCode = department.departmentCode
             view.showCenters(emptyList())
         }

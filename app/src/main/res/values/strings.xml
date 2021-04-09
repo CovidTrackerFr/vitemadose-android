@@ -9,9 +9,11 @@
         <item quantity="other">%s centres ayant des disponibilités</item>
     </plurals>
     <string name="disponibilities_placeholder">%s Centre(s) ayant des disponibilités</string>
-    <string name="no_slots_available_center_header">Autres centres sans créneaux de vaccination détecté</string>
+    <string name="no_slots_available_center_header_others">Autres centres sans créneau de vaccination détecté</string>
+    <string name="no_slots_available_center_header">Aucun centre ayant de disponibilité.\nCentres sans créneau de vaccination détecté</string>
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Vérifier ce centre</string>
     <string name="partner_placeholder">avec %s</string>
     <string name="centers_error">Erreur lors de la récupération des centres. Réessayez</string>
+    <string name="no_app_activity_found">Aucune application trouvée.</string>
 </resources>

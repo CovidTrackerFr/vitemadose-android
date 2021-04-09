@@ -6,7 +6,7 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
 import android.text.format.DateFormat
-import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,8 +14,11 @@ import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
+import com.covidtracker.vitemadose.extensions.hide
+import com.covidtracker.vitemadose.extensions.show
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import java.net.URLEncoder
 import java.util.*
 
 class MainActivity : AppCompatActivity(), MainContract.View {
@@ -37,7 +40,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showCenters(list: List<DisplayItem>, lastUpdatedDate: Date?) {
         lastUpdatedDate?.let { date ->
-            lastUpdated.visibility = View.VISIBLE
+            lastUpdated.show()
             lastUpdated.text = getString(
                 R.string.last_updated, DateFormat.format(
                     "EEEE dd MMMM à kk'h'mm",
@@ -45,16 +48,42 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 ).toString().capitalize(Locale.FRANCE)
             )
         } ?: run {
-            lastUpdated.visibility = View.GONE
+            lastUpdated.hide()
         }
 
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
-        centersRecyclerView.adapter = CenterAdapter(this, list) { center, index ->
-            presenter.onCenterClicked(center)
+        centersRecyclerView.adapter = CenterAdapter(
+            context = this,
+            items = list,
+            onClicked = { presenter.onCenterClicked(it) },
+            onAddressClicked = { startMapsActivity(it) },
+            onPhoneClicked = { startPhoneActivity(it) }
+        )
+    }
+
+    private fun startPhoneActivity(phoneNumber: String){
+        val intent = Intent(Intent.ACTION_DIAL).apply {
+            data = Uri.parse("tel:$phoneNumber")
+        }
+        try {
+            startActivity(intent)
+        }catch (e: ActivityNotFoundException){
+            Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
         }
     }
 
-    override fun setLoading(loading: Boolean){
+    private fun startMapsActivity(address: String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse("geo:0,0?q=${URLEncoder.encode(address, "utf-8")}")
+        }
+        try {
+            startActivity(intent)
+        }catch (e: ActivityNotFoundException){
+            Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    override fun setLoading(loading: Boolean) {
         refreshLayout.isRefreshing = loading
     }
 

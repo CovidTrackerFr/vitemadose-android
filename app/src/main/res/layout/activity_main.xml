@@ -65,8 +65,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
         android:gravity="center"
+        android:fontFamily="@font/sf_pro"
         android:textColor="@color/black"
-        android:textSize="16sp"
+        android:textSize="14sp"
         android:textStyle="italic"
         app:layout_constraintTop_toBottomOf="@id/departmentSelector"
         tools:text="@string/last_updated" />
