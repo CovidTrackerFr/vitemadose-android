@@ -3,6 +3,7 @@ package com.covidtracker.vitemadose.home
 import android.content.Context
 import android.text.format.DateFormat
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.covidtracker.vitemadose.R
@@ -23,6 +24,8 @@ class CenterAdapter(
     private val onPhoneClicked: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    private var mExpandedPosition = -1
+
     companion object {
         const val TYPE_CENTER = 0
         const val TYPE_CENTER_UNAVAILABLE = 1
@@ -39,7 +42,7 @@ class CenterAdapter(
     ) : RecyclerView.ViewHolder(
         LayoutInflater.from(context).inflate(R.layout.item_center, parent, false)
     ) {
-        fun bind(center: DisplayItem.Center) {
+        fun bind(center: DisplayItem.Center, position: Int) {
             with(itemView) {
                 centerNameView.text = center.displayName
                 if (center.available && center.url.isNotBlank()) {
@@ -63,6 +66,32 @@ class CenterAdapter(
                     centerNameView.setOnClickListener(null)
                 }
 
+                center.platformEnum?.let { partner ->
+                    partnerImageView.setImageResource(partner.logo)
+                    partnerImageView.show()
+                } ?: run {
+                    partnerImageView.hide()
+                }
+
+                setupExpandedState(this, center, position)
+
+                bookButton.setOnClickListener { onClicked.invoke(center) }
+                appointmentsCountView.text =
+                    String.format(
+                        context.resources.getQuantityString(
+                            R.plurals.shot_disponibilities,
+                            center.appointmentCount, center.appointmentCount
+                        )
+                    )
+            }
+        }
+    }
+
+    private fun setupExpandedState(itemView: View, center: DisplayItem.Center, position: Int) {
+        with(itemView) {
+            if (mExpandedPosition == position) {
+                moreView.rotation = 180f
+
                 center.metadata?.phoneNumber?.let { phoneNumber ->
                     phoneView.setOnClickListener { onPhoneClicked(phoneNumber) }
                     phoneView.show()
@@ -73,20 +102,37 @@ class CenterAdapter(
                     iconPhoneView.hide()
                 }
 
-                center.platformEnum?.let { partner ->
-                    partnerView?.text = String.format(
-                        context.getString(R.string.partner_placeholder),
-                        partner.label
-                    )
-                    partnerImageView.setImageResource(partner.logo)
-                    partnerView.show()
-                    partnerImageView.show()
+                center.metadata?.businessHours?.description?.let { address ->
+                    businessHoursView.show()
+                    businessHoursView.text = address
+                    iconBusinessHoursView.show()
                 } ?: run {
-                    partnerView.hide()
-                    partnerImageView.hide()
+                    businessHoursView.hide()
+                    iconBusinessHoursView.hide()
                 }
+            } else {
+                moreView.rotation = 0f
+                businessHoursView.hide()
+                iconBusinessHoursView.hide()
+                phoneView.hide()
+                iconPhoneView.hide()
+            }
 
-                bookButton.setOnClickListener { onClicked.invoke(center) }
+            if(center.metadata?.hasMoreInfoToShow == true){
+                moreView.show()
+            }else{
+                moreView.hide()
+            }
+
+            moreView.setOnClickListener {
+                mExpandedPosition = if (mExpandedPosition == position) {
+                    val oldPosition = mExpandedPosition
+                    notifyItemChanged(oldPosition)
+                    -1
+                } else {
+                    position
+                }
+                notifyItemChanged(mExpandedPosition)
             }
         }
     }
@@ -108,6 +154,8 @@ class CenterAdapter(
                 } ?: run {
                     centerNameView.setOnClickListener(null)
                 }
+
+                setupExpandedState(this, center, position)
             }
         }
     }
@@ -186,7 +234,7 @@ class CenterAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is AvailableCenterViewHolder -> {
-                holder.bind(items[position] as DisplayItem.Center)
+                holder.bind(items[position] as DisplayItem.Center, position)
             }
             is UnavailableCenterViewHolder -> {
                 holder.bind(items[position] as DisplayItem.Center)

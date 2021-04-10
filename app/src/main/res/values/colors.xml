@@ -13,5 +13,6 @@
     <color name="grey_2">#F3F3F3</color>
     <color name="grey_5">#E0E0E0</color>
     <color name="grey_10">#858585</color>
+    <color name="colorControl">#55858585</color>
 
 </resources>

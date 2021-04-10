@@ -21,6 +21,8 @@ sealed class DisplayItem {
         val metadata: Metadata?,
         @SerializedName("prochain_rdv")
         val nextSlot: String,
+        @SerializedName("appointment_count")
+        val appointmentCount: Int,
         var available: Boolean = false
     ) : DisplayItem() {
 
@@ -29,7 +31,7 @@ sealed class DisplayItem {
 
         val displayName: String
             get() {
-                val additionalInfo = metadata?.address
+                val additionalInfo = metadata?.address?.replace(", ","\n")?.trim()
                 return name + (if (additionalInfo != null) "\n" + additionalInfo else "")
             }
 
@@ -41,6 +43,9 @@ sealed class DisplayItem {
             @SerializedName("phone_number")
             val phoneNumber: String?
         ) {
+
+            val hasMoreInfoToShow: Boolean
+                get() = businessHours?.description != null || phoneNumber != null
 
             class BusinessHours(
                 @SerializedName("lundi")
