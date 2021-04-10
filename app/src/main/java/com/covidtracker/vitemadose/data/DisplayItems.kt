@@ -21,6 +21,8 @@ sealed class DisplayItem {
         val metadata: Metadata?,
         @SerializedName("prochain_rdv")
         val nextSlot: String,
+        @SerializedName("appointment_count")
+        val appointmentCount: Int,
         var available: Boolean = false
     ) : DisplayItem() {
 

@@ -5,8 +5,8 @@
     <string name="appointement">Prendre rendez-vous</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="disponibilities">
-        <item quantity="one">%s centre ayant des disponibilités</item>
-        <item quantity="other">%s centres ayant des disponibilités</item>
+        <item quantity="one">%s lieu ayant des disponibilités</item>
+        <item quantity="other">%s lieux ayant des disponibilités</item>
     </plurals>
     <string name="disponibilities_placeholder">%s Centre(s) ayant des disponibilités</string>
     <string name="no_slots_available_center_header_others">Autres centres sans créneau de vaccination détecté</string>
