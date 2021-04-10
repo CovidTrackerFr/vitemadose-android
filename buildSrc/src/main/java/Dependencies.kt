@@ -1,6 +1,9 @@
 object Versions {
     const val androidPlugin = "4.1.3"
     const val kotlin = "1.4.32"
+    const val googleServicesPlugin = "4.3.4"
+    const val firebaseCrashlytics = "2.3.0"
+    const val firebaseAppDistribution = "2.0.1"
 
     const val compileSdkVersion = 30
     const val minSdkVersion = 21
@@ -15,6 +18,11 @@ object Libs {
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:_"
     const val androidKtx = "androidx.core:core-ktx:_"
     const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:_"
+
+    // Play Services
+    const val firebaseBom = "com.google.firebase:firebase-bom:_"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
 
     //Log
     const val timber = "com.jakewharton.timber:timber:_"

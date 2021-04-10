@@ -5,6 +5,9 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-android")
     id("kotlin-android-extensions")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
+    id("com.google.firebase.appdistribution")
 }
 
 android {
@@ -29,6 +32,10 @@ android {
             storePassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_STORE_PASSWORD")
             keyAlias = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_ALIAS")
             keyPassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_KEY_PASSWORD")
+
+            firebaseAppDistribution {
+                groups = "androidtesters"
+            }
         }
         getByName("debug") {
             storeFile = file("../keystores/vitemadose_debug.keystore")
@@ -77,6 +84,10 @@ dependencies {
     implementation(Libs.swipeRefreshLayout)
 
     implementation(Libs.timber)
+
+    implementation(platform(Libs.firebaseBom))
+    implementation(Libs.firebaseAnalytics)
+    implementation(Libs.firebaseCrashlytics)
 
     implementation(Libs.kxCoroutines)
     implementation(Libs.kxCoroutinesAndroid)
