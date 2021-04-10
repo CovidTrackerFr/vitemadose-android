@@ -92,6 +92,7 @@ dependencies {
     implementation(Libs.kxCoroutines)
     implementation(Libs.kxCoroutinesAndroid)
 
+    implementation(Libs.gson)
     implementation(Libs.retrofit)
     implementation(Libs.retrofitGson)
     implementation(Libs.retrofitConverter)
