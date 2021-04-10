@@ -45,6 +45,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun loadDepartments() {
+        if (PrefHelper.favDepartmentCode == null) {
+            view.showEmptyState()
+        }
+
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val items = DataManager.getDepartments()

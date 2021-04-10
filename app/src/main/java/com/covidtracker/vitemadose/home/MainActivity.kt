@@ -7,6 +7,10 @@ import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,9 +19,12 @@ import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
+import com.covidtracker.vitemadose.extensions.hide
+import com.covidtracker.vitemadose.extensions.show
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.empty_state.*
 import java.net.URLEncoder
 
 
@@ -57,12 +64,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showCenters(list: List<DisplayItem>) {
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(
-            context = this,
-            items = list,
-            onClicked = { presenter.onCenterClicked(it) },
-            onAddressClicked = { startMapsActivity(it) },
-            onPhoneClicked = { startPhoneActivity(it) }
+                context = this,
+                items = list,
+                onClicked = { presenter.onCenterClicked(it) },
+                onAddressClicked = { startMapsActivity(it) },
+                onPhoneClicked = { startPhoneActivity(it) }
         )
+
+        emptyStateContainer.hide()
     }
 
     private fun startPhoneActivity(phoneNumber: String) {
@@ -93,23 +102,48 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun setupSelector(items: List<Department>, indexSelected: Int) {
         val array = items.map { "${it.departmentCode} - ${it.departmentName}" }.toTypedArray()
-        departmentSelector.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle(R.string.choose_department_title)
-                .setItems(array) { dialogInterface, index ->
-                    presenter.onDepartmentSelected(items[index])
-                    displaySelectedDepartment(items[index])
-                    dialogInterface.dismiss()
-                }.create().show()
+        arrayOf(emptyStateDepartmentSelector, departmentSelector).forEach { selector ->
+            selector.setOnClickListener {
+                AlertDialog.Builder(this)
+                        .setTitle(R.string.choose_department_title)
+                        .setItems(array) { dialogInterface, index ->
+                            presenter.onDepartmentSelected(items[index])
+                            displaySelectedDepartment(items[index])
+                            dialogInterface.dismiss()
+                        }.create().show()
+            }
+            displaySelectedDepartment(items.getOrNull(indexSelected))
         }
-        displaySelectedDepartment(items.getOrNull(indexSelected))
+    }
+
+    override fun showEmptyState() {
+        SpannableString(emptyStateBaselineTextView.text).apply {
+            setSpan(
+                    ForegroundColorSpan(color(R.color.corail)),
+                    27,
+                    37,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+            setSpan(
+                    ForegroundColorSpan(color(R.color.blue_main)),
+                    41,
+                    51,
+                    Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+            )
+
+            emptyStateBaselineTextView.setText(this, TextView.BufferType.SPANNABLE)
+        }
+
+        emptyStateContainer.show()
     }
 
     private fun displaySelectedDepartment(department: Department?) {
-        selectedDepartment.text = if (department != null) {
-            "${department.departmentCode} - ${department.departmentName}"
-        } else {
-            getString(R.string.choose_department_title)
+        arrayOf(emptyStateSelectedDepartment, selectedDepartment).forEach {
+            it.text = if (department != null) {
+                "${department.departmentCode} - ${department.departmentName}"
+            } else {
+                getString(R.string.choose_department_title)
+            }
         }
     }
 

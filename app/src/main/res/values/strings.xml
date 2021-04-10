@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">ViteMaDose</string>
-    <string name="prompt_location">J\'habite en</string>
-    <string name="choose_department_title">Choix du département</string>
+    <string name="find_dose_easily_and_quickly">Trouvez une dose de vaccin facilement et rapidement</string>
+    <string name="choose_department_title">Sélectionnez votre département</string>
     <string name="appointement">Prendre rendez-vous</string>
-    <string name="last_updated">Dernière mise à jour : %s</string>
+    <string name="last_updated">Mis à jour le %s</string>
     <plurals name="disponibilities">
         <item quantity="one">%s lieu ayant des disponibilités</item>
         <item quantity="other">%s lieux ayant des disponibilités</item>
@@ -18,6 +18,7 @@
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Vérifier ce centre</string>
     <string name="partner_placeholder">avec</string>
+    <string name="with_partners">En partenariat avec</string>
     <string name="centers_error">Erreur lors de la récupération des centres. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
 </resources>
