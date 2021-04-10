@@ -82,6 +82,6 @@ sealed class DisplayItem {
 
     class UnavailableCenterHeader(@StringRes val titleRes: Int) : DisplayItem()
 
-    class AvailableCenterHeader(val count: Int) : DisplayItem()
+    class AvailableCenterHeader(val placesCount: Int, val slotsCount: Int) : DisplayItem()
 
 }

@@ -21,7 +21,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                         val list = mutableListOf<DisplayItem>()
                         list.add(DisplayItem.LastUpdated(it.lastUpdated))
                         if (it.availableCenters.isNotEmpty()) {
-                            list.add(DisplayItem.AvailableCenterHeader(it.availableCenters.size))
+                            list.add(DisplayItem.AvailableCenterHeader(it.availableCenters.size, it.availableCenters.sumBy { it.appointmentCount }))
                             list.addAll(it.availableCenters.onEach { it.available = true })
                         }
                         if (it.unavailableCenters.isNotEmpty()) {
@@ -45,6 +45,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     }
 
     override fun loadDepartments() {
+        if (PrefHelper.favDepartmentCode == null) {
+            view.showEmptyState()
+        }
+
         GlobalScope.launch(Dispatchers.Main) {
             try {
                 val items = DataManager.getDepartments()

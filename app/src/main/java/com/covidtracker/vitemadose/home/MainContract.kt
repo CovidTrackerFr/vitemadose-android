@@ -7,6 +7,8 @@ interface MainContract {
 
     interface View {
 
+        fun showEmptyState()
+
         /**
          * Display main list of centers (available/unavailable)
          */
