@@ -4,9 +4,13 @@
     <string name="choose_department_title">Sélectionnez votre département</string>
     <string name="appointement">Prendre rendez-vous</string>
     <string name="last_updated">Mis à jour le %s</string>
-    <plurals name="disponibilities">
-        <item quantity="one">%s lieu ayant des disponibilités</item>
-        <item quantity="other">%s lieux ayant des disponibilités</item>
+    <plurals name="center_disponibilities">
+        <item quantity="one">lieu avec\ndes disponibilités</item>
+        <item quantity="other">lieux avec\ndes disponibilités</item>
+    </plurals>
+    <plurals name="slot_disponibilities">
+        <item quantity="one">créneau\ndisponible</item>
+        <item quantity="other">créneaux\ndisponibles</item>
     </plurals>
     <plurals name="shot_disponibilities">
         <item quantity="one">%s dose</item>

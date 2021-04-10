@@ -13,6 +13,7 @@ import com.covidtracker.vitemadose.extensions.show
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
 import kotlinx.android.synthetic.main.item_last_updated.view.*
+import kotlinx.android.synthetic.main.item_unavailable_center_header.view.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -183,7 +184,7 @@ class CenterAdapter(
                     R.string.last_updated, DateFormat.format(
                         "EEEE d MMMM à kk'h'mm",
                         item.date
-                    ).toString().capitalize(Locale.FRANCE)
+                    ).toString()
                 )
             }
         }
@@ -195,11 +196,20 @@ class CenterAdapter(
                 .inflate(R.layout.item_available_center_header, parent, false)
         ) {
         fun bind(header: DisplayItem.AvailableCenterHeader) {
-            itemView.sectionLibelleView.text =
+            itemView.nbCenterView.text = header.placesCount.toString()
+            itemView.libelleCenterAvailable.text =
                 String.format(
                     context.resources.getQuantityString(
-                        R.plurals.disponibilities,
-                        header.count, header.count
+                        R.plurals.center_disponibilities,
+                        header.placesCount, header.placesCount
+                    )
+                )
+            itemView.nbAppointementView.text = header.slotsCount.toString()
+            itemView.libelleAppointementAvailable.text =
+                String.format(
+                    context.resources.getQuantityString(
+                        R.plurals.slot_disponibilities,
+                        header.slotsCount, header.slotsCount
                     )
                 )
         }
