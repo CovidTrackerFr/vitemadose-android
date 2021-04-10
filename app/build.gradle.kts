@@ -34,7 +34,7 @@ android {
             keyPassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_KEY_PASSWORD")
 
             firebaseAppDistribution {
-                groups = "AndroidTesters"
+                groups = "androidtesters"
             }
         }
         getByName("debug") {

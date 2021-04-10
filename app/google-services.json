@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "304644690082",
+    "project_id": "vite-ma-dose",
+    "storage_bucket": "vite-ma-dose.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:304644690082:android:f76f8f4c75f41b4125c7fb",
+        "android_client_info": {
+          "package_name": "com.covidtracker.vitemadose"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "304644690082-io3fmkq0bt943rvm9mg260sot7nnu2tk.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.covidtracker.vitemadose",
+            "certificate_hash": "d31fda9fe3837739fd7ceb333595fab716697c06"
+          }
+        },
+        {
+          "client_id": "304644690082-pmjdj2l0eenbhdun7mi94oj2uhmh5f85.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.covidtracker.vitemadose",
+            "certificate_hash": "9bc70706931a9730f86ca75cecbe9669cea9b96d"
+          }
+        },
+        {
+          "client_id": "304644690082-d10q81t9r6qbntelorfi66b7r7mu0ekl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBl4_aecaPMtvy458zFbmDKu3rHfOZyaQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "304644690082-d10q81t9r6qbntelorfi66b7r7mu0ekl.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
