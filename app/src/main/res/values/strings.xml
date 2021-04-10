@@ -8,6 +8,10 @@
         <item quantity="one">%s lieu ayant des disponibilités</item>
         <item quantity="other">%s lieux ayant des disponibilités</item>
     </plurals>
+    <plurals name="shot_disponibilities">
+        <item quantity="one">%s dose</item>
+        <item quantity="other">%s doses</item>
+    </plurals>
     <string name="disponibilities_placeholder">%s Centre(s) ayant des disponibilités</string>
     <string name="no_slots_available_center_header_others">Autres centres sans créneau de vaccination détecté</string>
     <string name="no_slots_available_center_header">Aucun centre ayant de disponibilité.\nCentres sans créneau de vaccination détecté</string>

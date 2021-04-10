@@ -67,21 +67,22 @@ class CenterAdapter(
                 }
 
                 center.platformEnum?.let { partner ->
-                    partnerView?.text = String.format(
-                        context.getString(R.string.partner_placeholder),
-                        partner.label
-                    )
                     partnerImageView.setImageResource(partner.logo)
-                    partnerView.show()
                     partnerImageView.show()
                 } ?: run {
-                    partnerView.hide()
                     partnerImageView.hide()
                 }
 
                 setupExpandedState(this, center, position)
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
+                appointmentsCountView.text =
+                    String.format(
+                        context.resources.getQuantityString(
+                            R.plurals.shot_disponibilities,
+                            center.appointmentCount, center.appointmentCount
+                        )
+                    )
             }
         }
     }
