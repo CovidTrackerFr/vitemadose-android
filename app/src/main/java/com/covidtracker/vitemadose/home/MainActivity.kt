@@ -20,13 +20,13 @@ import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
 import com.covidtracker.vitemadose.extensions.hide
-import com.covidtracker.vitemadose.extensions.show
+import com.covidtracker.vitemadose.extensions.launchWebUrl
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_state.*
+import kotlinx.android.synthetic.main.empty_state.view.*
 import java.net.URLEncoder
-
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 onPhoneClicked = { startPhoneActivity(it) }
         )
 
-        emptyStateContainer.hide()
+        emptyStateContainer?.hide()
     }
 
     private fun startPhoneActivity(phoneNumber: String) {
@@ -102,7 +102,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun setupSelector(items: List<Department>, indexSelected: Int) {
         val array = items.map { "${it.departmentCode} - ${it.departmentName}" }.toTypedArray()
-        arrayOf(emptyStateDepartmentSelector, departmentSelector).forEach { selector ->
+        arrayOf(emptyStateDepartmentSelector, departmentSelector).filterNotNull().forEach { selector ->
             selector.setOnClickListener {
                 AlertDialog.Builder(this)
                         .setTitle(R.string.choose_department_title)
@@ -117,28 +117,28 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun showEmptyState() {
-        SpannableString(emptyStateBaselineTextView.text).apply {
-            setSpan(
+        stubEmptyState.setOnInflateListener { stub, inflated ->
+            SpannableString(inflated.emptyStateBaselineTextView.text).apply {
+                setSpan(
                     ForegroundColorSpan(color(R.color.corail)),
                     27,
                     37,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-            setSpan(
+                )
+                setSpan(
                     ForegroundColorSpan(color(R.color.blue_main)),
                     41,
                     51,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
-            )
-
-            emptyStateBaselineTextView.setText(this, TextView.BufferType.SPANNABLE)
+                )
+                inflated.emptyStateBaselineTextView.setText(this, TextView.BufferType.SPANNABLE)
+            }
         }
-
-        emptyStateContainer.show()
+        stubEmptyState.inflate()
     }
 
     private fun displaySelectedDepartment(department: Department?) {
-        arrayOf(emptyStateSelectedDepartment, selectedDepartment).forEach {
+        arrayOf(emptyStateSelectedDepartment, selectedDepartment).filterNotNull().forEach {
             it.text = if (department != null) {
                 "${department.departmentCode} - ${department.departmentName}"
             } else {
@@ -148,14 +148,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun openLink(url: String) {
-        try {
-            startActivity(Intent().apply {
-                action = Intent.ACTION_VIEW
-                data = Uri.parse(url)
-            })
-        } catch (e: ActivityNotFoundException) {
-            e.printStackTrace()
-        }
+        launchWebUrl(url)
     }
 
     override fun showCentersError() {

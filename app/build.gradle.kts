@@ -82,6 +82,7 @@ dependencies {
     implementation(Libs.design)
     implementation(Libs.core)
     implementation(Libs.swipeRefreshLayout)
+    implementation(Libs.browser)
 
     implementation(Libs.timber)
 
