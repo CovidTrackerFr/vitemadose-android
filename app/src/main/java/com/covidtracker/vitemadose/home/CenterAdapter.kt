@@ -2,6 +2,7 @@ package com.covidtracker.vitemadose.home
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -186,10 +187,8 @@ class CenterAdapter(
         fun bind(item: DisplayItem.LastUpdated) {
             with(itemView) {
                 lastUpdated.text = context.getString(
-                    R.string.last_updated, DateFormat.format(
-                        "EEEE d MMMM à kk'h'mm",
-                        item.date
-                    ).toString()
+                        R.string.last_updated,
+                        DateUtils.getRelativeTimeSpanString(item.date.time, System.currentTimeMillis(), 0L)
                 )
             }
         }
