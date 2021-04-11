@@ -8,6 +8,7 @@
     android:paddingBottom="2dp">
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         style="@style/CustomCardView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -20,6 +21,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineIcons"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="30dp" />
+
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateView"
                 style="@style/TextStyle_date"
@@ -31,16 +39,6 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Lundi 27 septembre à 8h30" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconPlaceView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                android:paddingEnd="10dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/centerNameView"
-                app:srcCompat="@drawable/ic_place" />
-
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerNameView"
                 style="@style/TextStyle_center"
@@ -48,11 +46,58 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="?attr/selectableItemBackground"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/iconPlaceView"
+                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/dateView"
                 tools:text="Centre de vaccination de Pontarlier" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iconPlaceView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/centerAddressView"
+                app:srcCompat="@drawable/ic_place" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/centerAddressView"
+                style="@style/TextStyle_center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+                app:layout_constraintTop_toBottomOf="@id/centerNameView"
+                tools:text="2 rue Victor Hugo\n12345 Ville" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iconTypeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
+                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/centerTypeView"
+                app:srcCompat="@drawable/ic_bag_plus" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/centerTypeView"
+                style="@style/TextStyle_center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+                app:layout_constraintTop_toBottomOf="@id/centerAddressView"
+                tools:text="Pharmacie" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/businessHoursView"
@@ -61,18 +106,18 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
-                android:text="02 25 25 25 25"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/iconBusinessHoursView"
-                app:layout_constraintTop_toBottomOf="@id/centerNameView" />
+                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+                app:layout_constraintTop_toBottomOf="@id/centerTypeView"
+                tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconBusinessHoursView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
-                android:paddingEnd="6dp"
+                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/businessHoursView"
                 app:srcCompat="@drawable/ic_schedule_black_24dp" />
@@ -82,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="4dp"
-                android:paddingEnd="6dp"
+                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/phoneView"
                 app:srcCompat="@drawable/ic_phone" />
@@ -94,11 +139,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
-                android:text="02 25 25 25 25"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/iconPhoneView"
-                app:layout_constraintTop_toBottomOf="@id/businessHoursView" />
+                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+                app:layout_constraintTop_toBottomOf="@id/businessHoursView"
+                tools:text="02 25 25 25 25" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookButton"
@@ -155,6 +200,23 @@
                 app:layout_constraintTop_toBottomOf="@id/bookButton"
                 tools:src="@drawable/logo_doctolib" />
 
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/checkButton"
+                style="@style/RegularButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="16dp"
+                android:padding="12dp"
+                android:text="@string/check_center"
+                android:textAllCaps="false"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:backgroundTint="@color/blue_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phoneView" />
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/moreView"
                 android:layout_width="wrap_content"
@@ -165,6 +227,12 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/dateView"
                 app:srcCompat="@drawable/ic_expand_more_black_24dp" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/centreAvailableSpecificViews"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="bookButton,appointmentsCountView,bottomSeparatorView,partnerImageView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

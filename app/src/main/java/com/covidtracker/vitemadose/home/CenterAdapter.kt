@@ -2,12 +2,14 @@ package com.covidtracker.vitemadose.home
 
 import android.content.Context
 import android.text.format.DateFormat
+import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.DisplayItem
+import com.covidtracker.vitemadose.extensions.color
 import com.covidtracker.vitemadose.extensions.hide
 import com.covidtracker.vitemadose.extensions.show
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
@@ -37,7 +39,7 @@ class CenterAdapter(
 
     private val dateParser: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.FRANCE)
 
-    open inner class AvailableCenterViewHolder(
+    open inner class CenterViewHolder(
         context: Context,
         parent: ViewGroup,
     ) : RecyclerView.ViewHolder(
@@ -45,7 +47,7 @@ class CenterAdapter(
     ) {
         fun bind(center: DisplayItem.Center, position: Int) {
             with(itemView) {
-                centerNameView.text = center.displayName
+                centerNameView.text = center.name
                 if (center.available && center.url.isNotBlank()) {
                     dateView.text = try {
                         /** I have not found the exact parser for all date format returned by the API
@@ -58,13 +60,16 @@ class CenterAdapter(
                         ""
                     }
                 } else {
-                    dateView.text = context.getString(R.string.check_center)
+                    dateView.text = context.getString(R.string.no_slots_available)
                 }
 
                 center.metadata?.address?.let { address ->
-                    centerNameView.setOnClickListener { onAddressClicked(address) }
+                    centerAddressView.text = center.formattedAddress
+                    centerAddressView.show()
+                    centerAddressView.setOnClickListener { onAddressClicked(address) }
                 } ?: run {
-                    centerNameView.setOnClickListener(null)
+                    centerAddressView.hide()
+                    centerAddressView.setOnClickListener(null)
                 }
 
                 center.platformEnum?.let { partner ->
@@ -79,6 +84,8 @@ class CenterAdapter(
                 setupExpandedState(this, center, position)
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
+                checkButton.setOnClickListener { onClicked.invoke(center) }
+
                 appointmentsCountView.text =
                     String.format(
                         context.resources.getQuantityString(
@@ -86,6 +93,16 @@ class CenterAdapter(
                             center.appointmentCount, center.appointmentCount
                         )
                     )
+
+                if (center.available) {
+                    cardView.setCardBackgroundColor(color(R.color.white))
+                    centreAvailableSpecificViews.show()
+                    checkButton.hide()
+                } else {
+                    cardView.setCardBackgroundColor(color(R.color.grey_5))
+                    centreAvailableSpecificViews.hide()
+                    checkButton.show()
+                }
             }
         }
     }
@@ -94,6 +111,15 @@ class CenterAdapter(
         with(itemView) {
             if (mExpandedPosition == position) {
                 moreView.rotation = 180f
+
+                center.typeLabel?.let { type ->
+                    centerTypeView.text = type
+                    centerTypeView.show()
+                    iconTypeView.show()
+                } ?: run {
+                    centerTypeView.hide()
+                    iconTypeView.hide()
+                }
 
                 center.metadata?.phoneFormatted?.let { phoneNumber ->
                     phoneView.setOnClickListener { onPhoneClicked(phoneNumber) }
@@ -105,9 +131,9 @@ class CenterAdapter(
                     iconPhoneView.hide()
                 }
 
-                center.metadata?.businessHours?.description?.let { address ->
+                center.metadata?.businessHours?.description?.let { hours ->
                     businessHoursView.show()
-                    businessHoursView.text = address
+                    businessHoursView.text = hours
                     iconBusinessHoursView.show()
                 } ?: run {
                     businessHoursView.hide()
@@ -115,15 +141,17 @@ class CenterAdapter(
                 }
             } else {
                 moreView.rotation = 0f
+                centerTypeView.hide()
+                iconTypeView.hide()
                 businessHoursView.hide()
                 iconBusinessHoursView.hide()
                 phoneView.hide()
                 iconPhoneView.hide()
             }
 
-            if(center.metadata?.hasMoreInfoToShow == true){
+            if (center.metadata?.hasMoreInfoToShow == true){
                 moreView.show()
-            }else{
+            } else {
                 moreView.hide()
             }
 
@@ -136,34 +164,6 @@ class CenterAdapter(
                     position
                 }
                 notifyItemChanged(mExpandedPosition)
-            }
-        }
-    }
-
-    inner class UnavailableCenterViewHolder(
-        context: Context,
-        parent: ViewGroup
-    ) : RecyclerView.ViewHolder(
-        LayoutInflater.from(context).inflate(R.layout.item_center_unavailable, parent, false)
-    ) {
-        fun bind(center: DisplayItem.Center) {
-            with(itemView) {
-                centerNameView.text = center.displayName
-                dateView.text = context.getString(R.string.no_slots_available)
-                if (center.url.isNotBlank()) {
-                    bookButton.show()
-                    bookButton.setOnClickListener { onClicked.invoke(center) }
-                }else{
-                    bookButton.hide()
-                }
-
-                center.metadata?.address?.let { address ->
-                    centerNameView.setOnClickListener { onAddressClicked(address) }
-                } ?: run {
-                    centerNameView.setOnClickListener(null)
-                }
-
-                setupExpandedState(this, center, position)
             }
         }
     }
@@ -188,10 +188,8 @@ class CenterAdapter(
         fun bind(item: DisplayItem.LastUpdated) {
             with(itemView) {
                 lastUpdated.text = context.getString(
-                    R.string.last_updated, DateFormat.format(
-                        "EEEE d MMMM à kk'h'mm",
-                        item.date
-                    ).toString()
+                        R.string.last_updated,
+                        DateUtils.getRelativeTimeSpanString(item.date.time, System.currentTimeMillis(), 0L)
                 )
             }
         }
@@ -224,8 +222,8 @@ class CenterAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            TYPE_CENTER -> AvailableCenterViewHolder(context, parent)
-            TYPE_CENTER_UNAVAILABLE -> UnavailableCenterViewHolder(context, parent)
+            TYPE_CENTER -> CenterViewHolder(context, parent)
+            TYPE_CENTER_UNAVAILABLE -> CenterViewHolder(context, parent)
             TYPE_UNAVAILABLE_HEADER -> UnavailableCenterHeaderViewHolder(context, parent)
             TYPE_AVAILABLE_HEADER -> AvailableCenterHeaderViewHolder(context, parent)
             TYPE_LAST_UPDATED -> LastUpdatedViewHolder(context, parent)
@@ -250,11 +248,8 @@ class CenterAdapter(
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is AvailableCenterViewHolder -> {
+            is CenterViewHolder -> {
                 holder.bind(items[position] as DisplayItem.Center, position)
-            }
-            is UnavailableCenterViewHolder -> {
-                holder.bind(items[position] as DisplayItem.Center)
             }
             is UnavailableCenterHeaderViewHolder -> {
                 holder.bind(items[position] as DisplayItem.UnavailableCenterHeader)
