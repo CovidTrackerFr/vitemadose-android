@@ -18,7 +18,7 @@ sealed class DisplayItem {
         @SerializedName("url")
         val url: String,
         @SerializedName("plateforme")
-        val platform: String,
+        val platform: String?,
         @SerializedName("metadata")
         val metadata: Metadata?,
         @SerializedName("prochain_rdv")
@@ -31,7 +31,7 @@ sealed class DisplayItem {
     ) : DisplayItem() {
 
         val platformEnum: Plateform?
-            get() = Plateform.fromId(platform)
+            get() = platform?.let { Plateform.fromId(it) }
 
         val typeLabel: String?
             get() = when (type) {
