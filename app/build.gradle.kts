@@ -89,6 +89,7 @@ dependencies {
     implementation(platform(Libs.firebaseBom))
     implementation(Libs.firebaseAnalytics)
     implementation(Libs.firebaseCrashlytics)
+    implementation(Libs.firebaseRemoteConfig)
 
     implementation(Libs.kxCoroutines)
     implementation(Libs.kxCoroutinesAndroid)
