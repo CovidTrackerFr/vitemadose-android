@@ -4,6 +4,7 @@ import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Bundle
@@ -53,6 +54,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
             headerLayout.alpha = 1 - progress
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
+                ValueAnimator.ofObject(
+                    ArgbEvaluator(),
+                    color(R.color.mine_shaft),
+                    color(R.color.white)
+                ).apply {
+                    setCurrentFraction(progress)
+                    aboutIconView.imageTintList = ColorStateList.valueOf(animatedValue as Int)
+                }
                 ValueAnimator.ofObject(
                     ArgbEvaluator(),
                     color(R.color.grey_2),
@@ -107,18 +116,19 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun setupSelector(items: List<Department>, indexSelected: Int) {
         val array = items.map { "${it.departmentCode} - ${it.departmentName}" }.toTypedArray()
-        arrayOf(emptyStateDepartmentSelector, departmentSelector).filterNotNull().forEach { selector ->
-            selector.setOnClickListener {
-                AlertDialog.Builder(this)
-                    .setTitle(R.string.choose_department_title)
-                    .setItems(array) { dialogInterface, index ->
-                        presenter.onDepartmentSelected(items[index])
-                        displaySelectedDepartment(items[index])
-                        dialogInterface.dismiss()
-                    }.create().show()
+        arrayOf(emptyStateDepartmentSelector, departmentSelector).filterNotNull()
+            .forEach { selector ->
+                selector.setOnClickListener {
+                    AlertDialog.Builder(this)
+                        .setTitle(R.string.choose_department_title)
+                        .setItems(array) { dialogInterface, index ->
+                            presenter.onDepartmentSelected(items[index])
+                            displaySelectedDepartment(items[index])
+                            dialogInterface.dismiss()
+                        }.create().show()
+                }
+                displaySelectedDepartment(items.getOrNull(indexSelected))
             }
-            displaySelectedDepartment(items.getOrNull(indexSelected))
-        }
     }
 
     override fun showEmptyState() {
