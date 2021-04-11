@@ -2,6 +2,7 @@ package com.covidtracker.vitemadose.master
 
 import com.covidtracker.vitemadose.data.CenterResponse
 import com.covidtracker.vitemadose.data.Department
+import com.covidtracker.vitemadose.data.StatsResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
@@ -18,6 +19,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 object DataManager {
 
     private const val URL_BASE = "https://raw.githubusercontent.com"
+    private const val URL_STATS = "https://vitemadose.gitlab.io/vitemadose/stats.json"
 
     private val service: RetrofitService
 
@@ -55,5 +57,9 @@ object DataManager {
 
     suspend fun getCenters(departmentCode: String): CenterResponse {
         return service.getCenters(departmentCode)
+    }
+
+    suspend fun getStats(): StatsResponse {
+        return service.getStats(URL_STATS)
     }
 }
