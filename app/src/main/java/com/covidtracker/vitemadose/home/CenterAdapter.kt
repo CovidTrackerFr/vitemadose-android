@@ -69,8 +69,10 @@ class CenterAdapter(
 
                 center.platformEnum?.let { partner ->
                     partnerImageView.setImageResource(partner.logo)
+                    bottomSeparatorView.show()
                     partnerImageView.show()
                 } ?: run {
+                    bottomSeparatorView.hide()
                     partnerImageView.hide()
                 }
 
