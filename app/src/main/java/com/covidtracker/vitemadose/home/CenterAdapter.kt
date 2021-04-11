@@ -148,7 +148,12 @@ class CenterAdapter(
             with(itemView) {
                 centerNameView.text = center.displayName
                 dateView.text = context.getString(R.string.no_slots_available)
-                bookButton.setOnClickListener { onClicked.invoke(center) }
+                if (center.url.isNotBlank()) {
+                    bookButton.show()
+                    bookButton.setOnClickListener { onClicked.invoke(center) }
+                }else{
+                    bookButton.hide()
+                }
 
                 center.metadata?.address?.let { address ->
                     centerNameView.setOnClickListener { onAddressClicked(address) }

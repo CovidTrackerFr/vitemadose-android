@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/corail"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:id="@+id/scrollView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/disclaimerView"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                style="@style/TextStyle_header_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/liens" />
+
+            <androidx.cardview.widget.CardView
+                style="@style/CustomCardView"
+                app:cardCornerRadius="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                app:contentPaddingBottom="4dp"
+                app:contentPaddingTop="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/faqView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_help_outline_black_24dp"
+                        android:text="FAQ" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_5" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/centersMapView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_location_on_black_24dp"
+                        android:text="Carte des centres" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="@color/grey_5" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/vaccinTrackerView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_assessment_black_24dp"
+                        android:text="VaccinTracker" />
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/statHeaderView"
+                android:visibility="gone"
+                android:layout_marginTop="16dp"
+                style="@style/TextStyle_header_about"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/stats" />
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/statFirstLineView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.covidtracker.vitemadose.custom.StatView
+                    android:id="@+id/availableCentersStat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1" />
+
+                <com.covidtracker.vitemadose.custom.StatView
+                    android:id="@+id/availableSlotsStat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:visibility="gone"
+                android:id="@+id/statSecondLineView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.covidtracker.vitemadose.custom.StatView
+                    android:id="@+id/centersStat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:layout_weight="1" />
+
+                <com.covidtracker.vitemadose.custom.StatView
+                    android:id="@+id/fillStat"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="1" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/disclaimerView"
+        android:padding="12dp"
+        android:textColor="@color/scorpion"
+        android:fontFamily="@font/sf_pro_rounded"
+        android:includeFontPadding="false"
+        android:text="@string/disclaimer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

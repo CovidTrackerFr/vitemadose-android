@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.covidtracker.vitemadose.R
+import com.covidtracker.vitemadose.about.AboutActivity
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.DisplayItem
 import com.covidtracker.vitemadose.extensions.color
@@ -44,6 +45,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.loadCenters()
         }
 
+        aboutIconView.setOnClickListener {
+            startActivity(Intent(this, AboutActivity::class.java))
+        }
+
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
             headerLayout.alpha = 1 - progress
@@ -64,11 +69,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun showCenters(list: List<DisplayItem>) {
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(
-                context = this,
-                items = list,
-                onClicked = { presenter.onCenterClicked(it) },
-                onAddressClicked = { startMapsActivity(it) },
-                onPhoneClicked = { startPhoneActivity(it) }
+            context = this,
+            items = list,
+            onClicked = { presenter.onCenterClicked(it) },
+            onAddressClicked = { startMapsActivity(it) },
+            onPhoneClicked = { startPhoneActivity(it) }
         )
 
         emptyStateContainer?.hide()
@@ -105,12 +110,12 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         arrayOf(emptyStateDepartmentSelector, departmentSelector).filterNotNull().forEach { selector ->
             selector.setOnClickListener {
                 AlertDialog.Builder(this)
-                        .setTitle(R.string.choose_department_title)
-                        .setItems(array) { dialogInterface, index ->
-                            presenter.onDepartmentSelected(items[index])
-                            displaySelectedDepartment(items[index])
-                            dialogInterface.dismiss()
-                        }.create().show()
+                    .setTitle(R.string.choose_department_title)
+                    .setItems(array) { dialogInterface, index ->
+                        presenter.onDepartmentSelected(items[index])
+                        displaySelectedDepartment(items[index])
+                        dialogInterface.dismiss()
+                    }.create().show()
             }
             displaySelectedDepartment(items.getOrNull(indexSelected))
         }
