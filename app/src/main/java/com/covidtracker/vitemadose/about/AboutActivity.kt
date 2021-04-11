@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.covidtracker.vitemadose.R
 import com.covidtracker.vitemadose.data.DisplayStat
 import com.covidtracker.vitemadose.extensions.color
+import com.covidtracker.vitemadose.extensions.launchWebUrl
 import com.covidtracker.vitemadose.extensions.show
 import kotlinx.android.synthetic.main.activity_about.*
 
@@ -22,6 +23,18 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
         toolbar.setTitle(R.string.about)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        faqView.setOnClickListener {
+            launchWebUrl(URL_FAQ)
+        }
+
+        centersMapView.setOnClickListener {
+            launchWebUrl(URL_CENTERS_PLACES)
+        }
+
+        vaccinTrackerView.setOnClickListener {
+            launchWebUrl(URL_COVIDTRACKER)
+        }
 
         presenter.loadStats()
     }
@@ -47,7 +60,7 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
         }
     }
 
-    companion object{
+    companion object {
         const val URL_COVIDTRACKER = "https://covidtracker.fr/vaccintracker/"
         const val URL_CENTERS_PLACES = "https://vitemadose.covidtracker.fr/centres"
         const val URL_FAQ = "https://vitemadose.covidtracker.fr/apropos"
