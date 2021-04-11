@@ -30,6 +30,18 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/logo_vitemadose" />
 
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/aboutIconView"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_width="56dp"
+                android:layout_height="56dp"
+                android:padding="14dp"
+                app:layout_constraintBottom_toBottomOf="@id/logoView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/logoView"
+                app:srcCompat="@drawable/ic_info_black"
+                app:tint="@color/mine_shaft" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout

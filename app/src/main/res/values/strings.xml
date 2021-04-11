@@ -4,6 +4,14 @@
     <string name="choose_department_title">Sélectionnez votre département</string>
     <string name="appointement">Prendre rendez-vous</string>
     <string name="last_updated">Mis à jour le %s</string>
+    <plurals name="centers">
+        <item quantity="one">lieu\nde vaccination</item>
+        <item quantity="other">lieux\nde vaccination</item>
+    </plurals>
+    <plurals name="center_ratio_disponibilities">
+        <item quantity="one">de lieu avec\ndes disponibilités</item>
+        <item quantity="other">de lieux avec\ndes disponibilités</item>
+    </plurals>
     <plurals name="center_disponibilities">
         <item quantity="one">lieu avec\ndes disponibilités</item>
         <item quantity="other">lieux avec\ndes disponibilités</item>
@@ -25,4 +33,8 @@
     <string name="with_partners">En partenariat avec</string>
     <string name="centers_error">Erreur lors de la récupération des centres. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
+    <string name="about">À propos</string>
+    <string name="liens">Liens</string>
+    <string name="stats">Statistiques</string>
+    <string name="disclaimer">Vite Ma Dose n\'est pas un outil officiel, n\'est pas exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun créneau de vaccination disponible n’est proposé sur notre site.</string>
 </resources>
