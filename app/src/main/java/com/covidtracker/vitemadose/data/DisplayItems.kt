@@ -1,12 +1,14 @@
 package com.covidtracker.vitemadose.data
 
+import android.telephony.PhoneNumberUtils
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
+
 sealed class DisplayItem {
 
-    class LastUpdated(val date: Date): DisplayItem()
+    class LastUpdated(val date: Date) : DisplayItem()
 
     class Center(
         @SerializedName("departement")
@@ -53,6 +55,14 @@ sealed class DisplayItem {
 
             val hasMoreInfoToShow: Boolean
                 get() = businessHours?.description != null || phoneNumber != null
+
+            val phoneFormatted: String?
+                get() {
+                    return phoneNumber?.let {
+                        PhoneNumberUtils.formatNumber(it, Locale.getDefault().country)
+                            .replace("+33 ", "0")
+                    }
+                }
 
             class BusinessHours(
                 @SerializedName("lundi")

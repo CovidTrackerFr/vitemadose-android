@@ -1,5 +1,6 @@
 package com.covidtracker.vitemadose.master
 
+import com.covidtracker.vitemadose.BuildConfig
 import com.covidtracker.vitemadose.data.CenterResponse
 import com.covidtracker.vitemadose.data.Department
 import com.covidtracker.vitemadose.data.StatsResponse
@@ -15,7 +16,6 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 object DataManager {
 
     private const val URL_BASE = "https://raw.githubusercontent.com"
@@ -25,7 +25,11 @@ object DataManager {
 
     init {
         val logging = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BASIC
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BASIC
+            } else {
+                HttpLoggingInterceptor.Level.NONE
+            }
         }
 
         val client: OkHttpClient = OkHttpClient.Builder()

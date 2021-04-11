@@ -74,8 +74,10 @@ class CenterAdapter(
 
                 center.platformEnum?.let { partner ->
                     partnerImageView.setImageResource(partner.logo)
+                    bottomSeparatorView.show()
                     partnerImageView.show()
                 } ?: run {
+                    bottomSeparatorView.hide()
                     partnerImageView.hide()
                 }
 
@@ -119,7 +121,7 @@ class CenterAdapter(
                     iconTypeView.hide()
                 }
 
-                center.metadata?.phoneNumber?.let { phoneNumber ->
+                center.metadata?.phoneFormatted?.let { phoneNumber ->
                     phoneView.setOnClickListener { onPhoneClicked(phoneNumber) }
                     phoneView.show()
                     phoneView.text = phoneNumber
