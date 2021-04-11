@@ -50,14 +50,18 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         }
 
         GlobalScope.launch(Dispatchers.Main) {
+            val items = mutableListOf<Department>()
             try {
-                val items = DataManager.getDepartments()
+                items.addAll(DataManager.getDepartments().apply {
+                    PrefHelper.cacheDepartmentList = this
+                })
+            } catch (e: Exception) {
+                Timber.e(e)
+                PrefHelper.cacheDepartmentList?.let { items.addAll(it) }
+            } finally {
                 view.setupSelector(
                     items,
                     items.indexOfFirst { PrefHelper.favDepartmentCode == it.departmentCode })
-            } catch (e: Exception) {
-                Timber.e(e)
-                /** Do we want to display an error if we have departments cache ? **/
             }
         }
     }
