@@ -23,17 +23,24 @@ sealed class DisplayItem {
         val nextSlot: String,
         @SerializedName("appointment_count")
         val appointmentCount: Int,
+        @SerializedName("type")
+        val type: String?,
         var available: Boolean = false
     ) : DisplayItem() {
 
         val platformEnum: Plateform?
             get() = Plateform.fromId(platform)
 
-        val displayName: String
-            get() {
-                val additionalInfo = metadata?.address?.replace(", ","\n")?.trim()
-                return name + (if (additionalInfo != null) "\n" + additionalInfo else "")
+        val typeLabel: String?
+            get() = when (type) {
+                "vaccination-center" -> "Centre de vaccination"
+                "drugstore" -> "Pharmacie"
+                "general-practitioner" -> "Médecin généraliste"
+                else -> null
             }
+
+        val formattedAddress: String?
+            get() = metadata?.address?.replace(", ","\n")?.trim()
 
         class Metadata(
             @SerializedName("address")
