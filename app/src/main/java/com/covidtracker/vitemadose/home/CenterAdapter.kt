@@ -95,7 +95,7 @@ class CenterAdapter(
             if (mExpandedPosition == position) {
                 moreView.rotation = 180f
 
-                center.metadata?.phoneNumber?.let { phoneNumber ->
+                center.metadata?.phoneFormatted?.let { phoneNumber ->
                     phoneView.setOnClickListener { onPhoneClicked(phoneNumber) }
                     phoneView.show()
                     phoneView.text = phoneNumber
