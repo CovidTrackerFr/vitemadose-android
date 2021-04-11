@@ -18,6 +18,7 @@ object Libs {
     const val constraintLayout = "androidx.constraintlayout:constraintlayout:_"
     const val androidKtx = "androidx.core:core-ktx:_"
     const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:_"
+    const val browser = "androidx.browser:browser:_"
 
     // Play Services
     const val firebaseBom = "com.google.firebase:firebase-bom:_"

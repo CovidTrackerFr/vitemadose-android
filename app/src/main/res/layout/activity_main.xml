@@ -107,6 +107,10 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/empty_state" />
+    <ViewStub
+        android:id="@+id/stubEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout="@layout/empty_state" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
