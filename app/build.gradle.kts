@@ -17,7 +17,7 @@ android {
         applicationId = "com.covidtracker.vitemadose"
         setMinSdkVersion(Versions.minSdkVersion)
         setTargetSdkVersion(Versions.targetSdkVersion)
-        versionCode = 1
+        versionCode = 3
         versionName = "1.0"
     }
 
