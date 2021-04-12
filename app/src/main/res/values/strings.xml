@@ -24,17 +24,17 @@
         <item quantity="one">%s dose</item>
         <item quantity="other">%s doses</item>
     </plurals>
-    <string name="disponibilities_placeholder">%s Centre(s) ayant des disponibilités</string>
-    <string name="no_slots_available_center_header_others">Autres centres sans créneau de vaccination détecté</string>
-    <string name="no_slots_available_center_header">Aucun centre ayant de disponibilité.\nCentres sans créneau de vaccination détecté</string>
+    <string name="disponibilities_placeholder">%s Lieux avec des disponibilités</string>
+    <string name="no_slots_available_center_header_others">Autres lieux sans créneau de vaccination détecté</string>
+    <string name="no_slots_available_center_header">Aucun lieu avec des disponibilités.\nLieux sans créneau de vaccination détecté</string>
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Vérifier ce centre</string>
     <string name="partner_placeholder">avec</string>
     <string name="with_partners">En partenariat avec</string>
-    <string name="centers_error">Erreur lors de la récupération des centres. Réessayez</string>
+    <string name="centers_error">Erreur lors de la récupération des lieux. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
     <string name="about">À propos</string>
     <string name="liens">Liens</string>
     <string name="stats">Statistiques</string>
-    <string name="disclaimer">Vite Ma Dose n\'est pas un outil officiel, n\'est pas exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun créneau de vaccination disponible n’est proposé sur notre site.</string>
+    <string name="disclaimer">Vite Ma Dose n\'est pas un outil officiel, n\'est pas exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun créneau de vaccination disponible n’est proposé sur notre application.</string>
 </resources>
