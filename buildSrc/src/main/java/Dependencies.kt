@@ -24,6 +24,7 @@ object Libs {
     const val firebaseBom = "com.google.firebase:firebase-bom:_"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
 
     //Log
     const val timber = "com.jakewharton.timber:timber:_"

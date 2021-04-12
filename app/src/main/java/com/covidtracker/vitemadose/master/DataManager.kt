@@ -18,12 +18,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object DataManager {
 
-    private const val URL_BASE = "https://raw.githubusercontent.com"
-    private const val URL_STATS = "https://vitemadose.gitlab.io/vitemadose/stats.json"
+    /** Theses urls could be override at startup via the Firebase Remote config **/
+    var URL_BASE = "https://vitemadose.gitlab.io"
+    var PATH_LIST_DEPARTMENTS = "/vitemadose/departements.json"
+    var PATH_DATA_DEPARTMENT = "/vitemadose/{code}.json"
+    var PATH_STATS = "/vitemadose/stats.json"
 
-    private val service: RetrofitService
-
-    init {
+    private val service: RetrofitService by lazy {
         val logging = HttpLoggingInterceptor().apply {
             level = if (BuildConfig.DEBUG) {
                 HttpLoggingInterceptor.Level.BASIC
@@ -52,18 +53,18 @@ object DataManager {
             )
             .build()
 
-        service = retrofit.create(RetrofitService::class.java)
+        retrofit.create(RetrofitService::class.java)
     }
 
     suspend fun getDepartments(): List<Department> {
-        return service.getDepartments()
+        return service.getDepartments(URL_BASE + PATH_LIST_DEPARTMENTS)
     }
 
     suspend fun getCenters(departmentCode: String): CenterResponse {
-        return service.getCenters(departmentCode)
+        return service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", departmentCode))
     }
 
     suspend fun getStats(): StatsResponse {
-        return service.getStats(URL_STATS)
+        return service.getStats(URL_BASE + PATH_STATS)
     }
 }

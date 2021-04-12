@@ -12,7 +12,6 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -95,7 +94,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
+            Snackbar.make(container, getString(R.string.no_app_activity_found), Snackbar.LENGTH_SHORT).show()
         }
     }
 
@@ -106,7 +105,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
+            Snackbar.make(container, getString(R.string.no_app_activity_found), Snackbar.LENGTH_SHORT).show()
         }
     }
 
