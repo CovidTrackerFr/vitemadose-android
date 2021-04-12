@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.net.Uri
 import android.util.TypedValue
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.browser.customtabs.CustomTabsIntent
@@ -62,6 +63,10 @@ fun Activity.launchWebUrl(url: String) {
         }.build()
         customTabsIntent.launchUrl(this, Uri.parse(url))
     }catch (e: ActivityNotFoundException){
-        startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
+        try{
+            startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
+        }catch (e1: ActivityNotFoundException){
+            Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
+        }
     }
 }
