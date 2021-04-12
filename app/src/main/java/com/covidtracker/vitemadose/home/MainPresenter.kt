@@ -25,7 +25,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             list.addAll(it.availableCenters.onEach { it.available = true })
                         }
                         if (it.unavailableCenters.isNotEmpty()) {
-                            if (list.isEmpty()) {
+                            if (it.availableCenters.isEmpty()) {
                                 list.add(DisplayItem.UnavailableCenterHeader(R.string.no_slots_available_center_header))
                             } else {
                                 list.add(DisplayItem.UnavailableCenterHeader(R.string.no_slots_available_center_header_others))
