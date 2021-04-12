@@ -72,6 +72,15 @@ class CenterAdapter(
                     centerAddressView.setOnClickListener(null)
                 }
 
+                center.vaccineType?.let { vaccine ->
+                    centerVaccineView.text = vaccine
+                    iconVaccineView.show()
+                    centerVaccineView.show()
+                } ?: run {
+                    iconVaccineView.hide()
+                    centerVaccineView.hide()
+                }
+
                 center.platformEnum?.let { partner ->
                     partnerImageView.setImageResource(partner.logo)
                     bottomSeparatorView.show()

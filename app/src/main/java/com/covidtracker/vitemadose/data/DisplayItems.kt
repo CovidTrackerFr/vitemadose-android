@@ -27,6 +27,8 @@ sealed class DisplayItem {
         val appointmentCount: Int,
         @SerializedName("type")
         val type: String?,
+        @SerializedName("vaccine_type")
+        val vaccineType: String?,
         var available: Boolean = false
     ) : DisplayItem() {
 
