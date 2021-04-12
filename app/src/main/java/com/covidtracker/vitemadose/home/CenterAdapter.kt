@@ -73,7 +73,7 @@ class CenterAdapter(
                 }
 
                 center.vaccineType?.let { vaccine ->
-                    centerVaccineView.text = vaccine
+                    centerVaccineView.text = vaccine.joinToString(separator = " | ")
                     iconVaccineView.show()
                     centerVaccineView.show()
                 } ?: run {

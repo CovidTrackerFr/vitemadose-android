@@ -28,7 +28,7 @@ sealed class DisplayItem {
         @SerializedName("type")
         val type: String?,
         @SerializedName("vaccine_type")
-        val vaccineType: String?,
+        val vaccineType: List<String>?,
         var available: Boolean = false
     ) : DisplayItem() {
 
