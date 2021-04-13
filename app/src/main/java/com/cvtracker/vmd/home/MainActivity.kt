@@ -20,6 +20,7 @@ import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.color
+import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.google.android.material.appbar.AppBarLayout
@@ -36,7 +37,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        window.setBackgroundDrawable(ColorDrawable(color(R.color.grey_2)))
+        window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
         presenter.loadDepartments()
         presenter.loadCenters()
@@ -55,7 +56,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
                 ValueAnimator.ofObject(
                     ArgbEvaluator(),
-                    color(R.color.mine_shaft),
+                    colorAttr(R.attr.iconTintColor),
                     color(R.color.white)
                 ).apply {
                     setCurrentFraction(progress)
@@ -63,8 +64,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 }
                 ValueAnimator.ofObject(
                     ArgbEvaluator(),
-                    color(R.color.grey_2),
-                    color(R.color.corail)
+                    colorAttr(R.attr.backgroundColor),
+                    colorAttr(R.attr.colorPrimary)
                 ).apply {
                     setCurrentFraction(progress)
                     backgroundSelectorView.setBackgroundColor(animatedValue as Int)
@@ -134,7 +135,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         stubEmptyState.setOnInflateListener { stub, inflated ->
             SpannableString(inflated.emptyStateBaselineTextView.text).apply {
                 setSpan(
-                    ForegroundColorSpan(color(R.color.corail)),
+                    ForegroundColorSpan(colorAttr(R.attr.colorPrimary)),
                     27,
                     37,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE

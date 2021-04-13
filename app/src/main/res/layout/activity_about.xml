@@ -9,7 +9,7 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/corail"
+        android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -34,11 +34,11 @@
 
             <androidx.cardview.widget.CardView
                 style="@style/CustomCardView"
-                app:cardCornerRadius="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="10dp"
+                app:cardCornerRadius="4dp"
                 app:contentPaddingBottom="4dp"
                 app:contentPaddingTop="4dp">
 
@@ -53,12 +53,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_help_outline_black_24dp"
-                        android:text="FAQ" />
+                        android:drawableTint="?android:attr/textColorPrimary"
+                        android:text="@string/faq" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/grey_5" />
+                        android:background="?attr/separatorColor" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/centersMapView"
@@ -66,12 +67,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_location_on_black_24dp"
-                        android:text="Carte des centres" />
+                        android:drawableTint="?android:attr/textColorPrimary"
+                        android:text="@string/carte_des_centres" />
 
                     <View
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
-                        android:background="@color/grey_5" />
+                        android:background="?attr/separatorColor" />
 
                     <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/vaccinTrackerView"
@@ -79,26 +81,27 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_assessment_black_24dp"
-                        android:text="VaccinTracker" />
+                        android:drawableTint="?android:attr/textColorPrimary"
+                        android:text="@string/vaccintracker" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/statHeaderView"
-                android:visibility="gone"
-                android:layout_marginTop="16dp"
                 style="@style/TextStyle_header_about"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/stats" />
+                android:layout_marginTop="16dp"
+                android:text="@string/stats"
+                android:visibility="gone" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/statFirstLineView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.cvtracker.vmd.custom.StatView
                     android:id="@+id/availableCentersStat"
@@ -116,11 +119,11 @@
             </LinearLayout>
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/statSecondLineView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <com.cvtracker.vmd.custom.StatView
                     android:id="@+id/centersStat"
@@ -141,15 +144,15 @@
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/disclaimerView"
-        android:padding="12dp"
-        android:textColor="@color/scorpion"
-        android:fontFamily="@font/sf_pro_rounded"
-        android:includeFontPadding="false"
-        android:text="@string/disclaimer"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
+        android:fontFamily="@font/sf_pro_rounded"
+        android:includeFontPadding="false"
+        android:padding="12dp"
+        android:text="@string/disclaimer"
+        android:textColor="@color/scorpion"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/scrollView" />

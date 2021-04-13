@@ -2,14 +2,21 @@
     <!-- Base application theme. -->
     <style name="Theme.ViteMaDose" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-        <item name="colorControlHighlight">@color/colorControl</item>
+        <item name="android:textColorPrimary">@color/mine_shaft</item>
+        <item name="android:textColorSecondary">@color/scorpion</item>
+        <item name="android:textColorTertiary">@color/gray</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/blue</item>
-        <item name="colorPrimaryVariant">@color/blue</item>
+        <item name="colorPrimary">@color/corail</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/corail</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/splash_drawable</item>
+
+        <item name="separatorColor">@color/grey_5</item>
+        <item name="iconTintColor">@color/scorpion</item>
+        <item name="backgroundColor">@color/grey_3</item>
+        <item name="backgroundCardColor">@color/white</item>
+        <item name="backgroundCardColorSecondary">@color/grey_5</item>
     </style>
 </resources>
