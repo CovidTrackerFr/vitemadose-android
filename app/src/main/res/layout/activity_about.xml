@@ -151,7 +151,7 @@
         android:includeFontPadding="false"
         android:padding="12dp"
         android:text="@string/disclaimer"
-        android:textColor="@color/scorpion"
+        android:textColor="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

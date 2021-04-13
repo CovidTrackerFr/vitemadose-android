@@ -54,7 +54,7 @@
             android:drawableEnd="@drawable/ic_expand_more_black_24dp"
             android:ellipsize="end"
             android:maxLines="1"
-            android:textColor="@color/black"
+            android:textColor="?android:attr/textColorPrimary"
             android:textSize="16sp"
             tools:text="04 - Alpes de Haute-Provence" />
 

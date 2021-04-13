@@ -7,11 +7,13 @@ import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,10 +21,7 @@ import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.color
-import com.cvtracker.vmd.extensions.colorAttr
-import com.cvtracker.vmd.extensions.hide
-import com.cvtracker.vmd.extensions.launchWebUrl
+import com.cvtracker.vmd.extensions.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,23 +52,33 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
             headerLayout.alpha = 1 - progress
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.LOLLIPOP_MR1) {
-                ValueAnimator.ofObject(
-                    ArgbEvaluator(),
-                    colorAttr(R.attr.iconTintColor),
-                    color(R.color.white)
-                ).apply {
-                    setCurrentFraction(progress)
-                    aboutIconView.imageTintList = ColorStateList.valueOf(animatedValue as Int)
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
+                    aboutIconView.imageTintList = ColorStateList.valueOf(it)
                 }
-                ValueAnimator.ofObject(
-                    ArgbEvaluator(),
+                loadColor(
                     colorAttr(R.attr.backgroundColor),
-                    colorAttr(R.attr.colorPrimary)
-                ).apply {
-                    setCurrentFraction(progress)
-                    backgroundSelectorView.setBackgroundColor(animatedValue as Int)
-                    appBarLayout.setBackgroundColor(animatedValue as Int)
+                    colorAttr(R.attr.colorPrimary),
+                    progress
+                ) {
+                    backgroundSelectorView.setBackgroundColor(it)
+                    appBarLayout.setBackgroundColor(it)
+                }
+                if (isDarkTheme()) {
+                    loadColor(
+                        colorAttr(android.R.attr.textColorPrimary),
+                        color(R.color.mine_shaft),
+                        progress
+                    ) {
+                        selectedDepartment.setTextColor(it)
+                    }
+                    loadColor(
+                        colorAttr(R.attr.backgroundCardColor),
+                        color(R.color.grey_5),
+                        progress
+                    ) {
+                        departmentSelector.setCardBackgroundColor(it)
+                    }
                 }
             }
         })
@@ -95,7 +104,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Snackbar.make(container, getString(R.string.no_app_activity_found), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                container,
+                getString(R.string.no_app_activity_found),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -106,7 +119,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         try {
             startActivity(intent)
         } catch (e: ActivityNotFoundException) {
-            Snackbar.make(container, getString(R.string.no_app_activity_found), Snackbar.LENGTH_SHORT).show()
+            Snackbar.make(
+                container,
+                getString(R.string.no_app_activity_found),
+                Snackbar.LENGTH_SHORT
+            ).show()
         }
     }
 
@@ -168,5 +185,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showCentersError() {
         Snackbar.make(container, getString(R.string.centers_error), Snackbar.LENGTH_SHORT).show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)
+    fun loadColor(
+        colorStart: Int,
+        colorEnd: Int,
+        progress: Float,
+        onColorLoaded: (Int) -> Unit
+    ) {
+        ValueAnimator.ofObject(ArgbEvaluator(), colorStart, colorEnd).apply {
+            setCurrentFraction(progress)
+            onColorLoaded.invoke(animatedValue as Int)
+        }
     }
 }

@@ -85,6 +85,7 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerVaccineView"
+                app:tint="?attr/iconTintColor"
                 app:srcCompat="@drawable/ic_vaccine" />
 
             <androidx.appcompat.widget.AppCompatTextView
