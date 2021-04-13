@@ -100,14 +100,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.covidtracker.vitemadose.custom.StatView
+                <com.cvtracker.vmd.custom.StatView
                     android:id="@+id/availableCentersStat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1" />
 
-                <com.covidtracker.vitemadose.custom.StatView
+                <com.cvtracker.vmd.custom.StatView
                     android:id="@+id/availableSlotsStat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -122,14 +122,14 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
 
-                <com.covidtracker.vitemadose.custom.StatView
+                <com.cvtracker.vmd.custom.StatView
                     android:id="@+id/centersStat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
                     android:layout_weight="1" />
 
-                <com.covidtracker.vitemadose.custom.StatView
+                <com.cvtracker.vmd.custom.StatView
                     android:id="@+id/fillStat"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"

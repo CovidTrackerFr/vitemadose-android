@@ -1,8 +1,8 @@
-package com.covidtracker.vitemadose.master
+package com.cvtracker.vmd.master
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.covidtracker.vitemadose.data.Department
+import com.cvtracker.vmd.data.Department
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 

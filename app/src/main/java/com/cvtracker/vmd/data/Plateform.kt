@@ -1,7 +1,7 @@
-package com.covidtracker.vitemadose.data
+package com.cvtracker.vmd.data
 
 import androidx.annotation.DrawableRes
-import com.covidtracker.vitemadose.R
+import com.cvtracker.vmd.R
 
 enum class Plateform(val id: String, val label: String, @DrawableRes val logo: Int) {
     DOCTOLIB("Doctolib", "Doctolib.fr", R.drawable.logo_doctolib),

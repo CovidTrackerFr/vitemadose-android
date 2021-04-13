@@ -1,7 +1,7 @@
-package com.covidtracker.vitemadose.about
+package com.cvtracker.vmd.about
 
-import com.covidtracker.vitemadose.data.DisplayStat
-import com.covidtracker.vitemadose.master.DataManager
+import com.cvtracker.vmd.data.DisplayStat
+import com.cvtracker.vmd.master.DataManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

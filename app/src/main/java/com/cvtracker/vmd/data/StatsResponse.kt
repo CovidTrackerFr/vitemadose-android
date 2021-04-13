@@ -1,8 +1,8 @@
-package com.covidtracker.vitemadose.data
+package com.cvtracker.vmd.data
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.PluralsRes
-import com.covidtracker.vitemadose.R
+import com.cvtracker.vmd.R
 import com.google.gson.annotations.SerializedName
 
 class StatsResponse(

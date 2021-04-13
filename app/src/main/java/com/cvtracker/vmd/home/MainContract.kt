@@ -1,7 +1,7 @@
-package com.covidtracker.vitemadose.home
+package com.cvtracker.vmd.home
 
-import com.covidtracker.vitemadose.data.Department
-import com.covidtracker.vitemadose.data.DisplayItem
+import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.DisplayItem
 
 interface MainContract {
 

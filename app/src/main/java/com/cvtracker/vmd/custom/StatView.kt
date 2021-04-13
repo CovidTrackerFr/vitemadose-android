@@ -1,11 +1,11 @@
-package com.covidtracker.vitemadose.custom
+package com.cvtracker.vmd.custom
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.covidtracker.vitemadose.R
-import com.covidtracker.vitemadose.data.ItemStat
+import com.cvtracker.vmd.R
+import com.cvtracker.vmd.data.ItemStat
 import kotlinx.android.synthetic.main.view_stats.view.*
 
 class StatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :

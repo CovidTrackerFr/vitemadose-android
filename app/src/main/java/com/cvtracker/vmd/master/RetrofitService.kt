@@ -1,8 +1,8 @@
-package com.covidtracker.vitemadose.master
+package com.cvtracker.vmd.master
 
-import com.covidtracker.vitemadose.data.CenterResponse
-import com.covidtracker.vitemadose.data.Department
-import com.covidtracker.vitemadose.data.StatsResponse
+import com.cvtracker.vmd.data.CenterResponse
+import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.StatsResponse
 import retrofit2.http.GET
 import retrofit2.http.Url
 

@@ -1,4 +1,4 @@
-package com.covidtracker.vitemadose.extensions
+package com.cvtracker.vmd.extensions
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
@@ -13,7 +13,7 @@ import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
-import com.covidtracker.vitemadose.R
+import com.cvtracker.vmd.R
 
 fun View.dpToPx(valueInDp: Float): Int {
     return (valueInDp * context.resources.displayMetrics.density).toInt()

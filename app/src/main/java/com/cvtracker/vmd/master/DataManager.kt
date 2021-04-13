@@ -1,9 +1,9 @@
-package com.covidtracker.vitemadose.master
+package com.cvtracker.vmd.master
 
-import com.covidtracker.vitemadose.BuildConfig
-import com.covidtracker.vitemadose.data.CenterResponse
-import com.covidtracker.vitemadose.data.Department
-import com.covidtracker.vitemadose.data.StatsResponse
+import com.cvtracker.vmd.BuildConfig
+import com.cvtracker.vmd.data.CenterResponse
+import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.StatsResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory

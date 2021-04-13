@@ -1,4 +1,4 @@
-package com.covidtracker.vitemadose.home
+package com.cvtracker.vmd.home
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
@@ -15,13 +15,13 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.covidtracker.vitemadose.R
-import com.covidtracker.vitemadose.about.AboutActivity
-import com.covidtracker.vitemadose.data.Department
-import com.covidtracker.vitemadose.data.DisplayItem
-import com.covidtracker.vitemadose.extensions.color
-import com.covidtracker.vitemadose.extensions.hide
-import com.covidtracker.vitemadose.extensions.launchWebUrl
+import com.cvtracker.vmd.R
+import com.cvtracker.vmd.about.AboutActivity
+import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.extensions.color
+import com.cvtracker.vmd.extensions.hide
+import com.cvtracker.vmd.extensions.launchWebUrl
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*

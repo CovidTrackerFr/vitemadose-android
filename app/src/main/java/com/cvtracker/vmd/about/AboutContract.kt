@@ -1,6 +1,6 @@
-package com.covidtracker.vitemadose.about
+package com.cvtracker.vmd.about
 
-import com.covidtracker.vitemadose.data.DisplayStat
+import com.cvtracker.vmd.data.DisplayStat
 
 interface AboutContract {
 
