@@ -26,7 +26,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="30dp" />
+                app:layout_constraintGuide_begin="32dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateView"
@@ -76,15 +76,38 @@
                 tools:text="2 rue Victor Hugo\n12345 Ville" />
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconTypeView"
+                android:id="@+id/iconVaccineView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/centerVaccineView"
+                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/centerVaccineView"
+                app:srcCompat="@drawable/ic_vaccine" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/centerVaccineView"
+                style="@style/TextStyle_center"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:background="?attr/selectableItemBackground"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+                app:layout_constraintTop_toBottomOf="@id/centerAddressView"
+                tools:text="Moderna" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iconTypeView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerTypeView"
-                app:srcCompat="@drawable/ic_bag_plus" />
+                app:srcCompat="@drawable/ic_bag_plus_fill" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerTypeView"
@@ -96,7 +119,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/centerAddressView"
+                app:layout_constraintTop_toBottomOf="@id/centerVaccineView"
                 tools:text="Pharmacie" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -120,7 +143,7 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/businessHoursView"
-                app:srcCompat="@drawable/ic_schedule_black_24dp" />
+                app:srcCompat="@drawable/ic_clock_fill" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconPhoneView"
@@ -164,7 +187,7 @@
                 android:id="@+id/appointmentsCountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/black"
+                android:textColor="@color/scorpion"
                 app:layout_constraintBottom_toBottomOf="@id/partnerImageView"
                 app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
                 app:layout_constraintHorizontal_chainStyle="packed"
