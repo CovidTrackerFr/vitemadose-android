@@ -14,7 +14,7 @@ android {
     compileSdkVersion(Versions.compileSdkVersion)
 
     defaultConfig {
-        applicationId = "com.covidtracker.vitemadose"
+        applicationId = "com.cvtracker.vmd"
         setMinSdkVersion(Versions.minSdkVersion)
         setTargetSdkVersion(Versions.targetSdkVersion)
         versionCode = 3

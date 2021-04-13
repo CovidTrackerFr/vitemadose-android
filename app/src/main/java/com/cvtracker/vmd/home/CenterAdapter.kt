@@ -1,4 +1,4 @@
-package com.covidtracker.vitemadose.home
+package com.cvtracker.vmd.home
 
 import android.content.Context
 import android.text.format.DateFormat
@@ -7,11 +7,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.covidtracker.vitemadose.R
-import com.covidtracker.vitemadose.data.DisplayItem
-import com.covidtracker.vitemadose.extensions.color
-import com.covidtracker.vitemadose.extensions.hide
-import com.covidtracker.vitemadose.extensions.show
+import com.cvtracker.vmd.R
+import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.extensions.color
+import com.cvtracker.vmd.extensions.hide
+import com.cvtracker.vmd.extensions.show
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
 import kotlinx.android.synthetic.main.item_last_updated.view.*

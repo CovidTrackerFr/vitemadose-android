@@ -1,4 +1,4 @@
-package com.covidtracker.vitemadose.master
+package com.cvtracker.vmd.master
 
 import android.app.Application
 import com.google.firebase.remoteconfig.BuildConfig

@@ -1,10 +1,10 @@
-package com.covidtracker.vitemadose.home
+package com.cvtracker.vmd.home
 
-import com.covidtracker.vitemadose.R
-import com.covidtracker.vitemadose.data.Department
-import com.covidtracker.vitemadose.data.DisplayItem
-import com.covidtracker.vitemadose.master.DataManager
-import com.covidtracker.vitemadose.master.PrefHelper
+import com.cvtracker.vmd.R
+import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.master.DataManager
+import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch

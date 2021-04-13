@@ -1,14 +1,14 @@
-package com.covidtracker.vitemadose.about
+package com.cvtracker.vmd.about
 
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
-import com.covidtracker.vitemadose.R
-import com.covidtracker.vitemadose.data.DisplayStat
-import com.covidtracker.vitemadose.extensions.color
-import com.covidtracker.vitemadose.extensions.launchWebUrl
-import com.covidtracker.vitemadose.extensions.show
+import com.cvtracker.vmd.R
+import com.cvtracker.vmd.data.DisplayStat
+import com.cvtracker.vmd.extensions.color
+import com.cvtracker.vmd.extensions.launchWebUrl
+import com.cvtracker.vmd.extensions.show
 import kotlinx.android.synthetic.main.activity_about.*
 
 class AboutActivity : AppCompatActivity(), AboutContract.View {
@@ -33,7 +33,7 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
         }
 
         vaccinTrackerView.setOnClickListener {
-            launchWebUrl(URL_COVIDTRACKER)
+            launchWebUrl(URL_VACCINTRACKER)
         }
 
         presenter.loadStats()
@@ -61,7 +61,7 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
     }
 
     companion object {
-        const val URL_COVIDTRACKER = "https://covidtracker.fr/vaccintracker/"
+        const val URL_VACCINTRACKER = "https://covidtracker.fr/vaccintracker/"
         const val URL_CENTERS_PLACES = "https://vitemadose.covidtracker.fr/centres"
         const val URL_FAQ = "https://vitemadose.covidtracker.fr/apropos"
     }

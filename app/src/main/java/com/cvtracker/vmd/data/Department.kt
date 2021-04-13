@@ -1,4 +1,4 @@
-package com.covidtracker.vitemadose.data
+package com.cvtracker.vmd.data
 
 import com.google.gson.annotations.SerializedName
 
