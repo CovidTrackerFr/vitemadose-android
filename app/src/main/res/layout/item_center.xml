@@ -61,7 +61,8 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerAddressView"
-                app:srcCompat="@drawable/ic_place" />
+                app:srcCompat="@drawable/ic_place"
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerAddressView"
@@ -84,6 +85,7 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerVaccineView"
+                app:tint="?attr/iconTintColor"
                 app:srcCompat="@drawable/ic_vaccine" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -108,6 +110,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerTypeView"
                 app:srcCompat="@drawable/ic_bag_plus_fill" />
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerTypeView"
@@ -144,6 +147,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/businessHoursView"
                 app:srcCompat="@drawable/ic_clock_fill" />
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconPhoneView"
@@ -153,7 +157,8 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/phoneView"
-                app:srcCompat="@drawable/ic_phone" />
+                app:srcCompat="@drawable/ic_phone"
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/phoneView"
@@ -187,7 +192,7 @@
                 android:id="@+id/appointmentsCountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/scorpion"
+                android:textColor="?android:attr/textColorSecondary"
                 app:layout_constraintBottom_toBottomOf="@id/partnerImageView"
                 app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
                 app:layout_constraintHorizontal_chainStyle="packed"
@@ -249,7 +254,8 @@
                 app:layout_constraintBottom_toBottomOf="@id/dateView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/dateView"
-                app:srcCompat="@drawable/ic_expand_more_black_24dp" />
+                app:srcCompat="@drawable/ic_expand_more_black_24dp"
+                app:tint="?attr/iconTintColor" />
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/centreAvailableSpecificViews"

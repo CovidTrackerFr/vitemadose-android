@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="separatorColor" format="color"/>
+    <attr name="iconTintColor" format="color"/>
+    <attr name="backgroundColor" format="color"/>
+    <attr name="backgroundCardColor" format="color"/>
+    <attr name="backgroundCardColorSecondary" format="color"/>
+</resources>

@@ -59,7 +59,7 @@ fun Resources.dpToPx(dp: Float): Int {
 fun Activity.launchWebUrl(url: String) {
     try {
         val customTabsIntent = CustomTabsIntent.Builder().apply {
-            setToolbarColor(color(R.color.corail))
+            setToolbarColor(colorAttr(R.attr.colorPrimary))
         }.build()
         customTabsIntent.launchUrl(this, Uri.parse(url))
     }catch (e: ActivityNotFoundException){

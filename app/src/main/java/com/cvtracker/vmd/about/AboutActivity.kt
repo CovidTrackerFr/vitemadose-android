@@ -6,7 +6,7 @@ import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayStat
-import com.cvtracker.vmd.extensions.color
+import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
 import kotlinx.android.synthetic.main.activity_about.*
@@ -18,7 +18,7 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
-        window.setBackgroundDrawable(ColorDrawable(color(R.color.grey_2)))
+        window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
         toolbar.setTitle(R.string.about)
         setSupportActionBar(toolbar)

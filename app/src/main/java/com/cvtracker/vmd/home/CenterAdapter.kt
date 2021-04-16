@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.color
+import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
@@ -104,11 +105,11 @@ class CenterAdapter(
                     )
 
                 if (center.available) {
-                    cardView.setCardBackgroundColor(color(R.color.white))
+                    cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
                     centreAvailableSpecificViews.show()
                     checkButton.hide()
                 } else {
-                    cardView.setCardBackgroundColor(color(R.color.grey_5))
+                    cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColorSecondary))
                     centreAvailableSpecificViews.hide()
                     checkButton.show()
                 }
