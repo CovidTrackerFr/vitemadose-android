@@ -7,26 +7,26 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:304644690082:android:b592236897bab48225c7fb",
+        "mobilesdk_app_id": "1:304644690082:android:e12d50228bc4493b25c7fb",
         "android_client_info": {
-          "package_name": "com.cvtracker.vmd"
+          "package_name": "com.cvtracker.vmd2"
         }
       },
       "oauth_client": [
         {
-          "client_id": "304644690082-0s11tqu1scargr5g0s0ui1dr3vfhe1m0.apps.googleusercontent.com",
+          "client_id": "304644690082-0vpcmmp0j3pp5598el7gbjk5enp5seo1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.cvtracker.vmd",
+            "package_name": "com.cvtracker.vmd2",
             "certificate_hash": "9bc70706931a9730f86ca75cecbe9669cea9b96d"
           }
         },
         {
-          "client_id": "304644690082-e0adlj0p90bee9vk99kpp8ejt0jb5rqj.apps.googleusercontent.com",
+          "client_id": "304644690082-sa8s2n06631uptg52mijqr47pe1iqv2j.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.cvtracker.vmd",
-            "certificate_hash": "81dd7afea34a64b3a867c5d29984fcbdde29f651"
+            "package_name": "com.cvtracker.vmd2",
+            "certificate_hash": "f7292f667fd1c64495f5af344b2c269384cf5ce7"
           }
         },
         {
@@ -45,6 +45,13 @@
             {
               "client_id": "304644690082-d10q81t9r6qbntelorfi66b7r7mu0ekl.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "304644690082-39sltnnigu6perensg3gijmq3jqio8l8.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fr.covidtracker.vmd"
+              }
             }
           ]
         }
