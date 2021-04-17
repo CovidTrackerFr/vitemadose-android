@@ -14,7 +14,7 @@ android {
     compileSdkVersion(Versions.compileSdkVersion)
 
     defaultConfig {
-        applicationId = "com.cvtracker.vmd"
+        applicationId = "com.cvtracker.vmd2"
         setMinSdkVersion(Versions.minSdkVersion)
         setTargetSdkVersion(Versions.targetSdkVersion)
         versionCode = 4
