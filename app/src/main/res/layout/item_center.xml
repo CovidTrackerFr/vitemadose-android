@@ -13,6 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardCornerRadius="8dp"
+        app:contentPadding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -26,16 +27,19 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="32dp" />
+                app:layout_constraintGuide_begin="38dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateView"
                 style="@style/TextStyle_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:layout_marginEnd="4dp"
+                android:gravity="start"
                 app:layout_constraintBottom_toTopOf="@+id/centerNameView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/moreView"
+                app:layout_constraintStart_toStartOf="@id/iconPlaceView"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Lundi 27 septembre à 8h30" />
 
@@ -47,7 +51,7 @@
                 android:layout_marginTop="16dp"
                 android:background="?attr/selectableItemBackground"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/dateView"
@@ -60,7 +64,7 @@
                 android:paddingTop="4dp"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/centerAddressView"
+                app:layout_constraintTop_toTopOf="@id/centerNameView"
                 app:srcCompat="@drawable/ic_place"
                 app:tint="?attr/iconTintColor" />
 
@@ -70,7 +74,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerNameView"
@@ -119,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerVaccineView"
@@ -132,7 +136,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerTypeView"
@@ -167,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/businessHoursView"
@@ -180,10 +184,9 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="16dp"
                 android:text="@string/appointement"
-                android:textAllCaps="false"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                app:backgroundTint="@color/blue_main"
+                app:backgroundTint="@color/danube"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/phoneView" />

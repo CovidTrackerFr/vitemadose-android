@@ -19,6 +19,7 @@
         <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="false" />
 
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".home.MainActivity"
             android:screenOrientation="sensorPortrait">
             <intent-filter>

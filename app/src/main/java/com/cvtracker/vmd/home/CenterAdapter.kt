@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.color
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
@@ -17,7 +16,6 @@ import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
 import kotlinx.android.synthetic.main.item_last_updated.view.*
 import kotlinx.android.synthetic.main.item_unavailable_center_header.view.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class CenterAdapter(
@@ -38,8 +36,6 @@ class CenterAdapter(
         const val TYPE_LAST_UPDATED = 5
     }
 
-    private val dateParser: SimpleDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm", Locale.FRANCE)
-
     open inner class CenterViewHolder(
         context: Context,
         parent: ViewGroup,
@@ -49,14 +45,10 @@ class CenterAdapter(
         fun bind(center: DisplayItem.Center, position: Int) {
             with(itemView) {
                 centerNameView.text = center.name
-                if (center.available && center.url.isNotBlank()) {
+                if (center.available && center.url.isNotBlank() && center.nextSlot != null) {
                     dateView.text = try {
-                        /** I have not found the exact parser for all date format returned by the API
-                         * Then I take only the string until minutes. This is sub-optimal */
-                        DateFormat.format(
-                            "EEEE d MMMM à kk'h'mm",
-                            dateParser.parse(center.nextSlot.substring(0, 16))
-                        ).toString().capitalize(Locale.FRANCE)
+                        DateFormat.format("EEEE d MMM à k'h'mm", center.nextSlot).toString()
+                            .capitalize(Locale.FRANCE) + center.formattedDistance
                     } catch (e: Exception) {
                         ""
                     }
@@ -159,7 +151,7 @@ class CenterAdapter(
                 iconPhoneView.hide()
             }
 
-            if (center.metadata?.hasMoreInfoToShow == true){
+            if (center.hasMoreInfoToShow) {
                 moreView.show()
             } else {
                 moreView.hide()
@@ -167,13 +159,15 @@ class CenterAdapter(
 
             moreView.setOnClickListener {
                 mExpandedPosition = if (mExpandedPosition == position) {
-                    val oldPosition = mExpandedPosition
-                    notifyItemChanged(oldPosition)
                     -1
                 } else {
+                    val oldPosition = mExpandedPosition
+                    if(oldPosition >= 0) {
+                        notifyItemChanged(oldPosition)
+                    }
                     position
                 }
-                notifyItemChanged(mExpandedPosition)
+                notifyItemChanged(position)
             }
         }
     }
@@ -198,8 +192,12 @@ class CenterAdapter(
         fun bind(item: DisplayItem.LastUpdated) {
             with(itemView) {
                 lastUpdated.text = context.getString(
-                        R.string.last_updated,
-                        DateUtils.getRelativeTimeSpanString(item.date.time, System.currentTimeMillis(), 0L)
+                    R.string.last_updated,
+                    DateUtils.getRelativeTimeSpanString(
+                        item.date.time,
+                        System.currentTimeMillis(),
+                        0L
+                    )
                 )
             }
         }

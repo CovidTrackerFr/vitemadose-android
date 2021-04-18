@@ -6,10 +6,10 @@
         <item name="android:textColorSecondary">@color/grey_5</item>
         <item name="android:textColorTertiary">@color/silver</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/corail_dark</item>
+        <item name="colorPrimary">@color/crail</item>
         <item name="colorOnPrimary">@color/thunder</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/corail_dark</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/crail</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/splash_drawable</item>
 
@@ -17,6 +17,6 @@
         <item name="iconTintColor">@color/grey_5</item>
         <item name="backgroundColor">@color/thunder</item>
         <item name="backgroundCardColor">#3a3a3a</item>
-        <item name="backgroundCardColorSecondary">#3a3a3a</item>
+        <item name="backgroundCardColorSecondary">@color/scorpion</item>
     </style>
 </resources>

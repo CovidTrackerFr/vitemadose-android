@@ -33,10 +33,6 @@ class ViteMaDoseApp : Application() {
                 DataManager.URL_BASE = it
                 Timber.d("RemoteConfig set URL_BASE = $it")
             }
-            getString(PATH_LIST_DEPARTMENTS_KEY).takeIf { it.isNotBlank() }?.let {
-                DataManager.PATH_LIST_DEPARTMENTS = it
-                Timber.d("RemoteConfig set PATH_LIST_DEPARTMENTS = $it")
-            }
             getString(PATH_DATA_DEPARTMENT_KEY).takeIf { it.isNotBlank() }?.let {
                 DataManager.PATH_DATA_DEPARTMENT = it
                 Timber.d("RemoteConfig set PATH_DATA_DEPARTMENT = $it")
@@ -53,7 +49,6 @@ class ViteMaDoseApp : Application() {
         private lateinit var instance: ViteMaDoseApp
 
         private const val URL_BASE_KEY = "url_base"
-        private const val PATH_LIST_DEPARTMENTS_KEY = "path_list_departments"
         private const val PATH_DATA_DEPARTMENT_KEY = "path_data_department"
         private const val PATH_STATS_KEY = "path_stats"
 

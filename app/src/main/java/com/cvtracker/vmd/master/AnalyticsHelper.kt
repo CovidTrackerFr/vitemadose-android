@@ -3,6 +3,7 @@ package com.cvtracker.vmd.master
 import android.os.Bundle
 import com.cvtracker.vmd.data.CenterResponse
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.SearchEntry
 import com.google.firebase.analytics.FirebaseAnalytics
 
 object AnalyticsHelper {
@@ -27,18 +28,26 @@ object AnalyticsHelper {
     private const val EVENT_RDV_DATA_VACCINE = "rdv_vaccine"
     private const val EVENT_RDV_DATA_FILTER_TYPE = "rdv_filter_type"
 
-    enum class FilterType(val value: String) {
-        ByDate("au plus tot"),
-        ByProximity("au plus proche");
+    enum class FilterType(val value: String, val displayTitle: String) {
+        ByDate("au plus tot", "Au plus tôt"),
+        ByProximity("au plus proche", "Au plus proche");
     }
 
     private val firebaseAnalytics: FirebaseAnalytics by lazy {
         FirebaseAnalytics.getInstance(ViteMaDoseApp.get())
     }
 
-    fun logEventSearchByDepartment(department: String, response: CenterResponse, filterType: FilterType) {
-        firebaseAnalytics.logEvent(EVENT_SEARCH_BY_DEPARTMENT, Bundle().apply {
-            putString(EVENT_SEARCH_DATA_DEPARTMENT, department)
+    fun logEventSearch(searchEntry: SearchEntry, response: CenterResponse, filterType: FilterType) {
+        val event = when(searchEntry){
+            is SearchEntry.Department -> EVENT_SEARCH_BY_DEPARTMENT
+            is SearchEntry.City -> EVENT_SEARCH_BY_MUNICIPALITY
+        }
+
+        firebaseAnalytics.logEvent(event, Bundle().apply {
+            if(searchEntry is SearchEntry.City) {
+                putString(EVENT_SEARCH_DATA_MUNICIPALITY, "${searchEntry.postalCode} - ${searchEntry.name} (${searchEntry.code})")
+            }
+            putString(EVENT_SEARCH_DATA_DEPARTMENT, searchEntry.entryDepartmentCode)
             putInt(EVENT_SEARCH_DATA_APPOINTMENTS, response.availableCenters.sumBy { it.appointmentCount })
             putInt(EVENT_SEARCH_DATA_AVAILABLE_CENTERS, response.availableCenters.size)
             putInt(EVENT_SEARCH_DATA_UNAVAILABLE_CENTERS, response.unavailableCenters.size)
