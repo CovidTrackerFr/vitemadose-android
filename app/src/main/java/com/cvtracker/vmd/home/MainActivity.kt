@@ -12,11 +12,13 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.data.Department
@@ -49,12 +51,39 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
+        selectedDepartment.setOnFocusChangeListener { v, hasFocus ->
+            if(hasFocus){
+                /** Clear text when autocompletetextview become focused **/
+                selectedDepartment.setText("", false)
+            }
+        }
+
+        centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING && selectedDepartment.isFocused) {
+                    /** selector was focused and a scroll is detected, reset the selector **/
+                    resetSelectorState()
+                }
+            }
+        })
+
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
             headerLayout.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
                     aboutIconView.imageTintList = ColorStateList.valueOf(it)
+                }
+                if (progress == 1.5f) {
+                    ContextCompat.getColorStateList(this, R.color.box_stroke_full_color_primary)
+                        ?.let {
+                            departmentSelector.setBoxStrokeColorStateList(it)
+                        }
+                } else {
+                    ContextCompat.getColorStateList(this, R.color.box_stroke_color)?.let {
+                        departmentSelector.setBoxStrokeColorStateList(it)
+                    }
                 }
                 loadColor(
                     colorAttr(R.attr.backgroundColor),
@@ -77,14 +106,21 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                         color(R.color.grey_5),
                         progress
                     ) {
-                        departmentSelector.setCardBackgroundColor(it)
+                        departmentSelector.setBoxBackgroundColorStateList(ColorStateList.valueOf(it))
                     }
                 }
             }
         })
     }
 
+    private fun resetSelectorState() {
+        selectedDepartment.clearFocus()
+        selectedDepartment.hideKeyboard()
+        displaySelectedDepartment(presenter.getSavedDepartment())
+    }
+
     override fun showCenters(list: List<DisplayItem>) {
+        appBarLayout.setExpanded(true, true)
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(
             context = this,
@@ -132,20 +168,21 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     override fun setupSelector(items: List<Department>, indexSelected: Int) {
-        val array = items.map { "${it.departmentCode} - ${it.departmentName}" }.toTypedArray()
-        arrayOf(emptyStateDepartmentSelector, departmentSelector).filterNotNull()
-            .forEach { selector ->
-                selector.setOnClickListener {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.choose_department_title)
-                        .setItems(array) { dialogInterface, index ->
-                            presenter.onDepartmentSelected(items[index])
-                            displaySelectedDepartment(items[index])
-                            dialogInterface.dismiss()
-                        }.create().show()
-                }
-                displaySelectedDepartment(items.getOrNull(indexSelected))
+        arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
+            it.setAdapter(
+                ArrayAdapter(
+                    this,
+                    R.layout.drop_down_resource,
+                    items.toTypedArray()
+                )
+            )
+            it.setOnItemClickListener { parent, view, position, id ->
+                container.requestFocus()
+                presenter.onDepartmentSelected(parent.getItemAtPosition(position) as Department)
+                resetSelectorState()
             }
+        }
+        displaySelectedDepartment(items.getOrNull(indexSelected))
     }
 
     override fun showEmptyState() {
@@ -170,12 +207,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     }
 
     private fun displaySelectedDepartment(department: Department?) {
-        arrayOf(emptyStateSelectedDepartment, selectedDepartment).filterNotNull().forEach {
-            it.text = if (department != null) {
-                "${department.departmentCode} - ${department.departmentName}"
-            } else {
-                getString(R.string.choose_department_title)
-            }
+        arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
+            it.setText(
+                if (department != null) {
+                    "${department.departmentCode} - ${department.departmentName}"
+                } else {
+                    ""
+                }, false
+            )
         }
     }
 

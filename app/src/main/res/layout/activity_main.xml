@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -22,11 +24,11 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/logoView"
-                android:layout_marginTop="8dp"
-                android:paddingBottom="8dp"
                 android:layout_width="150dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:adjustViewBounds="true"
+                android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -46,34 +48,30 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <androidx.cardview.widget.CardView
+            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/departmentSelector"
-                style="@style/CustomCardView"
+                style="@style/RegularTextInputLayout"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="4dp"
-                android:foreground="?attr/selectableItemBackground"
-                app:contentPadding="8dp"
+                android:background="@android:color/transparent"
+                app:hintEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintWidth_max="260dp">
 
-                <androidx.appcompat.widget.AppCompatTextView
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/selectedDepartment"
                     style="@style/TextStyle_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableEnd="@drawable/ic_expand_more_black_24dp"
-                    android:ellipsize="end"
-                    android:maxLines="1"
-                    android:textColor="?android:attr/textColorPrimary"
-                    android:textSize="16sp"
-                    tools:text="04 - Alpes de Haute-Provence" />
-
-            </androidx.cardview.widget.CardView>
+                    android:hint="@string/choose_department_title"
+                    android:inputType="textCapSentences"
+                    android:textSize="16sp" />
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,4 +11,8 @@ class Department(
     val regionCode: Int,
     @SerializedName("nom_region")
     val regionName: String
-)
+){
+    override fun toString(): String {
+        return "$departmentCode - $departmentName"
+    }
+}

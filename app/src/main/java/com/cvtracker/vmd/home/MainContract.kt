@@ -49,5 +49,7 @@ interface MainContract {
          * Called when a department is selected via the selector
          */
         fun onDepartmentSelected(department: Department)
+
+        fun getSavedDepartment(): Department?
     }
 }

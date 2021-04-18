@@ -10,16 +10,29 @@ object PrefHelper {
 
     private const val PREF_VITEMADOSE = "PREF_VITEMADOSE"
 
-    private const val PREF_DEPARTMENT_CODE = "PREF_DEPARTMENT_CODE"
-
+    private const val PREF_DEPARTMENT = "PREF_DEPARTMENT"
     private const val PREF_CACHE_DEPARTMENT_LIST = "PREF_CACHE_DEPARTMENT_LIST"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
 
-    var favDepartmentCode: String?
-        get() = sharedPrefs.getString(PREF_DEPARTMENT_CODE, null)
-        set(value) = sharedPrefs.edit().putString(PREF_DEPARTMENT_CODE, value).apply()
+    var favDepartment: Department?
+        get(){
+            val myType = object : TypeToken<Department>() {}.type
+            return try {
+                Gson().fromJson(sharedPrefs.getString(PREF_DEPARTMENT, null), myType)
+            }catch (e: Exception){
+                null
+            }
+        }
+        set(value) {
+            val json = try {
+                Gson().toJson(value)
+            }catch (e: Exception){
+                null
+            }
+            json?.let { sharedPrefs.edit().putString(PREF_DEPARTMENT, it).apply() }
+        }
 
     var cacheDepartmentList: List<Department>?
         get(){
