@@ -17,7 +17,7 @@ interface MainContract {
         /**
          * Setup department selectors with retrieved departments
          */
-        fun setupSelector(items: List<Department>, indexSelected: Int)
+        fun setupSelector(items: List<Department>)
 
         /**
          * Open link
@@ -26,14 +26,10 @@ interface MainContract {
 
         fun showCentersError()
         fun setLoading(loading: Boolean)
+        fun displaySelectedDepartment(department: Department?)
     }
 
     interface Presenter {
-
-        /**
-         * Load all departments available
-         */
-        fun loadDepartments()
 
         /**
          * Load centers for the saved department
@@ -51,5 +47,7 @@ interface MainContract {
         fun onDepartmentSelected(department: Department)
 
         fun getSavedDepartment(): Department?
+        fun onSearchUpdated(search: String)
+        fun loadInitialState()
     }
 }

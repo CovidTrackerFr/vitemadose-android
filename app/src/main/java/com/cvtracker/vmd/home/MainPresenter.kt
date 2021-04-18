@@ -12,6 +12,15 @@ import timber.log.Timber
 
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
 
+    override fun loadInitialState() {
+        PrefHelper.favDepartment.let { department ->
+            view.displaySelectedDepartment(department)
+            if (department == null) {
+                view.showEmptyState()
+            }
+        }
+    }
+
     override fun loadCenters() {
         GlobalScope.launch(Dispatchers.Main) {
             PrefHelper.favDepartment?.let { department ->
@@ -44,28 +53,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         }
     }
 
-    override fun loadDepartments() {
-        if (PrefHelper.favDepartment == null) {
-            view.showEmptyState()
-        }
-
-        GlobalScope.launch(Dispatchers.Main) {
-            val items = mutableListOf<Department>()
-            try {
-                items.addAll(DataManager.getDepartments().apply {
-                    PrefHelper.cacheDepartmentList = this
-                })
-            } catch (e: Exception) {
-                Timber.e(e)
-                PrefHelper.cacheDepartmentList?.let { items.addAll(it) }
-            } finally {
-                view.setupSelector(
-                    items,
-                    items.indexOfFirst { PrefHelper.favDepartment?.departmentCode == it.departmentCode })
-            }
-        }
-    }
-
     override fun onDepartmentSelected(department: Department) {
         if (department.departmentCode != PrefHelper.favDepartment?.departmentCode) {
             PrefHelper.favDepartment = department
@@ -80,6 +67,22 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun onCenterClicked(center: DisplayItem.Center) {
         view.openLink(center.url)
+    }
+
+    override fun onSearchUpdated(search: String) {
+        GlobalScope.launch(Dispatchers.Main) {
+            val list = mutableListOf<Department>()
+            if (search.substring(0, 1).toIntOrNull() != null) {
+                /** Search by code **/
+                list.addAll(DataManager.getDepartmentsByCode(search))
+                list.addAll(DataManager.getCitiesByPostalCode(search))
+            } else {
+                /** Search by name **/
+                list.addAll(DataManager.getDepartmentsByName(search))
+                list.addAll(DataManager.getCitiesByName(search))
+            }
+            view.setupSelector(list)
+        }
     }
 
 }

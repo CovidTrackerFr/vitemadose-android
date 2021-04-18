@@ -9,8 +9,10 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.widget.ArrayAdapter
 import android.widget.TextView
@@ -35,13 +37,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private val presenter: MainContract.Presenter = MainPresenter(this)
 
+    private val textWatcher= object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            val search = s?.trim() ?: return
+            if (search.length >= 2) {
+                presenter.onSearchUpdated(search.toString())
+            }
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
-
-        presenter.loadDepartments()
-        presenter.loadCenters()
 
         refreshLayout.setOnRefreshListener {
             presenter.loadCenters()
@@ -52,7 +66,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
         selectedDepartment.setOnFocusChangeListener { v, hasFocus ->
-            if(hasFocus){
+            if (hasFocus) {
                 /** Clear text when autocompletetextview become focused **/
                 selectedDepartment.setText("", false)
             }
@@ -67,6 +81,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 }
             }
         })
+
+        presenter.loadInitialState()
+        presenter.loadCenters()
 
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
@@ -167,7 +184,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         refreshLayout.isRefreshing = loading
     }
 
-    override fun setupSelector(items: List<Department>, indexSelected: Int) {
+    override fun setupSelector(items: List<Department>) {
         arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
             it.setAdapter(
                 ArrayAdapter(
@@ -181,8 +198,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 presenter.onDepartmentSelected(parent.getItemAtPosition(position) as Department)
                 resetSelectorState()
             }
+            it.showDropDown()
         }
-        displaySelectedDepartment(items.getOrNull(indexSelected))
     }
 
     override fun showEmptyState() {
@@ -206,8 +223,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         stubEmptyState.inflate()
     }
 
-    private fun displaySelectedDepartment(department: Department?) {
+    override fun displaySelectedDepartment(department: Department?) {
         arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
+            it.removeTextChangedListener(textWatcher)
             it.setText(
                 if (department != null) {
                     "${department.departmentCode} - ${department.departmentName}"
@@ -215,6 +233,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     ""
                 }, false
             )
+            it.addTextChangedListener(textWatcher)
         }
     }
 

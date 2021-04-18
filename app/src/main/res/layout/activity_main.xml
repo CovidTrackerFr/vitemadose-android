@@ -65,6 +65,7 @@
 
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
                     android:id="@+id/selectedDepartment"
+                    android:completionThreshold="2"
                     style="@style/TextStyle_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
