@@ -1,8 +1,8 @@
 package com.cvtracker.vmd.home
 
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.DataManager
 import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.Dispatchers
@@ -13,20 +13,20 @@ import timber.log.Timber
 class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
 
     override fun loadInitialState() {
-        PrefHelper.favDepartment.let { department ->
-            view.displaySelectedDepartment(department)
-            if (department == null) {
+        PrefHelper.favEntry.let { entry ->
+            if (entry == null) {
                 view.showEmptyState()
             }
+            view.displaySelectedSearchEntry(entry)
         }
     }
 
     override fun loadCenters() {
         GlobalScope.launch(Dispatchers.Main) {
-            PrefHelper.favDepartment?.let { department ->
+            PrefHelper.favEntry?.let { entry ->
                 try {
                     view.setLoading(true)
-                    DataManager.getCenters(department.departmentCode).let {
+                    DataManager.getCenters(entry.entryCode).let {
                         val list = mutableListOf<DisplayItem>()
                         list.add(DisplayItem.LastUpdated(it.lastUpdated))
                         if (it.availableCenters.isNotEmpty()) {
@@ -53,16 +53,16 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         }
     }
 
-    override fun onDepartmentSelected(department: Department) {
-        if (department.departmentCode != PrefHelper.favDepartment?.departmentCode) {
-            PrefHelper.favDepartment = department
+    override fun onSearchEntrySelected(searchEntry: SearchEntry) {
+        if (searchEntry.entryCode != PrefHelper.favEntry?.entryCode) {
+            PrefHelper.favEntry = searchEntry
             view.showCenters(emptyList())
         }
         loadCenters()
     }
 
-    override fun getSavedDepartment(): Department? {
-        return PrefHelper.favDepartment
+    override fun getSavedSearchEntry(): SearchEntry? {
+        return PrefHelper.favEntry
     }
 
     override fun onCenterClicked(center: DisplayItem.Center) {
@@ -71,7 +71,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun onSearchUpdated(search: String) {
         GlobalScope.launch(Dispatchers.Main) {
-            val list = mutableListOf<Department>()
+            val list = mutableListOf<SearchEntry>()
             if (search.substring(0, 1).toIntOrNull() != null) {
                 /** Search by code **/
                 list.addAll(DataManager.getDepartmentsByCode(search))

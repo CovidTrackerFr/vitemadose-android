@@ -2,27 +2,36 @@ package com.cvtracker.vmd.master
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.SearchEntry
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import timber.log.Timber
 
 object PrefHelper {
 
     private const val PREF_VITEMADOSE = "PREF_VITEMADOSE"
 
-    private const val PREF_DEPARTMENT = "PREF_DEPARTMENT"
-    private const val PREF_CACHE_DEPARTMENT_LIST = "PREF_CACHE_DEPARTMENT_LIST"
+    private const val PREF_SEARCH_ENTRY = "PREF_SEARCH_ENTRY"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
 
-    var favDepartment: Department?
+    var favEntry: SearchEntry?
         get(){
-            val myType = object : TypeToken<Department>() {}.type
+            /** I have struggled finding a way to parse efficiently the sealed class SearchEntru **/
             return try {
-                Gson().fromJson(sharedPrefs.getString(PREF_DEPARTMENT, null), myType)
+                /** Try parsing with Departement class first **/
+                val typeDepartment = object : TypeToken<SearchEntry.Department>() {}.type
+                Gson().fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), typeDepartment)
             }catch (e: Exception){
-                null
+                return try {
+                    /** Try parsing with City class then **/
+                    val typeCity = object : TypeToken<SearchEntry.City>() {}.type
+                    Gson().fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), typeCity)
+                }catch (e: Exception){
+                    Timber.e(e)
+                    null
+                }
             }
         }
         set(value) {
@@ -31,24 +40,6 @@ object PrefHelper {
             }catch (e: Exception){
                 null
             }
-            json?.let { sharedPrefs.edit().putString(PREF_DEPARTMENT, it).apply() }
-        }
-
-    var cacheDepartmentList: List<Department>?
-        get(){
-            val myType = object : TypeToken<List<Department>>() {}.type
-            return try {
-                Gson().fromJson(sharedPrefs.getString(PREF_CACHE_DEPARTMENT_LIST, null), myType)
-            }catch (e: Exception){
-                null
-            }
-        }
-        set(value) {
-            val json = try {
-                Gson().toJson(value)
-            }catch (e: Exception){
-                null
-            }
-            json?.let { sharedPrefs.edit().putString(PREF_CACHE_DEPARTMENT_LIST, it).apply() }
+            json?.let { sharedPrefs.edit().putString(PREF_SEARCH_ENTRY, it).apply() }
         }
 }

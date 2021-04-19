@@ -1,12 +1,15 @@
 package com.cvtracker.vmd.home
 
-import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.SearchEntry
 
 interface MainContract {
 
     interface View {
 
+        /**
+         * Show empty state
+         */
         fun showEmptyState()
 
         /**
@@ -17,16 +20,27 @@ interface MainContract {
         /**
          * Setup department selectors with retrieved departments
          */
-        fun setupSelector(items: List<Department>)
+        fun setupSelector(items: List<SearchEntry>)
 
         /**
          * Open link
          */
         fun openLink(url: String)
 
+        /**
+         * Notify an error occurs while retrieving centers
+         */
         fun showCentersError()
+
+        /**
+         * Notify centers are loading
+         */
         fun setLoading(loading: Boolean)
-        fun displaySelectedDepartment(department: Department?)
+
+        /**
+         * Display the entry in the selector
+         */
+        fun displaySelectedSearchEntry(entry: SearchEntry?)
     }
 
     interface Presenter {
@@ -44,10 +58,21 @@ interface MainContract {
         /**
          * Called when a department is selected via the selector
          */
-        fun onDepartmentSelected(department: Department)
+        fun onSearchEntrySelected(searchEntry: SearchEntry)
 
-        fun getSavedDepartment(): Department?
+        /**
+         * Get saved search entry
+         */
+        fun getSavedSearchEntry(): SearchEntry?
+
+        /**
+         * Called when the search has been modified
+         */
         fun onSearchUpdated(search: String)
+
+        /**
+         * load initial state (empty state, fav search entry,..;)
+         */
         fun loadInitialState()
     }
 }

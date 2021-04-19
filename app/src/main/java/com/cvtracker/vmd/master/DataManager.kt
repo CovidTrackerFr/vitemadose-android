@@ -3,7 +3,7 @@ package com.cvtracker.vmd.master
 import com.cvtracker.vmd.BuildConfig
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.CenterResponse
-import com.cvtracker.vmd.data.Department
+import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.data.StatsResponse
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -26,7 +26,7 @@ object DataManager {
     var PATH_DATA_DEPARTMENT = "/vitemadose/{code}.json"
     var PATH_STATS = "/vitemadose/stats.json"
 
-    private var cacheDepartmentsList: List<Department>? = null
+    private var cacheDepartmentsList: List<SearchEntry.Department>? = null
 
     private val service: RetrofitService by lazy {
         val logging = HttpLoggingInterceptor().apply {
@@ -68,32 +68,34 @@ object DataManager {
         return service.getStats(URL_BASE + PATH_STATS)
     }
 
-    fun getDepartmentsByCode(code : String): List<Department> {
+    fun getDepartmentsByCode(code : String): List<SearchEntry.Department> {
         return getDepartmentsList()?.filter {
             it.departmentCode.startsWith(code)
         } ?: emptyList()
     }
 
-    fun getDepartmentsByName(name: String): List<Department> {
+    fun getDepartmentsByName(name: String): List<SearchEntry.Department> {
         return getDepartmentsList()?.filter {
             it.departmentName.toLowerCase(Locale.FRANCE).contains(name.toLowerCase(Locale.FRANCE))
         } ?: emptyList()
     }
 
-    suspend fun getCitiesByPostalCode(code : String): List<Department> {
+    suspend fun getCitiesByPostalCode(code : String): List<SearchEntry.City> {
+        //TODO
         return emptyList()
     }
 
-    suspend fun getCitiesByName(name: String): List<Department> {
+    suspend fun getCitiesByName(name: String): List<SearchEntry.City> {
+        //TODO
         return emptyList()
     }
 
-    private fun getDepartmentsList(): List<Department>? {
+    private fun getDepartmentsList(): List<SearchEntry.Department>? {
         return cacheDepartmentsList ?: run {
             val data =
                 ViteMaDoseApp.get().resources.openRawResource(R.raw.departments).bufferedReader()
                     .use { it.readText() }
-            val myType = object : TypeToken<List<Department>>() {}.type
+            val myType = object : TypeToken<List<SearchEntry.Department>>() {}.type
             try {
                 cacheDepartmentsList = Gson().fromJson(data, myType)
                 cacheDepartmentsList

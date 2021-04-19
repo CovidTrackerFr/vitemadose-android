@@ -14,6 +14,7 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -23,8 +24,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
-import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -37,7 +38,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private val presenter: MainContract.Presenter = MainPresenter(this)
 
-    private val textWatcher= object : TextWatcher {
+    private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
 
@@ -133,7 +134,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
     private fun resetSelectorState() {
         selectedDepartment.clearFocus()
         selectedDepartment.hideKeyboard()
-        displaySelectedDepartment(presenter.getSavedDepartment())
+        displaySelectedSearchEntry(presenter.getSavedSearchEntry())
     }
 
     override fun showCenters(list: List<DisplayItem>) {
@@ -147,7 +148,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             onPhoneClicked = { startPhoneActivity(it) }
         )
 
-        emptyStateContainer?.hide()
+        emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
     }
 
     private fun startPhoneActivity(phoneNumber: String) {
@@ -184,8 +185,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         refreshLayout.isRefreshing = loading
     }
 
-    override fun setupSelector(items: List<Department>) {
-        arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
+    override fun setupSelector(items: List<SearchEntry>) {
+        arrayOf(
+            emptyStateSelectedDepartment,
+            selectedDepartment
+        ).firstOrNull { it?.isAttachedToWindow == true }?.let {
             it.setAdapter(
                 ArrayAdapter(
                     this,
@@ -195,7 +199,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             )
             it.setOnItemClickListener { parent, view, position, id ->
                 container.requestFocus()
-                presenter.onDepartmentSelected(parent.getItemAtPosition(position) as Department)
+                presenter.onSearchEntrySelected(parent.getItemAtPosition(position) as SearchEntry)
                 resetSelectorState()
             }
             it.showDropDown()
@@ -223,16 +227,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         stubEmptyState.inflate()
     }
 
-    override fun displaySelectedDepartment(department: Department?) {
+    override fun displaySelectedSearchEntry(entry: SearchEntry?) {
         arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
             it.removeTextChangedListener(textWatcher)
-            it.setText(
-                if (department != null) {
-                    "${department.departmentCode} - ${department.departmentName}"
-                } else {
-                    ""
-                }, false
-            )
+            it.setText(entry?.toString() ?: "", false)
             it.addTextChangedListener(textWatcher)
         }
     }
