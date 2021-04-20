@@ -22,3 +22,7 @@
 #-renamesourcefileattribute SourceFile
 
 -dontobfuscate
+-keepclassmembers class * {
+  @com.google.gson.annotations.SerializedName <fields>;
+}
+-keep @interface com.google.gson.annotations.SerializedName
