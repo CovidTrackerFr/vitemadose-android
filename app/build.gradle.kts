@@ -49,7 +49,7 @@ android {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isZipAlignEnabled = true
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
 
