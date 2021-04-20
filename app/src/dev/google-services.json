@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "812389299998",
+    "project_id": "vite-ma-dose-dev",
+    "storage_bucket": "vite-ma-dose-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:812389299998:android:ff949f4962d751b45dfb0f",
+        "android_client_info": {
+          "package_name": "com.cvtracker.vmd2.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "812389299998-digrv28946cah5js8t8r18vc4qj2mfao.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC5lncyBHo4HAmMecIvokok1A5PWWRrutw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "812389299998-digrv28946cah5js8t8r18vc4qj2mfao.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
