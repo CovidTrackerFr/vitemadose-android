@@ -55,6 +55,5 @@ jobs:
     - name: Upload artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: artifacts
-        path: |
-          app/**/apk/debug/*
+        name: app-dev-debug
+        path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
