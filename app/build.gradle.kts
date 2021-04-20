@@ -49,7 +49,7 @@ android {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
             isZipAlignEnabled = true
-            isMinifyEnabled = true
+            isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
 
@@ -57,6 +57,19 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             isZipAlignEnabled = true
             isMinifyEnabled = false
+        }
+    }
+
+    flavorDimensions("env")
+
+    productFlavors {
+        create("dev") {
+            dimension = "env"
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-dev"
+        }
+        create("prod") {
+            dimension = "env"
         }
     }
 

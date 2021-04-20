@@ -3,6 +3,7 @@ package com.cvtracker.vmd.home
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.DataManager
 import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             list.addAll(it.unavailableCenters.onEach { it.available = false })
                         }
                         view.showCenters(list)
+                        AnalyticsHelper.logEventSearchByDepartment(department, it, AnalyticsHelper.FilterType.ByDate)
                     }
                 } catch (e: Exception) {
                     Timber.e(e)
@@ -76,6 +78,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun onCenterClicked(center: DisplayItem.Center) {
         view.openLink(center.url)
+        AnalyticsHelper.logEventRdvClick(center, AnalyticsHelper.FilterType.ByDate)
     }
 
 }
