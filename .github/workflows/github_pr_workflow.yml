@@ -49,7 +49,7 @@ jobs:
         umask 000;
         . ./env.sh;
         . /opt/setup-android-sdk.sh;
-        ./gradlew assembleDebug
+        ./gradlew assembleDevDebug
         "'
 
     - name: Upload artifacts
