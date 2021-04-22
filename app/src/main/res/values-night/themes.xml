@@ -15,7 +15,7 @@
 
         <item name="separatorColor">@color/silver</item>
         <item name="iconTintColor">@color/grey_5</item>
-        <item name="backgroundColor">@color/black</item>
+        <item name="backgroundColor">@color/dark_grey_red</item>
         <item name="backgroundCardColor">#3a3a3a</item>
         <item name="backgroundCardColorSecondary">#3a3a3a</item>
     </style>
