@@ -67,7 +67,7 @@
         android:layout_marginBottom="12dp"
         android:fontFamily="@font/sf_pro"
         android:gravity="center"
-        android:text="@string/with_partners"
+        android:text="@string/supported_platforms"
         android:textColor="@color/grey_10"
         android:textSize="16sp"
         app:layout_constraintBottom_toTopOf="@id/emptyStateLogoPartners" />
