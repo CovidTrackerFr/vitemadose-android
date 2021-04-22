@@ -49,7 +49,8 @@ jobs:
         umask 000;
         . ./env.sh;
         . /opt/setup-android-sdk.sh;
-        ./gradlew assembleDevDebug
+        ./gradlew assembleDevNonOssDebug
+        ./gradlew assembleDevOssDebug
         "'
 
     - name: Upload artifacts
@@ -57,3 +58,9 @@ jobs:
       with:
         name: app-dev-debug
         path: app/build/outputs/apk/dev/debug/app-dev-debug.apk
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: app-dev-oss-debug
+        path: app/build/outputs/apk/devOss/debug/app-dev-oss-debug.apk

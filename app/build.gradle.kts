@@ -1,4 +1,7 @@
+import com.android.build.gradle.internal.api.BaseVariantOutputImpl
 import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+import java.nio.file.Paths
+import org.jetbrains.kotlin.konan.properties.hasProperty
 
 plugins {
     id("com.android.application")
@@ -47,7 +50,10 @@ android {
 
     buildTypes {
         getByName("release") {
-            signingConfig = signingConfigs.getByName("release")
+            if (gradleLocalProperties(rootDir).hasProperty("KEYSTORE_VITEMADOSE_STORE_PASSWORD")) {
+                signingConfig = signingConfigs.getByName("release")
+            }
+
             isZipAlignEnabled = true
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
@@ -60,7 +66,7 @@ android {
         }
     }
 
-    flavorDimensions("env")
+    flavorDimensions("env", "oss")
 
     productFlavors {
         create("dev") {
@@ -71,10 +77,42 @@ android {
         create("prod") {
             dimension = "env"
         }
+        create("oss") {
+            dimension = "oss"
+            applicationIdSuffix = ".oss"
+            versionNameSuffix = "-oss"
+        }
+        create("nonOss") {
+            dimension = "oss"
+        }
     }
 
     packagingOptions {
         exclude("META-INF/*.kotlin_module")
+    }
+
+    applicationVariants.all {
+        // Strip "NonOss" from output filenames.
+        outputs.all {
+            this as BaseVariantOutputImpl
+            outputFileName = Paths.get(
+                "..",
+                "..",
+                flavorName.replace("NonOss", ""),
+                buildType.name,
+                outputFileName.replace("nonOss-", "")
+            ).toString()
+        }
+
+        // Don't require google-services.json and Crashlytics configuration for oss flavors.
+        val isOss = (productFlavors.find{ it.dimension == "oss" }?.name == "oss")
+        if (isOss) {
+            val cname = name.capitalize()
+            try {
+                project.tasks.getByName("process${cname}GoogleServices").enabled = false
+                project.tasks.getByName("uploadCrashlyticsMappingFile${cname}").enabled = false
+            } catch (e: UnknownTaskException) {}
+        }
     }
 }
 
@@ -99,10 +137,10 @@ dependencies {
 
     implementation(Libs.timber)
 
-    implementation(platform(Libs.firebaseBom))
-    implementation(Libs.firebaseAnalytics)
-    implementation(Libs.firebaseCrashlytics)
-    implementation(Libs.firebaseRemoteConfig)
+    "nonOssImplementation"(platform(Libs.firebaseBom))
+    "nonOssImplementation"(Libs.firebaseAnalytics)
+    "nonOssImplementation"(Libs.firebaseCrashlytics)
+    "nonOssImplementation"(Libs.firebaseRemoteConfig)
 
     implementation(Libs.kxCoroutines)
     implementation(Libs.kxCoroutinesAndroid)

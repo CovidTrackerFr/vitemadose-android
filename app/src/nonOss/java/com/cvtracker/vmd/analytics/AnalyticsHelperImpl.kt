@@ -1,11 +1,18 @@
-package com.cvtracker.vmd.master
+package com.cvtracker.vmd.analytics
 
+import android.app.Application
 import android.os.Bundle
 import com.cvtracker.vmd.data.CenterResponse
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.master.DataManager
+import com.cvtracker.vmd.master.ViteMaDoseApp
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.remoteconfig.BuildConfig
+import com.google.firebase.remoteconfig.FirebaseRemoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
+import timber.log.Timber
 
-object AnalyticsHelper {
+object AnalyticsHelperImpl : AnalyticsHelper {
 
     // SEARCH EVENT
     private const val EVENT_SEARCH_BY_DEPARTMENT = "search_by_departement"
@@ -27,16 +34,58 @@ object AnalyticsHelper {
     private const val EVENT_RDV_DATA_VACCINE = "rdv_vaccine"
     private const val EVENT_RDV_DATA_FILTER_TYPE = "rdv_filter_type"
 
-    enum class FilterType(val value: String) {
-        ByDate("au plus tot"),
-        ByProximity("au plus proche");
-    }
+    // KEYS
+    private const val URL_BASE_KEY = "url_base"
+    private const val PATH_LIST_DEPARTMENTS_KEY = "path_list_departments"
+    private const val PATH_DATA_DEPARTMENT_KEY = "path_data_department"
+    private const val PATH_STATS_KEY = "path_stats"
 
     private val firebaseAnalytics: FirebaseAnalytics by lazy {
         FirebaseAnalytics.getInstance(ViteMaDoseApp.get())
     }
 
-    fun logEventSearchByDepartment(department: String, response: CenterResponse, filterType: FilterType) {
+    override fun initApp(app: Application) {
+        loadCacheFirebaseConfig()
+
+        FirebaseRemoteConfig.getInstance().apply {
+            setConfigSettingsAsync(remoteConfigSettings {
+                minimumFetchIntervalInSeconds = if (BuildConfig.DEBUG) 0 else 3600
+            })
+            fetchAndActivate().addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    loadCacheFirebaseConfig()
+                }
+            }
+        }
+    }
+
+    private fun loadCacheFirebaseConfig() {
+        FirebaseRemoteConfig.getInstance().apply {
+            getString(URL_BASE_KEY).takeIf { it.isNotBlank() }?.let {
+                DataManager.URL_BASE = it
+                Timber.d("RemoteConfig set URL_BASE = $it")
+            }
+            getString(PATH_LIST_DEPARTMENTS_KEY).takeIf { it.isNotBlank() }?.let {
+                DataManager.PATH_LIST_DEPARTMENTS = it
+                Timber.d("RemoteConfig set PATH_LIST_DEPARTMENTS = $it")
+            }
+            getString(PATH_DATA_DEPARTMENT_KEY).takeIf { it.isNotBlank() }?.let {
+                DataManager.PATH_DATA_DEPARTMENT = it
+                Timber.d("RemoteConfig set PATH_DATA_DEPARTMENT = $it")
+            }
+            getString(PATH_STATS_KEY).takeIf { it.isNotBlank() }?.let {
+                DataManager.PATH_STATS = it
+                Timber.d("RemoteConfig set PATH_STATS = $it")
+            }
+        }
+    }
+
+
+    override fun logEventSearchByDepartment(
+        department: String,
+        response: CenterResponse,
+        filterType: AnalyticsHelper.FilterType
+    ) {
         firebaseAnalytics.logEvent(EVENT_SEARCH_BY_DEPARTMENT, Bundle().apply {
             putString(EVENT_SEARCH_DATA_DEPARTMENT, department)
             putInt(EVENT_SEARCH_DATA_APPOINTMENTS, response.availableCenters.sumBy { it.appointmentCount })
@@ -46,7 +95,10 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventRdvClick(center: DisplayItem.Center, filterType: FilterType) {
+    override fun logEventRdvClick(
+        center: DisplayItem.Center,
+        filterType: AnalyticsHelper.FilterType
+    ) {
         val event = when (center.available) {
             true -> EVENT_RDV_CLICK
             else -> EVENT_RDV_VERIFY_CLICK
