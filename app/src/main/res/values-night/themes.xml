@@ -7,7 +7,7 @@
         <item name="android:textColorTertiary">@color/silver</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/corail_dark</item>
-        <item name="colorOnPrimary">@color/dark_grey_red</item>
+        <item name="colorOnPrimary">@color/thunder</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/corail_dark</item>
         <!-- Customize your theme here. -->
@@ -15,7 +15,7 @@
 
         <item name="separatorColor">@color/silver</item>
         <item name="iconTintColor">@color/grey_5</item>
-        <item name="backgroundColor">@color/dark_grey_red</item>
+        <item name="backgroundColor">@color/thunder</item>
         <item name="backgroundCardColor">#3a3a3a</item>
         <item name="backgroundCardColorSecondary">#3a3a3a</item>
     </style>
