@@ -30,7 +30,7 @@
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Vérifier ce centre</string>
     <string name="partner_placeholder">avec</string>
-    <string name="with_partners">En partenariat avec</string>
+    <string name="supported_platforms">Plateformes supportées</string>
     <string name="centers_error">Erreur lors de la récupération des lieux. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
     <string name="about">À propos</string>
