@@ -7,7 +7,7 @@
         <item name="android:textColorTertiary">@color/silver</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/corail_dark</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorOnPrimary">@color/dark_grey_red</item>
         <!-- Status bar color. -->
         <item name="android:statusBarColor" tools:targetApi="l">@color/corail_dark</item>
         <!-- Customize your theme here. -->
