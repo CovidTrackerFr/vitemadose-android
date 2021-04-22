@@ -2,7 +2,6 @@ package com.cvtracker.vmd.extensions
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
-import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
@@ -61,51 +60,13 @@ fun Activity.launchWebUrl(url: String) {
     try {
         val customTabsIntent = CustomTabsIntent.Builder().apply {
             setToolbarColor(colorAttr(R.attr.colorPrimary))
-        }.build().intent
-        customTabsIntent.data = Uri.parse(url)
-        startActivityExcludingOwnApp(this, customTabsIntent)
-    } catch (e: ActivityNotFoundException) {
-        try {
-            startActivityExcludingOwnApp(this, Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
-        } catch (e1: ActivityNotFoundException) {
+        }.build()
+        customTabsIntent.launchUrl(this, Uri.parse(url))
+    }catch (e: ActivityNotFoundException){
+        try{
+            startActivity(Intent(Intent.ACTION_VIEW).setData(Uri.parse(url)))
+        }catch (e1: ActivityNotFoundException){
             Toast.makeText(this, R.string.no_app_activity_found, Toast.LENGTH_SHORT).show()
         }
-    }
-}
-
-/**
- * Attempts to start an activity to handle the given intent, excluding activities of this app.
- *
- *  * If the user has set a default activity (which does not belong in this app's package), it is opened without prompt.
- *  * Otherwise, an intent chooser is displayed that excludes activities of this app's package.
- *
- *
- * @param context context
- * @param intent intent to open
- */
-fun startActivityExcludingOwnApp(context: Context, intent: Intent) {
-    val possibleIntents: MutableList<Intent> = ArrayList()
-    val possiblePackageNames: MutableSet<String> = HashSet()
-    for (resolveInfo in context.packageManager.queryIntentActivities(intent, 0)) {
-        val packageName = resolveInfo.activityInfo.packageName
-        if (packageName != context.packageName) {
-            val possibleIntent = Intent(intent)
-            possibleIntent.setPackage(resolveInfo.activityInfo.packageName)
-            possiblePackageNames.add(resolveInfo.activityInfo.packageName)
-            possibleIntents.add(possibleIntent)
-        }
-    }
-    val defaultResolveInfo = context.packageManager.resolveActivity(intent, 0)
-    if (defaultResolveInfo == null || possiblePackageNames.isEmpty()) {
-        throw ActivityNotFoundException()
-    }
-
-    // If there is a default app to handle the intent (which is not this app), use it.
-    if (possiblePackageNames.contains(defaultResolveInfo.activityInfo.packageName)) {
-        context.startActivity(intent)
-    } else { // Otherwise, let the user choose.
-        val intentChooser = Intent.createChooser(possibleIntents.removeAt(0), context.getString(R.string.open_with))
-        intentChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, possibleIntents.toTypedArray())
-        context.startActivity(intentChooser)
     }
 }
