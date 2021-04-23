@@ -1,6 +1,5 @@
 package com.cvtracker.vmd.home
 
-import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.AnalyticsHelper
@@ -46,57 +45,40 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                     ).let {
                         val list = mutableListOf<DisplayItem>()
 
-                        val availableCenters = it.availableCenters.toMutableList()
+                        fun addCenters(centers: MutableList<DisplayItem.Center>, available: Boolean) {
+                            /** Set up distance when city search **/
+                            if (isCitySearch) {
+                                centers.onEach { it.calculateDistance(entry as SearchEntry.City) }
+                                centers.removeAll {
+                                    (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM
+                                }
+                            }
+                            /** Sort results **/
+                            centers.sortWith(filter.comparator)
+                            list.addAll(centers.onEach { it.available = available })
+                        }
+
                         /** Add header to show last updated view **/
                         list.add(DisplayItem.LastUpdated(it.lastUpdated))
-                        if (availableCenters.isNotEmpty()) {
+
+                        if (it.availableCenters.isNotEmpty()) {
                             /** Add header when available centers **/
                             list.add(
                                 DisplayItem.AvailableCenterHeader(
-                                    availableCenters.size,
-                                    availableCenters.sumBy { it.appointmentCount })
+                                    it.availableCenters.size,
+                                    it.availableCenters.sumBy { it.appointmentCount })
                             )
-                            /** Set up distance when city search **/
-                            if (isCitySearch) {
-                                availableCenters.onEach { it.calculateDistance(entry as SearchEntry.City) }
-                                availableCenters.removeAll { (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM }
-                            }
-                            /** Sort results **/
-                            when (filter) {
-                                FilterType.ByProximity -> {
-                                    availableCenters.sortWith(compareBy(nullsLast()) { it.distance})
-                                }
-                                FilterType.ByDate -> {
-                                    availableCenters.sortWith(compareBy(nullsLast()) { it.nextSlot})
-                                }
-                            }
-                            list.addAll(availableCenters.onEach { it.available = true })
+
+                            addCenters(it.availableCenters, true)
                         }
 
-                        val unavailableCenters = it.unavailableCenters.toMutableList()
-                        if (unavailableCenters.isNotEmpty()) {
-                            /** Add the right header with  unavailable centers **/
-                            if (availableCenters.isEmpty()) {
-                                list.add(DisplayItem.UnavailableCenterHeader(R.string.no_slots_available_center_header))
-                            } else {
-                                list.add(DisplayItem.UnavailableCenterHeader(R.string.no_slots_available_center_header_others))
-                            }
-                            /** Set up distance when city search **/
-                            if (isCitySearch) {
-                                unavailableCenters.onEach { it.calculateDistance(entry as SearchEntry.City) }
-                                unavailableCenters.removeAll { (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM }
-                            }
-                            /** Sort results **/
-                            when (filter) {
-                                FilterType.ByProximity -> {
-                                    unavailableCenters.sortWith(compareBy(nullsLast()) { it.distance})
-                                }
-                                FilterType.ByDate -> {
-                                    unavailableCenters.sortWith(compareBy(nullsLast()) { it.nextSlot})
-                                }
-                            }
-                            list.addAll(unavailableCenters.onEach { it.available = false })
+                        if (it.unavailableCenters.isNotEmpty()) {
+                            /** Add the header with unavailable centers **/
+                            list.add(DisplayItem.UnavailableCenterHeader(it.availableCenters.isNotEmpty()))
+
+                            addCenters(it.unavailableCenters, false)
                         }
+
                         view.showCenters(list, if (isCitySearch) filter else null)
                         AnalyticsHelper.logEventSearch(entry, it, filter)
                     }

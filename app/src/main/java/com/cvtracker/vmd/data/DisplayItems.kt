@@ -133,7 +133,7 @@ sealed class DisplayItem {
         }
     }
 
-    class UnavailableCenterHeader(@StringRes val titleRes: Int) : DisplayItem()
+    class UnavailableCenterHeader(val hasAvailableCenters: Boolean) : DisplayItem()
 
     class AvailableCenterHeader(val placesCount: Int, val slotsCount: Int) : DisplayItem()
 
