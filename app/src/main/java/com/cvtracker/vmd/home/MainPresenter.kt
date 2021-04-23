@@ -45,7 +45,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                     ).let {
                         val list = mutableListOf<DisplayItem>()
 
-                        fun addCenters(centers: MutableList<DisplayItem.Center>, available: Boolean) {
+                        fun prepareCenters(centers: MutableList<DisplayItem.Center>, available: Boolean): List<DisplayItem.Center> {
                             /** Set up distance when city search **/
                             if (isCitySearch) {
                                 centers.onEach { it.calculateDistance(entry as SearchEntry.City) }
@@ -55,28 +55,31 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             }
                             /** Sort results **/
                             centers.sortWith(filter.comparator)
-                            list.addAll(centers.onEach { it.available = available })
+                            centers.onEach { it.available = available }
+                            return centers
                         }
 
                         /** Add header to show last updated view **/
                         list.add(DisplayItem.LastUpdated(it.lastUpdated))
 
-                        if (it.availableCenters.isNotEmpty()) {
+                        val preparedAvailableCenters = prepareCenters(it.availableCenters, true)
+                        if (preparedAvailableCenters.isNotEmpty()) {
                             /** Add header when available centers **/
                             list.add(
-                                DisplayItem.AvailableCenterHeader(
-                                    it.availableCenters.size,
-                                    it.availableCenters.sumBy { it.appointmentCount })
+                                    DisplayItem.AvailableCenterHeader(
+                                            preparedAvailableCenters.size,
+                                            preparedAvailableCenters.sumBy { it.appointmentCount })
                             )
-
-                            addCenters(it.availableCenters, true)
+                            /** Add available centers **/
+                            list.addAll(preparedAvailableCenters)
                         }
 
-                        if (it.unavailableCenters.isNotEmpty()) {
+                        val preparedUnavailableCenters = prepareCenters(it.unavailableCenters, false)
+                        if (preparedUnavailableCenters.isNotEmpty()) {
                             /** Add the header with unavailable centers **/
-                            list.add(DisplayItem.UnavailableCenterHeader(it.availableCenters.isNotEmpty()))
-
-                            addCenters(it.unavailableCenters, false)
+                            list.add(DisplayItem.UnavailableCenterHeader(preparedAvailableCenters.isNotEmpty()))
+                            /** Add unavailable centers **/
+                            list.addAll(preparedUnavailableCenters)
                         }
 
                         view.showCenters(list, if (isCitySearch) filter else null)
