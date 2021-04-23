@@ -34,6 +34,7 @@
                 <data android:scheme="https" />
                 <data android:host="vitemadose.covidtracker.fr" />
                 <data android:path="" tools:ignore="AppLinkUrlError" />
+                <data android:path="/" />
             </intent-filter>
 
         </activity>
