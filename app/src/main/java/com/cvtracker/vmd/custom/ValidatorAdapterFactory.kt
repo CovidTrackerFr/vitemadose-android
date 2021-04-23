@@ -9,6 +9,7 @@ import com.google.gson.reflect.TypeToken
 import java.lang.reflect.Field
 
 class ValidatorAdapterFactory : TypeAdapterFactory {
+
     override fun <T> create(gson: Gson, type: TypeToken<T>?): TypeAdapter<T> {
         // If the type adapter is a reflective type adapter, we want to modify the implementation using reflection. The
         // trick is to replace the Map object used to lookup the property name. Instead of returning null if the

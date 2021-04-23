@@ -27,7 +27,6 @@ import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
-import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.FilterType
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar

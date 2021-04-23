@@ -8,7 +8,6 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.forEachIndexed
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.FilterType
 import kotlinx.android.synthetic.main.view_filter_switch.view.*
 import kotlinx.android.synthetic.main.view_filter_switch_item.view.*

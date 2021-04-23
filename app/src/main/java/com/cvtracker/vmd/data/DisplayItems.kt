@@ -6,7 +6,6 @@ import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
-
 sealed class DisplayItem {
 
     class LastUpdated(val date: Date) : DisplayItem()

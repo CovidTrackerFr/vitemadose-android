@@ -1,6 +1,5 @@
 package com.cvtracker.vmd.data
 
-import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.FilterType
 import com.google.gson.annotations.SerializedName
 

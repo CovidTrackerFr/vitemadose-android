@@ -2,7 +2,6 @@ package com.cvtracker.vmd.home
 
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
-import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.FilterType
 
 interface MainContract {
