@@ -81,6 +81,10 @@ interface MainContract {
          * load initial state (empty state, fav search entry,..;)
          */
         fun loadInitialState()
+
+        /**
+         * Called when the filter has been modified
+         */
         fun onFilterChanged(filter: FilterType)
     }
 }

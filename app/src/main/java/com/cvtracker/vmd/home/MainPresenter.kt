@@ -101,7 +101,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                         AnalyticsHelper.logEventSearch(entry, it, filter)
                     }
                 } catch (e: CancellationException) {
-                    /** Couroutine has been canceled => Ignore**/
+                    /** Coroutine has been canceled => Ignore **/
                 } catch (e: Exception){
                     Timber.e(e)
                     view.showCentersError()
@@ -159,7 +159,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                 }
                 view.setupSelector(list)
             } catch (e: CancellationException) {
-                /** Couroutine has been canceled => Ignore**/
+                /** Coroutine has been canceled => Ignore **/
             } catch (e: Exception) {
                 Timber.e(e)
                 view.showSearchError()

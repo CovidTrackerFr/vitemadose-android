@@ -20,7 +20,7 @@ object PrefHelper {
 
     var favEntry: SearchEntry?
         get(){
-            /** I have struggled finding a way to parse efficiently the sealed class SearchEntru **/
+            /** I have struggled finding a way to parse efficiently the sealed class SearchEntry **/
             return try {
                 /** Try parsing with Department class first **/
                 gson.fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), SearchEntry.Department::class.java)
