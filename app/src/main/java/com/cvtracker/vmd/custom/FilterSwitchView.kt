@@ -9,17 +9,18 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.forEachIndexed
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.master.AnalyticsHelper
+import com.cvtracker.vmd.master.FilterType
 import kotlinx.android.synthetic.main.view_filter_switch.view.*
 import kotlinx.android.synthetic.main.view_filter_switch_item.view.*
 
 class FilterSwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ConstraintLayout(context, attrs) {
 
-    var onFilterChangedListener: ((AnalyticsHelper.FilterType) -> Unit)? = null
+    var onFilterChangedListener: ((FilterType) -> Unit)? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_filter_switch, this, true)
-        AnalyticsHelper.FilterType.values().forEachIndexed { index, filter ->
+        FilterType.values().forEachIndexed { index, filter ->
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.view_filter_switch_item, container, false).apply {
                     setOnClickListener {
@@ -40,7 +41,7 @@ class FilterSwitchView @JvmOverloads constructor(context: Context, attrs: Attrib
         container.forEachIndexed { index, view -> view.isSelected = (index == indexSelected) }
     }
 
-    fun updateSelectedFilter(filter: AnalyticsHelper.FilterType) {
-        updateSelectedFilterIndex(AnalyticsHelper.FilterType.values().indexOf(filter))
+    fun updateSelectedFilter(filter: FilterType) {
+        updateSelectedFilterIndex(FilterType.values().indexOf(filter))
     }
 }

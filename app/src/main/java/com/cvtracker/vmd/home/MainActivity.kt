@@ -28,6 +28,7 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.AnalyticsHelper
+import com.cvtracker.vmd.master.FilterType
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -135,7 +136,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         displaySelectedSearchEntry(presenter.getSavedSearchEntry())
     }
 
-    override fun showCenters(list: List<DisplayItem>, filter: AnalyticsHelper.FilterType?) {
+    override fun showCenters(list: List<DisplayItem>, filter: FilterType?) {
         appBarLayout.setExpanded(true, true)
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(

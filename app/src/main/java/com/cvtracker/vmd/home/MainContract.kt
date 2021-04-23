@@ -3,6 +3,7 @@ package com.cvtracker.vmd.home
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.AnalyticsHelper
+import com.cvtracker.vmd.master.FilterType
 
 interface MainContract {
 
@@ -16,7 +17,7 @@ interface MainContract {
         /**
          * Display main list of centers (available/unavailable)
          */
-        fun showCenters(list: List<DisplayItem>, filter: AnalyticsHelper.FilterType?)
+        fun showCenters(list: List<DisplayItem>, filter: FilterType?)
 
         /**
          * Setup department selectors with retrieved departments
@@ -80,6 +81,6 @@ interface MainContract {
          * load initial state (empty state, fav search entry,..;)
          */
         fun loadInitialState()
-        fun onFilterChanged(filter: AnalyticsHelper.FilterType)
+        fun onFilterChanged(filter: FilterType)
     }
 }

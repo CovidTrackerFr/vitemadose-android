@@ -5,6 +5,7 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.DataManager
+import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -14,7 +15,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private var jobSearch: Job? = null
     private var jobCenters: Job? = null
 
-    private var selectedFilter: AnalyticsHelper.FilterType? = null
+    private var selectedFilter: FilterType? = null
 
     companion object{
         const val DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 75f
@@ -62,10 +63,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             }
                             /** Sort results **/
                             when (filter) {
-                                AnalyticsHelper.FilterType.ByProximity -> {
+                                FilterType.ByProximity -> {
                                     availableCenters.sortWith(compareBy(nullsLast()) { it.distance})
                                 }
-                                AnalyticsHelper.FilterType.ByDate -> {
+                                FilterType.ByDate -> {
                                     availableCenters.sortWith(compareBy(nullsLast()) { it.nextSlot})
                                 }
                             }
@@ -87,10 +88,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             }
                             /** Sort results **/
                             when (filter) {
-                                AnalyticsHelper.FilterType.ByProximity -> {
+                                FilterType.ByProximity -> {
                                     unavailableCenters.sortWith(compareBy(nullsLast()) { it.distance})
                                 }
-                                AnalyticsHelper.FilterType.ByDate -> {
+                                FilterType.ByDate -> {
                                     unavailableCenters.sortWith(compareBy(nullsLast()) { it.nextSlot})
                                 }
                             }
@@ -126,10 +127,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun onCenterClicked(center: DisplayItem.Center) {
         view.openLink(center.url)
-        AnalyticsHelper.logEventRdvClick(center, AnalyticsHelper.FilterType.ByDate)
+        AnalyticsHelper.logEventRdvClick(center, FilterType.ByDate)
     }
 
-    override fun onFilterChanged(filter: AnalyticsHelper.FilterType) {
+    override fun onFilterChanged(filter: FilterType) {
         selectedFilter = filter
         view.showCenters(emptyList(), filter)
         loadCenters()

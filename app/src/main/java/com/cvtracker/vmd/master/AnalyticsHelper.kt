@@ -28,11 +28,6 @@ object AnalyticsHelper {
     private const val EVENT_RDV_DATA_VACCINE = "rdv_vaccine"
     private const val EVENT_RDV_DATA_FILTER_TYPE = "rdv_filter_type"
 
-    enum class FilterType(val value: String, val displayTitle: String) {
-        ByDate("au plus tot", "Au plus tôt"),
-        ByProximity("au plus proche", "Au plus proche");
-    }
-
     private val firebaseAnalytics: FirebaseAnalytics by lazy {
         FirebaseAnalytics.getInstance(ViteMaDoseApp.get())
     }
@@ -51,7 +46,7 @@ object AnalyticsHelper {
             putInt(EVENT_SEARCH_DATA_APPOINTMENTS, response.availableCenters.sumBy { it.appointmentCount })
             putInt(EVENT_SEARCH_DATA_AVAILABLE_CENTERS, response.availableCenters.size)
             putInt(EVENT_SEARCH_DATA_UNAVAILABLE_CENTERS, response.unavailableCenters.size)
-            putString(EVENT_SEARCH_DATA_FILTER_TYPE, filterType.value)
+            putString(EVENT_SEARCH_DATA_FILTER_TYPE, filterTypeValue(filterType))
         })
     }
 
@@ -66,7 +61,12 @@ object AnalyticsHelper {
             putString(EVENT_RDV_DATA_PLATFORM, center.platform)
             putString(EVENT_RDV_DATA_LOCATION_TYPE, center.type)
             putString(EVENT_RDV_DATA_VACCINE, center.vaccineType?.joinToString(separator = ","))
-            putString(EVENT_RDV_DATA_FILTER_TYPE, filterType.value)
+            putString(EVENT_RDV_DATA_FILTER_TYPE, filterTypeValue(filterType))
         })
+    }
+
+    private fun filterTypeValue(filterType: FilterType) = when (filterType) {
+        FilterType.ByDate -> "au plus tot"
+        FilterType.ByProximity -> "au plus proche"
     }
 }
