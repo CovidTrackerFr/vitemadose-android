@@ -2,15 +2,18 @@ package com.cvtracker.vmd.extensions
 
 import android.app.Activity
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
 import android.net.Uri
 import android.util.TypedValue
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.annotation.AttrRes
 import androidx.annotation.ColorRes
+import androidx.annotation.Px
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.cvtracker.vmd.R
@@ -70,3 +73,11 @@ fun Activity.launchWebUrl(url: String) {
         }
     }
 }
+
+fun View.hideKeyboard() {
+    (context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager).hideSoftInputFromWindow(windowToken, 0)
+}
+
+inline var View.topPadding: Int
+    get() = paddingTop
+    set(@Px value) = setPadding(paddingLeft, value, paddingRight, paddingBottom)

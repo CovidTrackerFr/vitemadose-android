@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ViteMaDose</string>
     <string name="find_dose_easily_and_quickly">Trouvez une dose de vaccin facilement et rapidement</string>
-    <string name="choose_department_title">Sélectionnez votre département</string>
+    <string name="choose_department_title">Commune, code postal, département</string>
     <string name="appointement">Prendre rendez-vous</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="centers">
@@ -32,6 +32,7 @@
     <string name="partner_placeholder">avec</string>
     <string name="supported_platforms">Plateformes supportées</string>
     <string name="centers_error">Erreur lors de la récupération des lieux. Réessayez</string>
+    <string name="search_error">Erreur lors de la récupération des suggestions. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
     <string name="about">À propos</string>
     <string name="liens">Liens</string>

@@ -6,10 +6,10 @@
         <item name="android:textColorSecondary">@color/scorpion</item>
         <item name="android:textColorTertiary">@color/gray</item>
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/corail</item>
+        <item name="colorPrimary">@color/roman</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/corail</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/roman</item>
         <!-- Customize your theme here. -->
         <item name="android:windowBackground">@drawable/splash_drawable</item>
 

@@ -9,19 +9,25 @@ import android.graphics.drawable.ColorDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.text.Editable
 import android.text.Spannable
 import android.text.SpannableString
+import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
-import com.cvtracker.vmd.data.Department
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
+import com.cvtracker.vmd.master.AnalyticsHelper
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -33,14 +39,24 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     private val presenter: MainContract.Presenter = MainPresenter(this)
 
+    private val textWatcher = object : TextWatcher {
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+        }
+
+        override fun afterTextChanged(s: Editable?) {
+            presenter.onSearchUpdated(s?.toString()?.trim().orEmpty())
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
-        presenter.loadDepartments()
-        presenter.loadCenters()
-
+        refreshLayout.setProgressViewOffset(false, resources.dpToPx(10f), resources.dpToPx(60f))
         refreshLayout.setOnRefreshListener {
             presenter.loadCenters()
         }
@@ -49,9 +65,38 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
+        filterSwitchView.onFilterChangedListener = { filter ->
+            presenter.onFilterChanged(filter)
+        }
+
+        selectedDepartment.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                selectedDepartment.gravity = Gravity.START
+                /** Clear text when autocompletetextview become focused **/
+                selectedDepartment.setText("", false)
+            } else {
+                selectedDepartment.gravity = Gravity.CENTER
+            }
+        }
+
+        centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING && selectedDepartment.isFocused) {
+                    /** selector was focused and a scroll is detected, reset the selector **/
+                    resetSelectorState()
+                }
+            }
+        })
+
+        presenter.loadInitialState()
+        presenter.loadCenters()
+
         appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-            val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.5f
+            /** Manage colors when switching between collapsed and expanded state **/
+            val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.25f
             headerLayout.alpha = 1 - progress
+            filterSwitchView.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
                     aboutIconView.imageTintList = ColorStateList.valueOf(it)
@@ -84,7 +129,14 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         })
     }
 
-    override fun showCenters(list: List<DisplayItem>) {
+    private fun resetSelectorState() {
+        selectedDepartment.clearFocus()
+        selectedDepartment.hideKeyboard()
+        displaySelectedSearchEntry(presenter.getSavedSearchEntry())
+    }
+
+    override fun showCenters(list: List<DisplayItem>, filter: AnalyticsHelper.FilterType?) {
+        appBarLayout.setExpanded(true, true)
         centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(
             context = this,
@@ -93,8 +145,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             onAddressClicked = { startMapsActivity(it) },
             onPhoneClicked = { startPhoneActivity(it) }
         )
+        /** set up filter state **/
+        if (filter != null) {
+            centersRecyclerView.topPadding = resources.dpToPx(50f)
+            filterSwitchView.show()
+            filterSwitchView.updateSelectedFilter(filter)
+        } else {
+            centersRecyclerView.topPadding = resources.dpToPx(12f)
+            filterSwitchView.hide()
+        }
 
-        emptyStateContainer?.hide()
+        emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
     }
 
     private fun startPhoneActivity(phoneNumber: String) {
@@ -131,21 +192,25 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         refreshLayout.isRefreshing = loading
     }
 
-    override fun setupSelector(items: List<Department>, indexSelected: Int) {
-        val array = items.map { "${it.departmentCode} - ${it.departmentName}" }.toTypedArray()
-        arrayOf(emptyStateDepartmentSelector, departmentSelector).filterNotNull()
-            .forEach { selector ->
-                selector.setOnClickListener {
-                    AlertDialog.Builder(this)
-                        .setTitle(R.string.choose_department_title)
-                        .setItems(array) { dialogInterface, index ->
-                            presenter.onDepartmentSelected(items[index])
-                            displaySelectedDepartment(items[index])
-                            dialogInterface.dismiss()
-                        }.create().show()
-                }
-                displaySelectedDepartment(items.getOrNull(indexSelected))
+    override fun setupSelector(items: List<SearchEntry>) {
+        arrayOf(
+            emptyStateSelectedDepartment,
+            selectedDepartment
+        ).firstOrNull { it?.isAttachedToWindow == true }?.let {
+            it.setAdapter(
+                ArrayAdapter(
+                    this,
+                    R.layout.drop_down_resource,
+                    items.toTypedArray()
+                )
+            )
+            it.setOnItemClickListener { parent, view, position, id ->
+                container.requestFocus()
+                presenter.onSearchEntrySelected(parent.getItemAtPosition(position) as SearchEntry)
+                resetSelectorState()
             }
+            it.showDropDown()
+        }
     }
 
     override fun showEmptyState() {
@@ -158,7 +223,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
                 )
                 setSpan(
-                    ForegroundColorSpan(color(R.color.blue_main)),
+                    ForegroundColorSpan(color(R.color.danube)),
                     41,
                     51,
                     Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
@@ -169,13 +234,11 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         stubEmptyState.inflate()
     }
 
-    private fun displaySelectedDepartment(department: Department?) {
-        arrayOf(emptyStateSelectedDepartment, selectedDepartment).filterNotNull().forEach {
-            it.text = if (department != null) {
-                "${department.departmentCode} - ${department.departmentName}"
-            } else {
-                getString(R.string.choose_department_title)
-            }
+    override fun displaySelectedSearchEntry(entry: SearchEntry?) {
+        arrayOf(selectedDepartment, emptyStateSelectedDepartment).filterNotNull().forEach {
+            it.removeTextChangedListener(textWatcher)
+            it.setText(entry?.toString() ?: "", false)
+            it.addTextChangedListener(textWatcher)
         }
     }
 
@@ -185,6 +248,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showCentersError() {
         Snackbar.make(container, getString(R.string.centers_error), Snackbar.LENGTH_SHORT).show()
+    }
+
+    override fun showSearchError() {
+        Snackbar.make(container, getString(R.string.search_error), Snackbar.LENGTH_SHORT).show()
     }
 
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP_MR1)

@@ -2,40 +2,44 @@ package com.cvtracker.vmd.master
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.cvtracker.vmd.data.Department
-import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.cvtracker.vmd.custom.ValidatorAdapterFactory
+import com.cvtracker.vmd.data.SearchEntry
+import com.google.gson.GsonBuilder
+import com.google.gson.JsonParseException
 
 object PrefHelper {
 
     private const val PREF_VITEMADOSE = "PREF_VITEMADOSE"
 
-    private const val PREF_DEPARTMENT_CODE = "PREF_DEPARTMENT_CODE"
-
-    private const val PREF_CACHE_DEPARTMENT_LIST = "PREF_CACHE_DEPARTMENT_LIST"
+    private const val PREF_SEARCH_ENTRY = "PREF_SEARCH_ENTRY"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
 
-    var favDepartmentCode: String?
-        get() = sharedPrefs.getString(PREF_DEPARTMENT_CODE, null)
-        set(value) = sharedPrefs.edit().putString(PREF_DEPARTMENT_CODE, value).apply()
+    private val gson = GsonBuilder().registerTypeAdapterFactory(ValidatorAdapterFactory()).create()
 
-    var cacheDepartmentList: List<Department>?
+    var favEntry: SearchEntry?
         get(){
-            val myType = object : TypeToken<List<Department>>() {}.type
+            /** I have struggled finding a way to parse efficiently the sealed class SearchEntru **/
             return try {
-                Gson().fromJson(sharedPrefs.getString(PREF_CACHE_DEPARTMENT_LIST, null), myType)
-            }catch (e: Exception){
-                null
+                /** Try parsing with Department class first **/
+                gson.fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), SearchEntry.Department::class.java)
+            }catch (e: JsonParseException){
+                e.printStackTrace()
+                return try {
+                    /** Try parsing with City class then **/
+                    gson.fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), SearchEntry.City::class.java)
+                }catch (e: JsonParseException){
+                    null
+                }
             }
         }
         set(value) {
             val json = try {
-                Gson().toJson(value)
+                gson.toJson(value)
             }catch (e: Exception){
                 null
             }
-            json?.let { sharedPrefs.edit().putString(PREF_CACHE_DEPARTMENT_LIST, it).apply() }
+            json?.let { sharedPrefs.edit().putString(PREF_SEARCH_ENTRY, it).apply() }
         }
 }

@@ -9,7 +9,12 @@ class CenterResponse(
     @SerializedName("last_updated")
     val lastUpdated: Date,
     @SerializedName("centres_disponibles")
-    val availableCenters: List<DisplayItem.Center>,
+    val availableCenters: MutableList<DisplayItem.Center>,
     @SerializedName("centres_indisponibles")
-    val unavailableCenters: List<DisplayItem.Center>,
-)
+    val unavailableCenters: MutableList<DisplayItem.Center>,
+) {
+    fun aggregate(response: CenterResponse) {
+        availableCenters.addAll(response.availableCenters)
+        unavailableCenters.addAll(response.unavailableCenters)
+    }
+}

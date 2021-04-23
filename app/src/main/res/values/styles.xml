@@ -3,12 +3,16 @@
 
     <style name="RegularButton" parent="Widget.MaterialComponents.Button">
         <item name="android:textSize">15sp</item>
-        <item name="android:padding">12dp</item>
+        <item name="android:paddingStart">14dp</item>
+        <item name="android:paddingEnd">14dp</item>
+        <item name="textAllCaps">true</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:includeFontPadding">false</item>
-        <item name="fontFamily">@font/sf_pro</item>
+        <item name="fontFamily">@font/sf_pro_bold</item>
         <item name="cornerRadius">8dp</item>
-        <item name="android:letterSpacing">0.05</item>
+        <item name="android:letterSpacing">0.03</item>
     </style>
 
     <style name="CustomCardView" parent="Base.CardView">
@@ -16,5 +20,25 @@
         <item name="cornerRadius">3dp</item>
         <item name="cardBackgroundColor">?attr/backgroundCardColor</item>
         <item name="contentPadding">16dp</item>
+    </style>
+
+    <style name="RegularTextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu">
+        <item name="boxCornerRadiusBottomEnd">8dp</item>
+        <item name="boxBackgroundColor">@android:color/transparent</item>
+        <item name="boxCornerRadiusBottomStart">8dp</item>
+        <item name="boxStrokeColor">@color/box_stroke_color</item>
+        <item name="boxCornerRadiusTopEnd">8dp</item>
+        <item name="boxCornerRadiusTopStart">8dp</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="hintTextColor">@color/box_stroke_color</item>
+        <item name="android:textColorHint">?android:attr/textColorPrimary</item>
+        <item name="paddingStart">0dp</item>
+        <item name="endIconMode">clear_text</item>
+        <item name="paddingEnd">0dp</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="colorControlNormal">?attr/colorPrimary</item>
+        <item name="colorControlActivated">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
+        <item name="android:textCursorDrawable">@null</item>
     </style>
 </resources>

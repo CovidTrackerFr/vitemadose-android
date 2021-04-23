@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.data
 
+import android.location.Location
 import android.telephony.PhoneNumberUtils
 import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
@@ -21,15 +22,18 @@ sealed class DisplayItem {
         val platform: String?,
         @SerializedName("metadata")
         val metadata: Metadata?,
+        @SerializedName("location")
+        val location: LocationCenter?,
         @SerializedName("prochain_rdv")
-        val nextSlot: String,
+        val nextSlot: Date?,
         @SerializedName("appointment_count")
         val appointmentCount: Int,
         @SerializedName("type")
         val type: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
-        var available: Boolean = false
+        var available: Boolean = false,
+        var distance: Float? = null
     ) : DisplayItem() {
 
         val platformEnum: Plateform?
@@ -46,6 +50,40 @@ sealed class DisplayItem {
         val formattedAddress: String?
             get() = metadata?.address?.replace(", ","\n")?.trim()
 
+        val formattedDistance: String
+            get() {
+                val distanceString = distance.toString()
+                return when{
+                    distance == null -> ""
+                    distance?.let { it > 10f } == true-> " · ${distanceString.substring(0, distanceString.lastIndexOf("."))} km"
+                    distance?.let { it > 0f } == true -> " · $distanceString km"
+                    else -> ""
+                }
+            }
+
+        val hasMoreInfoToShow: Boolean
+            get() = metadata?.businessHours?.description != null ||
+                    metadata?.phoneNumber != null ||
+                    typeLabel != null
+
+        fun calculateDistance(city: SearchEntry.City){
+            distance = if(location?.latitude != null && location.longitude != null){
+                val result = FloatArray(2)
+                Location.distanceBetween(city.latitude, city.longitude, location.latitude, location.longitude, result)
+                /** result is in meters, convert it to x.x kms **/
+                (result[0]/100).toLong().toFloat()/10f
+            }else{
+                null
+            }
+        }
+
+        class LocationCenter(
+            @SerializedName("latitude")
+            val latitude: Double?,
+            @SerializedName("longitude")
+            val longitude: Double?
+        )
+
         class Metadata(
             @SerializedName("address")
             val address: String?,
@@ -54,9 +92,6 @@ sealed class DisplayItem {
             @SerializedName("phone_number")
             val phoneNumber: String?
         ) {
-
-            val hasMoreInfoToShow: Boolean
-                get() = businessHours?.description != null || phoneNumber != null
 
             val phoneFormatted: String?
                 get() {

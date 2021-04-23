@@ -3,11 +3,12 @@
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
-    <color name="blue_main">#5561D9</color>
-    <color name="blue">#316BB9</color>
+    <color name="downy">#66C2CF</color>
+    <color name="danube">#577ED1</color>
+    <color name="amethyst">#AE50C2</color>
     <color name="blue_dark">#5F6D88</color>
-    <color name="corail">#EC4F5A</color>
-    <color name="corail_dark">#bc3f48</color>
+    <color name="roman">#dc5a60</color>
+    <color name="crail">#bc3f48</color>
     <color name="mine_shaft">#252525</color>
     <color name="scorpion">#5E5E5E</color>
     <color name="thunder">#211E1F</color>
