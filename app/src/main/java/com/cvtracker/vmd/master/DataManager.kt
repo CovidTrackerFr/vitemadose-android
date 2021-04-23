@@ -31,8 +31,34 @@ object DataManager {
     var URL_CITIES_BY_NAME = "https://geo.api.gouv.fr/communes?nom={NAME}&fields=codesPostaux,centre,departement&limit=15"
     var URL_CITIES_BY_POSTAL_CODE = "https://geo.api.gouv.fr/communes?codePostal={POSTAL_CODE}&fields=codesPostaux,centre,departement&limit=15"
 
-    private var cacheDepartmentsList: List<SearchEntry.Department>? = null
-    private var cacheMapNearDepartments: Map<String, List<String>>? = null
+    private val gson = GsonBuilder()
+        .registerTypeAdapterFactory(ValidatorAdapterFactory())
+        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
+        .create()
+
+    private val departmentsList: List<SearchEntry.Department>? by lazy {
+        val data = ViteMaDoseApp.get().resources.openRawResource(R.raw.departments)
+            .bufferedReader()
+            .use { it.readText() }
+        val myType = object : TypeToken<List<SearchEntry.Department>>() {}.type
+        try {
+            gson.fromJson(data, myType) as List<SearchEntry.Department>?
+        } catch (e: JsonParseException) {
+            null
+        }
+    }
+
+    private val nearDepartmentsMap: Map<String, List<String>>? by lazy {
+        val data = ViteMaDoseApp.get().resources.openRawResource(R.raw.near_departments_map)
+            .bufferedReader()
+            .use { it.readText() }
+        val myType = object : TypeToken<Map<String, List<String>>>() {}.type
+        try {
+            gson.fromJson(data, myType) as Map<String, List<String>>?
+        } catch (e: JsonParseException) {
+            null
+        }
+    }
 
     private val service: RetrofitService by lazy {
         val logging = HttpLoggingInterceptor().apply {
@@ -66,17 +92,12 @@ object DataManager {
         retrofit.create(RetrofitService::class.java)
     }
 
-    private val gson = GsonBuilder()
-        .registerTypeAdapterFactory(ValidatorAdapterFactory())
-        .setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ")
-        .create()
-
     suspend fun getCenters(departmentCode: String, useNearDepartment: Boolean): CenterResponse {
         val response = service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", departmentCode))
         if(useNearDepartment) {
             /** We load centers from departments near the current department
              * as some centers from an other department could be close to the city currently focused */
-            getNearDepartmentsMap()?.get(departmentCode)?.forEach { nearDepartmentCode ->
+            nearDepartmentsMap?.get(departmentCode)?.forEach { nearDepartmentCode ->
                 response.aggregate(
                     service.getCenters(
                         URL_BASE + PATH_DATA_DEPARTMENT.replace(
@@ -95,13 +116,13 @@ object DataManager {
     }
 
     fun getDepartmentsByCode(code: String): List<SearchEntry.Department> {
-        return getDepartmentsList()?.filter {
+        return departmentsList?.filter {
             it.departmentCode.startsWith(code)
         } ?: emptyList()
     }
 
     fun getDepartmentsByName(name: String): List<SearchEntry.Department> {
-        return getDepartmentsList()?.filter {
+        return departmentsList?.filter {
             it.departmentName.toLowerCase(Locale.FRANCE).contains(name.toLowerCase(Locale.FRANCE))
         } ?: emptyList()
     }
@@ -118,42 +139,5 @@ object DataManager {
 
     suspend fun getCitiesByName(name: String): List<SearchEntry.City> {
         return service.getCities(URL_CITIES_BY_NAME.replace("{NAME}", name))
-    }
-
-    /**
-     * Load departments list and keep it
-     */
-    private fun getDepartmentsList(): List<SearchEntry.Department>? {
-        return cacheDepartmentsList ?: run {
-            val data =
-                ViteMaDoseApp.get().resources.openRawResource(R.raw.departments).bufferedReader()
-                    .use { it.readText() }
-            val myType = object : TypeToken<List<SearchEntry.Department>>() {}.type
-            try {
-                cacheDepartmentsList = gson.fromJson(data, myType)
-                cacheDepartmentsList
-            } catch (e: JsonParseException) {
-                null
-            }
-        }
-    }
-
-    /**
-     * Here we load (department -> List of near departments) map
-     */
-    private fun getNearDepartmentsMap(): Map<String, List<String>>? {
-        return cacheMapNearDepartments ?: run {
-            val data =
-                ViteMaDoseApp.get().resources.openRawResource(R.raw.near_departments_map)
-                    .bufferedReader()
-                    .use { it.readText() }
-            val myType = object : TypeToken<Map<String, List<String>>>() {}.type
-            try {
-                cacheMapNearDepartments = gson.fromJson(data, myType)
-                cacheMapNearDepartments
-            } catch (e: JsonParseException) {
-                null
-            }
-        }
     }
 }

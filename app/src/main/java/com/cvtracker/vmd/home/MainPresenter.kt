@@ -147,7 +147,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             delay(250)
             val list = mutableListOf<SearchEntry>()
             try {
-                if (search.substring(0, 1).toIntOrNull() != null) {
+                if (search.first().isDigit()) {
                     /** Search by code **/
                     list.addAll(DataManager.getDepartmentsByCode(search))
                     list.addAll(DataManager.getCitiesByPostalCode(search))
