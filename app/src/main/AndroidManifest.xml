@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.cvtracker.vmd">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -30,15 +31,12 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="vitemadose.covidtracker.fr" />
+                <data android:scheme="https" />
+                <data android:host="vitemadose.covidtracker.fr" />
+                <data android:path="" tools:ignore="AppLinkUrlError" />
+                <data android:path="/" />
             </intent-filter>
 
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-                <data android:scheme="https" android:host="vitemadose.app" />
-            </intent-filter>
         </activity>
 
         <activity
