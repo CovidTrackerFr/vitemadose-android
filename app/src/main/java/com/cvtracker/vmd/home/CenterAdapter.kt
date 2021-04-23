@@ -179,7 +179,10 @@ class CenterAdapter(
         ) {
         fun bind(header: DisplayItem.UnavailableCenterHeader) {
             with(itemView) {
-                sectionLibelleView.setText(header.titleRes)
+                sectionLibelleView.setText(when {
+                    header.hasAvailableCenters -> R.string.no_slots_available_center_header_others
+                    else -> R.string.no_slots_available_center_header
+                })
             }
         }
     }

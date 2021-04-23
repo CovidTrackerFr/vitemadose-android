@@ -1,6 +1,6 @@
 package com.cvtracker.vmd.data
 
-import com.cvtracker.vmd.master.AnalyticsHelper
+import com.cvtracker.vmd.master.FilterType
 import com.google.gson.annotations.SerializedName
 
 sealed class SearchEntry {
@@ -23,10 +23,10 @@ sealed class SearchEntry {
             is City -> this.department?.departmentCode ?: ""
         }
 
-    val defaultFilterType : AnalyticsHelper.FilterType
+    val defaultFilterType : FilterType
         get() = when(this){
-            is Department -> AnalyticsHelper.FilterType.ByDate
-            is City -> AnalyticsHelper.FilterType.ByProximity
+            is Department -> FilterType.ByDate
+            is City -> FilterType.ByProximity
         }
 
     override fun toString(): String {

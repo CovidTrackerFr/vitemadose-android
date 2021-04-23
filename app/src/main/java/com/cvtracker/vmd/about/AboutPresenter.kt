@@ -14,7 +14,6 @@ class AboutPresenter(private val view: AboutContract.View) : AboutContract.Prese
             try {
                 view.showStats(DisplayStat.from(DataManager.getStats()))
             } catch (e: Exception) {
-                e.printStackTrace()
                 Timber.e(e)
             }
         }
