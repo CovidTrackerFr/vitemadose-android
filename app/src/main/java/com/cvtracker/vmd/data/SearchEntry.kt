@@ -20,11 +20,7 @@ sealed class SearchEntry {
     val entryDepartmentCode: String
         get() = when (this) {
             is Department -> this.departmentCode
-            is City -> when {
-                postalCode.startsWith("202") -> "2A"
-                postalCode.startsWith("20") -> "2B"
-                else -> postalCode.substring(0, 2)
-            }
+            is City -> this.department?.departmentCode ?: ""
         }
 
     val defaultFilterType : AnalyticsHelper.FilterType
@@ -38,9 +34,9 @@ sealed class SearchEntry {
     }
 
     class Department(
-        @SerializedName("code_departement")
+        @SerializedName("code")
         val departmentCode: String,
-        @SerializedName("nom_departement")
+        @SerializedName("nom")
         val departmentName: String
     ) : SearchEntry()
 
@@ -52,14 +48,16 @@ sealed class SearchEntry {
         @SerializedName("centre")
         val center: Center,
         @SerializedName("codesPostaux")
-        val postalCodeList: List<String>
+        val postalCodeList: List<String>,
+        @SerializedName("departement")
+        val department: Department?,
     ) : SearchEntry() {
 
         /** In case the user has searched 75017, we want to display 75017 to him **/
         var searchedPostalCode: String? = null
 
         val postalCode: String
-            get() = searchedPostalCode ?: postalCodeList.first()
+            get() = searchedPostalCode ?: postalCodeList.firstOrNull() ?: ""
 
         class Center(
             @SerializedName("coordinates")
@@ -71,5 +69,8 @@ sealed class SearchEntry {
 
         val longitude: Double
             get() = center.coordinates[0]
+
+        val isValid: Boolean
+            get() = department != null
     }
 }
