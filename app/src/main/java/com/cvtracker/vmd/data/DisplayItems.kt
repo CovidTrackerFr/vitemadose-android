@@ -33,7 +33,7 @@ sealed class DisplayItem {
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
         var available: Boolean = false,
-        var distance: Float = -1f
+        var distance: Float? = null
     ) : DisplayItem() {
 
         val platformEnum: Plateform?
@@ -54,8 +54,9 @@ sealed class DisplayItem {
             get() {
                 val distanceString = distance.toString()
                 return when{
-                    distance > 10f -> " · ${distanceString.substring(0, distanceString.lastIndexOf("."))} km"
-                    distance > 0f -> " · $distanceString km"
+                    distance == null -> ""
+                    distance?.let { it > 10f } == true-> " · ${distanceString.substring(0, distanceString.lastIndexOf("."))} km"
+                    distance?.let { it > 0f } == true -> " · $distanceString km"
                     else -> ""
                 }
             }
@@ -72,7 +73,7 @@ sealed class DisplayItem {
                 /** result is in meters, convert it to x.x kms **/
                 (result[0]/100).toLong().toFloat()/10f
             }else{
-                -1f
+                null
             }
         }
 

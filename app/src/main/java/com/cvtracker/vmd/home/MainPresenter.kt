@@ -16,6 +16,10 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     private var selectedFilter: AnalyticsHelper.FilterType? = null
 
+    companion object{
+        const val DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 75f
+    }
+
     override fun loadInitialState() {
         PrefHelper.favEntry.let { entry ->
             if (entry == null) {
@@ -54,14 +58,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             /** Set up distance when city search **/
                             if (isCitySearch) {
                                 availableCenters.onEach { it.calculateDistance(entry as SearchEntry.City) }
+                                availableCenters.removeAll { (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM }
                             }
                             /** Sort results **/
                             when (filter) {
                                 AnalyticsHelper.FilterType.ByProximity -> {
-                                    availableCenters.sortBy { it.distance }
+                                    availableCenters.sortWith(compareBy(nullsLast()) { it.distance})
                                 }
                                 AnalyticsHelper.FilterType.ByDate -> {
-                                    availableCenters.sortBy { it.nextSlot }
+                                    availableCenters.sortWith(compareBy(nullsLast()) { it.nextSlot})
                                 }
                             }
                             list.addAll(availableCenters.onEach { it.available = true })
@@ -78,14 +83,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             /** Set up distance when city search **/
                             if (isCitySearch) {
                                 unavailableCenters.onEach { it.calculateDistance(entry as SearchEntry.City) }
+                                unavailableCenters.removeAll { (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM }
                             }
                             /** Sort results **/
                             when (filter) {
                                 AnalyticsHelper.FilterType.ByProximity -> {
-                                    unavailableCenters.sortBy { it.distance }
+                                    unavailableCenters.sortWith(compareBy(nullsLast()) { it.distance})
                                 }
                                 AnalyticsHelper.FilterType.ByDate -> {
-                                    unavailableCenters.sortBy { it.nextSlot }
+                                    unavailableCenters.sortWith(compareBy(nullsLast()) { it.nextSlot})
                                 }
                             }
                             list.addAll(unavailableCenters.onEach { it.available = false })

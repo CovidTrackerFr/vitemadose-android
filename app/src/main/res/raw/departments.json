@@ -80,7 +80,8 @@
     "nom_departement":"Côte-d'Or"
   },
   {
-    "code_departement":"22"
+    "code_departement":"22",
+    "nom_departement":"Côtes-d'Armor"
   },
   {
     "code_departement":"23",
@@ -111,7 +112,8 @@
     "nom_departement":"Finistère"
   },
   {
-    "code_departement":"2A"
+    "code_departement":"2A",
+    "nom_departement":"Corse-du-Sud"
   },
   {
     "code_departement":"2B",
@@ -138,7 +140,8 @@
     "nom_departement":"Hérault"
   },
   {
-    "code_departement":"35"
+    "code_departement":"35",
+    "nom_departement":"Ille-et-Vilaine"
   },
   {
     "code_departement":"36",
@@ -213,7 +216,8 @@
     "nom_departement":"Mayenne"
   },
   {
-    "code_departement":"54"
+    "code_departement":"54",
+    "nom_departement":"Meurthe-et-Moselle"
   },
   {
     "code_departement":"55",
