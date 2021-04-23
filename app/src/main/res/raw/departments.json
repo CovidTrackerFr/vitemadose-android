@@ -1,406 +1,406 @@
 [
   {
-    "code_departement":"01",
-    "nom_departement":"Ain"
+    "code":"01",
+    "nom":"Ain"
   },
   {
-    "code_departement":"02",
-    "nom_departement":"Aisne"
+    "code":"02",
+    "nom":"Aisne"
   },
   {
-    "code_departement":"03",
-    "nom_departement":"Allier"
+    "code":"03",
+    "nom":"Allier"
   },
   {
-    "code_departement":"04",
-    "nom_departement":"Alpes-de-Haute-Provence"
+    "code":"04",
+    "nom":"Alpes-de-Haute-Provence"
   },
   {
-    "code_departement":"05",
-    "nom_departement":"Hautes-Alpes"
+    "code":"05",
+    "nom":"Hautes-Alpes"
   },
   {
-    "code_departement":"06",
-    "nom_departement":"Alpes-Maritimes"
+    "code":"06",
+    "nom":"Alpes-Maritimes"
   },
   {
-    "code_departement":"07",
-    "nom_departement":"Ardèche"
+    "code":"07",
+    "nom":"Ardèche"
   },
   {
-    "code_departement":"08",
-    "nom_departement":"Ardennes"
+    "code":"08",
+    "nom":"Ardennes"
   },
   {
-    "code_departement":"09",
-    "nom_departement":"Ariège"
+    "code":"09",
+    "nom":"Ariège"
   },
   {
-    "code_departement":"10",
-    "nom_departement":"Aube"
+    "code":"10",
+    "nom":"Aube"
   },
   {
-    "code_departement":"11",
-    "nom_departement":"Aude"
+    "code":"11",
+    "nom":"Aude"
   },
   {
-    "code_departement":"12",
-    "nom_departement":"Aveyron"
+    "code":"12",
+    "nom":"Aveyron"
   },
   {
-    "code_departement":"13",
-    "nom_departement":"Bouches-du-Rhône"
+    "code":"13",
+    "nom":"Bouches-du-Rhône"
   },
   {
-    "code_departement":"14",
-    "nom_departement":"Calvados"
+    "code":"14",
+    "nom":"Calvados"
   },
   {
-    "code_departement":"15",
-    "nom_departement":"Cantal"
+    "code":"15",
+    "nom":"Cantal"
   },
   {
-    "code_departement":"16",
-    "nom_departement":"Charente"
+    "code":"16",
+    "nom":"Charente"
   },
   {
-    "code_departement":"17",
-    "nom_departement":"Charente-Maritime"
+    "code":"17",
+    "nom":"Charente-Maritime"
   },
   {
-    "code_departement":"18",
-    "nom_departement":"Cher"
+    "code":"18",
+    "nom":"Cher"
   },
   {
-    "code_departement":"19",
-    "nom_departement":"Corrèze"
+    "code":"19",
+    "nom":"Corrèze"
   },
   {
-    "code_departement":"21",
-    "nom_departement":"Côte-d'Or"
+    "code":"21",
+    "nom":"Côte-d'Or"
   },
   {
-    "code_departement":"22",
-    "nom_departement":"Côtes-d'Armor"
+    "code":"22",
+    "nom":"Côtes-d'Armor"
   },
   {
-    "code_departement":"23",
-    "nom_departement":"Creuse"
+    "code":"23",
+    "nom":"Creuse"
   },
   {
-    "code_departement":"24",
-    "nom_departement":"Dordogne"
+    "code":"24",
+    "nom":"Dordogne"
   },
   {
-    "code_departement":"25",
-    "nom_departement":"Doubs"
+    "code":"25",
+    "nom":"Doubs"
   },
   {
-    "code_departement":"26",
-    "nom_departement":"Drôme"
+    "code":"26",
+    "nom":"Drôme"
   },
   {
-    "code_departement":"27",
-    "nom_departement":"Eure"
+    "code":"27",
+    "nom":"Eure"
   },
   {
-    "code_departement":"28",
-    "nom_departement":"Eure-et-Loir"
+    "code":"28",
+    "nom":"Eure-et-Loir"
   },
   {
-    "code_departement":"29",
-    "nom_departement":"Finistère"
+    "code":"29",
+    "nom":"Finistère"
   },
   {
-    "code_departement":"2A",
-    "nom_departement":"Corse-du-Sud"
+    "code":"2A",
+    "nom":"Corse-du-Sud"
   },
   {
-    "code_departement":"2B",
-    "nom_departement":"Haute-Corse"
+    "code":"2B",
+    "nom":"Haute-Corse"
   },
   {
-    "code_departement":"30",
-    "nom_departement":"Gard"
+    "code":"30",
+    "nom":"Gard"
   },
   {
-    "code_departement":"31",
-    "nom_departement":"Haute-Garonne"
+    "code":"31",
+    "nom":"Haute-Garonne"
   },
   {
-    "code_departement":"32",
-    "nom_departement":"Gers"
+    "code":"32",
+    "nom":"Gers"
   },
   {
-    "code_departement":"33",
-    "nom_departement":"Gironde"
+    "code":"33",
+    "nom":"Gironde"
   },
   {
-    "code_departement":"34",
-    "nom_departement":"Hérault"
+    "code":"34",
+    "nom":"Hérault"
   },
   {
-    "code_departement":"35",
-    "nom_departement":"Ille-et-Vilaine"
+    "code":"35",
+    "nom":"Ille-et-Vilaine"
   },
   {
-    "code_departement":"36",
-    "nom_departement":"Indre"
+    "code":"36",
+    "nom":"Indre"
   },
   {
-    "code_departement":"37",
-    "nom_departement":"Indre-et-Loire"
+    "code":"37",
+    "nom":"Indre-et-Loire"
   },
   {
-    "code_departement":"38",
-    "nom_departement":"Isère"
+    "code":"38",
+    "nom":"Isère"
   },
   {
-    "code_departement":"39",
-    "nom_departement":"Jura"
+    "code":"39",
+    "nom":"Jura"
   },
   {
-    "code_departement":"40",
-    "nom_departement":"Landes"
+    "code":"40",
+    "nom":"Landes"
   },
   {
-    "code_departement":"41",
-    "nom_departement":"Loir-et-Cher"
+    "code":"41",
+    "nom":"Loir-et-Cher"
   },
   {
-    "code_departement":"42",
-    "nom_departement":"Loire"
+    "code":"42",
+    "nom":"Loire"
   },
   {
-    "code_departement":"43",
-    "nom_departement":"Haute-Loire"
+    "code":"43",
+    "nom":"Haute-Loire"
   },
   {
-    "code_departement":"44",
-    "nom_departement":"Loire-Atlantique"
+    "code":"44",
+    "nom":"Loire-Atlantique"
   },
   {
-    "code_departement":"45",
-    "nom_departement":"Loiret"
+    "code":"45",
+    "nom":"Loiret"
   },
   {
-    "code_departement":"46",
-    "nom_departement":"Lot"
+    "code":"46",
+    "nom":"Lot"
   },
   {
-    "code_departement":"47",
-    "nom_departement":"Lot-et-Garonne"
+    "code":"47",
+    "nom":"Lot-et-Garonne"
   },
   {
-    "code_departement":"48",
-    "nom_departement":"Lozère"
+    "code":"48",
+    "nom":"Lozère"
   },
   {
-    "code_departement":"49",
-    "nom_departement":"Maine-et-Loire"
+    "code":"49",
+    "nom":"Maine-et-Loire"
   },
   {
-    "code_departement":"50",
-    "nom_departement":"Manche"
+    "code":"50",
+    "nom":"Manche"
   },
   {
-    "code_departement":"51",
-    "nom_departement":"Marne"
+    "code":"51",
+    "nom":"Marne"
   },
   {
-    "code_departement":"52",
-    "nom_departement":"Haute-Marne"
+    "code":"52",
+    "nom":"Haute-Marne"
   },
   {
-    "code_departement":"53",
-    "nom_departement":"Mayenne"
+    "code":"53",
+    "nom":"Mayenne"
   },
   {
-    "code_departement":"54",
-    "nom_departement":"Meurthe-et-Moselle"
+    "code":"54",
+    "nom":"Meurthe-et-Moselle"
   },
   {
-    "code_departement":"55",
-    "nom_departement":"Meuse"
+    "code":"55",
+    "nom":"Meuse"
   },
   {
-    "code_departement":"56",
-    "nom_departement":"Morbihan"
+    "code":"56",
+    "nom":"Morbihan"
   },
   {
-    "code_departement":"57",
-    "nom_departement":"Moselle"
+    "code":"57",
+    "nom":"Moselle"
   },
   {
-    "code_departement":"58",
-    "nom_departement":"Nièvre"
+    "code":"58",
+    "nom":"Nièvre"
   },
   {
-    "code_departement":"59",
-    "nom_departement":"Nord"
+    "code":"59",
+    "nom":"Nord"
   },
   {
-    "code_departement":"60",
-    "nom_departement":"Oise"
+    "code":"60",
+    "nom":"Oise"
   },
   {
-    "code_departement":"61",
-    "nom_departement":"Orne"
+    "code":"61",
+    "nom":"Orne"
   },
   {
-    "code_departement":"62",
-    "nom_departement":"Pas-de-Calais"
+    "code":"62",
+    "nom":"Pas-de-Calais"
   },
   {
-    "code_departement":"63",
-    "nom_departement":"Puy-de-Dôme"
+    "code":"63",
+    "nom":"Puy-de-Dôme"
   },
   {
-    "code_departement":"64",
-    "nom_departement":"Pyrénées-Atlantiques"
+    "code":"64",
+    "nom":"Pyrénées-Atlantiques"
   },
   {
-    "code_departement":"65",
-    "nom_departement":"Hautes-Pyrénées"
+    "code":"65",
+    "nom":"Hautes-Pyrénées"
   },
   {
-    "code_departement":"66",
-    "nom_departement":"Pyrénées-Orientales"
+    "code":"66",
+    "nom":"Pyrénées-Orientales"
   },
   {
-    "code_departement":"67",
-    "nom_departement":"Bas-Rhin"
+    "code":"67",
+    "nom":"Bas-Rhin"
   },
   {
-    "code_departement":"68",
-    "nom_departement":"Haut-Rhin"
+    "code":"68",
+    "nom":"Haut-Rhin"
   },
   {
-    "code_departement":"69",
-    "nom_departement":"Rhône"
+    "code":"69",
+    "nom":"Rhône"
   },
   {
-    "code_departement":"70",
-    "nom_departement":"Haute-Saône"
+    "code":"70",
+    "nom":"Haute-Saône"
   },
   {
-    "code_departement":"71",
-    "nom_departement":"Saône-et-Loire"
+    "code":"71",
+    "nom":"Saône-et-Loire"
   },
   {
-    "code_departement":"72",
-    "nom_departement":"Sarthe"
+    "code":"72",
+    "nom":"Sarthe"
   },
   {
-    "code_departement":"73",
-    "nom_departement":"Savoie"
+    "code":"73",
+    "nom":"Savoie"
   },
   {
-    "code_departement":"74",
-    "nom_departement":"Haute-Savoie"
+    "code":"74",
+    "nom":"Haute-Savoie"
   },
   {
-    "code_departement":"75",
-    "nom_departement":"Paris"
+    "code":"75",
+    "nom":"Paris"
   },
   {
-    "code_departement":"76",
-    "nom_departement":"Seine-Maritime"
+    "code":"76",
+    "nom":"Seine-Maritime"
   },
   {
-    "code_departement":"77",
-    "nom_departement":"Seine-et-Marne"
+    "code":"77",
+    "nom":"Seine-et-Marne"
   },
   {
-    "code_departement":"78",
-    "nom_departement":"Yvelines"
+    "code":"78",
+    "nom":"Yvelines"
   },
   {
-    "code_departement":"79",
-    "nom_departement":"Deux-Sèvres"
+    "code":"79",
+    "nom":"Deux-Sèvres"
   },
   {
-    "code_departement":"80",
-    "nom_departement":"Somme"
+    "code":"80",
+    "nom":"Somme"
   },
   {
-    "code_departement":"81",
-    "nom_departement":"Tarn"
+    "code":"81",
+    "nom":"Tarn"
   },
   {
-    "code_departement":"82",
-    "nom_departement":"Tarn-et-Garonne"
+    "code":"82",
+    "nom":"Tarn-et-Garonne"
   },
   {
-    "code_departement":"83",
-    "nom_departement":"Var"
+    "code":"83",
+    "nom":"Var"
   },
   {
-    "code_departement":"84",
-    "nom_departement":"Vaucluse"
+    "code":"84",
+    "nom":"Vaucluse"
   },
   {
-    "code_departement":"85",
-    "nom_departement":"Vendée"
+    "code":"85",
+    "nom":"Vendée"
   },
   {
-    "code_departement":"86",
-    "nom_departement":"Vienne"
+    "code":"86",
+    "nom":"Vienne"
   },
   {
-    "code_departement":"87",
-    "nom_departement":"Haute-Vienne"
+    "code":"87",
+    "nom":"Haute-Vienne"
   },
   {
-    "code_departement":"88",
-    "nom_departement":"Vosges"
+    "code":"88",
+    "nom":"Vosges"
   },
   {
-    "code_departement":"89",
-    "nom_departement":"Yonne"
+    "code":"89",
+    "nom":"Yonne"
   },
   {
-    "code_departement":"90",
-    "nom_departement":"Territoire de Belfort"
+    "code":"90",
+    "nom":"Territoire de Belfort"
   },
   {
-    "code_departement":"91",
-    "nom_departement":"Essonne"
+    "code":"91",
+    "nom":"Essonne"
   },
   {
-    "code_departement":"92",
-    "nom_departement":"Hauts-de-Seine"
+    "code":"92",
+    "nom":"Hauts-de-Seine"
   },
   {
-    "code_departement":"93",
-    "nom_departement":"Seine-Saint-Denis"
+    "code":"93",
+    "nom":"Seine-Saint-Denis"
   },
   {
-    "code_departement":"94",
-    "nom_departement":"Val-de-Marne"
+    "code":"94",
+    "nom":"Val-de-Marne"
   },
   {
-    "code_departement":"95",
-    "nom_departement":"Val-d'Oise"
+    "code":"95",
+    "nom":"Val-d'Oise"
   },
   {
-    "code_departement":"971",
-    "nom_departement":"Guadeloupe"
+    "code":"971",
+    "nom":"Guadeloupe"
   },
   {
-    "code_departement":"972",
-    "nom_departement":"Martinique"
+    "code":"972",
+    "nom":"Martinique"
   },
   {
-    "code_departement":"973",
-    "nom_departement":"Guyane"
+    "code":"973",
+    "nom":"Guyane"
   },
   {
-    "code_departement":"974",
-    "nom_departement":"La Réunion"
+    "code":"974",
+    "nom":"La Réunion"
   },
   {
-    "code_departement":"976",
-    "nom_departement":"Mayotte"
+    "code":"976",
+    "nom":"Mayotte"
   }
 ]

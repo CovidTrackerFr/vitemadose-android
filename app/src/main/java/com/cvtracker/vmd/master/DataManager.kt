@@ -128,16 +128,18 @@ object DataManager {
     }
 
     suspend fun getCitiesByPostalCode(code: String): List<SearchEntry.City> {
-        return if(code.length != 5){
+        return if (code.length != 5) {
             /** The Geo API has not autocomplete for postalCode search **/
             emptyList()
-        }else {
+        } else {
             service.getCities(URL_CITIES_BY_POSTAL_CODE.replace("{POSTAL_CODE}", code))
-                .onEach { it.searchedPostalCode = code }
+                    .filter { it.isValid }
+                    .onEach { it.searchedPostalCode = code }
         }
     }
 
     suspend fun getCitiesByName(name: String): List<SearchEntry.City> {
         return service.getCities(URL_CITIES_BY_NAME.replace("{NAME}", name))
+                .filter { it.isValid }
     }
 }
