@@ -5,7 +5,7 @@ import com.google.gson.annotations.SerializedName
 
 sealed class SearchEntry {
 
-    val entryCode: String?
+    val entryCode: String
         get() = when (this) {
             is Department -> this.departmentCode
             is City -> this.postalCode
