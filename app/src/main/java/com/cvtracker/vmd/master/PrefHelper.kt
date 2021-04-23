@@ -6,6 +6,7 @@ import com.cvtracker.vmd.custom.ValidatorAdapterFactory
 import com.cvtracker.vmd.data.SearchEntry
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
+import timber.log.Timber
 
 object PrefHelper {
 
@@ -25,7 +26,7 @@ object PrefHelper {
                 /** Try parsing with Department class first **/
                 gson.fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), SearchEntry.Department::class.java)
             }catch (e: JsonParseException){
-                e.printStackTrace()
+                Timber.e(e)
                 return try {
                     /** Try parsing with City class then **/
                     gson.fromJson(sharedPrefs.getString(PREF_SEARCH_ENTRY, null), SearchEntry.City::class.java)
