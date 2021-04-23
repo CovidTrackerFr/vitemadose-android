@@ -41,11 +41,7 @@ sealed class SearchEntry {
         @SerializedName("code_departement")
         val departmentCode: String,
         @SerializedName("nom_departement")
-        val departmentName: String,
-        @SerializedName("code_region")
-        val regionCode: Int,
-        @SerializedName("nom_region")
-        val regionName: String
+        val departmentName: String
     ) : SearchEntry()
 
     class City(
