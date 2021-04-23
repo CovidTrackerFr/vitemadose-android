@@ -16,6 +16,7 @@ import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -34,6 +35,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 import java.net.URLEncoder
+
 
 class MainActivity : AppCompatActivity(), MainContract.View {
 
@@ -56,6 +58,8 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(R.layout.activity_main)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
+        initSelectors()
+
         refreshLayout.setProgressViewOffset(false, resources.dpToPx(10f), resources.dpToPx(60f))
         refreshLayout.setOnRefreshListener {
             presenter.loadCenters()
@@ -67,16 +71,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
         filterSwitchView.onFilterChangedListener = { filter ->
             presenter.onFilterChanged(filter)
-        }
-
-        selectedDepartment.setOnFocusChangeListener { v, hasFocus ->
-            if (hasFocus) {
-                selectedDepartment.gravity = Gravity.START
-                /** Clear text when autocompletetextview become focused **/
-                selectedDepartment.setText("", false)
-            } else {
-                selectedDepartment.gravity = Gravity.CENTER
-            }
         }
 
         centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -127,6 +121,32 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 }
             }
         })
+    }
+
+    private fun initSelectors() {
+        selectedDepartment.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                selectedDepartment.gravity = Gravity.START
+                /** Clear text when autocompletetextview become focused **/
+                selectedDepartment.setText("", false)
+            } else {
+                selectedDepartment.gravity = Gravity.CENTER
+            }
+        }
+        arrayOf(
+            emptyStateSelectedDepartment,
+            selectedDepartment
+        ).filterNotNull().forEach {
+            it.setOnEditorActionListener { v, actionId, event ->
+                var handled = false
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    it.showDropDown()
+                    v.hideKeyboard()
+                    handled = true
+                }
+                handled
+            }
+        }
     }
 
     private fun resetSelectorState() {
