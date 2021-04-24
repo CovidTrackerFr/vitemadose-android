@@ -18,6 +18,7 @@ import android.view.Gravity
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
@@ -51,6 +52,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         override fun afterTextChanged(s: Editable?) {
             presenter.onSearchUpdated(s?.toString()?.trim().orEmpty())
         }
+    }
+
+    private val onEditorActionListener = TextView.OnEditorActionListener { v, actionId, event ->
+        var handled = false
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            (v as AutoCompleteTextView).showDropDown()
+            v.hideKeyboard()
+            handled = true
+        }
+        handled
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -133,20 +144,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 selectedDepartment.gravity = Gravity.CENTER
             }
         }
-        arrayOf(
-            emptyStateSelectedDepartment,
-            selectedDepartment
-        ).filterNotNull().forEach {
-            it.setOnEditorActionListener { v, actionId, event ->
-                var handled = false
-                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    it.showDropDown()
-                    v.hideKeyboard()
-                    handled = true
-                }
-                handled
-            }
-        }
+        selectedDepartment.setOnEditorActionListener(onEditorActionListener)
     }
 
     private fun resetSelectorState() {
@@ -235,6 +233,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showEmptyState() {
         stubEmptyState.setOnInflateListener { stub, inflated ->
+            emptyStateSelectedDepartment.setOnEditorActionListener(onEditorActionListener)
             SpannableString(inflated.emptyStateBaselineTextView.text).apply {
                 setSpan(
                     ForegroundColorSpan(colorAttr(R.attr.colorPrimary)),
