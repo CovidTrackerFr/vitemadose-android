@@ -107,8 +107,8 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconTypeView"
-                android:layout_width="13dp"
-                android:layout_height="12dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
