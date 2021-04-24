@@ -60,7 +60,7 @@
                 style="@style/TextStyle_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:completionThreshold="2"
+                android:completionThreshold="1000"
                 android:ellipsize="end"
                 android:hint="@string/choose_department_title"
                 android:inputType="textCapSentences"
