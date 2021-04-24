@@ -107,13 +107,13 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconTypeView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="13dp"
+                android:layout_height="12dp"
                 app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerTypeView"
-                app:srcCompat="@drawable/ic_bag_plus_fill" />
+                app:srcCompat="@drawable/ic_bag_plus_fill"
                 app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -150,7 +150,7 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/businessHoursView"
-                app:srcCompat="@drawable/ic_clock_fill" />
+                app:srcCompat="@drawable/ic_clock_fill"
                 app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatImageView
