@@ -21,8 +21,8 @@
         <item quantity="other">créneaux\ndisponibles</item>
     </plurals>
     <plurals name="shot_disponibilities">
-        <item quantity="one">%s dose</item>
-        <item quantity="other">%s doses</item>
+        <item quantity="one">%s créneau</item>
+        <item quantity="other">%s créneaux</item>
     </plurals>
     <string name="disponibilities_placeholder">%s Lieux avec des disponibilités</string>
     <string name="no_slots_available_center_header_others">Autres lieux sans créneau de vaccination détecté</string>
