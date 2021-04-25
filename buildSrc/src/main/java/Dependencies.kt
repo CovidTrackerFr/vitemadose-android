@@ -26,6 +26,8 @@ object Libs {
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
 
+    const val playCore = "com.google.android.play:core:_"
+
     //Log
     const val timber = "com.jakewharton.timber:timber:_"
 

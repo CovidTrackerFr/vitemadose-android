@@ -41,4 +41,8 @@
     <string name="carte_des_centres">Carte des centres</string>
     <string name="vaccintracker">VaccinTracker</string>
     <string name="faq">FAQ</string>
+
+    <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
+    <string name="app_update_pending">Préparation de la mise à jour.</string>
+    <string name="app_update_downloaded">Mise à jour téléchargée. Veuillez redémarrer ViteMaDose.</string>
 </resources>
