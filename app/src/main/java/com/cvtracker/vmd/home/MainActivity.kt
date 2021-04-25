@@ -30,6 +30,7 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
@@ -41,6 +42,8 @@ import java.net.URLEncoder
 class MainActivity : AppCompatActivity(), MainContract.View {
 
     private val presenter: MainContract.Presenter = MainPresenter(this)
+
+    private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container)}
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -69,6 +72,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         setContentView(R.layout.activity_main)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
+        appUpdateChecker.checkUpdates()
         initSelectors()
 
         refreshLayout.setProgressViewOffset(false, resources.dpToPx(10f), resources.dpToPx(60f))

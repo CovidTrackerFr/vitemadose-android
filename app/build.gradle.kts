@@ -104,6 +104,8 @@ dependencies {
     implementation(Libs.firebaseCrashlytics)
     implementation(Libs.firebaseRemoteConfig)
 
+    implementation(Libs.playCore)
+
     implementation(Libs.kxCoroutines)
     implementation(Libs.kxCoroutinesAndroid)
 
