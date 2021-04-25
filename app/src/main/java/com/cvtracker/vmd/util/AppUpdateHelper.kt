@@ -57,7 +57,7 @@ class AppUpdateHelper(private val activity: Activity, private val callback: AppU
 
         appUpdateInfoTask.addOnFailureListener {
             Timber.d("AppUpdate check FAILED ${it.message}")
-            it.printStackTrace()
+            Timber.e(it)
         }.addOnSuccessListener { appUpdateInfo ->
 
             // 1° Check for existing downloaded update
