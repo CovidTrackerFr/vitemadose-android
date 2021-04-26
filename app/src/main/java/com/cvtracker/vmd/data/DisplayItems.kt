@@ -54,8 +54,8 @@ sealed class DisplayItem {
                 val distanceString = distance.toString()
                 return when{
                     distance == null -> ""
-                    distance?.let { it > 10f } == true-> " · ${distanceString.substring(0, distanceString.lastIndexOf("."))} km"
-                    distance?.let { it > 0f } == true -> " · $distanceString km"
+                    distance?.let { it > 10f } == true-> " · ${distanceString.substring(0, distanceString.lastIndexOf("."))}\u00A0km"
+                    distance?.let { it > 0f } == true -> " · $distanceString\u00A0km"
                     else -> ""
                 }
             }
