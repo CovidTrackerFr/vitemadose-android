@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/notificationView"
+        style="@style/TextStyle_baseline_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_notifications_24dp"
+        android:drawableTint="?android:attr/textColorPrimary"
+        android:text="@string/bookmark_notification" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/favoriteView"
+        style="@style/TextStyle_baseline_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_bookmark_24dp"
+        android:drawableTint="?android:attr/textColorPrimary"
+        android:text="@string/bookmark_favorite" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/noneView"
+        style="@style/TextStyle_baseline_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableStart="@drawable/ic_bookmark_border_24_dp"
+        android:drawableTint="?android:attr/textColorPrimary"
+        android:text="@string/bookmark_none" />
+
+
+</LinearLayout>

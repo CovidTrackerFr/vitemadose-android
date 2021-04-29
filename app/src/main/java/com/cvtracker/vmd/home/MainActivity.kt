@@ -26,7 +26,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
-import com.cvtracker.vmd.data.Bookmark
+import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
@@ -165,13 +165,16 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             context = this,
             items = list,
             onClicked = { presenter.onCenterClicked(it) },
-            onBookmarkClicked = {
-                val target = when (it.bookmark) {
-                    Bookmark.NOTIFICATION -> Bookmark.FAVORITE
-                    Bookmark.FAVORITE -> Bookmark.NOTIFICATION
-                    Bookmark.NONE -> Bookmark.FAVORITE
+            onBookmarkClicked = { center, position ->
+                supportFragmentManager.let {
+                    BookmarkBottomSheetFragment.newInstance(center.bookmark).apply {
+                        listener = {
+                            presenter.onBookmarkClicked(center, it)
+                            this@MainActivity.centersRecyclerView.adapter?.notifyItemChanged(position)
+                        }
+                        show(it, tag)
+                    }
                 }
-                presenter.onBookmarkClicked(it, target)
             },
             onAddressClicked = { startMapsActivity(it) },
             onPhoneClicked = { startPhoneActivity(it) }

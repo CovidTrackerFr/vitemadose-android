@@ -23,7 +23,7 @@ class CenterAdapter(
     private val context: Context,
     private val items: List<DisplayItem>,
     private val onClicked: (DisplayItem.Center) -> Unit,
-    private val onBookmarkClicked: (DisplayItem.Center) -> Unit,
+    private val onBookmarkClicked: (DisplayItem.Center, Int) -> Unit,
     private val onAddressClicked: (String) -> Unit,
     private val onPhoneClicked: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -89,10 +89,7 @@ class CenterAdapter(
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
                 checkButton.setOnClickListener { onClicked.invoke(center) }
-                bookmarkView.setOnClickListener {
-                    onBookmarkClicked.invoke(center)
-                    notifyItemChanged(position)
-                }
+                bookmarkView.setOnClickListener { onBookmarkClicked.invoke(center, position) }
 
                 appointmentsCountView.text =
                     String.format(
