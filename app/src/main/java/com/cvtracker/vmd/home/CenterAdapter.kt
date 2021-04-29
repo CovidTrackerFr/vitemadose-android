@@ -22,6 +22,7 @@ class CenterAdapter(
     private val context: Context,
     private val items: List<DisplayItem>,
     private val onClicked: (DisplayItem.Center) -> Unit,
+    private val onSubscribeClicked: (DisplayItem.Center) -> Unit,
     private val onAddressClicked: (String) -> Unit,
     private val onPhoneClicked: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -87,6 +88,10 @@ class CenterAdapter(
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
                 checkButton.setOnClickListener { onClicked.invoke(center) }
+                subscribeButton.setOnClickListener {
+                    onSubscribeClicked.invoke(center)
+                    notifyItemChanged(position)
+                }
 
                 appointmentsCountView.text =
                     String.format(
@@ -95,6 +100,8 @@ class CenterAdapter(
                             center.appointmentCount, center.appointmentCount
                         )
                     )
+
+                subscribeButton.setText(if (center.subscribed) R.string.unsubscribe else R.string.subscribe)
 
                 if (center.available) {
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))

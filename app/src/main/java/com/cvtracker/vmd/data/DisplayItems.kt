@@ -29,10 +29,13 @@ sealed class DisplayItem {
         val appointmentCount: Int,
         @SerializedName("type")
         val type: String?,
+        @SerializedName("gid")
+        val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
         var available: Boolean = false,
-        var distance: Float? = null
+        var distance: Float? = null,
+        var subscribed: Boolean = false
     ) : DisplayItem() {
 
         val platformEnum: Plateform?

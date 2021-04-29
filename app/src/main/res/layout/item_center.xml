@@ -89,8 +89,8 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerVaccineView"
-                app:tint="?attr/iconTintColor"
-                app:srcCompat="@drawable/ic_vaccine" />
+                app:srcCompat="@drawable/ic_vaccine"
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerVaccineView"
@@ -178,18 +178,43 @@
                 tools:text="02 25 25 25 25" />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/checkButton"
+                style="@style/RegularButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/check_center"
+                android:visibility="gone"
+                app:backgroundTint="@color/blue_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phoneView"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookButton"
                 style="@style/RegularButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="6dp"
                 android:text="@string/appointement"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:backgroundTint="@color/danube"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phoneView" />
+                app:layout_constraintTop_toBottomOf="@id/checkButton"
+                app:layout_goneMarginTop="16dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/subscribeButton"
+                style="@style/RegularButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/subscribe"
+                app:backgroundTint="@color/downy"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/bookButton" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appointmentsCountView"
@@ -228,25 +253,8 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/bottomSeparatorView"
-                app:layout_constraintTop_toBottomOf="@id/bookButton"
+                app:layout_constraintTop_toBottomOf="@id/subscribeButton"
                 tools:src="@drawable/logo_doctolib" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/checkButton"
-                style="@style/RegularButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:padding="12dp"
-                android:text="@string/check_center"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="gone"
-                app:backgroundTint="@color/blue_dark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phoneView" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/moreView"

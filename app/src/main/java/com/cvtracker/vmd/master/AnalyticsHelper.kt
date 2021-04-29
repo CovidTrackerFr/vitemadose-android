@@ -21,6 +21,8 @@ object AnalyticsHelper {
     // CENTER EVENT
     private const val EVENT_RDV_CLICK = "rdv_click"
     private const val EVENT_RDV_VERIFY_CLICK = "rdv_verify"
+    private const val EVENT_SUBSCRIBE_CLICK = "subscribe"
+    private const val EVENT_UNSUBSCRIBE_CLICK = "unsubscribe"
     private const val EVENT_RDV_DATA_DEPARTMENT = "rdv_departement"
     private const val EVENT_RDV_DATA_NAME = "rdv_name"
     private const val EVENT_RDV_DATA_PLATFORM = "rdv_platform"
@@ -54,6 +56,21 @@ object AnalyticsHelper {
         val event = when (center.available) {
             true -> EVENT_RDV_CLICK
             else -> EVENT_RDV_VERIFY_CLICK
+        }
+        firebaseAnalytics.logEvent(event, Bundle().apply {
+            putString(EVENT_RDV_DATA_DEPARTMENT, center.department)
+            putString(EVENT_RDV_DATA_NAME, center.name)
+            putString(EVENT_RDV_DATA_PLATFORM, center.platform)
+            putString(EVENT_RDV_DATA_LOCATION_TYPE, center.type)
+            putString(EVENT_RDV_DATA_VACCINE, center.vaccineType?.joinToString(separator = ","))
+            putString(EVENT_RDV_DATA_FILTER_TYPE, filterTypeValue(filterType))
+        })
+    }
+
+    fun logEventSubscribeClick(center: DisplayItem.Center, filterType: FilterType) {
+        val event = when (center.subscribed) {
+            true -> EVENT_SUBSCRIBE_CLICK
+            else -> EVENT_UNSUBSCRIBE_CLICK
         }
         firebaseAnalytics.logEvent(event, Bundle().apply {
             putString(EVENT_RDV_DATA_DEPARTMENT, center.department)

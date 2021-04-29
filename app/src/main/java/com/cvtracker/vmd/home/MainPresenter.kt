@@ -2,10 +2,7 @@ package com.cvtracker.vmd.home
 
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
-import com.cvtracker.vmd.master.AnalyticsHelper
-import com.cvtracker.vmd.master.DataManager
-import com.cvtracker.vmd.master.FilterType
-import com.cvtracker.vmd.master.PrefHelper
+import com.cvtracker.vmd.master.*
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -53,9 +50,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                                     (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM
                                 }
                             }
+
+                            val subscribedCenters = PrefHelper.subscribedCenters
+
                             /** Sort results **/
                             centers.sortWith(filter.comparator)
-                            centers.onEach { it.available = available }
+                            centers.onEach {
+                                it.available = available
+                                it.subscribed = subscribedCenters.contains(it.id)
+                            }
                             return centers
                         }
 
@@ -113,6 +116,18 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     override fun onCenterClicked(center: DisplayItem.Center) {
         view.openLink(center.url)
         AnalyticsHelper.logEventRdvClick(center, FilterType.ByDate)
+    }
+
+    override fun onSubscribeClicked(center: DisplayItem.Center) {
+        if (center.subscribed) {
+            FcmHelper.unsubscribeFromCenter(center)
+            PrefHelper.removeSubscribedCenter(center)
+        } else {
+            FcmHelper.subscribeToCenter(center)
+            PrefHelper.addSubscribedCenter(center)
+        }
+        center.subscribed = !center.subscribed
+        AnalyticsHelper.logEventSubscribeClick(center, FilterType.ByDate)
     }
 
     override fun onFilterChanged(filter: FilterType) {

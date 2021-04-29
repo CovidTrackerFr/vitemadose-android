@@ -164,6 +164,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             context = this,
             items = list,
             onClicked = { presenter.onCenterClicked(it) },
+            onSubscribeClicked = { presenter.onSubscribeClicked(it) },
             onAddressClicked = { startMapsActivity(it) },
             onPhoneClicked = { startPhoneActivity(it) }
         )

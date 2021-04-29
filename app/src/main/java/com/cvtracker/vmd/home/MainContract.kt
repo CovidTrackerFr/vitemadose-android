@@ -62,6 +62,11 @@ interface MainContract {
         fun onCenterClicked(center: DisplayItem.Center)
 
         /**
+         * Called when subscribe to center is clicked
+         */
+        fun onSubscribeClicked(center: DisplayItem.Center)
+
+        /**
          * Called when a department is selected via the selector
          */
         fun onSearchEntrySelected(searchEntry: SearchEntry)
