@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.home
 
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.*
@@ -51,13 +52,15 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                                 }
                             }
 
-                            val subscribedCenters = PrefHelper.subscribedCenters
+                            val centersBookmark = PrefHelper.centersBookmark
 
                             /** Sort results **/
                             centers.sortWith(filter.comparator)
-                            centers.onEach {
-                                it.available = available
-                                it.subscribed = subscribedCenters.contains(it.id)
+                            centers.onEach { center ->
+                                center.available = available
+                                center.bookmark = centersBookmark
+                                    .firstOrNull { center.id == it.centerId }?.bookmark
+                                    ?: Bookmark.NONE
                             }
                             return centers
                         }
@@ -118,16 +121,20 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         AnalyticsHelper.logEventRdvClick(center, FilterType.ByDate)
     }
 
-    override fun onSubscribeClicked(center: DisplayItem.Center) {
-        if (center.subscribed) {
+    override fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark) {
+        if (center.bookmark == Bookmark.NOTIFICATION) {
+            // unsubscribe from center
             FcmHelper.unsubscribeFromCenter(center)
-            PrefHelper.removeSubscribedCenter(center)
-        } else {
-            FcmHelper.subscribeToCenter(center)
-            PrefHelper.addSubscribedCenter(center)
         }
-        center.subscribed = !center.subscribed
-        AnalyticsHelper.logEventSubscribeClick(center, FilterType.ByDate)
+
+        if (target == Bookmark.NOTIFICATION) {
+            // subscribe to center
+            FcmHelper.subscribeToCenter(center)
+        }
+
+        center.bookmark = target
+        PrefHelper.updateBookmark(center)
+        AnalyticsHelper.logEventBookmarkClick(center, FilterType.ByDate)
     }
 
     override fun onFilterChanged(filter: FilterType) {

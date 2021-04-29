@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
@@ -22,7 +23,7 @@ class CenterAdapter(
     private val context: Context,
     private val items: List<DisplayItem>,
     private val onClicked: (DisplayItem.Center) -> Unit,
-    private val onSubscribeClicked: (DisplayItem.Center) -> Unit,
+    private val onBookmarkClicked: (DisplayItem.Center) -> Unit,
     private val onAddressClicked: (String) -> Unit,
     private val onPhoneClicked: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -88,8 +89,8 @@ class CenterAdapter(
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
                 checkButton.setOnClickListener { onClicked.invoke(center) }
-                subscribeButton.setOnClickListener {
-                    onSubscribeClicked.invoke(center)
+                bookmarkView.setOnClickListener {
+                    onBookmarkClicked.invoke(center)
                     notifyItemChanged(position)
                 }
 
@@ -101,7 +102,13 @@ class CenterAdapter(
                         )
                     )
 
-                subscribeButton.setText(if (center.subscribed) R.string.unsubscribe else R.string.subscribe)
+                bookmarkView.setImageResource(
+                    when (center.bookmark) {
+                        Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
+                        Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
+                        else -> R.drawable.ic_bookmark_border_24_dp
+                    }
+                )
 
                 if (center.available) {
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))

@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.home
 
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.FilterType
@@ -62,9 +63,9 @@ interface MainContract {
         fun onCenterClicked(center: DisplayItem.Center)
 
         /**
-         * Called when subscribe to center is clicked
+         * Called when bookmark is clicked
          */
-        fun onSubscribeClicked(center: DisplayItem.Center)
+        fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark)
 
         /**
          * Called when a department is selected via the selector

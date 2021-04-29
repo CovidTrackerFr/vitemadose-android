@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.master
 
 import android.os.Bundle
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.CenterResponse
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
@@ -21,8 +22,9 @@ object AnalyticsHelper {
     // CENTER EVENT
     private const val EVENT_RDV_CLICK = "rdv_click"
     private const val EVENT_RDV_VERIFY_CLICK = "rdv_verify"
-    private const val EVENT_SUBSCRIBE_CLICK = "subscribe"
-    private const val EVENT_UNSUBSCRIBE_CLICK = "unsubscribe"
+    private const val EVENT_BOOKMARK_FAVORITE_CLICK = "bookmark_favorite"
+    private const val EVENT_BOOKMARK_NOTIFICATION_CLICK = "bookmark_notification"
+    private const val EVENT_BOOKMARK_NONE_CLICK = "bookmark_none"
     private const val EVENT_RDV_DATA_DEPARTMENT = "rdv_departement"
     private const val EVENT_RDV_DATA_NAME = "rdv_name"
     private const val EVENT_RDV_DATA_PLATFORM = "rdv_platform"
@@ -67,10 +69,11 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventSubscribeClick(center: DisplayItem.Center, filterType: FilterType) {
-        val event = when (center.subscribed) {
-            true -> EVENT_SUBSCRIBE_CLICK
-            else -> EVENT_UNSUBSCRIBE_CLICK
+    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: FilterType) {
+        val event = when (center.bookmark) {
+            Bookmark.NOTIFICATION -> EVENT_BOOKMARK_NOTIFICATION_CLICK
+            Bookmark.FAVORITE -> EVENT_BOOKMARK_FAVORITE_CLICK
+            else -> EVENT_BOOKMARK_NONE_CLICK
         }
         firebaseAnalytics.logEvent(event, Bundle().apply {
             putString(EVENT_RDV_DATA_DEPARTMENT, center.department)

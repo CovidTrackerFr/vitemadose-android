@@ -35,7 +35,7 @@ sealed class DisplayItem {
         val vaccineType: List<String>?,
         var available: Boolean = false,
         var distance: Float? = null,
-        var subscribed: Boolean = false
+        var bookmark: Bookmark = Bookmark.NONE
     ) : DisplayItem() {
 
         val platformEnum: Plateform?
