@@ -26,11 +26,14 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
+import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
+import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.IntentHelper
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -81,6 +84,9 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             presenter.loadCenters()
         }
 
+        bookmarkIconView.setOnClickListener {
+            startActivity(Intent(this, BookmarkActivity::class.java))
+        }
         aboutIconView.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
         }
@@ -109,6 +115,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             filterSwitchView.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
+                    bookmarkIconView.imageTintList = ColorStateList.valueOf(it)
                     aboutIconView.imageTintList = ColorStateList.valueOf(it)
                 }
                 loadColor(
@@ -160,7 +167,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showCenters(list: List<DisplayItem>, filter: FilterType?) {
         appBarLayout.setExpanded(true, true)
-        centersRecyclerView.layoutManager = LinearLayoutManager(this)
         centersRecyclerView.adapter = CenterAdapter(
             context = this,
             items = list,
@@ -170,15 +176,18 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                     BookmarkBottomSheetFragment.newInstance(center.bookmark).apply {
                         listener = {
                             presenter.onBookmarkClicked(center, it)
-                            this@MainActivity.centersRecyclerView.adapter?.notifyItemChanged(position)
+                            this@MainActivity.centersRecyclerView.adapter?.notifyItemChanged(
+                                position
+                            )
                         }
                         show(it, tag)
                     }
                 }
             },
-            onAddressClicked = { startMapsActivity(it) },
-            onPhoneClicked = { startPhoneActivity(it) }
+            onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
+            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) }
         )
+
         /** set up filter state **/
         if (filter != null) {
             centersRecyclerView.topPadding = resources.dpToPx(50f)
@@ -190,36 +199,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
-    }
-
-    private fun startPhoneActivity(phoneNumber: String) {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$phoneNumber")
-        }
-        try {
-            startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            Snackbar.make(
-                container,
-                getString(R.string.no_app_activity_found),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
-    }
-
-    private fun startMapsActivity(address: String) {
-        val intent = Intent(Intent.ACTION_VIEW).apply {
-            data = Uri.parse("geo:0,0?q=${URLEncoder.encode(address, "utf-8")}")
-        }
-        try {
-            startActivity(intent)
-        } catch (e: ActivityNotFoundException) {
-            Snackbar.make(
-                container,
-                getString(R.string.no_app_activity_found),
-                Snackbar.LENGTH_SHORT
-            ).show()
-        }
     }
 
     override fun setLoading(loading: Boolean) {

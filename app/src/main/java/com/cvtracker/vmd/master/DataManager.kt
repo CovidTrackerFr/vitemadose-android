@@ -3,6 +3,7 @@ package com.cvtracker.vmd.master
 import com.cvtracker.vmd.BuildConfig
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.ValidatorAdapterFactory
+import com.cvtracker.vmd.data.CenterBookmark
 import com.cvtracker.vmd.data.CenterResponse
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.data.StatsResponse
@@ -109,6 +110,13 @@ object DataManager {
             }
         }
         return response
+    }
+
+    suspend fun getCentersBookmark(bookmarks: Set<CenterBookmark>): CenterResponse {
+        return bookmarks.map { it.department }
+            .distinct()
+            .map { department -> service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", department)) }
+            .reduce { acc, centerResponse -> acc.aggregate(centerResponse); acc }
     }
 
     suspend fun getStats(): StatsResponse {

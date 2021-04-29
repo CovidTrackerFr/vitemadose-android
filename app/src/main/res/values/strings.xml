@@ -41,6 +41,7 @@
     <string name="search_error">Erreur lors de la récupération des suggestions. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
     <string name="about">À propos</string>
+    <string name="bookmark">Favoris</string>
     <string name="liens">Liens</string>
     <string name="stats">Statistiques</string>
     <string name="disclaimer">Vite Ma Dose n\'est pas un outil officiel, n\'est pas exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun créneau de vaccination disponible n’est proposé sur notre application.</string>
