@@ -27,9 +27,9 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setUpViews() {
         when (arguments?.getSerializable(EXTRA_CURRENT_BOOKMARK) as? Bookmark) {
-            Bookmark.NOTIFICATION -> notificationView.setText(R.string.bookmark_notification_keep)
-            Bookmark.FAVORITE -> favoriteView.setText(R.string.bookmark_favorite_keep)
-            Bookmark.NONE -> noneView.setText(R.string.bookmark_none_keep)
+            Bookmark.NOTIFICATION -> notificationView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_notifications_24dp, 0, R.drawable.ic_done_black_24dp, 0)
+            Bookmark.FAVORITE -> favoriteView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_24dp, 0, R.drawable.ic_done_black_24dp, 0)
+            Bookmark.NONE -> noneView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_border_24_dp, 0, R.drawable.ic_done_black_24dp, 0)
         }
 
         notificationView.setOnClickListener {

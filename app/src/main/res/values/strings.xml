@@ -3,12 +3,9 @@
     <string name="find_dose_easily_and_quickly">Trouvez une dose de vaccin facilement et rapidement</string>
     <string name="choose_department_title">Commune, code postal, département</string>
     <string name="appointement">Prendre rendez-vous</string>
-    <string name="bookmark_notification">Recevoir des notifications</string>
-    <string name="bookmark_notification_keep">Continuer à recevoir des notifications</string>
-    <string name="bookmark_favorite">Mettre en favori</string>
-    <string name="bookmark_favorite_keep">Laisser en favori</string>
-    <string name="bookmark_none">Retirer des favoris</string>
-    <string name="bookmark_none_keep">Ne pas mettre favori</string>
+    <string name="bookmark_notification">Suivi avec notifications</string>
+    <string name="bookmark_favorite">Suivi</string>
+    <string name="bookmark_none">Non suivi</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="centers">
         <item quantity="one">lieu\nde vaccination</item>
@@ -41,7 +38,7 @@
     <string name="search_error">Erreur lors de la récupération des suggestions. Réessayez</string>
     <string name="no_app_activity_found">Aucune application trouvée.</string>
     <string name="about">À propos</string>
-    <string name="bookmark">Favoris</string>
+    <string name="bookmark">Centres suivis</string>
     <string name="liens">Liens</string>
     <string name="stats">Statistiques</string>
     <string name="disclaimer">Vite Ma Dose n\'est pas un outil officiel, n\'est pas exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun créneau de vaccination disponible n’est proposé sur notre application.</string>

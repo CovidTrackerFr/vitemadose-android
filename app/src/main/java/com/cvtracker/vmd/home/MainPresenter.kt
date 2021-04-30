@@ -1,13 +1,17 @@
 package com.cvtracker.vmd.home
 
+import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
-import com.cvtracker.vmd.master.*
+import com.cvtracker.vmd.master.AnalyticsHelper
+import com.cvtracker.vmd.master.DataManager
+import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.*
 import timber.log.Timber
 
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
+class MainPresenter(override val view: MainContract.View) : AbstractCenterPresenter(view), MainContract.Presenter {
 
     private var jobSearch: Job? = null
     private var jobCenters: Job? = null
@@ -88,6 +92,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                             list.addAll(preparedUnavailableCenters)
                         }
 
+                        view.removeEmptyStateIfNeeded()
                         view.showCenters(list, if (isCitySearch) filter else null)
                         AnalyticsHelper.logEventSearch(entry, it, filter)
                     }
@@ -114,27 +119,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
 
     override fun getSavedSearchEntry(): SearchEntry? {
         return PrefHelper.favEntry
-    }
-
-    override fun onCenterClicked(center: DisplayItem.Center) {
-        view.openLink(center.url)
-        AnalyticsHelper.logEventRdvClick(center, FilterType.ByDate)
-    }
-
-    override fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark) {
-        if (center.bookmark == Bookmark.NOTIFICATION) {
-            // unsubscribe from center
-            FcmHelper.unsubscribeFromCenter(center)
-        }
-
-        if (target == Bookmark.NOTIFICATION) {
-            // subscribe to center
-            FcmHelper.subscribeToCenter(center)
-        }
-
-        center.bookmark = target
-        PrefHelper.updateBookmark(center)
-        AnalyticsHelper.logEventBookmarkClick(center, FilterType.ByDate)
     }
 
     override fun onFilterChanged(filter: FilterType) {

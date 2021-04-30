@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.bookmark
 
+import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.master.DataManager
@@ -7,7 +8,7 @@ import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.*
 import timber.log.Timber
 
-class BookmarkPresenter(private val view: BookmarkContract.View) : BookmarkContract.Presenter {
+class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCenterPresenter(view), BookmarkContract.Presenter {
 
     private var jobBookmarks: Job? = null
 
@@ -45,7 +46,7 @@ class BookmarkPresenter(private val view: BookmarkContract.View) : BookmarkContr
 
                         /** Add unavailable centers **/
                         list.addAll(prepareCenters(it.unavailableCenters, true))
-                        view.showCenters(list)
+                        view.showCenters(list, null)
                     }
                 } catch (e: CancellationException) {
                     /** Coroutine has been canceled => Ignore **/
@@ -57,14 +58,6 @@ class BookmarkPresenter(private val view: BookmarkContract.View) : BookmarkContr
                 }
             }
         }
-    }
-
-    override fun onCenterClicked(center: DisplayItem.Center) {
-        // TODO("Not yet implemented")
-    }
-
-    override fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark) {
-        // TODO("Not yet implemented")
     }
 
 

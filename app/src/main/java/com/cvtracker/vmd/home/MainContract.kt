@@ -1,13 +1,12 @@
 package com.cvtracker.vmd.home
 
-import com.cvtracker.vmd.data.Bookmark
-import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.base.CenterContract
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.FilterType
 
 interface MainContract {
 
-    interface View {
+    interface View : CenterContract.View{
 
         /**
          * Show empty state
@@ -15,24 +14,9 @@ interface MainContract {
         fun showEmptyState()
 
         /**
-         * Display main list of centers (available/unavailable)
-         */
-        fun showCenters(list: List<DisplayItem>, filter: FilterType?)
-
-        /**
          * Setup department selectors with retrieved departments
          */
         fun setupSelector(items: List<SearchEntry>)
-
-        /**
-         * Open link
-         */
-        fun openLink(url: String)
-
-        /**
-         * Notify an error occurs while retrieving centers
-         */
-        fun showCentersError()
 
         /**
          * Notify an error occurs while retrieving suggestions
@@ -40,32 +24,18 @@ interface MainContract {
         fun showSearchError()
 
         /**
-         * Notify centers are loading
-         */
-        fun setLoading(loading: Boolean)
-
-        /**
          * Display the entry in the selector
          */
         fun displaySelectedSearchEntry(entry: SearchEntry?)
+        fun removeEmptyStateIfNeeded()
     }
 
-    interface Presenter {
+    interface Presenter: CenterContract.Presenter {
 
         /**
          * Load centers for the saved department
          */
         fun loadCenters()
-
-        /**
-         * Called when a center is clicked
-         */
-        fun onCenterClicked(center: DisplayItem.Center)
-
-        /**
-         * Called when bookmark is clicked
-         */
-        fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark)
 
         /**
          * Called when a department is selected via the selector

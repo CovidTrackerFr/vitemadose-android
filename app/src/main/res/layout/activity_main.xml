@@ -134,12 +134,13 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bookmarkIconView"
         android:layout_width="56dp"
+        android:layout_marginStart="2dp"
         android:layout_height="56dp"
         android:layout_gravity="start"
         android:background="@drawable/selectable_background"
         android:elevation="20dp"
-        android:padding="14dp"
-        app:srcCompat="@drawable/ic_bookmark_24dp"
+        android:padding="15dp"
+        app:srcCompat="@drawable/ic_bookmarks_black_24dp"
         app:tint="@color/mine_shaft" />
 
     <androidx.appcompat.widget.AppCompatImageView

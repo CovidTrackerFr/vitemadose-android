@@ -2,11 +2,9 @@ package com.cvtracker.vmd.home
 
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
-import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.graphics.drawable.ColorDrawable
-import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.text.Editable
@@ -21,31 +19,24 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
+import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
-import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
-import com.cvtracker.vmd.custom.CenterAdapter
-import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
-import com.cvtracker.vmd.master.FilterType
-import com.cvtracker.vmd.master.IntentHelper
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
-import java.net.URLEncoder
 
 
-class MainActivity : AppCompatActivity(), MainContract.View {
+class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View {
 
-    private val presenter: MainContract.Presenter = MainPresenter(this)
+    override val presenter: MainContract.Presenter = MainPresenter(this)
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container)}
 
@@ -57,7 +48,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
 
         override fun afterTextChanged(s: Editable?) {
-            presenter.onSearchUpdated(s?.toString()?.trim().orEmpty())
+            (presenter as MainPresenter).onSearchUpdated(s?.toString()?.trim().orEmpty())
         }
     }
 
@@ -165,46 +156,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         displaySelectedSearchEntry(presenter.getSavedSearchEntry())
     }
 
-    override fun showCenters(list: List<DisplayItem>, filter: FilterType?) {
-        appBarLayout.setExpanded(true, true)
-        centersRecyclerView.adapter = CenterAdapter(
-            context = this,
-            items = list,
-            onClicked = { presenter.onCenterClicked(it) },
-            onBookmarkClicked = { center, position ->
-                supportFragmentManager.let {
-                    BookmarkBottomSheetFragment.newInstance(center.bookmark).apply {
-                        listener = {
-                            presenter.onBookmarkClicked(center, it)
-                            this@MainActivity.centersRecyclerView.adapter?.notifyItemChanged(
-                                position
-                            )
-                        }
-                        show(it, tag)
-                    }
-                }
-            },
-            onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
-            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) }
-        )
-
-        /** set up filter state **/
-        if (filter != null) {
-            centersRecyclerView.topPadding = resources.dpToPx(50f)
-            filterSwitchView.show()
-            filterSwitchView.updateSelectedFilter(filter)
-        } else {
-            centersRecyclerView.topPadding = resources.dpToPx(12f)
-            filterSwitchView.hide()
-        }
-
-        emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
-    }
-
-    override fun setLoading(loading: Boolean) {
-        refreshLayout.isRefreshing = loading
-    }
-
     override fun setupSelector(items: List<SearchEntry>) {
         arrayOf(
             emptyStateSelectedDepartment,
@@ -224,6 +175,10 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             }
             it.showDropDown()
         }
+    }
+
+    override fun removeEmptyStateIfNeeded(){
+        emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
     }
 
     override fun showEmptyState() {
@@ -254,14 +209,6 @@ class MainActivity : AppCompatActivity(), MainContract.View {
             it.setText(entry?.toString() ?: "", false)
             it.addTextChangedListener(textWatcher)
         }
-    }
-
-    override fun openLink(url: String) {
-        launchWebUrl(url)
-    }
-
-    override fun showCentersError() {
-        Snackbar.make(container, getString(R.string.centers_error), Snackbar.LENGTH_SHORT).show()
     }
 
     override fun showSearchError() {

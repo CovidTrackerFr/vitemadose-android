@@ -1,26 +1,10 @@
 package com.cvtracker.vmd.bookmark
 
-import com.cvtracker.vmd.data.Bookmark
-import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.base.CenterContract
 
 interface BookmarkContract {
 
-    interface View {
-
-        /**
-         * Display bookmark list of centers
-         */
-        fun showCenters(list: List<DisplayItem>)
-
-        /**
-         * Notify centers are loading
-         */
-        fun setLoading(loading: Boolean)
-
-        /**
-         * Notify an error occurs while retrieving centers
-         */
-        fun showCentersError()
+    interface View: CenterContract.View{
 
         /**
          * Notify no bookmark saved
@@ -28,21 +12,11 @@ interface BookmarkContract {
         fun showNoBookmark()
     }
 
-    interface Presenter {
+    interface Presenter: CenterContract.Presenter {
 
         /**
          * Load centers for the saved bookmarks
          */
         fun loadBookmarks()
-
-        /**
-         * Called when a center is clicked
-         */
-        fun onCenterClicked(center: DisplayItem.Center)
-
-        /**
-         * Called when bookmark is clicked
-         */
-        fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark)
     }
 }
