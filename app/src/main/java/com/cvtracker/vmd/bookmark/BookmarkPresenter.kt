@@ -4,6 +4,7 @@ import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.master.DataManager
+import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -26,9 +27,10 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
                         val centersBookmarkId = centersBookmark.map { it.centerId }
 
                         fun prepareCenters(
-                            centers: List<DisplayItem.Center>,
+                            centers: MutableList<DisplayItem.Center>,
                             available: Boolean
                         ): List<DisplayItem.Center> {
+                            centers.sortWith(FilterType.ByDate.comparator)
                             return centers
                                 .filter { it.id in centersBookmarkId } // todo move this filter on DataManager ?
                                 .onEach { center ->
