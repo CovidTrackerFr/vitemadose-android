@@ -39,6 +39,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                     val filter = selectedFilter ?: entry.defaultFilterType
                     val isCitySearch = entry is SearchEntry.City
 
+                    view.removeEmptyStateIfNeeded()
                     view.setLoading(true)
 
                     DataManager.getCenters(
@@ -92,7 +93,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             list.addAll(preparedUnavailableCenters)
                         }
 
-                        view.removeEmptyStateIfNeeded()
                         view.showCenters(list, if (isCitySearch) filter else null)
                         AnalyticsHelper.logEventSearch(entry, it, filter)
                     }

@@ -182,10 +182,12 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     }
 
     override fun removeEmptyStateIfNeeded(){
+        bookmarkIconView.show()
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
     }
 
     override fun showEmptyState() {
+        bookmarkIconView.hide()
         stubEmptyState.setOnInflateListener { stub, inflated ->
             emptyStateSelectedDepartment.setOnEditorActionListener(onEditorActionListener)
             SpannableString(inflated.emptyStateBaselineTextView.text).apply {
