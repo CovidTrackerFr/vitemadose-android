@@ -45,7 +45,7 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
                         list.addAll(prepareCenters(it.availableCenters, true))
 
                         /** Add unavailable centers **/
-                        list.addAll(prepareCenters(it.unavailableCenters, true))
+                        list.addAll(prepareCenters(it.unavailableCenters, false))
                         view.showCenters(list, null)
                     }
                 } catch (e: CancellationException) {
