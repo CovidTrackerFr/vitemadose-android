@@ -29,7 +29,7 @@ sealed class DisplayItem {
         val appointmentCount: Int,
         @SerializedName("type")
         val type: String?,
-        @SerializedName("internal_id")
+        @SerializedName("gid")
         val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
