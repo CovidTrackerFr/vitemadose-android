@@ -24,6 +24,7 @@ import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
+import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.util.VMDAppUpdate
@@ -36,6 +37,9 @@ import kotlinx.android.synthetic.main.empty_state.view.*
 
 class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View {
 
+    companion object{
+        const val REQUEST_CODE_BOOKMARKS = 121
+    }
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container)}
@@ -76,7 +80,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         }
 
         bookmarkIconView.setOnClickListener {
-            startActivity(Intent(this, BookmarkActivity::class.java))
+            startActivityForResult(Intent(this, BookmarkActivity::class.java), REQUEST_CODE_BOOKMARKS)
         }
         aboutIconView.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
@@ -225,6 +229,13 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         ValueAnimator.ofObject(ArgbEvaluator(), colorStart, colorEnd).apply {
             setCurrentFraction(progress)
             onColorLoaded.invoke(animatedValue as Int)
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if(requestCode == REQUEST_CODE_BOOKMARKS && resultCode == RESULT_OK){
+            (centersRecyclerView.adapter as? CenterAdapter)?.refreshBookmarkState()
         }
     }
 }

@@ -13,6 +13,7 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
 import kotlinx.android.synthetic.main.item_last_updated.view.*
@@ -173,7 +174,7 @@ class CenterAdapter(
                     -1
                 } else {
                     val oldPosition = mExpandedPosition
-                    if(oldPosition >= 0) {
+                    if (oldPosition >= 0) {
                         notifyItemChanged(oldPosition)
                     }
                     position
@@ -190,10 +191,12 @@ class CenterAdapter(
         ) {
         fun bind(header: DisplayItem.UnavailableCenterHeader) {
             with(itemView) {
-                sectionLibelleView.setText(when {
-                    header.hasAvailableCenters -> R.string.no_slots_available_center_header_others
-                    else -> R.string.no_slots_available_center_header
-                })
+                sectionLibelleView.setText(
+                    when {
+                        header.hasAvailableCenters -> R.string.no_slots_available_center_header_others
+                        else -> R.string.no_slots_available_center_header
+                    }
+                )
             }
         }
     }
@@ -286,5 +289,15 @@ class CenterAdapter(
     }
 
     override fun getItemCount() = items.size
+
+    fun refreshBookmarkState() {
+        val centersBookmark = PrefHelper.centersBookmark
+        items.filterIsInstance<DisplayItem.Center>().onEach { center ->
+            center.bookmark = centersBookmark
+                .firstOrNull { center.id == it.centerId }?.bookmark
+                ?: Bookmark.NONE
+        }
+        notifyDataSetChanged()
+    }
 
 }

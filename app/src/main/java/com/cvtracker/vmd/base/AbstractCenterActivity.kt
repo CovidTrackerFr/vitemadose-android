@@ -11,7 +11,8 @@ import com.cvtracker.vmd.master.IntentHelper
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCompatActivity(), CenterContract.View {
+abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCompatActivity(),
+    CenterContract.View {
 
     abstract val presenter: T
 
@@ -21,19 +22,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
             context = this,
             items = list,
             onClicked = { presenter.onCenterClicked(it) },
-            onBookmarkClicked = { center, position ->
-                supportFragmentManager.let {
-                    BookmarkBottomSheetFragment.newInstance(center.bookmark).apply {
-                        listener = {
-                            presenter.onBookmarkClicked(center, it)
-                            this@AbstractCenterActivity.centersRecyclerView.adapter?.notifyItemChanged(
-                                position
-                            )
-                        }
-                        show(it, tag)
-                    }
-                }
-            },
+            onBookmarkClicked = { center, position -> showBookmarkBottomSheet(center, position) },
             onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
             onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) }
         )
@@ -49,6 +38,20 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
         }
     }
 
+    open fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int) {
+        supportFragmentManager.let {
+            BookmarkBottomSheetFragment.newInstance(center.bookmark).apply {
+                listener = {
+                    presenter.onBookmarkClicked(center, it)
+                    this@AbstractCenterActivity.centersRecyclerView.adapter?.notifyItemChanged(
+                        position
+                    )
+                }
+                show(it, tag)
+            }
+        }
+    }
+
     override fun setLoading(loading: Boolean) {
         refreshLayout.isRefreshing = loading
     }
@@ -58,6 +61,10 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
     }
 
     override fun showCentersError() {
-        Snackbar.make(findViewById(R.id.container), getString(R.string.centers_error), Snackbar.LENGTH_SHORT).show()
+        Snackbar.make(
+            findViewById(R.id.container),
+            getString(R.string.centers_error),
+            Snackbar.LENGTH_SHORT
+        ).show()
     }
 }
