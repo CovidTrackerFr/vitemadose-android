@@ -7,8 +7,11 @@ import com.cvtracker.vmd.R
 import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
-import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.activity_main.*
+import com.cvtracker.vmd.extensions.hide
+import com.cvtracker.vmd.extensions.show
+import kotlinx.android.synthetic.main.activity_about.toolbar
+import kotlinx.android.synthetic.main.activity_bookmark.*
+import kotlinx.android.synthetic.main.activity_main.refreshLayout
 
 class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), BookmarkContract.View {
 
@@ -47,7 +50,11 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
         }
     }
 
-    override fun showNoBookmark() {
-        // TODO("Not yet implemented")
+    override fun showNoBookmark(visible: Boolean) {
+        if(visible){
+            bookmarkEmptyState.show()
+        }else{
+            bookmarkEmptyState.hide()
+        }
     }
 }

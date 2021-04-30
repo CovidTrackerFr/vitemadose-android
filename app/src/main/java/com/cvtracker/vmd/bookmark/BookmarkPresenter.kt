@@ -18,8 +18,10 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
         jobBookmarks = GlobalScope.launch(Dispatchers.Main) {
             val centersBookmark = PrefHelper.centersBookmark
             if (centersBookmark.isEmpty()) {
-                view.showNoBookmark()
+                view.setLoading(false)
+                view.showNoBookmark(true)
             } else {
+                view.showNoBookmark(false)
                 try {
                     view.setLoading(true)
 

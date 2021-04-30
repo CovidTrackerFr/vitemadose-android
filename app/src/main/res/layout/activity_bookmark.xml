@@ -38,4 +38,62 @@
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/bookmarkEmptyState"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="?attr/backgroundColor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/firstIconView"
+            android:layout_width="36dp"
+            app:layout_constraintVertical_bias="0.4"
+            android:layout_height="36dp"
+            android:layout_marginEnd="8dp"
+            app:layout_constraintBottom_toTopOf="@id/emptyStateTitleView"
+            app:layout_constraintEnd_toStartOf="@id/secondIconView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed"
+            app:srcCompat="@drawable/ic_bookmark_24dp" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/secondIconView"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:layout_marginStart="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/firstIconView"
+            app:layout_constraintTop_toTopOf="@id/firstIconView"
+            app:srcCompat="@drawable/ic_notifications_24dp" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/emptyStateTitleView"
+            style="@style/TextStyle_baseline_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:text="@string/bookmark_empty_state_title"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/emptyStateDescriptionView"
+            app:layout_constraintTop_toBottomOf="@id/firstIconView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/emptyStateDescriptionView"
+            style="@style/TextStyle_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:text="@string/bookmark_empty_state_description"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/emptyStateTitleView" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,7 +9,7 @@ interface BookmarkContract {
         /**
          * Notify no bookmark saved
          */
-        fun showNoBookmark()
+        fun showNoBookmark(visible: Boolean)
     }
 
     interface Presenter: CenterContract.Presenter {

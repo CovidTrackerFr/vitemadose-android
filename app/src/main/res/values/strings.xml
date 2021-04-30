@@ -49,4 +49,6 @@
     <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
     <string name="app_update_pending">Préparation de la mise à jour.</string>
     <string name="app_update_downloaded">Mise à jour téléchargée. Veuillez redémarrer ViteMaDose.</string>
+    <string name="bookmark_empty_state_description">Retrouvez ici vos centres suivis. Vous pouvez également activer les notifications sur un centre pour recevoir une alerte quand celui ci propose à nouveau des créneaux de vaccination.</string>
+    <string name="bookmark_empty_state_title">Aucun centre suivi</string>
 </resources>
