@@ -13,10 +13,13 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
 
     private var jobBookmarks: Job? = null
 
-    override fun loadBookmarks() {
+    override fun loadBookmarks(department: String?, centerId: String?) {
         jobBookmarks?.cancel()
         jobBookmarks = GlobalScope.launch(Dispatchers.Main) {
             val centersBookmark = PrefHelper.centersBookmark
+                    .filter { department == null || department == it.department }
+                    .filter { centerId == null || centerId == it.centerId }
+
             if (centersBookmark.isEmpty()) {
                 view.setLoading(false)
                 view.showNoBookmark(true)
@@ -26,15 +29,12 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
                     view.setLoading(true)
 
                     DataManager.getCentersBookmark(centersBookmark).let {
-                        val centersBookmarkId = centersBookmark.map { it.centerId }
-
                         fun prepareCenters(
                             centers: MutableList<DisplayItem.Center>,
                             available: Boolean
                         ): List<DisplayItem.Center> {
                             centers.sortWith(FilterType.ByDate.comparator)
                             return centers
-                                .filter { it.id in centersBookmarkId } // todo move this filter on DataManager ?
                                 .onEach { center ->
                                     center.available = available
                                     center.bookmark = centersBookmark
@@ -63,6 +63,4 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
             }
         }
     }
-
-
 }

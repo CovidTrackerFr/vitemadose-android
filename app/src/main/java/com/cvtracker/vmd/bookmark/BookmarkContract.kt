@@ -4,7 +4,7 @@ import com.cvtracker.vmd.base.CenterContract
 
 interface BookmarkContract {
 
-    interface View: CenterContract.View{
+    interface View : CenterContract.View {
 
         /**
          * Notify no bookmark saved
@@ -12,11 +12,11 @@ interface BookmarkContract {
         fun showNoBookmark(visible: Boolean)
     }
 
-    interface Presenter: CenterContract.Presenter {
+    interface Presenter : CenterContract.Presenter {
 
         /**
          * Load centers for the saved bookmarks
          */
-        fun loadBookmarks()
+        fun loadBookmarks(department: String?, centerId: String?)
     }
 }

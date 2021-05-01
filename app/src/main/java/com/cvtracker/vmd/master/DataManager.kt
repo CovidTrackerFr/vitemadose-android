@@ -21,6 +21,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.Locale.filter
 
 object DataManager {
 
@@ -112,11 +113,17 @@ object DataManager {
         return response
     }
 
-    suspend fun getCentersBookmark(bookmarks: Set<CenterBookmark>): CenterResponse {
-        return bookmarks.map { it.department }
-            .distinct()
-            .map { department -> service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", department)) }
-            .reduce { acc, centerResponse -> acc.aggregate(centerResponse); acc }
+    suspend fun getCentersBookmark(bookmarks: List<CenterBookmark>): CenterResponse {
+        return bookmarks
+                .map { it.department }
+                .distinct()
+                .map { department -> service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", department)) }
+                .reduce { acc, centerResponse -> acc.aggregate(centerResponse); acc }
+                .apply {
+                    val centersBookmarkId = bookmarks.map { it.centerId }
+                    availableCenters.removeAll { (it.id in centersBookmarkId).not() }
+                    unavailableCenters.removeAll { (it.id in centersBookmarkId).not() }
+                }
     }
 
     suspend fun getStats(): StatsResponse {

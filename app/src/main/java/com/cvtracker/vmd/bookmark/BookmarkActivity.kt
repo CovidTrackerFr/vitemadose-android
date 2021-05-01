@@ -15,7 +15,15 @@ import kotlinx.android.synthetic.main.activity_main.refreshLayout
 
 class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), BookmarkContract.View {
 
+    companion object {
+        const val EXTRA_DEPARTMENT = "EXTRA_DEPARTMENT"
+        const val EXTRA_CENTER_ID = "EXTRA_CENTER_ID"
+    }
+
     override val presenter: BookmarkContract.Presenter = BookmarkPresenter(this)
+
+    private var notificationDepartment: String? = null
+    private var notificationCenterId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,14 +35,17 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        notificationDepartment = intent.getStringExtra(EXTRA_DEPARTMENT)
+        notificationCenterId = intent.getStringExtra(EXTRA_CENTER_ID)
+
         refreshLayout.setOnRefreshListener {
-            presenter.loadBookmarks()
+            presenter.loadBookmarks(notificationDepartment, notificationCenterId)
         }
 
-        presenter.loadBookmarks()
+        presenter.loadBookmarks(notificationDepartment, notificationCenterId)
     }
 
-    override fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int){
+    override fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int) {
         super.showBookmarkBottomSheet(center, position)
         /** Retain we should have changed a bookmark state **/
         setResult(RESULT_OK)
@@ -50,10 +61,21 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
         }
     }
 
+    override fun onBackPressed() {
+        if (notificationDepartment != null) {
+            notificationDepartment = null
+            notificationCenterId = null
+
+            presenter.loadBookmarks(notificationDepartment, notificationCenterId)
+        } else {
+            super.onBackPressed()
+        }
+    }
+
     override fun showNoBookmark(visible: Boolean) {
-        if(visible){
+        if (visible) {
             bookmarkEmptyState.show()
-        }else{
+        } else {
             bookmarkEmptyState.hide()
         }
     }
