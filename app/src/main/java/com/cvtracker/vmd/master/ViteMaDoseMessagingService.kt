@@ -6,11 +6,13 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.bookmark.BookmarkActivity
+import com.cvtracker.vmd.home.MainActivity
+import com.cvtracker.vmd.home.MainPresenter
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 
@@ -37,24 +39,23 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
 
         if (Build.VERSION.SDK_INT >= 26) {
             val notificationChannel = NotificationChannel(NOTIFICATION_CHANNEL_ID_AVAILABILITY, "Disponibilités",
-                    NotificationManager.IMPORTANCE_DEFAULT)
+                NotificationManager.IMPORTANCE_DEFAULT)
             notificationChannel.description = "Nouvelle disponibilité dans vos centre suivis avec notification";
             notificationManager.createNotificationChannel(notificationChannel);
         }
 
-        val intent = Intent(this, BookmarkActivity::class.java)
-                .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                .putExtra(BookmarkActivity.EXTRA_DEPARTMENT, department)
-                .putExtra(BookmarkActivity.EXTRA_CENTER_ID, centerId)
+        val intent = Intent(this, MainActivity::class.java)
+            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            .setData(Uri.parse("${MainPresenter.BASE_URL}/bookmark/$department/$centerId"))
 
         val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
 
         val notificationBuilder = NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_AVAILABILITY)
-                .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_vmd_logo_notification)
-                .setContentTitle(title)
-                .setContentText(body)
-                .setContentIntent(pendingIntent)
+            .setAutoCancel(true)
+            .setSmallIcon(R.drawable.ic_vmd_logo_notification)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setContentIntent(pendingIntent)
 
         val notificationId = "$department\\_$centerId".hashCode() // use unique id to replace notification if already exists
 

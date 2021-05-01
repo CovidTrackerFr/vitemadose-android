@@ -20,6 +20,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     companion object{
         const val DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 75f
+        const val BASE_URL = "https://vitemadose.covidtracker.fr"
     }
 
     override fun loadInitialState() {
@@ -154,6 +155,23 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             } catch (e: Exception) {
                 Timber.e(e)
                 view.showSearchError()
+            }
+        }
+    }
+
+    override fun handleDeepLink(data: String) {
+        when {
+            data.startsWith("$BASE_URL/bookmarks") -> {
+                /** Bookmarks list **/
+                view.showBookmarks()
+            }
+            data.startsWith("$BASE_URL/bookmark/") -> {
+                val params = data.replace("$BASE_URL/bookmark/", "").split("/")
+                if(params.size >= 2){
+                    /** params[0] is the department **/
+                    /** params[1] is the centerId **/
+                    view.showBookmarks(params[0], params[1])
+                }
             }
         }
     }

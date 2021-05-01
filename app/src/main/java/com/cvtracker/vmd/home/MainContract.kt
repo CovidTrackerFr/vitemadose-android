@@ -6,7 +6,7 @@ import com.cvtracker.vmd.master.FilterType
 
 interface MainContract {
 
-    interface View : CenterContract.View{
+    interface View : CenterContract.View {
 
         /**
          * Show empty state
@@ -27,10 +27,13 @@ interface MainContract {
          * Display the entry in the selector
          */
         fun displaySelectedSearchEntry(entry: SearchEntry?)
+
         fun removeEmptyStateIfNeeded()
+
+        fun showBookmarks(department: String? = null, centerId: String? = null)
     }
 
-    interface Presenter: CenterContract.Presenter {
+    interface Presenter : CenterContract.Presenter {
 
         /**
          * Load centers for the saved department
@@ -61,5 +64,7 @@ interface MainContract {
          * Called when the filter has been modified
          */
         fun onFilterChanged(filter: FilterType)
+
+        fun handleDeepLink(data: String)
     }
 }

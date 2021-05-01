@@ -37,12 +37,12 @@ import kotlinx.android.synthetic.main.empty_state.view.*
 
 class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View {
 
-    companion object{
+    companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
     }
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
-    private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container)}
+    private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
     private val textWatcher = object : TextWatcher {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -71,6 +71,10 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         setContentView(R.layout.activity_main)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
+        if(savedInstanceState == null){
+            intent.dataString?.let { presenter.handleDeepLink(it) }
+        }
+
         appUpdateChecker.checkUpdates()
         initSelectors()
 
@@ -80,7 +84,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         }
 
         bookmarkIconView.setOnClickListener {
-            startActivityForResult(Intent(this, BookmarkActivity::class.java), REQUEST_CODE_BOOKMARKS)
+            showBookmarks()
         }
         aboutIconView.setOnClickListener {
             startActivity(Intent(this, AboutActivity::class.java))
@@ -181,7 +185,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         }
     }
 
-    override fun removeEmptyStateIfNeeded(){
+    override fun removeEmptyStateIfNeeded() {
         bookmarkIconView.show()
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
     }
@@ -236,8 +240,23 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if(requestCode == REQUEST_CODE_BOOKMARKS && resultCode == RESULT_OK){
+        if (requestCode == REQUEST_CODE_BOOKMARKS && resultCode == RESULT_OK) {
             (centersRecyclerView.adapter as? CenterAdapter)?.refreshBookmarkState()
         }
+    }
+
+    override fun showBookmarks(department: String?, centerId: String?) {
+        startActivityForResult(
+            Intent(this, BookmarkActivity::class.java).apply {
+                putExtra(BookmarkActivity.EXTRA_DEPARTMENT, department)
+                putExtra(BookmarkActivity.EXTRA_CENTER_ID, centerId)
+            }, REQUEST_CODE_BOOKMARKS
+        )
+    }
+
+    override fun onNewIntent(newIntent: Intent?) {
+        super.onNewIntent(newIntent)
+        intent = newIntent
+        intent.dataString?.let { presenter.handleDeepLink(it) }
     }
 }

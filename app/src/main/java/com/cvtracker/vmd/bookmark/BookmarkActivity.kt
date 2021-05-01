@@ -43,11 +43,15 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
         }
 
         presenter.loadBookmarks(notificationDepartment, notificationCenterId)
+
+        if(notificationCenterId != null || notificationDepartment != null){
+            supportActionBar?.setTitle(R.string.notification)
+        }
     }
 
     override fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int) {
         super.showBookmarkBottomSheet(center, position)
-        /** Retain we should have changed a bookmark state **/
+        /** Retain we could have changed a bookmark state **/
         setResult(RESULT_OK)
     }
 
@@ -58,17 +62,6 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
                 true
             }
             else -> super.onOptionsItemSelected(item)
-        }
-    }
-
-    override fun onBackPressed() {
-        if (notificationDepartment != null) {
-            notificationDepartment = null
-            notificationCenterId = null
-
-            presenter.loadBookmarks(notificationDepartment, notificationCenterId)
-        } else {
-            super.onBackPressed()
         }
     }
 
