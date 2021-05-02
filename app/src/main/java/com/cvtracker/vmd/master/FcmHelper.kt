@@ -15,7 +15,10 @@ object FcmHelper {
         unsubscribeFromTopic(topicForCenter(center))
     }
 
-    private fun topicForCenter(center: DisplayItem.Center) = "department_${center.department}_center_${center.id}"
+    private fun topicForCenter(center: DisplayItem.Center) = topicWithDepartmentAndCenterId(center.department, center.id)
+
+    /** Use for notification action **/
+    fun topicWithDepartmentAndCenterId(department: String, centerId: String?) = "department_${department}_center_${centerId}"
 
     private fun subscribeToTopic(topic: String) {
         Firebase.messaging.subscribeToTopic(topic)
