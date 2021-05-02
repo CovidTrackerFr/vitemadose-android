@@ -1,5 +1,7 @@
 package com.cvtracker.vmd.about
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
@@ -9,7 +11,9 @@ import com.cvtracker.vmd.data.DisplayStat
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_about.*
+
 
 class AboutActivity : AppCompatActivity(), AboutContract.View {
 
@@ -34,6 +38,21 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
 
         vaccinTrackerView.setOnClickListener {
             launchWebUrl(URL_VACCINTRACKER)
+        }
+
+        shareView.setOnClickListener {
+            try {
+                startActivity(Intent(Intent.ACTION_SEND).apply {
+                    type = "text/plain"
+                    putExtra(Intent.EXTRA_TEXT, getString(R.string.share_description))
+                })
+            }catch (e: ActivityNotFoundException){
+                Snackbar.make(
+                    container,
+                    getString(R.string.no_app_activity_found),
+                    Snackbar.LENGTH_SHORT
+                ).show()
+            }
         }
 
         presenter.loadStats()
