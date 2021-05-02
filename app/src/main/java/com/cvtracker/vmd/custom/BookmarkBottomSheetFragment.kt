@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.Bookmark
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -33,8 +34,18 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
         }
 
         notificationView.setOnClickListener {
-            dismissAllowingStateLoss()
-            listener?.invoke(Bookmark.NOTIFICATION)
+            AlertDialog.Builder(requireContext())
+                .setTitle(R.string.notification_disclaimer_title)
+                .setMessage(R.string.notification_disclaimer_message)
+                .setPositiveButton(R.string.notification_disclaimer_compris){ dialog, _ ->
+                    dialog.dismiss()
+                    dismissAllowingStateLoss()
+                    listener?.invoke(Bookmark.NOTIFICATION)
+                }
+                .setNegativeButton(R.string.notification_disclaimer_cancel){ dialog, _ ->
+                    dialog.dismiss()
+                }
+                .show()
         }
         favoriteView.setOnClickListener {
             dismissAllowingStateLoss()
