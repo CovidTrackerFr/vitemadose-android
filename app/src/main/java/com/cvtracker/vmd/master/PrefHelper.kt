@@ -74,15 +74,19 @@ object PrefHelper {
         }
 
     fun updateBookmark(center: DisplayItem.Center) {
-        center.id?.let { id ->
+        updateBookmark(center.id, center.department, center.bookmark)
+    }
+
+    fun updateBookmark(centerId: String?, department: String, bookmark: Bookmark) {
+        centerId?.let { id ->
             val update = centersBookmark.toMutableSet()
 
             // remove center
             update.removeAll { it.centerId == id }
 
             // add bookmark if necessary
-            if (center.bookmark == Bookmark.NOTIFICATION || center.bookmark == Bookmark.FAVORITE) {
-                update.add(CenterBookmark(id, center.department, center.bookmark))
+            if (bookmark == Bookmark.NOTIFICATION || bookmark == Bookmark.FAVORITE) {
+                update.add(CenterBookmark(id, department, bookmark))
             }
 
             // save

@@ -51,6 +51,7 @@
             android:name=".bookmark.BookmarkActivity"
             android:screenOrientation="sensorPortrait"/>
 
+        <activity android:name=".master.SilentRedirectActivity"/>
 
         <service
             android:name=".master.ViteMaDoseMessagingService"

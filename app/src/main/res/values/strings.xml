@@ -56,4 +56,6 @@
     <string name="notification_disclaimer_message">Vous recevrez une notification à chaque fois que le centre sera <b>de nouveau disponible</b> à la réservation.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
     <string name="notification_disclaimer_compris">J\'ai compris</string>
     <string name="notification_disclaimer_cancel">Annuler</string>
+    <string name="notification_disable_notifications">Arrêter notifications</string>
+    <string name="notification_channel_description">Nouvelle disponibilité dans vos centres suivis avec notification</string>
 </resources>
