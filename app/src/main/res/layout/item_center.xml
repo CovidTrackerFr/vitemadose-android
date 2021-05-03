@@ -185,15 +185,18 @@
                 android:layout_marginTop="16dp"
                 android:text="@string/check_center"
                 android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/bookButton"
                 app:backgroundTint="@color/blue_dark"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/phoneView"
+                app:layout_goneMarginBottom="50dp"
                 tools:visibility="visible" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/bookButton"
                 style="@style/RegularButton"
+                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -202,18 +205,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/checkButton"
-                app:layout_goneMarginTop="16dp" />
+                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appointmentsCountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?android:attr/textColorSecondary"
-                app:layout_constraintBottom_toBottomOf="@id/partnerImageView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/partnerImageView"
+                app:layout_constraintTop_toBottomOf="@id/bookButton"
                 tools:text="20 doses" />
 
             <View
@@ -232,16 +235,16 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/partnerImageView"
-                android:layout_width="84dp"
+                android:layout_width="78dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/bottomSeparatorView"
-                app:layout_constraintTop_toBottomOf="@id/bookButton"
+                app:layout_constraintTop_toTopOf="@id/appointmentsCountView"
                 tools:src="@drawable/logo_doctolib" />
 
             <androidx.appcompat.widget.AppCompatImageView
@@ -256,15 +259,20 @@
                 app:srcCompat="@drawable/ic_expand_more_black_24dp"
                 app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
+            <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bookmarkView"
+                app:textAllCaps="true"
+                android:fontFamily="@font/sf_pro_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
+                android:background="?attr/selectableItemBackground"
                 android:padding="8dp"
+                android:drawablePadding="6dp"
+                android:includeFontPadding="false"
+                android:gravity="center"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:srcCompat="@drawable/ic_bookmark_border_24_dp"
+                android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
                 app:tint="?attr/iconTintColor" />
 
             <androidx.constraintlayout.widget.Group

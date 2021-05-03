@@ -100,11 +100,17 @@ class CenterAdapter(
                         )
                     )
 
-                bookmarkView.setImageResource(
+                bookmarkView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
                     when (center.bookmark) {
                         Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
                         Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
                         else -> R.drawable.ic_bookmark_border_24_dp
+                    }, 0)
+                bookmarkView.setText(
+                    when{
+                        center.available -> R.string.empty_string
+                        center.bookmark != Bookmark.NOTIFICATION -> R.string.activate_notifs
+                        else -> R.string.notifications_activated
                     }
                 )
 

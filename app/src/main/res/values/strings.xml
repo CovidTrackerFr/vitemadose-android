@@ -58,4 +58,7 @@
     <string name="notification_disclaimer_cancel">Annuler</string>
     <string name="notification_disable_notifications">Arrêter notifications</string>
     <string name="notification_channel_description">Nouvelle disponibilité dans vos centres suivis avec notification</string>
+    <string name="activate_notifs">activer notifications</string>
+    <string name="notifications_activated">notifications activées</string>
+    <string name="empty_string" />
 </resources>
