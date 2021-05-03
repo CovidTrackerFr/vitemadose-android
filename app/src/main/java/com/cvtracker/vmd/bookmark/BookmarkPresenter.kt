@@ -50,7 +50,12 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
 
                         /** Add unavailable centers **/
                         list.addAll(prepareCenters(it.unavailableCenters, false))
-                        view.showCenters(list, null)
+
+                        if(list.isEmpty()){
+                            view.showNoBookmark(true)
+                        }else {
+                            view.showCenters(list, null)
+                        }
                     }
                 } catch (e: CancellationException) {
                     /** Coroutine has been canceled => Ignore **/
