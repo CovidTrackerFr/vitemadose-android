@@ -2,6 +2,7 @@ package com.cvtracker.vmd.master
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.NotificationManagerCompat
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.home.MainPresenter
 
@@ -23,8 +24,11 @@ class SilentRedirectActivity : AppCompatActivity() {
                 if (params.size >= 2) {
                     val department = params[0]
                     val centerId = params[1]
+                    val notificationId = params[2].toIntOrNull()
                     /** Unsubscribe from topic **/
                     FcmHelper.unsubscribeWithDepartmentAndCenterId(department, centerId)
+                    /** Cancel  the notification linked to this subscription **/
+                    notificationId?.let { NotificationManagerCompat.from(this).cancel(notificationId) }
                     /** Rollback to favorite only **/
                     PrefHelper.updateBookmark(centerId, department, Bookmark.FAVORITE)
                 }

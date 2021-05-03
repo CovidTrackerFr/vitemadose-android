@@ -44,6 +44,8 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
     ) {
         val notificationManager = NotificationManagerCompat.from(context)
 
+        val notificationId = "$department\\_$centerId".hashCode() // use unique id to replace notification if already exists
+
         if (Build.VERSION.SDK_INT >= 26) {
             val notificationChannel = NotificationChannel(
                 NOTIFICATION_CHANNEL_ID_AVAILABILITY, "Disponibilités",
@@ -66,7 +68,7 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
 
         val intentAction = Intent(this, SilentRedirectActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            .setData(Uri.parse("${SilentRedirectActivity.DISABLE_NOTIFICATION_LINK}/$department/$centerId"))
+            .setData(Uri.parse("${SilentRedirectActivity.DISABLE_NOTIFICATION_LINK}/$department/$centerId/$notificationId"))
         val actionPendingIntent = PendingIntent.getActivity(this, 0, intentAction, 0)
 
         val notificationBuilder =
@@ -83,8 +85,6 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
                         actionPendingIntent
                     ).build()
                 )
-
-        val notificationId = "$department\\_$centerId".hashCode() // use unique id to replace notification if already exists
 
         notificationManager.notify(notificationId, notificationBuilder.build());
     }
