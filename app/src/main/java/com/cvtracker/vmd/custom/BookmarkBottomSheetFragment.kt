@@ -37,13 +37,11 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
             AlertDialog.Builder(requireContext())
                 .setTitle(R.string.notification_disclaimer_title)
                 .setMessage(R.string.notification_disclaimer_message)
-                .setPositiveButton(R.string.notification_disclaimer_compris){ dialog, _ ->
-                    dialog.dismiss()
+                .setPositiveButton(R.string.notification_disclaimer_compris) { _, _ ->
                     dismissAllowingStateLoss()
                     listener?.invoke(Bookmark.NOTIFICATION)
                 }
-                .setNegativeButton(R.string.notification_disclaimer_cancel){ dialog, _ ->
-                    dialog.dismiss()
+                .setNegativeButton(R.string.notification_disclaimer_cancel) { _, _ ->
                 }
                 .show()
         }
