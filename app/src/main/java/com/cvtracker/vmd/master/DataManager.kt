@@ -3,6 +3,7 @@ package com.cvtracker.vmd.master
 import com.cvtracker.vmd.BuildConfig
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.ValidatorAdapterFactory
+import com.cvtracker.vmd.data.CenterBookmark
 import com.cvtracker.vmd.data.CenterResponse
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.data.StatsResponse
@@ -20,6 +21,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
+import java.util.Locale.filter
 
 object DataManager {
 
@@ -109,6 +111,19 @@ object DataManager {
             }
         }
         return response
+    }
+
+    suspend fun getCentersBookmark(bookmarks: List<CenterBookmark>): CenterResponse {
+        return bookmarks
+                .map { it.department }
+                .distinct()
+                .map { department -> service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", department)) }
+                .reduce { acc, centerResponse -> acc.aggregate(centerResponse); acc }
+                .apply {
+                    val centersBookmarkId = bookmarks.map { it.centerId }
+                    availableCenters.removeAll { (it.id in centersBookmarkId).not() }
+                    unavailableCenters.removeAll { (it.id in centersBookmarkId).not() }
+                }
     }
 
     suspend fun getStats(): StatsResponse {

@@ -1,5 +1,7 @@
 package com.cvtracker.vmd.home
 
+import com.cvtracker.vmd.base.AbstractCenterPresenter
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.AnalyticsHelper
@@ -9,7 +11,7 @@ import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.coroutines.*
 import timber.log.Timber
 
-class MainPresenter(private val view: MainContract.View) : MainContract.Presenter {
+class MainPresenter(override val view: MainContract.View) : AbstractCenterPresenter(view), MainContract.Presenter {
 
     private var jobSearch: Job? = null
     private var jobCenters: Job? = null
@@ -17,7 +19,8 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
     private var selectedFilter: FilterType? = null
 
     companion object{
-        const val DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 75f
+        const val DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
+        const val BASE_URL = "https://vitemadose.covidtracker.fr"
     }
 
     override fun loadInitialState() {
@@ -37,6 +40,7 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                     val filter = selectedFilter ?: entry.defaultFilterType
                     val isCitySearch = entry is SearchEntry.City
 
+                    view.removeEmptyStateIfNeeded()
                     view.setLoading(true)
 
                     DataManager.getCenters(
@@ -53,9 +57,17 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
                                     (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM
                                 }
                             }
+
+                            val centersBookmark = PrefHelper.centersBookmark
+
                             /** Sort results **/
                             centers.sortWith(filter.comparator)
-                            centers.onEach { it.available = available }
+                            centers.onEach { center ->
+                                center.available = available
+                                center.bookmark = centersBookmark
+                                    .firstOrNull { center.id == it.centerId }?.bookmark
+                                    ?: Bookmark.NONE
+                            }
                             return centers
                         }
 
@@ -110,11 +122,6 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
         return PrefHelper.favEntry
     }
 
-    override fun onCenterClicked(center: DisplayItem.Center) {
-        view.openLink(center.url)
-        AnalyticsHelper.logEventRdvClick(center, FilterType.ByDate)
-    }
-
     override fun onFilterChanged(filter: FilterType) {
         selectedFilter = filter
         view.showCenters(emptyList(), filter)
@@ -148,6 +155,23 @@ class MainPresenter(private val view: MainContract.View) : MainContract.Presente
             } catch (e: Exception) {
                 Timber.e(e)
                 view.showSearchError()
+            }
+        }
+    }
+
+    override fun handleDeepLink(data: String) {
+        when {
+            data.startsWith("$BASE_URL/bookmarks") -> {
+                /** Bookmarks list **/
+                view.showBookmarks()
+            }
+            data.startsWith("$BASE_URL/bookmark/") -> {
+                val params = data.replace("$BASE_URL/bookmark/", "").split("/")
+                if(params.size >= 2){
+                    /** params[0] is the department **/
+                    /** params[1] is the centerId **/
+                    view.showBookmarks(params[0], params[1])
+                }
             }
         }
     }

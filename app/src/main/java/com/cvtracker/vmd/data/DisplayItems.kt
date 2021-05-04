@@ -2,7 +2,6 @@ package com.cvtracker.vmd.data
 
 import android.location.Location
 import android.telephony.PhoneNumberUtils
-import androidx.annotation.StringRes
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -29,10 +28,13 @@ sealed class DisplayItem {
         val appointmentCount: Int,
         @SerializedName("type")
         val type: String?,
+        @SerializedName("internal_id")
+        val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
         var available: Boolean = false,
-        var distance: Float? = null
+        var distance: Float? = null,
+        var bookmark: Bookmark = Bookmark.NONE
     ) : DisplayItem() {
 
         val platformEnum: Plateform?

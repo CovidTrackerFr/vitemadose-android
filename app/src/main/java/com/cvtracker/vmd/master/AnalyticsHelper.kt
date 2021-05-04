@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.master
 
 import android.os.Bundle
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.CenterResponse
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
@@ -21,6 +22,9 @@ object AnalyticsHelper {
     // CENTER EVENT
     private const val EVENT_RDV_CLICK = "rdv_click"
     private const val EVENT_RDV_VERIFY_CLICK = "rdv_verify"
+    private const val EVENT_BOOKMARK_FAVORITE_CLICK = "bookmark_favorite"
+    private const val EVENT_BOOKMARK_NOTIFICATION_CLICK = "bookmark_notification"
+    private const val EVENT_BOOKMARK_NONE_CLICK = "bookmark_none"
     private const val EVENT_RDV_DATA_DEPARTMENT = "rdv_departement"
     private const val EVENT_RDV_DATA_NAME = "rdv_name"
     private const val EVENT_RDV_DATA_PLATFORM = "rdv_platform"
@@ -54,6 +58,22 @@ object AnalyticsHelper {
         val event = when (center.available) {
             true -> EVENT_RDV_CLICK
             else -> EVENT_RDV_VERIFY_CLICK
+        }
+        firebaseAnalytics.logEvent(event, Bundle().apply {
+            putString(EVENT_RDV_DATA_DEPARTMENT, center.department)
+            putString(EVENT_RDV_DATA_NAME, center.name)
+            putString(EVENT_RDV_DATA_PLATFORM, center.platform)
+            putString(EVENT_RDV_DATA_LOCATION_TYPE, center.type)
+            putString(EVENT_RDV_DATA_VACCINE, center.vaccineType?.joinToString(separator = ","))
+            putString(EVENT_RDV_DATA_FILTER_TYPE, filterTypeValue(filterType))
+        })
+    }
+
+    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: FilterType) {
+        val event = when (center.bookmark) {
+            Bookmark.NOTIFICATION -> EVENT_BOOKMARK_NOTIFICATION_CLICK
+            Bookmark.FAVORITE -> EVENT_BOOKMARK_FAVORITE_CLICK
+            else -> EVENT_BOOKMARK_NONE_CLICK
         }
         firebaseAnalytics.logEvent(event, Bundle().apply {
             putString(EVENT_RDV_DATA_DEPARTMENT, center.department)

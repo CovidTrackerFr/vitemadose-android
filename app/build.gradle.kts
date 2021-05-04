@@ -101,6 +101,7 @@ dependencies {
 
     implementation(platform(Libs.firebaseBom))
     implementation(Libs.firebaseAnalytics)
+    implementation(Libs.firebaseMessaging)
     implementation(Libs.firebaseCrashlytics)
     implementation(Libs.firebaseRemoteConfig)
 

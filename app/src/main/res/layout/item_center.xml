@@ -89,8 +89,8 @@
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@id/centerVaccineView"
-                app:tint="?attr/iconTintColor"
-                app:srcCompat="@drawable/ic_vaccine" />
+                app:srcCompat="@drawable/ic_vaccine"
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/centerVaccineView"
@@ -178,29 +178,45 @@
                 tools:text="02 25 25 25 25" />
 
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/bookButton"
+                android:id="@+id/checkButton"
                 style="@style/RegularButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="16dp"
+                android:layout_marginTop="16dp"
+                android:text="@string/check_center"
+                android:visibility="gone"
+                app:layout_constraintBottom_toTopOf="@id/bookButton"
+                app:backgroundTint="@color/blue_dark"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/phoneView"
+                app:layout_goneMarginBottom="50dp"
+                tools:visibility="visible" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bookButton"
+                style="@style/RegularButton"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
                 android:text="@string/appointement"
-                android:textColor="@color/white"
-                android:textSize="16sp"
                 app:backgroundTint="@color/danube"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phoneView" />
+                app:layout_constraintTop_toBottomOf="@id/checkButton"
+                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appointmentsCountView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="?android:attr/textColorSecondary"
-                app:layout_constraintBottom_toBottomOf="@id/partnerImageView"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/partnerImageView"
+                app:layout_constraintTop_toBottomOf="@id/bookButton"
                 tools:text="20 doses" />
 
             <View
@@ -219,34 +235,17 @@
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/partnerImageView"
-                android:layout_width="84dp"
+                android:layout_width="78dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="6dp"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/bottomSeparatorView"
-                app:layout_constraintTop_toBottomOf="@id/bookButton"
+                app:layout_constraintTop_toTopOf="@id/appointmentsCountView"
                 tools:src="@drawable/logo_doctolib" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/checkButton"
-                style="@style/RegularButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:padding="12dp"
-                android:text="@string/check_center"
-                android:textAllCaps="false"
-                android:textColor="@color/white"
-                android:textSize="16sp"
-                android:visibility="gone"
-                app:backgroundTint="@color/blue_dark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/phoneView" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/moreView"
@@ -258,6 +257,22 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/dateView"
                 app:srcCompat="@drawable/ic_expand_more_black_24dp"
+                app:tint="?attr/iconTintColor" />
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/bookmarkView"
+                app:textAllCaps="true"
+                android:fontFamily="@font/sf_pro_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackground"
+                android:padding="8dp"
+                android:drawablePadding="6dp"
+                android:includeFontPadding="false"
+                android:gravity="center"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
                 app:tint="?attr/iconTintColor" />
 
             <androidx.constraintlayout.widget.Group

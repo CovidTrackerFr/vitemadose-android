@@ -1,4 +1,4 @@
-package com.cvtracker.vmd.home
+package com.cvtracker.vmd.custom
 
 import android.content.Context
 import android.text.format.DateFormat
@@ -8,10 +8,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
 import kotlinx.android.synthetic.main.item_last_updated.view.*
@@ -22,6 +24,7 @@ class CenterAdapter(
     private val context: Context,
     private val items: List<DisplayItem>,
     private val onClicked: (DisplayItem.Center) -> Unit,
+    private val onBookmarkClicked: (DisplayItem.Center, Int) -> Unit,
     private val onAddressClicked: (String) -> Unit,
     private val onPhoneClicked: (String) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -87,6 +90,7 @@ class CenterAdapter(
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
                 checkButton.setOnClickListener { onClicked.invoke(center) }
+                bookmarkView.setOnClickListener { onBookmarkClicked.invoke(center, position) }
 
                 appointmentsCountView.text =
                     String.format(
@@ -95,6 +99,20 @@ class CenterAdapter(
                             center.appointmentCount, center.appointmentCount
                         )
                     )
+
+                bookmarkView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
+                    when (center.bookmark) {
+                        Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
+                        Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
+                        else -> R.drawable.ic_bookmark_border_24_dp
+                    }, 0)
+                bookmarkView.setText(
+                    when{
+                        center.available -> R.string.empty_string
+                        center.bookmark != Bookmark.NOTIFICATION -> R.string.activate_notifs
+                        else -> R.string.notifications_activated
+                    }
+                )
 
                 if (center.available) {
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
@@ -162,7 +180,7 @@ class CenterAdapter(
                     -1
                 } else {
                     val oldPosition = mExpandedPosition
-                    if(oldPosition >= 0) {
+                    if (oldPosition >= 0) {
                         notifyItemChanged(oldPosition)
                     }
                     position
@@ -179,10 +197,12 @@ class CenterAdapter(
         ) {
         fun bind(header: DisplayItem.UnavailableCenterHeader) {
             with(itemView) {
-                sectionLibelleView.setText(when {
-                    header.hasAvailableCenters -> R.string.no_slots_available_center_header_others
-                    else -> R.string.no_slots_available_center_header
-                })
+                sectionLibelleView.setText(
+                    when {
+                        header.hasAvailableCenters -> R.string.no_slots_available_center_header_others
+                        else -> R.string.no_slots_available_center_header
+                    }
+                )
             }
         }
     }
@@ -275,5 +295,15 @@ class CenterAdapter(
     }
 
     override fun getItemCount() = items.size
+
+    fun refreshBookmarkState() {
+        val centersBookmark = PrefHelper.centersBookmark
+        items.filterIsInstance<DisplayItem.Center>().onEach { center ->
+            center.bookmark = centersBookmark
+                .firstOrNull { center.id == it.centerId }?.bookmark
+                ?: Bookmark.NONE
+        }
+        notifyDataSetChanged()
+    }
 
 }
