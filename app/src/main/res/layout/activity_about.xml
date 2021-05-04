@@ -14,6 +14,8 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
+        android:background="?attr/backgroundColor"
+        android:overScrollMode="ifContentScrolls"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -83,6 +85,20 @@
                         android:drawableStart="@drawable/ic_assessment_black_24dp"
                         android:drawableTint="?android:attr/textColorPrimary"
                         android:text="@string/vaccintracker" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/separatorColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/shareView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_share_black_24dp"
+                        android:drawableTint="?android:attr/textColorPrimary"
+                        android:text="@string/share" />
 
                 </LinearLayout>
             </androidx.cardview.widget.CardView>

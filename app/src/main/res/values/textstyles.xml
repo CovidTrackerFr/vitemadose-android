@@ -21,13 +21,13 @@
         <item name="android:drawablePadding">16dp</item>
         <item name="android:background">?attr/selectableItemBackground</item>
         <item name="android:paddingStart">6dp</item>
-        <item name="android:paddingTop">12dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">6dp</item>
         <item name="fontFamily">@font/sf_pro_rounded</item>
         <item name="android:textScaleX">1.05</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">?android:attr/textColorPrimary</item>
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
     <style name="TextStyle_date">
