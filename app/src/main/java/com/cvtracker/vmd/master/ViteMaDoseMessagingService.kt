@@ -48,7 +48,7 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
 
         if (Build.VERSION.SDK_INT >= 26) {
             val notificationChannel = NotificationChannel(
-                NOTIFICATION_CHANNEL_ID_AVAILABILITY, "Disponibilités",
+                NOTIFICATION_CHANNEL_ID_AVAILABILITY, getString(R.string.notification_channel_name),
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationChannel.description = getString(R.string.notification_channel_description)
