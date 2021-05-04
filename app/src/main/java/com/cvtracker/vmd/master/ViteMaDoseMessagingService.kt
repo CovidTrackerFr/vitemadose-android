@@ -66,10 +66,9 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
             PendingIntent.FLAG_ONE_SHOT
         );
 
-        val intentAction = Intent(this, SilentRedirectActivity::class.java)
-            .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            .setData(Uri.parse("${SilentRedirectActivity.DISABLE_NOTIFICATION_LINK}/$department/$centerId/$notificationId"))
-        val actionPendingIntent = PendingIntent.getActivity(this, 0, intentAction, 0)
+        val intentAction = Intent(this, SilentRedirectReceiver::class.java)
+            .setData(Uri.parse("${SilentRedirectReceiver.DISABLE_NOTIFICATION_LINK}/$department/$centerId/$notificationId"))
+        val actionPendingIntent = PendingIntent.getBroadcast(this, 0, intentAction, 0)
 
         val notificationBuilder =
             NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_AVAILABILITY)
