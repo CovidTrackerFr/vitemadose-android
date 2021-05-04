@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.master
 
 import android.app.Application
+import com.cvtracker.vmd.home.MainPresenter
 import com.google.firebase.remoteconfig.BuildConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
@@ -41,6 +42,10 @@ class ViteMaDoseApp : Application() {
                 DataManager.PATH_STATS = it
                 Timber.d("RemoteConfig set PATH_STATS = $it")
             }
+            getDouble(CITY_SEARCH_MAX_DISTANCE_KEY).takeIf { it > 0.0f }?.let {
+                MainPresenter.DISPLAY_CENTER_MAX_DISTANCE_IN_KM = it.toFloat()
+                Timber.d("RemoteConfig set CITY_SEARCH_MAX_DISTANCE_KEY = $it")
+            }
         }
     }
 
@@ -51,6 +56,7 @@ class ViteMaDoseApp : Application() {
         private const val URL_BASE_KEY = "url_base"
         private const val PATH_DATA_DEPARTMENT_KEY = "path_data_department"
         private const val PATH_STATS_KEY = "path_stats"
+        private const val CITY_SEARCH_MAX_DISTANCE_KEY = "vaccination_centres_list_radius_in_km"
 
         fun get() = instance
     }

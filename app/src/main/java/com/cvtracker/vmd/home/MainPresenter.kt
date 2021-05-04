@@ -19,7 +19,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private var selectedFilter: FilterType? = null
 
     companion object{
-        const val DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
+        var DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
         const val BASE_URL = "https://vitemadose.covidtracker.fr"
     }
 
