@@ -23,7 +23,7 @@ class SilentRedirectReceiver : BroadcastReceiver() {
                 val centerId = params[1]
                 val notificationId = params[2].toIntOrNull()
                 /** Unsubscribe from topic **/
-                FcmHelper.unsubscribeWithDepartmentAndCenterId(department, centerId)
+                FcmHelper.unsubscribeFromDepartmentAndCenterId(department, centerId)
                 /** Cancel  the notification linked to this subscription **/
                 notificationId?.let { NotificationManagerCompat.from(contextNotNull).cancel(notificationId) }
                 /** Rollback to favorite only **/

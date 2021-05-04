@@ -15,7 +15,7 @@ object FcmHelper {
         unsubscribeFromTopic(topicForCenter(center))
     }
 
-    fun unsubscribeWithDepartmentAndCenterId(department: String, centerId: String?) {
+    fun unsubscribeFromDepartmentAndCenterId(department: String, centerId: String?) {
         unsubscribeFromTopic(topicWithDepartmentAndCenterId(department, centerId))
     }
 
