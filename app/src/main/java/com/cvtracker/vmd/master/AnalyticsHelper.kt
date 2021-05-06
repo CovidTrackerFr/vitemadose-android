@@ -19,12 +19,9 @@ object AnalyticsHelper {
     private const val EVENT_SEARCH_DATA_UNAVAILABLE_CENTERS = "search_nb_lieu_vaccination_inactive"
     private const val EVENT_SEARCH_DATA_FILTER_TYPE = "search_filter_type"
 
-    // CENTER EVENT
+    // CENTER EVENTS
     private const val EVENT_RDV_CLICK = "rdv_click"
     private const val EVENT_RDV_VERIFY_CLICK = "rdv_verify"
-    private const val EVENT_BOOKMARK_FAVORITE_CLICK = "bookmark_favorite"
-    private const val EVENT_BOOKMARK_NOTIFICATION_CLICK = "bookmark_notification"
-    private const val EVENT_BOOKMARK_NONE_CLICK = "bookmark_none"
     private const val EVENT_RDV_DATA_DEPARTMENT = "rdv_departement"
     private const val EVENT_RDV_DATA_NAME = "rdv_name"
     private const val EVENT_RDV_DATA_PLATFORM = "rdv_platform"
@@ -32,18 +29,36 @@ object AnalyticsHelper {
     private const val EVENT_RDV_DATA_VACCINE = "rdv_vaccine"
     private const val EVENT_RDV_DATA_FILTER_TYPE = "rdv_filter_type"
 
+    // BOOKMARK EVENTS
+    private const val EVENT_BOOKMARK_FAVORITE_CLICK = "bookmark_favorites"
+    private const val EVENT_BOOKMARK_NOTIFICATION_CLICK = "bookmark_notification"
+    private const val EVENT_BOOKMARK_NONE_CLICK = "bookmark_remove"
+    private const val EVENT_BOOKMARK_DATA_FROM = "bookmark_from"
+    private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NONE = "none"
+    private const val EVENT_BOOKMARK_DATA_FROM_VALUE_FAVORITE = "favorite"
+    private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION = "notification"
+
+    // NOTIFICATION EVENTS
+    private const val EVENT_NOTIFICATION_RECEIVE = "notif_receive"
+    private const val EVENT_NOTIFICATION_OPEN = "notif_open"
+    private const val EVENT_NOTIFICATION_UNSUBSCRIBE = "notif_unsubscribe"
+    private const val EVENT_NOTIFICATION_DATA_DEPARTMENT = "notif_department"
+    private const val EVENT_NOTIFICATION_DATA_CENTER = "notif_center"
+    private const val EVENT_NOTIFICATION_DATA_TOPIC = "notif_topic"
+    private const val EVENT_NOTIFICATION_DATA_TYPE = "notif_type"
+
     private val firebaseAnalytics: FirebaseAnalytics by lazy {
         FirebaseAnalytics.getInstance(ViteMaDoseApp.get())
     }
 
     fun logEventSearch(searchEntry: SearchEntry, response: CenterResponse, filterType: FilterType) {
-        val event = when(searchEntry){
+        val event = when (searchEntry) {
             is SearchEntry.Department -> EVENT_SEARCH_BY_DEPARTMENT
             is SearchEntry.City -> EVENT_SEARCH_BY_MUNICIPALITY
         }
 
         firebaseAnalytics.logEvent(event, Bundle().apply {
-            if(searchEntry is SearchEntry.City) {
+            if (searchEntry is SearchEntry.City) {
                 putString(EVENT_SEARCH_DATA_MUNICIPALITY, "${searchEntry.postalCode} - ${searchEntry.name} (${searchEntry.code})")
             }
             putString(EVENT_SEARCH_DATA_DEPARTMENT, searchEntry.entryDepartmentCode)
@@ -69,7 +84,7 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: FilterType) {
+    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: FilterType, fromBookmark: Bookmark) {
         val event = when (center.bookmark) {
             Bookmark.NOTIFICATION -> EVENT_BOOKMARK_NOTIFICATION_CLICK
             Bookmark.FAVORITE -> EVENT_BOOKMARK_FAVORITE_CLICK
@@ -82,6 +97,32 @@ object AnalyticsHelper {
             putString(EVENT_RDV_DATA_LOCATION_TYPE, center.type)
             putString(EVENT_RDV_DATA_VACCINE, center.vaccineType?.joinToString(separator = ","))
             putString(EVENT_RDV_DATA_FILTER_TYPE, filterTypeValue(filterType))
+            putString(EVENT_BOOKMARK_DATA_FROM, when (fromBookmark) {
+                Bookmark.NOTIFICATION -> EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION
+                Bookmark.FAVORITE -> EVENT_BOOKMARK_DATA_FROM_VALUE_FAVORITE
+                else -> EVENT_BOOKMARK_DATA_FROM_VALUE_NONE
+            })
+        })
+    }
+
+    fun logEventNotificationReceive(department: String, centerId: String, topic: String, type: String) {
+        logEventNotification(EVENT_NOTIFICATION_RECEIVE, department, centerId, topic, type)
+    }
+
+    fun logEventNotificationOpen(department: String, centerId: String, topic: String, type: String) {
+        logEventNotification(EVENT_NOTIFICATION_OPEN, department, centerId, topic, type)
+    }
+
+    fun logEventNotificationUnsubscribe(department: String, centerId: String, topic: String, type: String) {
+        logEventNotification(EVENT_NOTIFICATION_UNSUBSCRIBE, department, centerId, topic, type)
+    }
+
+    private fun logEventNotification(event: String, department: String, centerId: String, topic: String, type: String) {
+        firebaseAnalytics.logEvent(event, Bundle().apply {
+            putString(EVENT_NOTIFICATION_DATA_DEPARTMENT, department)
+            putString(EVENT_NOTIFICATION_DATA_CENTER, centerId)
+            putString(EVENT_NOTIFICATION_DATA_TOPIC, topic)
+            putString(EVENT_NOTIFICATION_DATA_TYPE, type)
         })
     }
 

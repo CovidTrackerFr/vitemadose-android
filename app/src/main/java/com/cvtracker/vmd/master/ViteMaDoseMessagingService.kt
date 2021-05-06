@@ -31,8 +31,12 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
         val body = data["body"] ?: ""
         val department = data["department"] ?: ""
         val centerId = data["center"] ?: ""
+        val topic = data["topic"] ?: ""
+        val type = data["type"] ?: ""
 
-        sendNotification(this, title, body, department, centerId)
+        sendNotification(this, title, body, department, centerId, topic, type)
+
+        AnalyticsHelper.logEventNotificationReceive(department, centerId, topic, type)
     }
 
     private fun sendNotification(
@@ -40,11 +44,13 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
         title: String,
         body: String,
         department: String,
-        centerId: String
+        centerId: String,
+        topic: String,
+        type: String
     ) {
         val notificationManager = NotificationManagerCompat.from(context)
 
-        val notificationId = "$department\\_$centerId".hashCode() // use unique id to replace notification if already exists
+        val notificationId = topic.hashCode() // use unique id to replace notification if already exists
 
         if (Build.VERSION.SDK_INT >= 26) {
             val notificationChannel = NotificationChannel(
@@ -57,17 +63,11 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
 
         val intent = Intent(this, MainActivity::class.java)
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-            .setData(Uri.parse("${MainPresenter.BASE_URL}/bookmark/$department/$centerId"))
+            .setData(Uri.parse("${MainPresenter.BASE_URL}/bookmark/$department/$centerId/$topic/$type"))
 
-        val pendingIntent = PendingIntent.getActivity(
-            context,
-            0,
-            intent,
-            PendingIntent.FLAG_ONE_SHOT
-        );
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
 
-        val intentAction = Intent(this, SilentRedirectReceiver::class.java)
-            .setData(Uri.parse("${SilentRedirectReceiver.DISABLE_NOTIFICATION_LINK}/$department/$centerId/$notificationId"))
+        val intentAction = SilentRedirectReceiver.buildIntent(this, department, centerId, topic, type, notificationId)
         val actionPendingIntent = PendingIntent.getBroadcast(this, 0, intentAction, 0)
 
         val notificationBuilder =

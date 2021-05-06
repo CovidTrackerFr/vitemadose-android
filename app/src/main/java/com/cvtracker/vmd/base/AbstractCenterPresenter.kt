@@ -15,7 +15,9 @@ abstract class AbstractCenterPresenter(open val view: CenterContract.View): Cent
     }
 
     override fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark) {
-        if (center.bookmark == Bookmark.NOTIFICATION) {
+        val fromBookmark = center.bookmark
+
+        if (fromBookmark == Bookmark.NOTIFICATION) {
             // unsubscribe from center
             FcmHelper.unsubscribeFromCenter(center)
         }
@@ -27,7 +29,7 @@ abstract class AbstractCenterPresenter(open val view: CenterContract.View): Cent
 
         center.bookmark = target
         PrefHelper.updateBookmark(center)
-        AnalyticsHelper.logEventBookmarkClick(center, FilterType.ByDate)
+        AnalyticsHelper.logEventBookmarkClick(center, FilterType.ByDate, fromBookmark)
     }
 
 }

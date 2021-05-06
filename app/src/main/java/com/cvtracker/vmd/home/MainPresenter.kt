@@ -167,10 +167,15 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             }
             data.startsWith("$BASE_URL/bookmark/") -> {
                 val params = data.replace("$BASE_URL/bookmark/", "").split("/")
-                if(params.size >= 2){
-                    /** params[0] is the department **/
-                    /** params[1] is the centerId **/
-                    view.showBookmarks(params[0], params[1])
+                if (params.size >= 4) {
+                    val department = params[0]
+                    val centerId = params[1]
+                    val topic = params[2]
+                    val type = params[3]
+
+                    view.showBookmarks(department, centerId)
+
+                    AnalyticsHelper.logEventNotificationOpen(department, centerId, topic, type)
                 }
             }
         }
