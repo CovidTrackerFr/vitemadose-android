@@ -1,0 +1,3 @@
+Vous pouvez désormais :
+- suivre des centres afin de les retrouver plus facilement dans votre liste de "Centres suivis".
+- vous abonner aux notifications sur un centre afin d'être alerté lorsque celui redevient disponible.
