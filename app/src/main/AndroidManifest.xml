@@ -38,7 +38,7 @@
                 <data android:path="" tools:ignore="AppLinkUrlError" />
                 <data android:path="/" />
                 <data android:path="/bookmarks" />
-                <data android:pathPattern="/bookmark/.*/.*" />
+                <data android:pathPattern="/bookmark/.*/.*/.*/.*" />
             </intent-filter>
 
         </activity>
