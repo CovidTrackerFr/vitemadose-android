@@ -65,10 +65,10 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             .setData(Uri.parse("${MainPresenter.BASE_URL}/bookmark/$department/$centerId/$topic/$type"))
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_ONE_SHOT)
+        val pendingIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val intentAction = SilentRedirectReceiver.buildIntent(this, department, centerId, topic, type, notificationId)
-        val actionPendingIntent = PendingIntent.getBroadcast(this, 0, intentAction, 0)
+        val actionPendingIntent = PendingIntent.getBroadcast(this, notificationId, intentAction, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notificationBuilder =
             NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_AVAILABILITY)
