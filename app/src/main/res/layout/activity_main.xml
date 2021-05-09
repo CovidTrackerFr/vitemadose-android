@@ -133,12 +133,12 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:elevation="2dp"
             android:padding="0dp"
-            app:backgroundTint="@color/white"
+            app:backgroundTint="@color/filter_background_selector"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/refreshLayout"
             app:srcCompat="@drawable/ic_tune_black_24dp"
-            app:tint="@color/selector_filter_icon" />
+            app:tint="@color/sort_text_selector" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

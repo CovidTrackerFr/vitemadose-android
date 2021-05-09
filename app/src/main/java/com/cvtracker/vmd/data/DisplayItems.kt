@@ -40,7 +40,7 @@ sealed class DisplayItem {
     ) : DisplayItem() {
 
         val isChronodose: Boolean
-            get() = false
+            get() = true
             /** get() = (schedules?.chronodosesCount ?: 0) > 0**/
 
         val platformEnum: Plateform?

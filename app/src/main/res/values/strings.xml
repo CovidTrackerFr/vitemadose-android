@@ -70,4 +70,5 @@
     <string name="validate">valider</string>
     <string name="cancel">annuler</string>
     <string name="apply">appliquer</string>
+    <string name="chronodoses_disponibles">Chronodoses disponibles</string>
 </resources>

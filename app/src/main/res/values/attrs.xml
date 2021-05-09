@@ -5,4 +5,6 @@
     <attr name="backgroundColor" format="color"/>
     <attr name="backgroundCardColor" format="color"/>
     <attr name="backgroundCardColorSecondary" format="color"/>
+    <attr name="chronodoseBackgroundColor" format="color"/>
+    <attr name="chronodoseTextColor" format="color"/>
 </resources>

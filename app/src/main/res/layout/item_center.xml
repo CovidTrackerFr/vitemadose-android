@@ -48,11 +48,12 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 app:constraint_referenced_ids="backgroundChronodoseView, chronodoseTitleView"/>
+
             <View
                 android:id="@+id/backgroundChronodoseView"
                 app:layout_constraintHeight_min="38dp"
                 android:layout_width="0dp"
-                android:background="@color/vanilla_ice"
+                android:background="?attr/chronodoseBackgroundColor"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -60,13 +61,17 @@
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/chronodoseTitleView"
+                android:drawableStart="@drawable/ic_lightning_charge_fill"
+                android:drawableEnd="@drawable/ic_lightning_charge_fill"
+                android:drawableTint="?attr/chronodoseTextColor"
                 android:includeFontPadding="false"
                 app:layout_constraintVertical_chainStyle="packed"
                 android:gravity="center"
-                android:text="Chronodoses disponibles !"
-                android:textColor="@color/roman"
+                android:drawablePadding="12dp"
+                android:text="@string/chronodoses_disponibles"
+                android:textColor="?attr/chronodoseTextColor"
                 android:fontFamily="@font/sf_pro_bold"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toTopOf="@id/backgroundChronodoseView"
                 app:layout_constraintBottom_toTopOf="@id/chronodoseDescriptionView"
