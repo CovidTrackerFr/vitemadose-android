@@ -51,7 +51,7 @@
     <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
     <string name="app_update_pending">Préparation de la mise à jour.</string>
     <string name="app_update_downloaded">Mise à jour téléchargée. Veuillez redémarrer ViteMaDose.</string>
-    <string name="bookmark_empty_state_description">Retrouvez ici vos centres suivis.\nVous pouvez également activer le suivi avec notifications pour recevoir une alerte à chaque fois que le centre sera de nouveau disponible à la réservation.</string>
+    <string name="bookmark_empty_state_description">"Retrouvez ici vos centres suivis.\n\nActivez le suivi en appuyant sur le bouton en bas à droite d'un centre.\n\nVous pouvez également activer le suivi avec notifications pour recevoir une alerte à chaque fois que le centre sera de nouveau disponible à la réservation."</string>
     <string name="bookmark_empty_state_title">Aucun centre suivi</string>
     <string name="notification">Notification</string>
     <string name="notification_disclaimer_title">Note</string>
