@@ -48,7 +48,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                     ).let {
                         val list = mutableListOf<DisplayItem>()
 
-                        fun prepareCenters(centers: MutableList<DisplayItem.Center>, available: Boolean): List<DisplayItem.Center> {
+                        fun prepareCenters(centers: MutableList<DisplayItem.Center>): List<DisplayItem.Center> {
                             /** Set up distance when city search **/
                             if (isCitySearch) {
                                 centers.onEach { it.calculateDistance(entry as SearchEntry.City) }
@@ -62,7 +62,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             /** Sort results **/
                             centers.sortWith(sortType.comparator)
                             centers.onEach { center ->
-                                center.available = available
+                                center.available = center.appointmentCount > 0
                                 center.bookmark = centersBookmark
                                     .firstOrNull { center.id == it.centerId }?.bookmark
                                     ?: Bookmark.NONE
@@ -77,10 +77,13 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
                         /** Add header to show last updated view **/
                         list.add(DisplayItem.LastUpdated(it.lastUpdated))
+
                         /** Update available vaccine filter type **/
                         updateVaccineFilters(it.availableCenters)
 
-                        val preparedAvailableCenters = prepareCenters(it.availableCenters, true)
+                        val preparedAvailableCenters = prepareCenters(it.availableCenters)
+                        val preparedUnavailableCenters = prepareCenters(it.unavailableCenters)
+
                         if (preparedAvailableCenters.isNotEmpty()) {
                             /** Add header when available centers **/
                             list.add(
@@ -88,16 +91,29 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                                             preparedAvailableCenters.size,
                                             preparedAvailableCenters.sumBy { it.appointmentCount })
                             )
-                            /** Add available centers **/
-                            list.addAll(preparedAvailableCenters)
                         }
 
-                        val preparedUnavailableCenters = prepareCenters(it.unavailableCenters, false)
-                        if (preparedUnavailableCenters.isNotEmpty()) {
-                            /** Add the header with unavailable centers **/
-                            list.add(DisplayItem.UnavailableCenterHeader(preparedAvailableCenters.isNotEmpty()))
-                            /** Add unavailable centers **/
-                            list.addAll(preparedUnavailableCenters)
+                        when (sortType) {
+                            SortType.ByDate -> {
+                                /** Add available centers **/
+                                list.addAll(preparedAvailableCenters)
+
+                                if (preparedUnavailableCenters.isNotEmpty()) {
+                                    /** Add the header with unavailable centers **/
+                                    list.add(DisplayItem.UnavailableCenterHeader(preparedAvailableCenters.isNotEmpty()))
+
+                                    /** Add unavailable centers **/
+                                    list.addAll(preparedUnavailableCenters)
+                                }
+                            }
+                            SortType.ByProximity -> {
+                                val centers = mutableListOf<DisplayItem.Center>().apply {
+                                    addAll(preparedAvailableCenters)
+                                    addAll(preparedUnavailableCenters)
+                                    sortWith(SortType.ByProximity.comparator)
+                                }
+                                list.addAll(centers)
+                            }
                         }
 
                         view.showCenters(list, if (isCitySearch) sortType else null)

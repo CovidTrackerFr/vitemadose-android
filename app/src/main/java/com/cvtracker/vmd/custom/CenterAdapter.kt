@@ -56,7 +56,7 @@ class CenterAdapter(
                         ""
                     }
                 } else {
-                    dateView.text = context.getString(R.string.no_slots_available)
+                    dateView.text = context.getString(R.string.no_slots_available) + center.formattedDistance
                 }
 
                 center.metadata?.address?.let { address ->
@@ -124,9 +124,9 @@ class CenterAdapter(
                     checkButton.show()
                 }
 
-                if(center.isChronodose){
+                if (center.isChronodose) {
                     chronodoseView.show()
-                }else{
+                } else {
                     chronodoseView.hide()
                 }
             }
