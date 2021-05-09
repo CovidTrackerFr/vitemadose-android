@@ -110,8 +110,8 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <com.cvtracker.vmd.custom.FilterSwitchView
-            android:id="@+id/filterSwitchView"
+        <com.cvtracker.vmd.custom.SortSwitchView
+            android:id="@+id/sortSwitchView"
             android:layout_width="0dp"
             android:visibility="gone"
             android:layout_height="wrap_content"

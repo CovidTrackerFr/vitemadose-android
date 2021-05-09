@@ -32,10 +32,15 @@ sealed class DisplayItem {
         val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
+        @SerializedName("appointment_schedules")
+        val schedules: Schedules?,
         var available: Boolean = false,
         var distance: Float? = null,
         var bookmark: Bookmark = Bookmark.NONE
     ) : DisplayItem() {
+
+        val isChronodose: Boolean
+            get() = (schedules?.chronodosesCount ?: 0) > 0
 
         val platformEnum: Plateform?
             get() = platform?.let { Plateform.fromId(it) }
@@ -49,7 +54,7 @@ sealed class DisplayItem {
             }
 
         val formattedAddress: String?
-            get() = metadata?.address?.replace(", ","\n")?.trim()
+            get() = metadata?.address?.replace(", ", "\n")?.trim()
 
         val formattedDistance: String
             get() {
@@ -77,6 +82,11 @@ sealed class DisplayItem {
                 null
             }
         }
+
+        class Schedules(
+            @SerializedName("2_days")
+            val chronodosesCount: Int,
+        )
 
         class LocationCenter(
             @SerializedName("latitude")

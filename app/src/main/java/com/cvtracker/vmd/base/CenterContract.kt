@@ -2,7 +2,7 @@ package com.cvtracker.vmd.base
 
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.SortType
 
 interface CenterContract {
 
@@ -16,7 +16,7 @@ interface CenterContract {
         /**
          * Display bookmark list of centers
          */
-        fun showCenters(list: List<DisplayItem>, filter: FilterType?)
+        fun showCenters(list: List<DisplayItem>, sortType: SortType?)
 
         /**
          * Notify centers are loading

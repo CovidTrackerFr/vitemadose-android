@@ -27,6 +27,7 @@ import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
+import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -90,8 +91,8 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        filterSwitchView.onFilterChangedListener = { filter ->
-            presenter.onFilterChanged(filter)
+        sortSwitchView.onSortChangedListener = { filter ->
+            presenter.onSortChanged(filter)
         }
 
         centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -111,7 +112,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             /** Manage colors when switching between collapsed and expanded state **/
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.25f
             headerLayout.alpha = 1 - progress
-            filterSwitchView.alpha = 1 - progress
+            sortSwitchView.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
                     bookmarkIconView.imageTintList = ColorStateList.valueOf(it)
@@ -258,5 +259,9 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         super.onNewIntent(newIntent)
         intent = newIntent
         intent.dataString?.let { presenter.handleDeepLink(it) }
+    }
+
+    override fun showFiltersDialog(filterSections: MutableList<FilterType.FilterSection>) {
+
     }
 }

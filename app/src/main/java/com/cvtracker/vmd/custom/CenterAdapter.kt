@@ -123,6 +123,12 @@ class CenterAdapter(
                     centreAvailableSpecificViews.hide()
                     checkButton.show()
                 }
+
+                if(center.isChronodose){
+                    chronodoseView.show()
+                }else{
+                    chronodoseView.hide()
+                }
             }
         }
     }

@@ -1,6 +1,6 @@
 package com.cvtracker.vmd.data
 
-import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.SortType
 import com.google.gson.annotations.SerializedName
 
 sealed class SearchEntry {
@@ -23,10 +23,10 @@ sealed class SearchEntry {
             is City -> this.department?.departmentCode ?: ""
         }
 
-    val defaultFilterType : FilterType
+    val defaultSortType : SortType
         get() = when(this){
-            is Department -> FilterType.ByDate
-            is City -> FilterType.ByProximity
+            is Department -> SortType.ByDate
+            is City -> SortType.ByProximity
         }
 
     override fun toString(): String {

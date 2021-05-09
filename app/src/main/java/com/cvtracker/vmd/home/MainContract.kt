@@ -3,6 +3,7 @@ package com.cvtracker.vmd.home
 import com.cvtracker.vmd.base.CenterContract
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.SortType
 
 interface MainContract {
 
@@ -31,6 +32,8 @@ interface MainContract {
         fun removeEmptyStateIfNeeded()
 
         fun showBookmarks(department: String? = null, centerId: String? = null)
+
+        fun showFiltersDialog(filterSections: MutableList<FilterType.FilterSection>)
     }
 
     interface Presenter : CenterContract.Presenter {
@@ -63,8 +66,10 @@ interface MainContract {
         /**
          * Called when the filter has been modified
          */
-        fun onFilterChanged(filter: FilterType)
+        fun onSortChanged(sortType: SortType)
 
         fun handleDeepLink(data: String)
+        fun updateFilters(filters: List<FilterType.FilterSection>)
+        fun requestFiltersDialog()
     }
 }

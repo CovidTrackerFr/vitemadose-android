@@ -51,7 +51,7 @@ object AnalyticsHelper {
         FirebaseAnalytics.getInstance(ViteMaDoseApp.get())
     }
 
-    fun logEventSearch(searchEntry: SearchEntry, response: CenterResponse, filterType: FilterType) {
+    fun logEventSearch(searchEntry: SearchEntry, response: CenterResponse, filterType: SortType) {
         val event = when (searchEntry) {
             is SearchEntry.Department -> EVENT_SEARCH_BY_DEPARTMENT
             is SearchEntry.City -> EVENT_SEARCH_BY_MUNICIPALITY
@@ -69,7 +69,7 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventRdvClick(center: DisplayItem.Center, filterType: FilterType) {
+    fun logEventRdvClick(center: DisplayItem.Center, filterType: SortType) {
         val event = when (center.available) {
             true -> EVENT_RDV_CLICK
             else -> EVENT_RDV_VERIFY_CLICK
@@ -84,7 +84,7 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: FilterType, fromBookmark: Bookmark) {
+    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: SortType, fromBookmark: Bookmark) {
         val event = when (center.bookmark) {
             Bookmark.NOTIFICATION -> EVENT_BOOKMARK_NOTIFICATION_CLICK
             Bookmark.FAVORITE -> EVENT_BOOKMARK_FAVORITE_CLICK
@@ -126,8 +126,8 @@ object AnalyticsHelper {
         })
     }
 
-    private fun filterTypeValue(filterType: FilterType) = when (filterType) {
-        FilterType.ByDate -> "au plus tot"
-        FilterType.ByProximity -> "au plus proche"
+    private fun filterTypeValue(filterType: SortType) = when (filterType) {
+        SortType.ByDate -> "au plus tot"
+        SortType.ByProximity -> "au plus proche"
     }
 }

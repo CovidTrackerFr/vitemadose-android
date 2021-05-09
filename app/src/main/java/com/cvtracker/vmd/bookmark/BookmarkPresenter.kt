@@ -4,8 +4,8 @@ import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.master.DataManager
-import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.master.PrefHelper
+import com.cvtracker.vmd.master.SortType
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -33,7 +33,7 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
                             centers: MutableList<DisplayItem.Center>,
                             available: Boolean
                         ): List<DisplayItem.Center> {
-                            centers.sortWith(FilterType.ByDate.comparator)
+                            centers.sortWith(SortType.ByDate.comparator)
                             return centers
                                 .onEach { center ->
                                     center.available = available

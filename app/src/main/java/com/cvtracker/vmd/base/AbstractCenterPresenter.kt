@@ -4,14 +4,14 @@ import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.master.AnalyticsHelper
 import com.cvtracker.vmd.master.FcmHelper
-import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.master.PrefHelper
+import com.cvtracker.vmd.master.SortType
 
 abstract class AbstractCenterPresenter(open val view: CenterContract.View): CenterContract.Presenter {
 
     override fun onCenterClicked(center: DisplayItem.Center) {
         view.openLink(center.url)
-        AnalyticsHelper.logEventRdvClick(center, FilterType.ByDate)
+        AnalyticsHelper.logEventRdvClick(center, SortType.ByDate)
     }
 
     override fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark) {
@@ -29,7 +29,7 @@ abstract class AbstractCenterPresenter(open val view: CenterContract.View): Cent
 
         center.bookmark = target
         PrefHelper.updateBookmark(center)
-        AnalyticsHelper.logEventBookmarkClick(center, FilterType.ByDate, fromBookmark)
+        AnalyticsHelper.logEventBookmarkClick(center, SortType.ByDate, fromBookmark)
     }
 
 }
