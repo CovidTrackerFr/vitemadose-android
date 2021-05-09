@@ -26,7 +26,7 @@ class SortSwitchView @JvmOverloads constructor(context: Context, attrs: Attribut
                         updateSelectedFilterIndex(index)
                         onSortChangedListener?.invoke(filter)
                     }
-                    sortNameView.text = filter.displayTitle
+                    sortNameView.setText(filter.displayTitle)
                 }
             container.addView(
                 view,

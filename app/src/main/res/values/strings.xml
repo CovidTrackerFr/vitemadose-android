@@ -7,6 +7,8 @@
     <string name="bookmark_notification">Suivi avec notifications</string>
     <string name="bookmark_favorite">Suivi</string>
     <string name="bookmark_none">Non suivi</string>
+    <string name="sort_by_date">Au plus tôt</string>
+    <string name="sort_by_proximity">Au plus proche</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="centers">
         <item quantity="one">lieu\nde vaccination</item>
