@@ -118,6 +118,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.25f
             headerLayout.alpha = 1 - progress
             sortSwitchView.alpha = 1 - progress
+            filterView.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
                     bookmarkIconView.imageTintList = ColorStateList.valueOf(it)
@@ -273,6 +274,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             .setTitle(R.string.filters_title)
             .setView(filtersDialogView)
             .setPositiveButton(R.string.apply){ _,_ ->
+                filterView.isSelected = filtersDialogView.isDefault().not()
                 presenter.updateFilters(filtersDialogView.newFilters)
             }
             .setNegativeButton(R.string.cancel){ _,_ -> }

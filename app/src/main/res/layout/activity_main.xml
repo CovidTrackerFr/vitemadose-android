@@ -51,13 +51,13 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/departmentSelector"
                 style="@style/CustomCardView"
-                app:cardCornerRadius="8dp"
-                app:contentPadding="0dp"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
                 android:layout_marginEnd="4dp"
                 android:background="@android:color/transparent"
+                app:cardCornerRadius="8dp"
+                app:contentPadding="0dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -72,12 +72,12 @@
 
                     <com.google.android.material.textfield.MaterialAutoCompleteTextView
                         android:id="@+id/selectedDepartment"
-                        android:completionThreshold="1000"
-                        android:imeOptions="actionSearch"
                         style="@style/TextStyle_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:completionThreshold="1000"
                         android:hint="@string/choose_department_title"
+                        android:imeOptions="actionSearch"
                         android:inputType="textCapSentences|textNoSuggestions"
                         android:textSize="16sp" />
                 </com.google.android.material.textfield.TextInputLayout>
@@ -113,29 +113,32 @@
         <com.cvtracker.vmd.custom.SortSwitchView
             android:id="@+id/sortSwitchView"
             android:layout_width="0dp"
-            android:visibility="gone"
+            android:layout_marginTop="2dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
             android:elevation="10dp"
+            android:visibility="gone"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/refreshLayout"
             app:layout_constraintWidth_max="250dp" />
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/filterView"
-            app:layout_constraintTop_toTopOf="@id/sortSwitchView"
-            app:layout_constraintBottom_toBottomOf="@id/sortSwitchView"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end"
-            android:background="@drawable/selectable_background"
-            android:elevation="20dp"
-            android:padding="14dp"
-            app:srcCompat="@drawable/ic_info_black"
-            app:tint="@color/mine_shaft" />
+            android:layout_marginEnd="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:elevation="2dp"
+            android:padding="0dp"
+            app:backgroundTint="@color/white"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/refreshLayout"
+            app:srcCompat="@drawable/ic_tune_black_24dp"
+            app:tint="@color/selector_filter_icon" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -148,9 +151,9 @@
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/bookmarkIconView"
         android:layout_width="56dp"
-        android:layout_marginStart="2dp"
         android:layout_height="56dp"
         android:layout_gravity="start"
+        android:layout_marginStart="2dp"
         android:background="@drawable/selectable_background"
         android:elevation="20dp"
         android:padding="15dp"

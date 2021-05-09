@@ -33,7 +33,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
             sortSwitchView?.show()
             sortSwitchView?.updateSelectedSort(sortType)
         } else {
-            centersRecyclerView.topPadding = resources.dpToPx(12f)
+            centersRecyclerView.topPadding = resources.dpToPx(25f)
             sortSwitchView?.hide()
         }
     }

@@ -32,15 +32,16 @@ sealed class DisplayItem {
         val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
-        @SerializedName("appointment_schedules")
-        val schedules: Schedules?,
+        /**@SerializedName("appointment_schedules")
+        val schedules: Schedules?,**/
         var available: Boolean = false,
         var distance: Float? = null,
         var bookmark: Bookmark = Bookmark.NONE
     ) : DisplayItem() {
 
         val isChronodose: Boolean
-            get() = (schedules?.chronodosesCount ?: 0) > 0
+            get() = false
+            /** get() = (schedules?.chronodosesCount ?: 0) > 0**/
 
         val platformEnum: Plateform?
             get() = platform?.let { Plateform.fromId(it) }
