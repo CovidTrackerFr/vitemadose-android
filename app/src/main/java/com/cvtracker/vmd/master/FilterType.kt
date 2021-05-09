@@ -6,6 +6,8 @@ class FilterType {
 
     companion object {
 
+        fun getDefault() = mutableListOf(appointmentFilterType)
+
         const val FILTER_APPOINTMENT = "FILTER_APPOINTMENT"
         const val FILTER_VACCINE_TYPE = "FILTER_VACCINE_TYPE"
 
@@ -36,7 +38,7 @@ class FilterType {
 
     class Filter(
         val displayTitle: String,
-        val enabled: Boolean,
+        var enabled: Boolean,
         val predicate: (DisplayItem.Center) -> Boolean
     )
 }

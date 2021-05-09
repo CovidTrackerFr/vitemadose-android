@@ -15,7 +15,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private var jobCenters: Job? = null
 
     private var selectedSortType: SortType? = null
-    private var filterSections = mutableListOf(FilterType.appointmentFilterType)
+    private var filterSections = FilterType.getDefault()
 
     companion object{
         var DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
@@ -67,9 +67,15 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                                     .firstOrNull { center.id == it.centerId }?.bookmark
                                     ?: Bookmark.NONE
                             }
-                            filterSections.forEach {
-                                it.filters.filter { it.enabled }.forEach {
-                                    centers.filter(it.predicate)
+                            filterSections.forEach { section ->
+                                section.filters.forEach { filter ->
+                                    if(section.defaultState.not() && filter.enabled) {
+                                        /** We want to remove items which do not match the predicate, ie a filter **/
+                                        centers.removeAll { filter.predicate(it).not() }
+                                    }else if(section.defaultState && !filter.enabled) {
+                                        /** We want to remove items which do match the predicate **/
+                                        centers.removeAll(filter.predicate)
+                                    }
                                 }
                             }
                             return centers
@@ -227,8 +233,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             defaultState = true,
             filters = mapVaccine.map { entry ->
                 FilterType.Filter(entry.key, entry.value){
-                    /** If a vaccine type is not set up, keep it **/
-                    it.vaccineType?.toList()?.contains(entry.key) ?: true
+                    it.vaccineType?.toList()?.contains(entry.key) ?: false
                 }
             }
         )

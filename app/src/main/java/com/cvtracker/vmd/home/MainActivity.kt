@@ -13,12 +13,17 @@ import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.AppCompatCheckBox
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
@@ -32,6 +37,7 @@ import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.alert_dialog_filters.view.*
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
@@ -93,6 +99,9 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
         sortSwitchView.onSortChangedListener = { filter ->
             presenter.onSortChanged(filter)
+        }
+        filterView.setOnClickListener {
+            presenter.requestFiltersDialog()
         }
 
         centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -262,6 +271,38 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     }
 
     override fun showFiltersDialog(filterSections: MutableList<FilterType.FilterSection>) {
+        val newFilters = filterSections.toMutableList()
+        val view = LayoutInflater.from(this).inflate(R.layout.alert_dialog_filters, null).apply {
+            filterSections.forEach {
+                val sectionView =  LayoutInflater.from(this@MainActivity).inflate(R.layout.item_filter_section, null)
+                (sectionView as AppCompatTextView).text = it.displayTitle
+                container.addView(sectionView)
+                it.filters.forEach {
+                    val filterView =  LayoutInflater.from(this@MainActivity).inflate(R.layout.item_filter, null)
+                    (filterView as AppCompatCheckBox).text = it.displayTitle
+                    filterView.isChecked = it.enabled
+                    filterView.setTypeface(ResourcesCompat.getFont(context, R.font.sf_pro))
+                    filterView.setOnCheckedChangeListener { buttonView, isChecked ->
+                        newFilters.onEach {
+                            it.filters.find { it.displayTitle == buttonView.text }?.enabled = isChecked
+                        }
+                    }
+                    container.addView(filterView)
+                }
+            }
+
+        }
+        AlertDialog.Builder(this)
+            .setTitle(R.string.filters_title)
+            .setView(view)
+            .setPositiveButton(R.string.validate){ _,_ ->
+                presenter.updateFilters(newFilters)
+            }
+            .setNeutralButton(R.string.reset) { _,_ ->
+                presenter.updateFilters(FilterType.getDefault())
+            }
+            .setNegativeButton(R.string.cancel){ _,_ -> }
+            .show()
 
     }
 }

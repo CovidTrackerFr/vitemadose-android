@@ -123,6 +123,20 @@
             app:layout_constraintTop_toTopOf="@id/refreshLayout"
             app:layout_constraintWidth_max="250dp" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/filterView"
+            app:layout_constraintTop_toTopOf="@id/sortSwitchView"
+            app:layout_constraintBottom_toBottomOf="@id/sortSwitchView"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:layout_gravity="end"
+            android:background="@drawable/selectable_background"
+            android:elevation="20dp"
+            android:padding="14dp"
+            app:srcCompat="@drawable/ic_info_black"
+            app:tint="@color/mine_shaft" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ViewStub
