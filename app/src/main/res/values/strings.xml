@@ -66,8 +66,8 @@
     <string name="activate_notifs">activer les notifications</string>
     <string name="notifications_activated">notifications activées</string>
     <string name="empty_string" />
-    <string name="filters_title">Filtres</string>
+    <string name="filters_title">Filtrer les résultats</string>
     <string name="validate">valider</string>
     <string name="cancel">annuler</string>
-    <string name="reset">reinitialiser</string>
+    <string name="apply">appliquer</string>
 </resources>

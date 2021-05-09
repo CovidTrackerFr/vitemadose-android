@@ -212,9 +212,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private fun updateVaccineFilters(centers: List<DisplayItem.Center>){
         /** Retrieve all vaccine type **/
         val mapVaccine = mutableMapOf<String, Boolean>()
-        centers.flatMap {
-            it.vaccineType?.toList() ?: emptyList()
-        } .distinct().forEach {
+        centers.flatMap { it.vaccineType?.toList() ?: emptyList() } .distinct().forEach {
             /** by default, a vaccine filter is enabled **/
             mapVaccine[it] = true
         }
@@ -239,21 +237,10 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         )
         filterSections.removeAll { it.id == FILTER_VACCINE_TYPE }
         filterSections.add(section)
-
-        logFilter()
-    }
-
-    private fun logFilter(){
-        println("--- FILTER START")
-        filterSections.forEach {
-            println("--- FILTER $it")
-        }
-        println("--- FILTER END")
     }
 
     override fun updateFilters(filters: List<FilterType.FilterSection>){
         filterSections = filters.toMutableList()
-        logFilter()
         loadCenters()
     }
 

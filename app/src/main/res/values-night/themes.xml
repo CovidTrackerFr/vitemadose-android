@@ -18,5 +18,6 @@
         <item name="backgroundColor">@color/thunder</item>
         <item name="backgroundCardColor">#3a3a3a</item>
         <item name="backgroundCardColorSecondary">@color/scorpion</item>
+        <item name="colorControlActivated">@color/crail</item>
     </style>
 </resources>

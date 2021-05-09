@@ -13,7 +13,7 @@ class FilterType {
 
         val appointmentFilterType = FilterSection(
             id = FILTER_APPOINTMENT,
-            displayTitle = "Créneaux",
+            displayTitle = null,
             defaultState = false,
             filters = listOf(
                 Filter("Chronodoses uniquement", false) {
@@ -27,7 +27,7 @@ class FilterType {
 
     class FilterSection(
         val id: String,
-        val displayTitle: String,
+        val displayTitle: String?,
         val defaultState: Boolean,
         val filters: List<Filter>
     ){
