@@ -17,14 +17,18 @@ abstract class AbstractCenterPresenter(open val view: CenterContract.View): Cent
     override fun onBookmarkClicked(center: DisplayItem.Center, target: Bookmark) {
         val fromBookmark = center.bookmark
 
-        if (fromBookmark == Bookmark.NOTIFICATION) {
-            // unsubscribe from center
-            FcmHelper.unsubscribeFromCenter(center)
+        // unsubscribe from center
+        when (fromBookmark) {
+            Bookmark.NOTIFICATION_CHRONODOSE -> FcmHelper.unsubscribeFromCenter(center, true)
+            Bookmark.NOTIFICATION -> FcmHelper.unsubscribeFromCenter(center, false)
+            else -> { /* nothing to do */ }
         }
 
-        if (target == Bookmark.NOTIFICATION) {
-            // subscribe to center
-            FcmHelper.subscribeToCenter(center)
+        // subscribe to center
+        when (target) {
+            Bookmark.NOTIFICATION_CHRONODOSE -> FcmHelper.subscribeToCenter(center, true)
+            Bookmark.NOTIFICATION -> FcmHelper.subscribeToCenter(center, false)
+            else -> { /* nothing to do */ }
         }
 
         center.bookmark = target

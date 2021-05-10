@@ -35,7 +35,7 @@ class SilentRedirectReceiver : BroadcastReceiver() {
         val notificationId = intent.getIntExtra(EXTRA_NOTIFICATION_ID, 0)
 
         /** Unsubscribe from topic **/
-        FcmHelper.unsubscribeFromDepartmentAndCenterId(department, centerId)
+        FcmHelper.unsubscribeFromDepartmentAndCenterId(department, centerId, topic.contains("_chronodose", true))
 
         /** Cancel  the notification linked to this subscription **/
         NotificationManagerCompat.from(contextNotNull).cancel(notificationId)

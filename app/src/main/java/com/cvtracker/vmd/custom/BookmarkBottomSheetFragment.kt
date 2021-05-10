@@ -28,22 +28,17 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setUpViews() {
         when (arguments?.getSerializable(EXTRA_CURRENT_BOOKMARK) as? Bookmark) {
+            Bookmark.NOTIFICATION_CHRONODOSE -> notificationChronodoseView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_lightning_charge_fill_24dp, 0, R.drawable.ic_done_black_24dp, 0)
             Bookmark.NOTIFICATION -> notificationView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_notifications_24dp, 0, R.drawable.ic_done_black_24dp, 0)
             Bookmark.FAVORITE -> favoriteView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_24dp, 0, R.drawable.ic_done_black_24dp, 0)
             Bookmark.NONE -> noneView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_border_24_dp, 0, R.drawable.ic_done_black_24dp, 0)
         }
 
+        notificationChronodoseView.setOnClickListener {
+            displayConfirmDialog(Bookmark.NOTIFICATION_CHRONODOSE)
+        }
         notificationView.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(R.string.notification_disclaimer_title)
-                .setMessage(R.string.notification_disclaimer_message)
-                .setPositiveButton(R.string.notification_disclaimer_compris) { _, _ ->
-                    dismissAllowingStateLoss()
-                    listener?.invoke(Bookmark.NOTIFICATION)
-                }
-                .setNegativeButton(R.string.notification_disclaimer_cancel) { _, _ ->
-                }
-                .show()
+            displayConfirmDialog(Bookmark.NOTIFICATION)
         }
         favoriteView.setOnClickListener {
             dismissAllowingStateLoss()
@@ -53,6 +48,24 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
             dismissAllowingStateLoss()
             listener?.invoke(Bookmark.NONE)
         }
+    }
+
+    private fun displayConfirmDialog(bookmark: Bookmark) {
+        val message = when (bookmark) {
+            Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notification_chronodose_disclaimer_message
+            else -> R.string.notification_disclaimer_message
+        }
+
+        AlertDialog.Builder(requireContext())
+                .setTitle(R.string.notification_disclaimer_title)
+                .setMessage(message)
+                .setPositiveButton(R.string.notification_disclaimer_compris) { _, _ ->
+                    dismissAllowingStateLoss()
+                    listener?.invoke(bookmark)
+                }
+                .setNegativeButton(R.string.notification_disclaimer_cancel) { _, _ ->
+                }
+                .show()
     }
 
     companion object {

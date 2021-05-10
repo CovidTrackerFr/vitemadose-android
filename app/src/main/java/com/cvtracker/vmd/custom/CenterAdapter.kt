@@ -103,6 +103,7 @@ class CenterAdapter(
 
                 bookmarkView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
                     when (center.bookmark) {
+                        Bookmark.NOTIFICATION_CHRONODOSE -> R.drawable.ic_lightning_charge_fill_24dp
                         Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
                         Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
                         else -> R.drawable.ic_bookmark_border_24_dp
@@ -110,8 +111,9 @@ class CenterAdapter(
                 bookmarkView.setText(
                     when{
                         center.available -> R.string.empty_string
-                        center.bookmark != Bookmark.NOTIFICATION -> R.string.activate_notifs
-                        else -> R.string.notifications_activated
+                        center.bookmark == Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notifications_chronodose_activated
+                        center.bookmark == Bookmark.NOTIFICATION -> R.string.notifications_activated
+                        else -> R.string.activate_notifs
                     }
                 )
 

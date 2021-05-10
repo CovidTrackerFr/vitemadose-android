@@ -31,12 +31,14 @@ object AnalyticsHelper {
 
     // BOOKMARK EVENTS
     private const val EVENT_BOOKMARK_FAVORITE_CLICK = "bookmark_favorites"
+    private const val EVENT_BOOKMARK_NOTIFICATION_CHRONODOSE_CLICK = "bookmark_notification_chronodose"
     private const val EVENT_BOOKMARK_NOTIFICATION_CLICK = "bookmark_notification"
     private const val EVENT_BOOKMARK_NONE_CLICK = "bookmark_remove"
     private const val EVENT_BOOKMARK_DATA_FROM = "bookmark_from"
     private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NONE = "none"
     private const val EVENT_BOOKMARK_DATA_FROM_VALUE_FAVORITE = "favorite"
     private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION = "notification"
+    private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION_CHRONODOSE = "notification_chronodose"
 
     // NOTIFICATION EVENTS
     private const val EVENT_NOTIFICATION_RECEIVE = "notif_receive"
@@ -86,6 +88,7 @@ object AnalyticsHelper {
 
     fun logEventBookmarkClick(center: DisplayItem.Center, filterType: SortType, fromBookmark: Bookmark) {
         val event = when (center.bookmark) {
+            Bookmark.NOTIFICATION_CHRONODOSE -> EVENT_BOOKMARK_NOTIFICATION_CHRONODOSE_CLICK
             Bookmark.NOTIFICATION -> EVENT_BOOKMARK_NOTIFICATION_CLICK
             Bookmark.FAVORITE -> EVENT_BOOKMARK_FAVORITE_CLICK
             else -> EVENT_BOOKMARK_NONE_CLICK
@@ -98,6 +101,7 @@ object AnalyticsHelper {
             putString(EVENT_RDV_DATA_VACCINE, center.vaccineType?.joinToString(separator = ","))
             putString(EVENT_RDV_DATA_FILTER_TYPE, filterTypeValue(filterType))
             putString(EVENT_BOOKMARK_DATA_FROM, when (fromBookmark) {
+                Bookmark.NOTIFICATION_CHRONODOSE -> EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION_CHRONODOSE
                 Bookmark.NOTIFICATION -> EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION
                 Bookmark.FAVORITE -> EVENT_BOOKMARK_DATA_FROM_VALUE_FAVORITE
                 else -> EVENT_BOOKMARK_DATA_FROM_VALUE_NONE

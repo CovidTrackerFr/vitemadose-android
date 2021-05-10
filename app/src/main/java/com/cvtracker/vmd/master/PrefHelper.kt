@@ -85,7 +85,7 @@ object PrefHelper {
             update.removeAll { it.centerId == id }
 
             // add bookmark if necessary
-            if (bookmark == Bookmark.NOTIFICATION || bookmark == Bookmark.FAVORITE) {
+            if (bookmark != Bookmark.NONE) {
                 update.add(CenterBookmark(id, department, bookmark))
             }
 

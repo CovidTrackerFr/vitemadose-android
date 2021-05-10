@@ -7,34 +7,36 @@ import timber.log.Timber
 
 object FcmHelper {
 
-    fun subscribeToCenter(center: DisplayItem.Center) {
-        subscribeToTopic(topicForCenter(center))
+    fun subscribeToCenter(center: DisplayItem.Center, chronodose: Boolean) {
+        subscribeToTopic(topicForCenter(center, chronodose))
     }
 
-    fun unsubscribeFromCenter(center: DisplayItem.Center) {
-        unsubscribeFromTopic(topicForCenter(center))
+    fun unsubscribeFromCenter(center: DisplayItem.Center, chronodose: Boolean) {
+        unsubscribeFromTopic(topicForCenter(center, chronodose))
     }
 
-    fun unsubscribeFromDepartmentAndCenterId(department: String, centerId: String?) {
-        unsubscribeFromTopic(topicWithDepartmentAndCenterId(department, centerId))
+    fun unsubscribeFromDepartmentAndCenterId(department: String, centerId: String?, chronodose: Boolean) {
+        unsubscribeFromTopic(topicWithDepartmentAndCenterId(department, centerId, chronodose))
     }
 
-    private fun topicForCenter(center: DisplayItem.Center) = topicWithDepartmentAndCenterId(center.department, center.id)
+    private fun topicForCenter(center: DisplayItem.Center, chronodose: Boolean) =
+            topicWithDepartmentAndCenterId(center.department, center.id, chronodose)
 
     /** Use for notification action **/
-    private fun topicWithDepartmentAndCenterId(department: String, centerId: String?) = "department_${department}_center_${centerId}"
+    private fun topicWithDepartmentAndCenterId(department: String, centerId: String?, chronodose: Boolean) =
+            "department_${department}_center_${centerId}${if (chronodose) "_chronodoses" else ""}"
 
     private fun subscribeToTopic(topic: String) {
         Firebase.messaging.subscribeToTopic(topic)
-            .addOnCompleteListener { task ->
-                Timber.d("subscribeToTopic [$topic] : ${if (task.isSuccessful) "success" else "fail"}")
-            }
+                .addOnCompleteListener { task ->
+                    Timber.d("subscribeToTopic [$topic] : ${if (task.isSuccessful) "success" else "fail"}")
+                }
     }
 
     private fun unsubscribeFromTopic(topic: String) {
         Firebase.messaging.unsubscribeFromTopic(topic)
-            .addOnCompleteListener { task ->
-                Timber.d("unsubscribeFromTopic [$topic] : ${if (task.isSuccessful) "success" else "fail"}")
-            }
+                .addOnCompleteListener { task ->
+                    Timber.d("unsubscribeFromTopic [$topic] : ${if (task.isSuccessful) "success" else "fail"}")
+                }
     }
 }
