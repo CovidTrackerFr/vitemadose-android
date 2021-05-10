@@ -228,7 +228,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         /** Finally create our filter vaccine with the map **/
         val section = FilterType.FilterSection(
             id = FILTER_VACCINE_TYPE,
-            displayTitle = "Type de vaccin",
+            displayTitle = "Types de vaccins",
             defaultState = true,
             filters = mapVaccine.map { entry ->
                 FilterType.Filter(entry.key, entry.value){

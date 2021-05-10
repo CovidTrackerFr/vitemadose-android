@@ -5,14 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <androidx.constraintlayout.helper.widget.Flow
+    <com.google.android.material.chip.ChipGroup
         android:id="@+id/flow"
-        app:flow_horizontalGap="5dp"
-        app:flow_verticalBias="0"
-        app:flow_verticalGap="0dp"
-        app:flow_wrapMode="chain"
-        app:flow_verticalStyle="packed"
-        app:flow_horizontalStyle="packed"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>

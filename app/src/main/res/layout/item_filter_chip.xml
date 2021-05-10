@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.chip.Chip xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/checkboxView"
     style="@style/Widget.MaterialComponents.Chip.Choice"
     android:maxLines="1"
     android:layout_marginTop="0dp"
     android:layout_marginBottom="0dp"
-    android:ellipsize="end"
+    app:checkedIconTint="?attr/colorPrimary"
+    app:checkedIconEnabled="true"
     android:includeFontPadding="false"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content" />

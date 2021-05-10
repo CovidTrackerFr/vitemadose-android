@@ -26,7 +26,7 @@ sealed class SearchEntry {
     val defaultSortType : SortType
         get() = when(this){
             is Department -> SortType.ByDate
-            is City -> SortType.ByProximity
+            is City -> SortType.ByDate
         }
 
     override fun toString(): String {

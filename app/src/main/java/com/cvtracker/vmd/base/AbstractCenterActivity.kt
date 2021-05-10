@@ -29,13 +29,14 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
         /** set up filter state **/
         if (sortType != null) {
-            centersRecyclerView.topPadding = resources.dpToPx(50f)
+            centersRecyclerView.topPadding = resources.dpToPx(60f)
             sortSwitchView?.show()
             sortSwitchView?.updateSelectedSort(sortType)
         } else {
-            centersRecyclerView.topPadding = resources.dpToPx(25f)
+            centersRecyclerView.topPadding = resources.dpToPx(35f)
             sortSwitchView?.hide()
         }
+        filterView?.show()
     }
 
     open fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int) {

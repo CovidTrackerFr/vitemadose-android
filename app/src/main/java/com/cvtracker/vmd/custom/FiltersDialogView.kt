@@ -34,13 +34,9 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
 
             if(it.id == FilterType.FILTER_VACCINE_TYPE){
                 val chipHolder =  LayoutInflater.from(context).inflate(R.layout.item_chip_holder, null) as ConstraintLayout
-                val ids = mutableListOf<Int>()
-                it.filters.forEach {
-                    val filterView = getFilterItemView(it, R.layout.item_filter_chip)
-                    chipHolder.addView(filterView)
-                    ids.add(filterView.id)
-                }
-                chipHolder.flow.referencedIds = ids.toIntArray()
+                it.filters
+                    .sortedBy { it.displayTitle }
+                    .forEach { chipHolder.flow.addView(getFilterItemView(it, R.layout.item_filter_chip)) }
                 container.addView(chipHolder)
             }else{
                 it.filters.forEach { container.addView(getFilterItemView(it, R.layout.item_filter))}
