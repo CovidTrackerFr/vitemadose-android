@@ -12,7 +12,7 @@
         android:layout_weight="1" />
 
     <com.cvtracker.vmd.custom.StatView
-        android:id="@+id/availableChronodosesStat"
+        android:id="@+id/secondStatView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"

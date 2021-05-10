@@ -239,20 +239,29 @@ class CenterAdapter(
                 .inflate(R.layout.item_available_center_header, parent, false)
         ) {
         fun bind(header: DisplayItem.AvailableCenterHeader) {
-            val availableCentersStat = ItemStat(
-                icon = R.drawable.ic_check,
-                plurals = R.plurals.center_disponibilities,
-                countString = header.placesCount.toString(),
-                count = header.placesCount
+            itemView.availableCentersStat.bind(
+                ItemStat(
+                    icon = R.drawable.ic_check,
+                    plurals = R.plurals.center_disponibilities,
+                    countString = header.placesCount.toString(),
+                    count = header.placesCount
+                )
             )
-            val chronodosesStat = ItemStat(
-                icon = R.drawable.ic_eclair,
-                plurals = R.plurals.chronodose_disponibilities,
-                countString = header.chronodoseCount.toString(),
-                count = header.chronodoseCount
-            )
-            itemView.availableCentersStat.bind(availableCentersStat)
-            itemView.availableChronodosesStat.bind(chronodosesStat)
+            itemView.secondStatView.bind(if(header.chronodoseCount > 0){
+                ItemStat(
+                    icon = R.drawable.ic_eclair,
+                    plurals = R.plurals.chronodose_disponibilities,
+                    countString = header.chronodoseCount.toString(),
+                    count = header.chronodoseCount
+                )
+            }else{
+                ItemStat(
+                    icon = R.drawable.ic_appointement,
+                    plurals = R.plurals.slot_disponibilities,
+                    countString = header.slotsCount.toString(),
+                    count = header.slotsCount
+                )
+            })
         }
     }
 
