@@ -133,6 +133,7 @@
             android:layout_gravity="end"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:elevation="2dp"
+            app:elevation="2dp"
             android:padding="0dp"
             app:backgroundTint="@color/filter_background_selector"
             app:fabSize="mini"

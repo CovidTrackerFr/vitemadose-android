@@ -33,7 +33,12 @@ import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_bookmark.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.appBarLayout
+import kotlinx.android.synthetic.main.activity_main.centersRecyclerView
+import kotlinx.android.synthetic.main.activity_main.container
+import kotlinx.android.synthetic.main.activity_main.refreshLayout
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
@@ -119,6 +124,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             }
         })
 
+        centersRecyclerView.topPadding = resources.dpToPx(60f)
         presenter.loadInitialState()
         presenter.loadCenters()
 
