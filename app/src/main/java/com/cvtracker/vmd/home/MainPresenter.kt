@@ -95,7 +95,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             list.add(
                                     DisplayItem.AvailableCenterHeader(
                                             preparedAvailableCenters.size,
-                                            preparedAvailableCenters.sumBy { it.appointmentCount })
+                                            preparedAvailableCenters.sumBy { it.chronodoseCount })
                             )
                         }
 

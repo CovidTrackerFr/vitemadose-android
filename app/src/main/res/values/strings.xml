@@ -26,6 +26,10 @@
         <item quantity="one">créneau\ndisponible</item>
         <item quantity="other">créneaux\ndisponibles</item>
     </plurals>
+    <plurals name="chronodose_disponibilities">
+        <item quantity="one">chronodose\ndisponible</item>
+        <item quantity="other">chronodoses\ndisponibles</item>
+    </plurals>
     <plurals name="shot_disponibilities">
         <item quantity="one">%s créneau</item>
         <item quantity="other">%s créneaux</item>

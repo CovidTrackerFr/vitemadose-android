@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.ItemStat
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
@@ -238,22 +239,20 @@ class CenterAdapter(
                 .inflate(R.layout.item_available_center_header, parent, false)
         ) {
         fun bind(header: DisplayItem.AvailableCenterHeader) {
-            itemView.nbCenterView.text = header.placesCount.toString()
-            itemView.libelleCenterAvailable.text =
-                String.format(
-                    context.resources.getQuantityString(
-                        R.plurals.center_disponibilities,
-                        header.placesCount, header.placesCount
-                    )
-                )
-            itemView.nbAppointementView.text = header.slotsCount.toString()
-            itemView.libelleAppointementAvailable.text =
-                String.format(
-                    context.resources.getQuantityString(
-                        R.plurals.slot_disponibilities,
-                        header.slotsCount, header.slotsCount
-                    )
-                )
+            val availableCentersStat = ItemStat(
+                icon = R.drawable.ic_check,
+                plurals = R.plurals.center_disponibilities,
+                countString = header.placesCount.toString(),
+                count = header.placesCount
+            )
+            val chronodosesStat = ItemStat(
+                icon = R.drawable.ic_eclair,
+                plurals = R.plurals.chronodose_disponibilities,
+                countString = header.chronodoseCount.toString(),
+                count = header.chronodoseCount
+            )
+            itemView.availableCentersStat.bind(availableCentersStat)
+            itemView.availableChronodosesStat.bind(chronodosesStat)
         }
     }
 
