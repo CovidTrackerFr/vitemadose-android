@@ -145,7 +145,7 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/noCentersView"
-            android:visibility="visible"
+            android:visibility="gone"
             style="@style/TextStyle_baseline_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -161,7 +161,7 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/resetFiltersView"
-            android:visibility="visible"
+            android:visibility="gone"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton"
             android:backgroundTint="?attr/backgroundCardColor"
             android:layout_width="wrap_content"
