@@ -58,8 +58,10 @@
     <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
     <string name="app_update_pending">Préparation de la mise à jour.</string>
     <string name="app_update_downloaded">Mise à jour téléchargée. Veuillez redémarrer ViteMaDose.</string>
-    <string name="bookmark_empty_state_description">"Retrouvez ici vos centres suivis.\n\nActivez le suivi en appuyant sur le bouton en bas à droite d'un centre.\n\nVous pouvez également activer le suivi avec notifications pour recevoir une alerte à chaque fois que le centre sera de nouveau disponible à la réservation."</string>
-    <string name="bookmark_empty_state_title">Aucun centre suivi</string>
+    <string name="bookmark_empty_state_none">"Aucun centre suivi"</string>
+    <string name="bookmark_empty_state_favorite">"Suivez vos centres pour les retrouver plus facilement"</string>
+    <string name="bookmark_empty_state_notification">"Recevez une notification lorsque les centres sont de nouveau disponibles"</string>
+    <string name="bookmark_empty_state_notification_chronodose">"Soyez alerté lors de la disponibilité de chronodoses"</string>
     <string name="notification">Notification</string>
     <string name="notification_disclaimer_title">Note</string>
     <string name="notification_chronodose_disclaimer_message">Vous recevrez une notification à chaque fois que le centre proposera <b>de nouveau des chronodoses</b>.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
