@@ -10,6 +10,11 @@ interface MainContract {
     interface View : CenterContract.View {
 
         /**
+         * Show chronodose onboarding
+         */
+        fun showChronodoseOnboarding()
+
+        /**
          * Show empty state
          */
         fun showEmptyState()

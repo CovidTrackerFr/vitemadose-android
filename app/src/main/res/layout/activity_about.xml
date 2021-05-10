@@ -14,11 +14,11 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:background="?attr/backgroundColor"
-        android:overScrollMode="ifContentScrolls"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="?attr/backgroundColor"
+        android:overScrollMode="ifContentScrolls"
         app:layout_constraintBottom_toTopOf="@id/disclaimerView"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
@@ -50,13 +50,27 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/chronodoseView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_lightning_charge_fill"
+                        android:text="@string/chronodose_onboarding_title"
+                        app:drawableTint="?android:attr/textColorPrimary" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/separatorColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/faqView"
                         style="@style/TextStyle_baseline_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_help_outline_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/faq" />
+                        android:text="@string/faq"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
@@ -69,8 +83,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_location_on_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/carte_des_centres" />
+                        android:text="@string/carte_des_centres"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
@@ -83,8 +97,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_assessment_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/vaccintracker" />
+                        android:text="@string/vaccintracker"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
@@ -97,10 +111,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_share_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/share" />
+                        android:text="@string/share"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView

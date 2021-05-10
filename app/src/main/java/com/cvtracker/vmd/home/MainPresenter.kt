@@ -28,6 +28,10 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                 view.showEmptyState()
             }
             view.displaySelectedSearchEntry(entry)
+
+            if (!PrefHelper.chronodoseOnboardingDisplayed) {
+                view.showChronodoseOnboarding()
+            }
         }
     }
 

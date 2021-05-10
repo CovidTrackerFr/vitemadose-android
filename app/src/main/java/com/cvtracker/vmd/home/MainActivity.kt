@@ -30,6 +30,7 @@ import com.cvtracker.vmd.custom.FiltersDialogView
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -233,6 +234,10 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             }
         }
         stubEmptyState.inflate()
+    }
+
+    override fun showChronodoseOnboarding() {
+        startActivity(Intent(this, ChronodoseOnboardingActivity::class.java))
     }
 
     override fun displaySelectedSearchEntry(entry: SearchEntry?) {

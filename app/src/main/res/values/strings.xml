@@ -78,4 +78,6 @@
     <string name="cancel">annuler</string>
     <string name="apply">appliquer</string>
     <string name="chronodoses_disponibles">Chronodoses disponibles</string>
+    <string name="chronodose_onboarding_title">Chronodose</string>
+    <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme sans critère d\éligibilité.\n\n</string>
 </resources>
