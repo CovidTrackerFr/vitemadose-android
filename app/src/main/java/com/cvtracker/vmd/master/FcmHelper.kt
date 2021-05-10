@@ -7,6 +7,10 @@ import timber.log.Timber
 
 object FcmHelper {
 
+    const val CHRONODOSE_SUFFIX = "_chronodoses"
+
+    fun isTopicChronodose(topic: String) = topic.endsWith(CHRONODOSE_SUFFIX, true)
+
     fun subscribeToCenter(center: DisplayItem.Center, chronodose: Boolean) {
         subscribeToTopic(topicForCenter(center, chronodose))
     }
@@ -24,7 +28,7 @@ object FcmHelper {
 
     /** Use for notification action **/
     private fun topicWithDepartmentAndCenterId(department: String, centerId: String?, chronodose: Boolean) =
-            "department_${department}_center_${centerId}${if (chronodose) "_chronodoses" else ""}"
+            "department_${department}_center_${centerId}${if (chronodose) CHRONODOSE_SUFFIX else ""}"
 
     private fun subscribeToTopic(topic: String) {
         Firebase.messaging.subscribeToTopic(topic)

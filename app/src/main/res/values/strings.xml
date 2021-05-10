@@ -71,6 +71,8 @@
     <string name="notification_disable_notifications">Arrêter notifications</string>
     <string name="notification_channel_name">Disponibilités</string>
     <string name="notification_channel_description">Nouvelles disponibilités dans vos centres suivis avec notifications</string>
+    <string name="notification_chronodose_channel_name">Chronodoses</string>
+    <string name="notification_chronodose_channel_description">Nouvelles chronodoses disponibles dans vos centres suivis avec notifications</string>
     <string name="activate_notifs">activer les notifications</string>
     <string name="notifications_chronodose_activated">notifications chronodose activées</string>
     <string name="notifications_activated">notifications activées</string>
