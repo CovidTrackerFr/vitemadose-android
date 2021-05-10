@@ -34,6 +34,8 @@ interface MainContract {
         fun showBookmarks(department: String? = null, centerId: String? = null)
 
         fun showFiltersDialog(filterSections: MutableList<FilterType.FilterSection>)
+
+        fun updateFilterState(defaultFilters: Boolean)
     }
 
     interface Presenter : CenterContract.Presenter {
@@ -69,7 +71,9 @@ interface MainContract {
         fun onSortChanged(sortType: SortType)
 
         fun handleDeepLink(data: String)
+
         fun updateFilters(filters: List<FilterType.FilterSection>)
-        fun requestFiltersDialog()
+
+        fun getFilters(): List<FilterType.FilterSection>
     }
 }

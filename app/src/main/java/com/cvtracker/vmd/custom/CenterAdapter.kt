@@ -27,7 +27,9 @@ class CenterAdapter(
     private val onClicked: (DisplayItem.Center) -> Unit,
     private val onBookmarkClicked: (DisplayItem.Center, Int) -> Unit,
     private val onAddressClicked: (String) -> Unit,
-    private val onPhoneClicked: (String) -> Unit
+    private val onPhoneClicked: (String) -> Unit,
+    private val onChronodoseFilterClick: (() -> Unit)? = null,
+    private val onSlotsFilterClick: (() -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mExpandedPosition = -1
@@ -241,29 +243,28 @@ class CenterAdapter(
                 .inflate(R.layout.item_available_center_header, parent, false)
         ) {
         fun bind(header: DisplayItem.AvailableCenterHeader) {
-            itemView.availableCentersStat.bind(
-                ItemStat(
-                    icon = R.drawable.ic_check,
-                    plurals = R.plurals.center_disponibilities,
-                    countString = header.placesCount.toString(),
-                    count = header.placesCount
+            itemView.firstStatView.apply {
+                bind(
+                    ItemStat(
+                        icon = R.drawable.ic_appointement,
+                        plurals = R.plurals.slot_disponibilities,
+                        countString = header.slotsCount.toString(),
+                        count = header.slotsCount
+                    )
                 )
-            )
-            itemView.secondStatView.bind(if(header.chronodoseCount > 0){
-                ItemStat(
-                    icon = R.drawable.ic_eclair,
-                    plurals = R.plurals.chronodose_disponibilities,
-                    countString = header.chronodoseCount.toString(),
-                    count = header.chronodoseCount
+                setOnClickListener { onSlotsFilterClick?.invoke() }
+            }
+            itemView.secondStatView.apply {
+                bind(
+                    ItemStat(
+                        icon = R.drawable.ic_eclair,
+                        plurals = R.plurals.chronodose_disponibilities,
+                        countString = header.chronodoseCount.toString(),
+                        count = header.chronodoseCount
+                    )
                 )
-            }else{
-                ItemStat(
-                    icon = R.drawable.ic_appointement,
-                    plurals = R.plurals.slot_disponibilities,
-                    countString = header.slotsCount.toString(),
-                    count = header.slotsCount
-                )
-            })
+                setOnClickListener { onChronodoseFilterClick?.invoke() }
+            }
         }
     }
 

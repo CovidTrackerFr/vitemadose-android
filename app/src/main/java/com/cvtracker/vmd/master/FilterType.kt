@@ -11,15 +11,18 @@ class FilterType {
         const val FILTER_APPOINTMENT = "FILTER_APPOINTMENT"
         const val FILTER_VACCINE_TYPE = "FILTER_VACCINE_TYPE"
 
+        const val FILTER_CHRONODOSE_ID = "FILTER_CHRONODOSE_ID"
+        const val FILTER_AVAILABLE_ID = "FILTER_AVAILABLE_ID"
+
         val appointmentFilterType = FilterSection(
             id = FILTER_APPOINTMENT,
             displayTitle = null,
             defaultState = false,
             filters = listOf(
-                Filter("Chronodoses uniquement", false) {
+                Filter("Chronodoses uniquement", false, FILTER_CHRONODOSE_ID) {
                     it.isChronodose
                 },
-                Filter("Centres disponibles uniquement", false) {
+                Filter("Centres disponibles uniquement", false, FILTER_AVAILABLE_ID) {
                     it.available
                 }
             ))
@@ -39,6 +42,7 @@ class FilterType {
     class Filter(
         val displayTitle: String,
         var enabled: Boolean,
+        val id: String? = null,
         val predicate: (DisplayItem.Center) -> Boolean
     )
 }

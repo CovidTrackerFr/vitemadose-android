@@ -16,6 +16,10 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
     abstract val presenter: T
 
+    abstract val onChronodoseFilterClick: (() -> Unit)?
+
+    abstract val onSlotsFilterClick: (() -> Unit)?
+
     override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
         appBarLayout.setExpanded(true, true)
         centersRecyclerView.adapter = CenterAdapter(
@@ -24,7 +28,9 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
             onClicked = { presenter.onCenterClicked(it) },
             onBookmarkClicked = { center, position -> showBookmarkBottomSheet(center, position) },
             onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
-            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) }
+            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) },
+            onChronodoseFilterClick = onChronodoseFilterClick,
+            onSlotsFilterClick = onSlotsFilterClick
         )
 
         /** set up filter state **/

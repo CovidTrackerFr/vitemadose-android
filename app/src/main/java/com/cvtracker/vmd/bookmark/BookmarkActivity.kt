@@ -72,4 +72,7 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
             bookmarkEmptyState.hide()
         }
     }
+
+    override val onChronodoseFilterClick: (() -> Unit)? = null
+    override val onSlotsFilterClick: (() -> Unit)? = null
 }

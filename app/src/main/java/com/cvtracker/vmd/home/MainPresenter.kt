@@ -93,10 +93,10 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         if (preparedAvailableCenters.isNotEmpty()) {
                             /** Add header when available centers **/
                             list.add(
-                                    DisplayItem.AvailableCenterHeader(
-                                            preparedAvailableCenters.size,
-                                            preparedAvailableCenters.sumBy { it.appointmentCount },
-                                            preparedAvailableCenters.sumBy { it.chronodoseCount })
+                                DisplayItem.AvailableCenterHeader(
+                                    preparedAvailableCenters.size,
+                                    preparedAvailableCenters.sumBy { it.appointmentCount },
+                                    preparedAvailableCenters.sumBy { it.chronodoseCount })
                             )
                         }
 
@@ -242,11 +242,16 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun updateFilters(filters: List<FilterType.FilterSection>){
         filterSections = filters.toMutableList()
+        view.updateFilterState(isDefaultFilters())
         loadCenters()
     }
 
-    override fun requestFiltersDialog(){
-        view.showFiltersDialog(filterSections)
+    private fun isDefaultFilters(): Boolean {
+        return (filterSections.find { section ->
+            section.filters.find { it.enabled != section.defaultState } != null
+        }) == null
     }
+
+    override fun getFilters() = filterSections
 
 }

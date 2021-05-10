@@ -57,10 +57,4 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
             }
         }
     }
-
-    fun isDefault(): Boolean {
-        return (newFilters.find { section ->
-            section.filters.find { it.enabled != section.defaultState } != null
-        }) == null
-    }
 }

@@ -5,7 +5,7 @@
     android:orientation="horizontal">
 
     <com.cvtracker.vmd.custom.StatView
-        android:id="@+id/availableCentersStat"
+        android:id="@+id/firstStatView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"

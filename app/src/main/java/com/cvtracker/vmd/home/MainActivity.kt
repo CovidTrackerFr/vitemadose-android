@@ -43,7 +43,16 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
     }
+
     override val presenter: MainContract.Presenter = MainPresenter(this)
+
+    override val onChronodoseFilterClick: (() -> Unit) = {
+        switchFilter(FilterType.FILTER_CHRONODOSE_ID)
+    }
+
+    override val onSlotsFilterClick: (() -> Unit) = {
+        switchFilter(FilterType.FILTER_AVAILABLE_ID)
+    }
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
@@ -97,7 +106,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             presenter.onSortChanged(filter)
         }
         filterView.setOnClickListener {
-            presenter.requestFiltersDialog()
+            showFiltersDialog(presenter.getFilters().toMutableList())
         }
 
         centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -274,11 +283,23 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             .setTitle(R.string.filters_title)
             .setView(filtersDialogView)
             .setPositiveButton(R.string.apply){ _,_ ->
-                filterView.isSelected = filtersDialogView.isDefault().not()
                 presenter.updateFilters(filtersDialogView.newFilters)
             }
             .setNegativeButton(R.string.cancel){ _,_ -> }
             .show()
+    }
 
+    override fun updateFilterState(defaultFilters: Boolean) {
+        filterView.isSelected = defaultFilters.not()
+    }
+
+    private fun switchFilter(filterId: String) {
+        val filters = presenter.getFilters()
+        filters.onEach {
+            val filter = it.filters.find { it.id == filterId } ?: return@onEach
+            filter.enabled = filter.enabled.not()
+            Snackbar.make(container, "Filtre \"${filter.displayTitle}\" ${if(filter.enabled) "activé" else "désactivé"}", Snackbar.LENGTH_SHORT).show()
+        }
+        presenter.updateFilters(filters)
     }
 }
