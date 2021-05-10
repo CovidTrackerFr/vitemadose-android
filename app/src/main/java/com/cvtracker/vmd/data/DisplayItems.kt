@@ -32,8 +32,8 @@ sealed class DisplayItem {
         val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
-        /** @SerializedName("appointment_schedules")
-        val schedules: List<Schedule>?, **/
+        @SerializedName("appointment_schedules")
+        val schedules: List<Schedule>?,
         var available: Boolean = false,
         var distance: Float? = null,
         var bookmark: Bookmark = Bookmark.NONE
@@ -43,8 +43,7 @@ sealed class DisplayItem {
             get() = chronodoseCount > 0
 
         val chronodoseCount: Int
-            get() = 3
-            //get() = (schedules?.find { it.name == "chronodose" }?.total ?: 0)
+            get() = (schedules?.find { it.name == "chronodose" }?.total ?: 0)
 
         val platformEnum: Plateform?
             get() = platform?.let { Plateform.fromId(it) }
