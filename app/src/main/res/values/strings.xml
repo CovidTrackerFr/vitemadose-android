@@ -82,6 +82,7 @@
     <string name="cancel">annuler</string>
     <string name="apply">appliquer</string>
     <string name="chronodoses_disponibles">Chronodoses disponibles</string>
-    <string name="chronodose_onboarding_title">Chronodose</string>
-    <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme sans critère d\éligibilité.\n\n</string>
+    <string name="chronodose_onboarding_title">Chronodoses</string>
+    <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme et sans critère d\'éligibilité.\n\nVous pouvez être alerté de leurs disponibilités en activant les notifications.</string>
+    <string name="chronodose_onboarding_message_2">Les centres disposant de chronodoses sont affichés avec un bandeau rouge comme ci-dessous :</string>
 </resources>
