@@ -4,7 +4,7 @@
     android:maxLines="1"
     android:ellipsize="end"
     style="@style/TextStyle_baseline_small"
-    android:layout_marginStart="16dp"
+    android:textSize="15sp"
     android:includeFontPadding="false"
     android:layout_width="match_parent"
     android:layout_height="match_parent" />
