@@ -39,7 +39,7 @@
     <string name="no_slots_available_center_header_others">Autres lieux sans créneau de vaccination détecté</string>
     <string name="no_slots_available_center_header">Aucun lieu avec des disponibilités.\nLieux sans créneau de vaccination détecté</string>
     <string name="no_slots_available">Aucun RDV détecté</string>
-    <string name="check_center">Vérifier ce centre</string>
+    <string name="check_center">Consulter ce lieu</string>
     <string name="partner_placeholder">avec</string>
     <string name="supported_platforms_title">Trouvez vos rendez-vous avec</string>
     <string name="centers_error">Erreur lors de la récupération des lieux. Réessayez</string>
@@ -58,7 +58,7 @@
     <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
     <string name="app_update_pending">Préparation de la mise à jour.</string>
     <string name="app_update_downloaded">Mise à jour téléchargée. Veuillez redémarrer ViteMaDose.</string>
-    <string name="bookmark_empty_state_description">Retrouvez ici vos centres suivis.\nVous pouvez également activer le suivi avec notifications pour recevoir une alerte à chaque fois que le centre sera de nouveau disponible à la réservation.</string>
+    <string name="bookmark_empty_state_description">"Retrouvez ici vos centres suivis.\n\nActivez le suivi en appuyant sur le bouton en bas à droite d'un centre.\n\nVous pouvez également activer le suivi avec notifications pour recevoir une alerte à chaque fois que le centre sera de nouveau disponible à la réservation."</string>
     <string name="bookmark_empty_state_title">Aucun centre suivi</string>
     <string name="notification">Notification</string>
     <string name="notification_disclaimer_title">Note</string>
