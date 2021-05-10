@@ -94,15 +94,13 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         val preparedAvailableCenters = prepareCenters(it.availableCenters)
                         val preparedUnavailableCenters = prepareCenters(it.unavailableCenters)
 
-                        if (preparedAvailableCenters.isNotEmpty()) {
-                            /** Add header when available centers **/
-                            list.add(
+                        /** Add statistics header **/
+                        list.add(
                                 DisplayItem.AvailableCenterHeader(
-                                    preparedAvailableCenters.size,
-                                    preparedAvailableCenters.sumBy { it.appointmentCount },
-                                    preparedAvailableCenters.sumBy { it.chronodoseCount })
-                            )
-                        }
+                                        preparedAvailableCenters.size,
+                                        preparedAvailableCenters.sumBy { it.appointmentCount },
+                                        preparedAvailableCenters.sumBy { it.chronodoseCount })
+                        )
 
                         when (sortType) {
                             SortType.ByDate -> {
