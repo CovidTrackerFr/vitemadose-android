@@ -21,6 +21,7 @@ object AnalyticsHelper {
 
     // CENTER EVENTS
     private const val EVENT_RDV_CLICK = "rdv_click"
+    private const val EVENT_RDV_CLICK_CHRONODOSE = "rdv_click_chronodose"
     private const val EVENT_RDV_VERIFY_CLICK = "rdv_verify"
     private const val EVENT_RDV_DATA_DEPARTMENT = "rdv_departement"
     private const val EVENT_RDV_DATA_NAME = "rdv_name"
@@ -72,8 +73,9 @@ object AnalyticsHelper {
     }
 
     fun logEventRdvClick(center: DisplayItem.Center, filterType: SortType) {
-        val event = when (center.available) {
-            true -> EVENT_RDV_CLICK
+        val event = when {
+            center.available && center.isChronodose -> EVENT_RDV_CLICK_CHRONODOSE
+            center.available -> EVENT_RDV_CLICK
             else -> EVENT_RDV_VERIFY_CLICK
         }
         firebaseAnalytics.logEvent(event, Bundle().apply {
