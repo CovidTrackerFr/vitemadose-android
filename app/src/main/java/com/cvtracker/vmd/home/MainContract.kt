@@ -79,6 +79,8 @@ interface MainContract {
 
         fun updateFilters(filters: List<FilterType.FilterSection>)
 
+        fun resetFilters()
+
         fun getFilters(): List<FilterType.FilterSection>
     }
 }

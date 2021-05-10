@@ -250,6 +250,13 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         loadCenters()
     }
 
+    override fun resetFilters() {
+        filterSections.onEach { section ->
+            section.filters.onEach { it.enabled = section.defaultState }
+        }
+        updateFilters(filterSections)
+    }
+
     private fun isDefaultFilters(): Boolean {
         return (filterSections.find { section ->
             section.filters.find { it.enabled != section.defaultState } != null

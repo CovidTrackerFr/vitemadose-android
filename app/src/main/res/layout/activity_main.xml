@@ -113,35 +113,66 @@
         <com.cvtracker.vmd.custom.SortSwitchView
             android:id="@+id/sortSwitchView"
             android:layout_width="0dp"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            android:layout_marginEnd="4dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
             android:elevation="10dp"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@id/filterView"
+            app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@id/refreshLayout"
             app:layout_constraintWidth_max="250dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/filterView"
-            android:visibility="gone"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="2dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_gravity="end"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:elevation="2dp"
-            app:elevation="2dp"
             android:padding="0dp"
+            android:visibility="gone"
             app:backgroundTint="@color/filter_background_selector"
+            app:elevation="2dp"
             app:fabSize="mini"
-            app:layout_constraintStart_toEndOf="@id/sortSwitchView"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sortSwitchView"
             app:layout_constraintTop_toTopOf="@id/refreshLayout"
             app:srcCompat="@drawable/ic_tune_black_24dp"
             app:tint="@color/sort_text_selector" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/noCentersView"
+            android:visibility="visible"
+            style="@style/TextStyle_baseline_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            app:layout_constraintVertical_bias="0.4"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="0dp"
+            android:text="Aucun centre à afficher"
+            android:textSize="22sp"
+            app:layout_constraintBottom_toTopOf="@id/resetFiltersView"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/resetFiltersView"
+            android:visibility="visible"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:backgroundTint="?attr/backgroundCardColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Reinitiliser les filtres"
+            app:cornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noCentersView" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

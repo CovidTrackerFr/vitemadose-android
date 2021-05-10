@@ -27,9 +27,11 @@ import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.FiltersDialogView
+import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.SortType
 import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
@@ -312,5 +314,27 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             Snackbar.make(container, "Filtre \"${filter.displayTitle}\" ${if(filter.enabled) "activé" else "désactivé"}", Snackbar.LENGTH_SHORT).show()
         }
         presenter.updateFilters(filters)
+    }
+
+    override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
+        super.showCenters(list, sortType)
+        showPlaceholderEmptyList(list.find { it is DisplayItem.Center } == null)
+    }
+
+    private fun showPlaceholderEmptyList(show: Boolean){
+        if(show) {
+            noCentersView.show()
+            if (filterView.isSelected) {
+                resetFiltersView.show()
+                resetFiltersView.setOnClickListener {
+                    presenter.resetFilters()
+                }
+            } else {
+                resetFiltersView.hide()
+            }
+        }else{
+            noCentersView.hide()
+            resetFiltersView.hide()
+        }
     }
 }
