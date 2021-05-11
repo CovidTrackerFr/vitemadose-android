@@ -82,5 +82,7 @@ interface MainContract {
         fun resetFilters()
 
         fun getFilters(): List<FilterType.FilterSection>
+
+        fun displayChronodoseOnboardingIfNeeded()
     }
 }

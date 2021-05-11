@@ -28,10 +28,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                 view.showEmptyState()
             }
             view.displaySelectedSearchEntry(entry)
-
-            if (!PrefHelper.chronodoseOnboardingDisplayed) {
-                view.showChronodoseOnboarding()
-            }
         }
     }
 
@@ -263,4 +259,9 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun getFilters() = filterSections
 
+    override fun displayChronodoseOnboardingIfNeeded() {
+        if (!PrefHelper.chronodoseOnboardingDisplayed) {
+            view.showChronodoseOnboarding()
+        }
+    }
 }
