@@ -43,57 +43,69 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:background="?attr/backgroundColor"
+        android:padding="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/firstIconView"
-            android:layout_width="36dp"
-            app:layout_constraintVertical_bias="0.4"
-            android:layout_height="36dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintBottom_toTopOf="@id/emptyStateTitleView"
-            app:layout_constraintEnd_toStartOf="@id/secondIconView"
-            app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_bookmark_24dp" />
-
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/secondIconView"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/firstIconView"
-            app:layout_constraintTop_toTopOf="@id/firstIconView"
-            app:srcCompat="@drawable/ic_notifications_24dp" />
-
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/emptyStateTitleView"
+            android:id="@+id/bookmarkNoneView"
             style="@style/TextStyle_baseline_small"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center"
+            android:drawableStart="@drawable/ic_bookmark_border_24_dp"
             android:paddingHorizontal="16dp"
             android:paddingVertical="8dp"
-            android:text="@string/bookmark_empty_state_title"
+            android:text="@string/bookmark_empty_state_none"
             android:textSize="22sp"
-            app:layout_constraintBottom_toTopOf="@id/emptyStateDescriptionView"
-            app:layout_constraintTop_toBottomOf="@id/firstIconView" />
+            app:layout_constraintBottom_toTopOf="@id/bookmarkFavoriteView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/emptyStateDescriptionView"
+            android:id="@+id/bookmarkFavoriteView"
             style="@style/TextStyle_center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingHorizontal="16dp"
-            android:text="@string/bookmark_empty_state_description"
+            android:drawableStart="@drawable/ic_bookmark_24dp"
+            android:drawablePadding="16dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            android:text="@string/bookmark_empty_state_favorite"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/bookmarkNotificationView"
+            app:layout_constraintTop_toBottomOf="@id/bookmarkNoneView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookmarkNotificationView"
+            style="@style/TextStyle_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_notifications_24dp"
+            android:drawablePadding="16dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            android:text="@string/bookmark_empty_state_notification"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@id/bookmarkNotificationChronodoseView"
+            app:layout_constraintTop_toBottomOf="@id/bookmarkFavoriteView" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookmarkNotificationChronodoseView"
+            style="@style/TextStyle_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lightning_charge_fill_24dp"
+            android:drawablePadding="16dp"
+            android:paddingHorizontal="24dp"
+            android:paddingVertical="8dp"
+            android:text="@string/bookmark_empty_state_notification_chronodose"
             android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/emptyStateTitleView" />
+            app:layout_constraintTop_toBottomOf="@id/bookmarkNotificationView" />
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

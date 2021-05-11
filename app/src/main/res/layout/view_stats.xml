@@ -3,8 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/CustomCardView"
+    android:duplicateParentState="true"
+    android:foreground="?attr/selectableItemBackground"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    app:contentPadding="12dp"
     app:cardCornerRadius="8dp"
     tools:parentTag="androidx.cardview.widget.CardView">
 

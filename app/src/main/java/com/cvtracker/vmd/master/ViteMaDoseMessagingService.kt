@@ -22,6 +22,7 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
 
     companion object {
         const val NOTIFICATION_CHANNEL_ID_AVAILABILITY = "availability"
+        const val NOTIFICATION_CHANNEL_ID_CHRONODOSE = "chronodose"
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
@@ -58,7 +59,14 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
                 NotificationManager.IMPORTANCE_DEFAULT
             )
             notificationChannel.description = getString(R.string.notification_channel_description)
-            notificationManager.createNotificationChannel(notificationChannel);
+            notificationManager.createNotificationChannel(notificationChannel)
+
+            val chronodoseChannel = NotificationChannel(
+                NOTIFICATION_CHANNEL_ID_CHRONODOSE, getString(R.string.notification_chronodose_channel_name),
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+            chronodoseChannel.description = getString(R.string.notification_chronodose_channel_description)
+            notificationManager.createNotificationChannel(chronodoseChannel);
         }
 
         val intent = Intent(this, MainActivity::class.java)
@@ -70,10 +78,17 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
         val intentAction = SilentRedirectReceiver.buildIntent(this, department, centerId, topic, type, notificationId)
         val actionPendingIntent = PendingIntent.getBroadcast(this, notificationId, intentAction, PendingIntent.FLAG_UPDATE_CURRENT)
 
+        val (channelId: String, iconResId: Int) = if(FcmHelper.isTopicChronodose(topic)){
+            NOTIFICATION_CHANNEL_ID_CHRONODOSE to R.drawable.ic_lightning_charge_fill_24dp
+        }else{
+            NOTIFICATION_CHANNEL_ID_AVAILABILITY to R.drawable.ic_vmd_logo_notification
+        }
+
         val notificationBuilder =
-            NotificationCompat.Builder(context, NOTIFICATION_CHANNEL_ID_AVAILABILITY)
+            NotificationCompat.Builder(context, channelId)
                 .setAutoCancel(true)
-                .setSmallIcon(R.drawable.ic_vmd_logo_notification)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setSmallIcon(iconResId)
                 .setContentTitle(title)
                 .setContentText(body)
                 .setContentIntent(pendingIntent)

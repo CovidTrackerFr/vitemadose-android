@@ -19,18 +19,29 @@ import android.widget.ArrayAdapter
 import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
+import com.cvtracker.vmd.custom.FiltersDialogView
+import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
+import com.cvtracker.vmd.master.FilterType
+import com.cvtracker.vmd.master.SortType
+import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.activity_bookmark.*
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.appBarLayout
+import kotlinx.android.synthetic.main.activity_main.centersRecyclerView
+import kotlinx.android.synthetic.main.activity_main.container
+import kotlinx.android.synthetic.main.activity_main.refreshLayout
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
@@ -40,7 +51,16 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
     }
+
     override val presenter: MainContract.Presenter = MainPresenter(this)
+
+    override val onChronodoseFilterClick: (() -> Unit) = {
+        switchFilter(FilterType.FILTER_CHRONODOSE_ID)
+    }
+
+    override val onSlotsFilterClick: (() -> Unit) = {
+        switchFilter(FilterType.FILTER_AVAILABLE_ID)
+    }
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
@@ -90,8 +110,11 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        filterSwitchView.onFilterChangedListener = { filter ->
-            presenter.onFilterChanged(filter)
+        sortSwitchView.onSortChangedListener = { filter ->
+            presenter.onSortChanged(filter)
+        }
+        filterView.setOnClickListener {
+            showFiltersDialog(presenter.getFilters().toMutableList())
         }
 
         centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -104,6 +127,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             }
         })
 
+        centersRecyclerView.topPadding = resources.dpToPx(60f)
         presenter.loadInitialState()
         presenter.loadCenters()
 
@@ -111,7 +135,8 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             /** Manage colors when switching between collapsed and expanded state **/
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.25f
             headerLayout.alpha = 1 - progress
-            filterSwitchView.alpha = 1 - progress
+            sortSwitchView.alpha = 1 - progress
+            filterView.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
                 loadColor(colorAttr(R.attr.iconTintColor), color(R.color.white), progress) {
                     bookmarkIconView.imageTintList = ColorStateList.valueOf(it)
@@ -188,6 +213,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     override fun removeEmptyStateIfNeeded() {
         bookmarkIconView.show()
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
+        presenter.displayChronodoseOnboardingIfNeeded()
     }
 
     override fun showEmptyState() {
@@ -211,6 +237,10 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             }
         }
         stubEmptyState.inflate()
+    }
+
+    override fun showChronodoseOnboarding() {
+        startActivity(Intent(this, ChronodoseOnboardingActivity::class.java))
     }
 
     override fun displaySelectedSearchEntry(entry: SearchEntry?) {
@@ -258,5 +288,54 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         super.onNewIntent(newIntent)
         intent = newIntent
         intent.dataString?.let { presenter.handleDeepLink(it) }
+    }
+
+    override fun showFiltersDialog(filterSections: MutableList<FilterType.FilterSection>) {
+        val filtersDialogView = FiltersDialogView(this)
+        filtersDialogView.populateFilters(filterSections)
+        AlertDialog.Builder(this)
+            .setTitle(R.string.filters_title)
+            .setView(filtersDialogView)
+            .setPositiveButton(R.string.apply){ _,_ ->
+                presenter.updateFilters(filtersDialogView.newFilters)
+            }
+            .setNegativeButton(R.string.cancel){ _,_ -> }
+            .show()
+    }
+
+    override fun updateFilterState(defaultFilters: Boolean) {
+        filterView.isSelected = defaultFilters.not()
+    }
+
+    private fun switchFilter(filterId: String) {
+        val filters = presenter.getFilters()
+        filters.onEach {
+            val filter = it.filters.find { it.id == filterId } ?: return@onEach
+            filter.enabled = filter.enabled.not()
+            Snackbar.make(container, "Filtre \"${filter.displayTitle}\" ${if(filter.enabled) "activé" else "désactivé"}", Snackbar.LENGTH_SHORT).show()
+        }
+        presenter.updateFilters(filters)
+    }
+
+    override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
+        super.showCenters(list, sortType)
+        showPlaceholderEmptyList(list.lastOrNull() is DisplayItem.AvailableCenterHeader)
+    }
+
+    private fun showPlaceholderEmptyList(show: Boolean){
+        if(show) {
+            noCentersView.show()
+            if (filterView.isSelected) {
+                resetFiltersView.show()
+                resetFiltersView.setOnClickListener {
+                    presenter.resetFilters()
+                }
+            } else {
+                resetFiltersView.hide()
+            }
+        }else{
+            noCentersView.hide()
+            resetFiltersView.hide()
+        }
     }
 }

@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
+import com.cvtracker.vmd.data.ItemStat
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
@@ -26,7 +27,9 @@ class CenterAdapter(
     private val onClicked: (DisplayItem.Center) -> Unit,
     private val onBookmarkClicked: (DisplayItem.Center, Int) -> Unit,
     private val onAddressClicked: (String) -> Unit,
-    private val onPhoneClicked: (String) -> Unit
+    private val onPhoneClicked: (String) -> Unit,
+    private val onChronodoseFilterClick: (() -> Unit)? = null,
+    private val onSlotsFilterClick: (() -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mExpandedPosition = -1
@@ -56,7 +59,7 @@ class CenterAdapter(
                         ""
                     }
                 } else {
-                    dateView.text = context.getString(R.string.no_slots_available)
+                    dateView.text = context.getString(R.string.no_slots_available) + center.formattedDistance
                 }
 
                 center.metadata?.address?.let { address ->
@@ -102,6 +105,7 @@ class CenterAdapter(
 
                 bookmarkView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
                     when (center.bookmark) {
+                        Bookmark.NOTIFICATION_CHRONODOSE -> R.drawable.ic_lightning_charge_fill_24dp
                         Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
                         Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
                         else -> R.drawable.ic_bookmark_border_24_dp
@@ -109,8 +113,9 @@ class CenterAdapter(
                 bookmarkView.setText(
                     when{
                         center.available -> R.string.empty_string
-                        center.bookmark != Bookmark.NOTIFICATION -> R.string.activate_notifs
-                        else -> R.string.notifications_activated
+                        center.bookmark == Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notifications_chronodose_activated
+                        center.bookmark == Bookmark.NOTIFICATION -> R.string.notifications_activated
+                        else -> R.string.activate_notifs
                     }
                 )
 
@@ -122,6 +127,12 @@ class CenterAdapter(
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColorSecondary))
                     centreAvailableSpecificViews.hide()
                     checkButton.show()
+                }
+
+                if (center.isChronodose) {
+                    chronodoseView.show()
+                } else {
+                    chronodoseView.hide()
                 }
             }
         }
@@ -232,22 +243,28 @@ class CenterAdapter(
                 .inflate(R.layout.item_available_center_header, parent, false)
         ) {
         fun bind(header: DisplayItem.AvailableCenterHeader) {
-            itemView.nbCenterView.text = header.placesCount.toString()
-            itemView.libelleCenterAvailable.text =
-                String.format(
-                    context.resources.getQuantityString(
-                        R.plurals.center_disponibilities,
-                        header.placesCount, header.placesCount
+            itemView.firstStatView.apply {
+                bind(
+                    ItemStat(
+                        icon = R.drawable.ic_appointement,
+                        plurals = R.plurals.slot_disponibilities,
+                        countString = header.slotsCount.toString(),
+                        count = header.slotsCount
                     )
                 )
-            itemView.nbAppointementView.text = header.slotsCount.toString()
-            itemView.libelleAppointementAvailable.text =
-                String.format(
-                    context.resources.getQuantityString(
-                        R.plurals.slot_disponibilities,
-                        header.slotsCount, header.slotsCount
+                setOnClickListener { onSlotsFilterClick?.invoke() }
+            }
+            itemView.secondStatView.apply {
+                bind(
+                    ItemStat(
+                        icon = R.drawable.ic_eclair,
+                        plurals = R.plurals.chronodose_disponibilities,
+                        countString = header.chronodoseCount.toString(),
+                        count = header.chronodoseCount
                     )
                 )
+                setOnClickListener { onChronodoseFilterClick?.invoke() }
+            }
         }
     }
 

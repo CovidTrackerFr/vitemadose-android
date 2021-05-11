@@ -51,6 +51,10 @@
             android:name=".bookmark.BookmarkActivity"
             android:screenOrientation="sensorPortrait"/>
 
+        <activity
+            android:name=".onboarding.ChronodoseOnboardingActivity"
+            android:screenOrientation="sensorPortrait"/>
+
         <receiver android:name=".master.SilentRedirectReceiver"/>
 
         <service

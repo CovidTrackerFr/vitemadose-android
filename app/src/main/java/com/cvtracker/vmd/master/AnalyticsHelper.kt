@@ -21,6 +21,7 @@ object AnalyticsHelper {
 
     // CENTER EVENTS
     private const val EVENT_RDV_CLICK = "rdv_click"
+    private const val EVENT_RDV_CLICK_CHRONODOSE = "rdv_click_chronodose"
     private const val EVENT_RDV_VERIFY_CLICK = "rdv_verify"
     private const val EVENT_RDV_DATA_DEPARTMENT = "rdv_departement"
     private const val EVENT_RDV_DATA_NAME = "rdv_name"
@@ -31,12 +32,14 @@ object AnalyticsHelper {
 
     // BOOKMARK EVENTS
     private const val EVENT_BOOKMARK_FAVORITE_CLICK = "bookmark_favorites"
+    private const val EVENT_BOOKMARK_NOTIFICATION_CHRONODOSE_CLICK = "bookmark_notification_chronodose"
     private const val EVENT_BOOKMARK_NOTIFICATION_CLICK = "bookmark_notification"
     private const val EVENT_BOOKMARK_NONE_CLICK = "bookmark_remove"
     private const val EVENT_BOOKMARK_DATA_FROM = "bookmark_from"
     private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NONE = "none"
     private const val EVENT_BOOKMARK_DATA_FROM_VALUE_FAVORITE = "favorite"
     private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION = "notification"
+    private const val EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION_CHRONODOSE = "notification_chronodose"
 
     // NOTIFICATION EVENTS
     private const val EVENT_NOTIFICATION_RECEIVE = "notif_receive"
@@ -51,7 +54,7 @@ object AnalyticsHelper {
         FirebaseAnalytics.getInstance(ViteMaDoseApp.get())
     }
 
-    fun logEventSearch(searchEntry: SearchEntry, response: CenterResponse, filterType: FilterType) {
+    fun logEventSearch(searchEntry: SearchEntry, response: CenterResponse, filterType: SortType) {
         val event = when (searchEntry) {
             is SearchEntry.Department -> EVENT_SEARCH_BY_DEPARTMENT
             is SearchEntry.City -> EVENT_SEARCH_BY_MUNICIPALITY
@@ -69,9 +72,10 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventRdvClick(center: DisplayItem.Center, filterType: FilterType) {
-        val event = when (center.available) {
-            true -> EVENT_RDV_CLICK
+    fun logEventRdvClick(center: DisplayItem.Center, filterType: SortType) {
+        val event = when {
+            center.available && center.isChronodose -> EVENT_RDV_CLICK_CHRONODOSE
+            center.available -> EVENT_RDV_CLICK
             else -> EVENT_RDV_VERIFY_CLICK
         }
         firebaseAnalytics.logEvent(event, Bundle().apply {
@@ -84,8 +88,9 @@ object AnalyticsHelper {
         })
     }
 
-    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: FilterType, fromBookmark: Bookmark) {
+    fun logEventBookmarkClick(center: DisplayItem.Center, filterType: SortType, fromBookmark: Bookmark) {
         val event = when (center.bookmark) {
+            Bookmark.NOTIFICATION_CHRONODOSE -> EVENT_BOOKMARK_NOTIFICATION_CHRONODOSE_CLICK
             Bookmark.NOTIFICATION -> EVENT_BOOKMARK_NOTIFICATION_CLICK
             Bookmark.FAVORITE -> EVENT_BOOKMARK_FAVORITE_CLICK
             else -> EVENT_BOOKMARK_NONE_CLICK
@@ -98,6 +103,7 @@ object AnalyticsHelper {
             putString(EVENT_RDV_DATA_VACCINE, center.vaccineType?.joinToString(separator = ","))
             putString(EVENT_RDV_DATA_FILTER_TYPE, filterTypeValue(filterType))
             putString(EVENT_BOOKMARK_DATA_FROM, when (fromBookmark) {
+                Bookmark.NOTIFICATION_CHRONODOSE -> EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION_CHRONODOSE
                 Bookmark.NOTIFICATION -> EVENT_BOOKMARK_DATA_FROM_VALUE_NOTIFICATION
                 Bookmark.FAVORITE -> EVENT_BOOKMARK_DATA_FROM_VALUE_FAVORITE
                 else -> EVENT_BOOKMARK_DATA_FROM_VALUE_NONE
@@ -126,8 +132,8 @@ object AnalyticsHelper {
         })
     }
 
-    private fun filterTypeValue(filterType: FilterType) = when (filterType) {
-        FilterType.ByDate -> "au plus tot"
-        FilterType.ByProximity -> "au plus proche"
+    private fun filterTypeValue(filterType: SortType) = when (filterType) {
+        SortType.ByDate -> "au plus tot"
+        SortType.ByProximity -> "au plus proche"
     }
 }

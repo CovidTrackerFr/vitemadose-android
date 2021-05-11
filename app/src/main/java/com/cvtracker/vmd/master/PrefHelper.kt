@@ -16,6 +16,7 @@ object PrefHelper {
 
     private const val PREF_VITEMADOSE = "PREF_VITEMADOSE"
 
+    private const val PREF_CHRONODOSE_ONBOARDING_DISPLAYED = "PREF_CHRONODOSE_ONBOARDING_DISPLAYED"
     private const val PREF_SEARCH_ENTRY = "PREF_SEARCH_ENTRY"
     private const val PREF_CENTERS_BOOKMARK = "PREF_CENTERS_BOOKMARK"
 
@@ -23,6 +24,12 @@ object PrefHelper {
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
 
     private val gson = GsonBuilder().registerTypeAdapterFactory(ValidatorAdapterFactory()).create()
+
+    var chronodoseOnboardingDisplayed: Boolean
+        get() = sharedPrefs.getBoolean(PREF_CHRONODOSE_ONBOARDING_DISPLAYED, false)
+        set(value) {
+            sharedPrefs.edit().putBoolean(PREF_CHRONODOSE_ONBOARDING_DISPLAYED, value).apply()
+        }
 
     var favEntry: SearchEntry?
         get() {
@@ -85,7 +92,7 @@ object PrefHelper {
             update.removeAll { it.centerId == id }
 
             // add bookmark if necessary
-            if (bookmark == Bookmark.NOTIFICATION || bookmark == Bookmark.FAVORITE) {
+            if (bookmark != Bookmark.NONE) {
                 update.add(CenterBookmark(id, department, bookmark))
             }
 

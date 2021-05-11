@@ -1,45 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/notificationView"
-        android:paddingVertical="16dp"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/notificationChronodoseView"
         style="@style/TextStyle_baseline_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_notifications_24dp"
-        android:drawableTint="?android:attr/textColorPrimary"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/ic_lightning_charge_fill_24dp"
         android:includeFontPadding="false"
-        android:text="@string/bookmark_notification" />
+        android:paddingVertical="16dp"
+        android:text="@string/bookmark_notification_chronodose"
+        app:drawableTint="?android:attr/textColorPrimary" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/notificationView"
+        style="@style/TextStyle_baseline_small"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:drawableStart="@drawable/ic_notifications_24dp"
+        android:includeFontPadding="false"
+        android:paddingVertical="16dp"
+        android:text="@string/bookmark_notification"
+        app:drawableTint="?android:attr/textColorPrimary" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/favoriteView"
-        android:layout_marginEnd="8dp"
-        android:paddingVertical="16dp"
         style="@style/TextStyle_baseline_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/ic_bookmark_24dp"
-        android:drawableTint="?android:attr/textColorPrimary"
         android:includeFontPadding="false"
-        android:text="@string/bookmark_favorite" />
+        android:paddingVertical="16dp"
+        android:text="@string/bookmark_favorite"
+        app:drawableTint="?android:attr/textColorPrimary" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/noneView"
-        android:layout_marginEnd="8dp"
-        android:paddingVertical="16dp"
         style="@style/TextStyle_baseline_small"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:drawableStart="@drawable/ic_bookmark_border_24_dp"
-        android:drawableTint="?android:attr/textColorPrimary"
         android:includeFontPadding="false"
-        android:text="@string/bookmark_none" />
+        android:paddingVertical="16dp"
+        android:text="@string/bookmark_none"
+        app:drawableTint="?android:attr/textColorPrimary" />
 
 
 </LinearLayout>

@@ -8,25 +8,25 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.forEachIndexed
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.master.FilterType
-import kotlinx.android.synthetic.main.view_filter_switch.view.*
-import kotlinx.android.synthetic.main.view_filter_switch_item.view.*
+import com.cvtracker.vmd.master.SortType
+import kotlinx.android.synthetic.main.view_sort_switch.view.*
+import kotlinx.android.synthetic.main.view_sort_switch_item.view.*
 
-class FilterSwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+class SortSwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ConstraintLayout(context, attrs) {
 
-    var onFilterChangedListener: ((FilterType) -> Unit)? = null
+    var onSortChangedListener: ((SortType) -> Unit)? = null
 
     init {
-        LayoutInflater.from(context).inflate(R.layout.view_filter_switch, this, true)
-        FilterType.values().forEachIndexed { index, filter ->
+        LayoutInflater.from(context).inflate(R.layout.view_sort_switch, this, true)
+        SortType.values().forEachIndexed { index, filter ->
             val view = LayoutInflater.from(context)
-                .inflate(R.layout.view_filter_switch_item, container, false).apply {
+                .inflate(R.layout.view_sort_switch_item, container, false).apply {
                     setOnClickListener {
                         updateSelectedFilterIndex(index)
-                        onFilterChangedListener?.invoke(filter)
+                        onSortChangedListener?.invoke(filter)
                     }
-                    filterNameView.text = filter.displayTitle
+                    sortNameView.setText(filter.displayTitle)
                 }
             container.addView(
                 view,
@@ -40,7 +40,7 @@ class FilterSwitchView @JvmOverloads constructor(context: Context, attrs: Attrib
         container.forEachIndexed { index, view -> view.isSelected = (index == indexSelected) }
     }
 
-    fun updateSelectedFilter(filter: FilterType) {
-        updateSelectedFilterIndex(FilterType.values().indexOf(filter))
+    fun updateSelectedSort(filter: SortType) {
+        updateSelectedFilterIndex(SortType.values().indexOf(filter))
     }
 }

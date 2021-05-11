@@ -6,8 +6,8 @@ import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.*
-import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.master.IntentHelper
+import com.cvtracker.vmd.master.SortType
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -16,7 +16,11 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
     abstract val presenter: T
 
-    override fun showCenters(list: List<DisplayItem>, filter: FilterType?) {
+    abstract val onChronodoseFilterClick: (() -> Unit)?
+
+    abstract val onSlotsFilterClick: (() -> Unit)?
+
+    override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
         appBarLayout.setExpanded(true, true)
         centersRecyclerView.adapter = CenterAdapter(
             context = this,
@@ -24,18 +28,19 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
             onClicked = { presenter.onCenterClicked(it) },
             onBookmarkClicked = { center, position -> showBookmarkBottomSheet(center, position) },
             onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
-            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) }
+            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) },
+            onChronodoseFilterClick = onChronodoseFilterClick,
+            onSlotsFilterClick = onSlotsFilterClick
         )
 
         /** set up filter state **/
-        if (filter != null) {
-            centersRecyclerView.topPadding = resources.dpToPx(50f)
-            filterSwitchView?.show()
-            filterSwitchView?.updateSelectedFilter(filter)
+        if (sortType != null) {
+            sortSwitchView?.show()
+            sortSwitchView?.updateSelectedSort(sortType)
         } else {
-            centersRecyclerView.topPadding = resources.dpToPx(12f)
-            filterSwitchView?.hide()
+            sortSwitchView?.hide()
         }
+        filterView?.show()
     }
 
     open fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int) {

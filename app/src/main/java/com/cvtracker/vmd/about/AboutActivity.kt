@@ -11,6 +11,7 @@ import com.cvtracker.vmd.data.DisplayStat
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_about.*
 
@@ -27,6 +28,10 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
         toolbar.setTitle(R.string.about)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        chronodoseView.setOnClickListener {
+            startActivity(Intent(this, ChronodoseOnboardingActivity::class.java))
+        }
 
         faqView.setOnClickListener {
             launchWebUrl(URL_FAQ)

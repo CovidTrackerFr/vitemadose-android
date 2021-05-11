@@ -32,10 +32,18 @@ sealed class DisplayItem {
         val id: String?,
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
+        @SerializedName("appointment_schedules")
+        val schedules: List<Schedule>?,
         var available: Boolean = false,
         var distance: Float? = null,
         var bookmark: Bookmark = Bookmark.NONE
     ) : DisplayItem() {
+
+        val isChronodose: Boolean
+            get() = chronodoseCount > 0
+
+        val chronodoseCount: Int
+            get() = (schedules?.find { it.name == "chronodose" }?.total ?: 0)
 
         val platformEnum: Plateform?
             get() = platform?.let { Plateform.fromId(it) }
@@ -49,7 +57,7 @@ sealed class DisplayItem {
             }
 
         val formattedAddress: String?
-            get() = metadata?.address?.replace(", ","\n")?.trim()
+            get() = metadata?.address?.replace(", ", "\n")?.trim()
 
         val formattedDistance: String
             get() {
@@ -77,6 +85,13 @@ sealed class DisplayItem {
                 null
             }
         }
+
+        class Schedule(
+            @SerializedName("name")
+            val name: String,
+            @SerializedName("total")
+            val total: Int,
+        )
 
         class LocationCenter(
             @SerializedName("latitude")
@@ -137,6 +152,9 @@ sealed class DisplayItem {
 
     class UnavailableCenterHeader(val hasAvailableCenters: Boolean) : DisplayItem()
 
-    class AvailableCenterHeader(val placesCount: Int, val slotsCount: Int) : DisplayItem()
+    class AvailableCenterHeader(
+        val placesCount: Int,
+        val slotsCount: Int,
+        val chronodoseCount: Int) : DisplayItem()
 
 }

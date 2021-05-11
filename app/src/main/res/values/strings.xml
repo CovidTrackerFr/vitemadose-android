@@ -4,9 +4,12 @@
     <string name="share_description">Trouvez une dose de vaccin facilement et rapidement avec ViteMaDose https://vitemadose.page.link/jdF1</string>
     <string name="choose_department_title">Commune, code postal, département</string>
     <string name="appointement">Prendre rendez-vous</string>
+    <string name="bookmark_notification_chronodose">Suivi avec notifications chronodose</string>
     <string name="bookmark_notification">Suivi avec notifications</string>
     <string name="bookmark_favorite">Suivi</string>
     <string name="bookmark_none">Non suivi</string>
+    <string name="sort_by_date">Au plus tôt</string>
+    <string name="sort_by_proximity">Au plus proche</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="centers">
         <item quantity="one">lieu\nde vaccination</item>
@@ -23,6 +26,10 @@
     <plurals name="slot_disponibilities">
         <item quantity="one">créneau\ndisponible</item>
         <item quantity="other">créneaux\ndisponibles</item>
+    </plurals>
+    <plurals name="chronodose_disponibilities">
+        <item quantity="one">chronodose\ndisponible</item>
+        <item quantity="other">chronodoses\ndisponibles</item>
     </plurals>
     <plurals name="shot_disponibilities">
         <item quantity="one">%s créneau</item>
@@ -51,17 +58,31 @@
     <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
     <string name="app_update_pending">Préparation de la mise à jour.</string>
     <string name="app_update_downloaded">Mise à jour téléchargée. Veuillez redémarrer ViteMaDose.</string>
-    <string name="bookmark_empty_state_description">"Retrouvez ici vos centres suivis.\n\nActivez le suivi en appuyant sur le bouton en bas à droite d'un centre.\n\nVous pouvez également activer le suivi avec notifications pour recevoir une alerte à chaque fois que le centre sera de nouveau disponible à la réservation."</string>
-    <string name="bookmark_empty_state_title">Aucun centre suivi</string>
+    <string name="bookmark_empty_state_none">"Aucun centre suivi"</string>
+    <string name="bookmark_empty_state_favorite">"Suivez vos centres pour les retrouver plus facilement"</string>
+    <string name="bookmark_empty_state_notification">"Recevez une notification lorsque les centres sont de nouveau disponibles"</string>
+    <string name="bookmark_empty_state_notification_chronodose">"Soyez alerté lors de la disponibilité de chronodoses"</string>
     <string name="notification">Notification</string>
     <string name="notification_disclaimer_title">Note</string>
+    <string name="notification_chronodose_disclaimer_message">Vous recevrez une notification à chaque fois que le centre proposera <b>de nouveau des chronodoses</b>.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
     <string name="notification_disclaimer_message">Vous recevrez une notification à chaque fois que le centre sera <b>de nouveau disponible</b> à la réservation.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
     <string name="notification_disclaimer_compris">J\'ai compris</string>
     <string name="notification_disclaimer_cancel">Annuler</string>
     <string name="notification_disable_notifications">Arrêter notifications</string>
     <string name="notification_channel_name">Disponibilités</string>
     <string name="notification_channel_description">Nouvelles disponibilités dans vos centres suivis avec notifications</string>
+    <string name="notification_chronodose_channel_name">Chronodoses</string>
+    <string name="notification_chronodose_channel_description">Nouvelles chronodoses disponibles dans vos centres suivis avec notifications</string>
     <string name="activate_notifs">activer les notifications</string>
+    <string name="notifications_chronodose_activated">notifications chronodose activées</string>
     <string name="notifications_activated">notifications activées</string>
     <string name="empty_string" />
+    <string name="filters_title">Filtrer les résultats</string>
+    <string name="validate">valider</string>
+    <string name="cancel">annuler</string>
+    <string name="apply">appliquer</string>
+    <string name="chronodoses_disponibles">Chronodoses disponibles</string>
+    <string name="chronodose_onboarding_title">Chronodoses</string>
+    <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme et sans critère d\'éligibilité.\n\nVous pouvez être alerté de leurs disponibilités en activant les notifications.</string>
+    <string name="chronodose_onboarding_message_2">Les centres disposant de chronodoses sont affichés avec un bandeau rouge comme ci-dessous :</string>
 </resources>

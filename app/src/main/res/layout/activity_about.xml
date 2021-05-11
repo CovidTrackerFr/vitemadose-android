@@ -14,12 +14,12 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ScrollView
-        android:background="?attr/backgroundColor"
-        android:overScrollMode="ifContentScrolls"
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@id/disclaimerView"
+        android:background="?attr/backgroundColor"
+        android:overScrollMode="ifContentScrolls"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/toolbar">
 
         <LinearLayout
@@ -50,13 +50,27 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/chronodoseView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_lightning_charge_fill_24dp"
+                        android:text="@string/chronodose_onboarding_title"
+                        app:drawableTint="?android:attr/textColorPrimary" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/separatorColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/faqView"
                         style="@style/TextStyle_baseline_small"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_help_outline_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/faq" />
+                        android:text="@string/faq"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
@@ -69,8 +83,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_location_on_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/carte_des_centres" />
+                        android:text="@string/carte_des_centres"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
@@ -83,8 +97,8 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_assessment_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/vaccintracker" />
+                        android:text="@string/vaccintracker"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                     <View
                         android:layout_width="match_parent"
@@ -97,10 +111,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:drawableStart="@drawable/ic_share_black_24dp"
-                        android:drawableTint="?android:attr/textColorPrimary"
-                        android:text="@string/share" />
+                        android:text="@string/share"
+                        app:drawableTint="?android:attr/textColorPrimary" />
 
                 </LinearLayout>
+
             </androidx.cardview.widget.CardView>
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -155,22 +170,20 @@
                     android:layout_marginEnd="10dp"
                     android:layout_weight="1" />
             </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/disclaimerView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:fontFamily="@font/sf_pro_rounded"
-        android:includeFontPadding="false"
-        android:padding="12dp"
-        android:text="@string/disclaimer"
-        android:textColor="?android:attr/textColorTertiary"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/scrollView" />
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/disclaimerView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/sf_pro_rounded"
+                android:includeFontPadding="false"
+                android:padding="12dp"
+                android:text="@string/disclaimer"
+                android:textColor="?android:attr/textColorTertiary" />
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

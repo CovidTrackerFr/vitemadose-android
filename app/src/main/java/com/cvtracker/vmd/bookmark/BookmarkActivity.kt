@@ -6,11 +6,10 @@ import android.view.MenuItem
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.colorAttr
-import com.cvtracker.vmd.extensions.hide
-import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.extensions.*
 import kotlinx.android.synthetic.main.activity_about.toolbar
 import kotlinx.android.synthetic.main.activity_bookmark.*
+import kotlinx.android.synthetic.main.activity_bookmark.centersRecyclerView
 import kotlinx.android.synthetic.main.activity_main.refreshLayout
 
 class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), BookmarkContract.View {
@@ -47,6 +46,8 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
         if(notificationCenterId != null || notificationDepartment != null){
             supportActionBar?.setTitle(R.string.notification)
         }
+
+        centersRecyclerView.topPadding = resources.dpToPx(8f)
     }
 
     override fun showBookmarkBottomSheet(center: DisplayItem.Center, position: Int) {
@@ -72,4 +73,7 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
             bookmarkEmptyState.hide()
         }
     }
+
+    override val onChronodoseFilterClick: (() -> Unit)? = null
+    override val onSlotsFilterClick: (() -> Unit)? = null
 }

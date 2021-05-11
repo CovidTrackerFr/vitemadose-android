@@ -5,10 +5,13 @@
     <color name="black">#000000</color>
     <color name="downy">#66C2CF</color>
     <color name="danube">#577ED1</color>
+    <color name="anakiwa">#dde0f4</color>
     <color name="amethyst">#AE50C2</color>
     <color name="blue_dark">#5F6D88</color>
     <color name="roman">#dc5a60</color>
+    <color name="vanilla_ice">#f7e5e6</color>
     <color name="crail">#bc3f48</color>
+    <color name="limegreen">#3CB371</color>
     <color name="mine_shaft">#252525</color>
     <color name="scorpion">#5E5E5E</color>
     <color name="thunder">#211E1F</color>

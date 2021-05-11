@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:cardCornerRadius="8dp"
-        app:contentPadding="10dp"
+        app:contentPadding="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -27,20 +27,83 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                app:layout_constraintGuide_begin="38dp" />
+                app:layout_constraintGuide_begin="48dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineStart"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_begin="10dp" />
+
+            <androidx.constraintlayout.widget.Guideline
+                android:id="@+id/guidelineEnd"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                app:layout_constraintGuide_end="10dp" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/chronodoseView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:constraint_referenced_ids="backgroundChronodoseView, chronodoseTitleView"/>
+
+            <View
+                android:id="@+id/backgroundChronodoseView"
+                app:layout_constraintHeight_min="38dp"
+                android:layout_width="0dp"
+                android:background="?attr/chronodoseBackgroundColor"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_height="30dp"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/chronodoseTitleView"
+                android:drawableStart="@drawable/ic_lightning_charge_fill"
+                android:drawableEnd="@drawable/ic_lightning_charge_fill"
+                android:drawableTint="?attr/chronodoseTextColor"
+                android:includeFontPadding="false"
+                app:layout_constraintVertical_chainStyle="packed"
+                android:gravity="center"
+                android:drawablePadding="12dp"
+                android:text="@string/chronodoses_disponibles"
+                android:textColor="?attr/chronodoseTextColor"
+                android:fontFamily="@font/sf_pro_bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/backgroundChronodoseView"
+                app:layout_constraintBottom_toTopOf="@id/chronodoseDescriptionView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/chronodoseDescriptionView"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="Ouvert à tous"
+                android:textColor="@color/roman"
+                android:fontFamily="@font/sf_pro"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/chronodoseTitleView"
+                app:layout_constraintBottom_toBottomOf="@id/backgroundChronodoseView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateView"
                 style="@style/TextStyle_date"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="4dp"
                 android:gravity="start"
                 app:layout_constraintBottom_toTopOf="@+id/centerNameView"
                 app:layout_constraintEnd_toStartOf="@id/moreView"
                 app:layout_constraintStart_toStartOf="@id/iconPlaceView"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/backgroundChronodoseView"
                 tools:text="Lundi 27 septembre à 8h30" />
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -63,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="4dp"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="@id/centerNameView"
                 app:srcCompat="@drawable/ic_place"
                 app:tint="?attr/iconTintColor" />
@@ -87,7 +150,7 @@
                 android:paddingTop="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/centerVaccineView"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="@id/centerVaccineView"
                 app:srcCompat="@drawable/ic_vaccine"
                 app:tint="?attr/iconTintColor" />
@@ -99,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerAddressView"
@@ -111,7 +174,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="@id/centerTypeView"
                 app:srcCompat="@drawable/ic_bag_plus_fill"
                 app:tint="?attr/iconTintColor" />
@@ -148,7 +211,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="3dp"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="@id/businessHoursView"
                 app:srcCompat="@drawable/ic_clock_fill"
                 app:tint="?attr/iconTintColor" />
@@ -159,7 +222,7 @@
                 android:layout_height="wrap_content"
                 android:paddingTop="4dp"
                 app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toTopOf="@id/phoneView"
                 app:srcCompat="@drawable/ic_phone"
                 app:tint="?attr/iconTintColor" />
@@ -187,8 +250,8 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@id/bookButton"
                 app:backgroundTint="@color/blue_dark"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@id/phoneView"
                 app:layout_goneMarginBottom="50dp"
                 tools:visibility="visible" />
@@ -202,8 +265,8 @@
                 android:layout_marginTop="6dp"
                 android:text="@string/appointement"
                 app:backgroundTint="@color/danube"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@id/checkButton"
                 app:layout_constraintBottom_toTopOf="@id/appointmentsCountView" />
 
@@ -213,9 +276,10 @@
                 android:layout_height="wrap_content"
                 android:textColor="?android:attr/textColorSecondary"
                 app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
                 app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@id/bookButton"
                 tools:text="20 doses" />
 
@@ -241,7 +305,7 @@
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
                 app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toEndOf="@id/bottomSeparatorView"
                 app:layout_constraintTop_toTopOf="@id/appointmentsCountView"
@@ -254,7 +318,7 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/dateView"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintTop_toTopOf="@id/dateView"
                 app:srcCompat="@drawable/ic_expand_more_black_24dp"
                 app:tint="?attr/iconTintColor" />
@@ -270,8 +334,9 @@
                 android:drawablePadding="6dp"
                 android:includeFontPadding="false"
                 android:gravity="center"
+                android:layout_marginBottom="10dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
                 app:tint="?attr/iconTintColor" />
 
