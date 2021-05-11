@@ -1,5 +1,4 @@
 Vaccination pour tous en 24h !
-Dans cette mise à jour nous avons apporté deux nouveautés : des notifications, et Chronodose :
+Dans cette maj nous avons apporté deux nouveautés : des notifications, et Chronodose :
 - vous pouvez désormais vous abonner à un ou plusieurs centres de vaccination. Vous recevrez alors une notification si ce centre a des créneaux disponibles.
 - Chronodose est une fonctionnalité permettant de trouver les rendez-vous disponibles très rapidement, pour le jour même ou le lendemain. Ces créneaux peuvent être réservés par tous les plus de 18 ans, sans restriction !
-Merci de votre soutien !
