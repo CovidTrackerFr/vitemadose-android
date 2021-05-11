@@ -318,7 +318,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
         super.showCenters(list, sortType)
-        showPlaceholderEmptyList(list.find { it is DisplayItem.Center } == null)
+        showPlaceholderEmptyList(list.lastOrNull() is DisplayItem.AvailableCenterHeader)
     }
 
     private fun showPlaceholderEmptyList(show: Boolean){
