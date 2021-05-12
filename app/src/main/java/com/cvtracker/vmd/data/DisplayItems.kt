@@ -76,12 +76,12 @@ sealed class DisplayItem {
                     typeLabel != null
 
         fun calculateDistance(city: SearchEntry.City){
-            distance = if(location?.latitude != null && location.longitude != null){
+            distance = if (location?.latitude != null && location.longitude != null && city.latitude != null && city.longitude != null) {
                 val result = FloatArray(2)
-                Location.distanceBetween(city.latitude, city.longitude, location.latitude, location.longitude, result)
+                Location.distanceBetween(city.latitude!!, city.longitude!!, location.latitude, location.longitude, result)
                 /** result is in meters, convert it to x.x kms **/
-                (result[0]/100).toLong().toFloat()/10f
-            }else{
+                (result[0] / 100).toLong().toFloat() / 10f
+            } else {
                 null
             }
         }
