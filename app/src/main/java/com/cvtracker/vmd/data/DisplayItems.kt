@@ -7,7 +7,7 @@ import java.util.*
 
 sealed class DisplayItem {
 
-    class LastUpdated(val date: Date) : DisplayItem()
+    class LastUpdated(val date: Date, var disclaimer: Disclaimer? = null) : DisplayItem()
 
     class Center(
         @SerializedName("departement")
@@ -153,8 +153,9 @@ sealed class DisplayItem {
     class UnavailableCenterHeader(val hasAvailableCenters: Boolean) : DisplayItem()
 
     class AvailableCenterHeader(
-        val placesCount: Int,
         val slotsCount: Int,
-        val chronodoseCount: Int) : DisplayItem()
+        var isSlotFilterSelected: Boolean,
+        val chronodoseCount: Int,
+        var isChronodoseFilterSelected: Boolean) : DisplayItem()
 
 }

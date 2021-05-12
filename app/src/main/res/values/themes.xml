@@ -21,5 +21,12 @@
         <item name="colorControlActivated">@color/roman</item>
         <item name="chronodoseBackgroundColor">@color/vanilla_ice</item>
         <item name="chronodoseTextColor">@color/roman</item>
+
+        <item name="disclaimerInfoTextColor">@color/scorpion</item>
+        <item name="disclaimerInfoBackgroundColor">@color/white</item>
+        <item name="disclaimerWarningTextColor">@color/crete</item>
+        <item name="disclaimerWarningBackgroundColor">@color/half_colonial_white</item>
+        <item name="disclaimerErrorTextColor">@color/roman</item>
+        <item name="disclaimerErrorBackgroundColor">@color/vanilla_ice</item>
     </style>
 </resources>

@@ -55,11 +55,21 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
     override val onChronodoseFilterClick: (() -> Unit) = {
-        switchFilter(FilterType.FILTER_CHRONODOSE_ID)
+        switchFilter(
+            filterId = FilterType.FILTER_CHRONODOSE_ID,
+            excludedFilterId = FilterType.FILTER_AVAILABLE_ID
+        )
     }
 
     override val onSlotsFilterClick: (() -> Unit) = {
-        switchFilter(FilterType.FILTER_AVAILABLE_ID)
+        switchFilter(
+            filterId = FilterType.FILTER_AVAILABLE_ID,
+            excludedFilterId = FilterType.FILTER_CHRONODOSE_ID
+        )
+    }
+
+    override val onRemoveDisclaimerClick: (() -> Unit) = {
+        presenter.removeDisclaimer()
     }
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
@@ -307,12 +317,18 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         filterView.isSelected = defaultFilters.not()
     }
 
-    private fun switchFilter(filterId: String) {
+    private fun switchFilter(filterId: String, excludedFilterId: String) {
         val filters = presenter.getFilters()
         filters.onEach {
             val filter = it.filters.find { it.id == filterId } ?: return@onEach
             filter.enabled = filter.enabled.not()
             Snackbar.make(container, "Filtre \"${filter.displayTitle}\" ${if(filter.enabled) "activé" else "désactivé"}", Snackbar.LENGTH_SHORT).show()
+
+            /** We want to be sure we disable $excludedFilterId when we enable $filterId **/
+            if(filter.enabled) {
+                val filterToDisable = it.filters.find { it.id == excludedFilterId } ?: return@onEach
+                filterToDisable.enabled = false
+            }
         }
         presenter.updateFilters(filters)
     }

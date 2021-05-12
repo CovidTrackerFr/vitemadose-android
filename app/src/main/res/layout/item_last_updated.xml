@@ -1,16 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/lastUpdated"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:fontFamily="@font/sf_pro"
-    android:gravity="center"
-    android:paddingStart="4dp"
-    android:paddingEnd="4dp"
-    android:paddingBottom="4dp"
-    android:textColor="?android:attr/textColorSecondary"
-    android:textSize="14sp"
-    app:layout_constraintTop_toBottomOf="@id/departmentSelector"
-    tools:text="@string/last_updated" />
+    android:layout_height="wrap_content">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/lastUpdated"
+        app:layout_constraintTop_toBottomOf="@id/lastUpdated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/sf_pro"
+        android:gravity="center"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp"
+        android:paddingBottom="0dp"
+        android:textColor="?android:attr/textColorSecondary"
+        android:textSize="14sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="@string/last_updated" />
+
+    <androidx.cardview.widget.CardView
+        app:contentPadding="0dp"
+        app:layout_constraintTop_toBottomOf="@id/lastUpdated"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        style="@style/CustomCardView"
+        app:cardCornerRadius="8dp"
+        android:id="@+id/disclaimerCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/disclaimerMessageView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/sf_pro_medium"
+                android:gravity="start"
+                android:paddingVertical="8dp"
+                android:paddingStart="14dp"
+                android:paddingEnd="4dp"
+                android:textColor="?android:attr/textColorSecondary"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@id/removeDisclaimerView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Les plateformes sont très sollicitées, les données affichées par ViteMaDose ..." />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/removeDisclaimerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                android:padding="4dp"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:tint="@color/crete"
+                app:srcCompat="@drawable/ic_cancel_black_24dp"
+                android:background="?attr/selectableItemBackgroundBorderless" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -28,6 +28,12 @@ fun View.colorAttr(@AttrRes resId: Int): Int {
     return typedValue.data
 }
 
+fun Context.colorAttr(@AttrRes resId: Int): Int {
+    val typedValue = TypedValue()
+    theme.resolveAttribute(resId, typedValue, true)
+    return typedValue.data
+}
+
 fun Activity.colorAttr(@AttrRes resId: Int): Int {
     val typedValue = TypedValue()
     theme.resolveAttribute(resId, typedValue, true)

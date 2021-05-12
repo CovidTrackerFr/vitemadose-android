@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -22,5 +23,6 @@ class StatView @JvmOverloads constructor(context: Context, attrs: AttributeSet? 
             itemStat.plurals,
             itemStat.count
         )
+        itemStat.color?.let { indicatorView.backgroundTintList = ColorStateList.valueOf(it) }
     }
 }

@@ -18,6 +18,7 @@ class FilterType {
             id = FILTER_APPOINTMENT,
             displayTitle = null,
             defaultState = false,
+            primaryFilter = true,
             filters = listOf(
                 Filter("Chronodoses uniquement", false, FILTER_CHRONODOSE_ID) {
                     it.isChronodose
@@ -32,6 +33,7 @@ class FilterType {
         val id: String,
         val displayTitle: String?,
         val defaultState: Boolean,
+        val primaryFilter: Boolean,
         val filters: List<Filter>
     ){
         override fun toString(): String {

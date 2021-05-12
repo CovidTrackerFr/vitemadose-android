@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.ItemStat
+import com.cvtracker.vmd.extensions.color
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
@@ -29,7 +31,8 @@ class CenterAdapter(
     private val onAddressClicked: (String) -> Unit,
     private val onPhoneClicked: (String) -> Unit,
     private val onChronodoseFilterClick: (() -> Unit)? = null,
-    private val onSlotsFilterClick: (() -> Unit)? = null
+    private val onSlotsFilterClick: (() -> Unit)? = null,
+    private val onRemoveDisclaimerClick: (() -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mExpandedPosition = -1
@@ -92,14 +95,21 @@ class CenterAdapter(
                 setupExpandedState(this, center, position)
 
                 bookButton.setOnClickListener { onClicked.invoke(center) }
+                bookButton.backgroundTintList = ColorStateList.valueOf(if(center.isChronodose){
+                    colorAttr(R.attr.colorPrimary)
+                }else{
+                    color(R.color.danube)
+                })
+
                 checkButton.setOnClickListener { onClicked.invoke(center) }
                 bookmarkView.setOnClickListener { onBookmarkClicked.invoke(center, position) }
 
+                val slotsToShow = if(center.isChronodose) center.chronodoseCount else center.appointmentCount
                 appointmentsCountView.text =
                     String.format(
                         context.resources.getQuantityString(
                             R.plurals.shot_disponibilities,
-                            center.appointmentCount, center.appointmentCount
+                            slotsToShow, slotsToShow
                         )
                     )
 
@@ -223,7 +233,7 @@ class CenterAdapter(
             LayoutInflater.from(context)
                 .inflate(R.layout.item_last_updated, parent, false)
         ) {
-        fun bind(item: DisplayItem.LastUpdated) {
+        fun bind(item: DisplayItem.LastUpdated, position: Int) {
             with(itemView) {
                 lastUpdated.text = context.getString(
                     R.string.last_updated,
@@ -233,6 +243,20 @@ class CenterAdapter(
                         0L
                     )
                 )
+                item.disclaimer?.let { disclaimer ->
+                    disclaimerMessageView.text = disclaimer.message
+                    disclaimerMessageView.setTextColor(disclaimer.severity.textColor(context))
+                    disclaimerCardView.setCardBackgroundColor(disclaimer.severity.backgroundColor(context))
+                    removeDisclaimerView.imageTintList = ColorStateList.valueOf(disclaimer.severity.textColor(context))
+                    removeDisclaimerView.setOnClickListener {
+                        item.disclaimer = null
+                        notifyItemChanged(position)
+                        onRemoveDisclaimerClick?.invoke()
+                    }
+                    disclaimerCardView.show()
+                } ?: apply{
+                    disclaimerCardView.hide()
+                }
             }
         }
     }
@@ -242,28 +266,42 @@ class CenterAdapter(
             LayoutInflater.from(context)
                 .inflate(R.layout.item_available_center_header, parent, false)
         ) {
-        fun bind(header: DisplayItem.AvailableCenterHeader) {
+        fun bind(header: DisplayItem.AvailableCenterHeader, position: Int) {
             itemView.firstStatView.apply {
+                isSelected = header.isSlotFilterSelected
                 bind(
                     ItemStat(
                         icon = R.drawable.ic_appointement,
                         plurals = R.plurals.slot_disponibilities,
                         countString = header.slotsCount.toString(),
-                        count = header.slotsCount
+                        count = header.slotsCount,
+                        color = color(R.color.danube)
                     )
                 )
-                setOnClickListener { onSlotsFilterClick?.invoke() }
+                setOnClickListener {
+                    header.isSlotFilterSelected = !header.isSlotFilterSelected
+                    header.isChronodoseFilterSelected = false
+                    notifyItemChanged(position)
+                    onSlotsFilterClick?.invoke()
+                }
             }
             itemView.secondStatView.apply {
+                isSelected = header.isChronodoseFilterSelected
                 bind(
                     ItemStat(
                         icon = R.drawable.ic_eclair,
                         plurals = R.plurals.chronodose_disponibilities,
                         countString = header.chronodoseCount.toString(),
-                        count = header.chronodoseCount
+                        count = header.chronodoseCount,
+                        color = colorAttr(R.attr.colorPrimary)
                     )
                 )
-                setOnClickListener { onChronodoseFilterClick?.invoke() }
+                setOnClickListener {
+                    header.isChronodoseFilterSelected = !header.isChronodoseFilterSelected
+                    header.isSlotFilterSelected = false
+                    notifyItemChanged(position)
+                    onChronodoseFilterClick?.invoke()
+                }
             }
         }
     }
@@ -303,10 +341,10 @@ class CenterAdapter(
                 holder.bind(items[position] as DisplayItem.UnavailableCenterHeader)
             }
             is AvailableCenterHeaderViewHolder -> {
-                holder.bind(items[position] as DisplayItem.AvailableCenterHeader)
+                holder.bind(items[position] as DisplayItem.AvailableCenterHeader, position)
             }
             is LastUpdatedViewHolder -> {
-                holder.bind(items[position] as DisplayItem.LastUpdated)
+                holder.bind(items[position] as DisplayItem.LastUpdated, position)
             }
         }
     }
