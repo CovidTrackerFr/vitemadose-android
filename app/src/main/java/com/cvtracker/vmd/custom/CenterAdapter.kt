@@ -297,8 +297,8 @@ class CenterAdapter(
                     )
                 )
                 setOnClickListener {
-                    header.isSlotFilterSelected = !header.isSlotFilterSelected
-                    header.isChronodoseFilterSelected = true
+                    header.isChronodoseFilterSelected = !header.isChronodoseFilterSelected
+                    header.isSlotFilterSelected = false
                     notifyItemChanged(position)
                     onChronodoseFilterClick?.invoke()
                 }
