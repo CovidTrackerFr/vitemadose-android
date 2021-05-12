@@ -53,7 +53,7 @@ class CenterAdapter(
 
                 dateView.text = when {
                     center.available && center.url.isNotBlank() && center.nextSlot != null -> center.formattedNextSlot
-                    center.available && center.appointmentByPhoneOnly -> context.getString(R.string.appointment_by_phone_only)
+                    center.available && center.isValidAppointmentByPhoneOnly -> context.getString(R.string.appointment_by_phone_only)
                     else -> context.getString(R.string.no_slots_available)
                 } + center.formattedDistance
 
@@ -122,7 +122,7 @@ class CenterAdapter(
                     }
                 )
 
-                if (center.available && center.appointmentByPhoneOnly) {
+                if (center.available && center.isValidAppointmentByPhoneOnly) {
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
                     centreAvailableSpecificViews.hide()
                     callButton.text = context.getString(R.string.call_center, center.metadata?.phoneFormatted)

@@ -48,7 +48,10 @@ sealed class DisplayItem {
             get() = (schedules?.find { it.name == "chronodose" }?.total ?: 0)
 
         val available: Boolean
-            get() = (appointmentByPhoneOnly && !metadata?.phoneNumber.isNullOrBlank()) || appointmentCount > 0
+            get() = isValidAppointmentByPhoneOnly || appointmentCount > 0
+
+        val isValidAppointmentByPhoneOnly: Boolean
+            get() = appointmentByPhoneOnly && !metadata?.phoneNumber.isNullOrBlank()
 
         val platformEnum: Plateform?
             get() = platform?.let { Plateform.fromId(it) }
