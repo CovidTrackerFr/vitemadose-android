@@ -43,7 +43,7 @@
                 android:gravity="start"
                 android:paddingVertical="8dp"
                 android:paddingStart="14dp"
-                android:paddingEnd="20dp"
+                android:paddingEnd="4dp"
                 android:textColor="?android:attr/textColorSecondary"
                 android:textSize="14sp"
                 app:layout_constraintEnd_toStartOf="@id/removeDisclaimerView"
