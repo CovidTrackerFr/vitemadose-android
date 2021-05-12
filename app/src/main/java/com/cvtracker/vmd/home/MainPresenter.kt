@@ -144,6 +144,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             view.showCenters(emptyList(), null)
         }
         selectedSortType = null
+        resetFilters(needRefresh = false)
         loadCenters()
     }
 
@@ -240,17 +241,19 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         filterSections.add(section)
     }
 
-    override fun updateFilters(filters: List<FilterType.FilterSection>){
+    override fun updateFilters(filters: List<FilterType.FilterSection>, needRefresh: Boolean){
         filterSections = filters.toMutableList()
         view.updateFilterState(isDefaultFilters())
-        loadCenters()
+        if(needRefresh) {
+            loadCenters()
+        }
     }
 
-    override fun resetFilters() {
+    override fun resetFilters(needRefresh: Boolean) {
         filterSections.onEach { section ->
             section.filters.onEach { it.enabled = section.defaultState }
         }
-        updateFilters(filterSections)
+        updateFilters(filterSections, needRefresh)
     }
 
     private fun isDefaultFilters(): Boolean {
