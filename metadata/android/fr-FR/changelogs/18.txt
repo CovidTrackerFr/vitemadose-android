@@ -1,0 +1,4 @@
+- Affichage du nombre de chonodoses sur un centre proposant des chronodoses
+- Clics sur les filtres principaux simplifiés
+- Carte d'information concernant le service
+- Diverses corrections et optimisations
