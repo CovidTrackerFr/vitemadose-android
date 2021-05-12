@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.custom
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -29,7 +30,8 @@ class CenterAdapter(
     private val onAddressClicked: (String) -> Unit,
     private val onPhoneClicked: (String) -> Unit,
     private val onChronodoseFilterClick: (() -> Unit)? = null,
-    private val onSlotsFilterClick: (() -> Unit)? = null
+    private val onSlotsFilterClick: (() -> Unit)? = null,
+    private val onRemoveDisclaimerClick: (() -> Unit)? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var mExpandedPosition = -1
@@ -95,11 +97,12 @@ class CenterAdapter(
                 checkButton.setOnClickListener { onClicked.invoke(center) }
                 bookmarkView.setOnClickListener { onBookmarkClicked.invoke(center, position) }
 
+                val slotsToShow = if(center.isChronodose) center.chronodoseCount else center.appointmentCount
                 appointmentsCountView.text =
                     String.format(
                         context.resources.getQuantityString(
                             R.plurals.shot_disponibilities,
-                            center.appointmentCount, center.appointmentCount
+                            slotsToShow, slotsToShow
                         )
                     )
 
@@ -233,6 +236,20 @@ class CenterAdapter(
                         0L
                     )
                 )
+                item.disclaimer?.let { disclaimer ->
+                    disclaimerMessageView.text = disclaimer.message
+                    disclaimerMessageView.setTextColor(disclaimer.severity.textColor(context))
+                    disclaimerCardView.setCardBackgroundColor(disclaimer.severity.backgroundColor(context))
+                    removeDisclaimerView.imageTintList = ColorStateList.valueOf(disclaimer.severity.textColor(context))
+                    removeDisclaimerView.setOnClickListener {
+                        disclaimerCardView.hide()
+                        item.disclaimer = null
+                        onRemoveDisclaimerClick?.invoke()
+                    }
+                    disclaimerCardView.show()
+                } ?: apply{
+                    disclaimerCardView.hide()
+                }
             }
         }
     }

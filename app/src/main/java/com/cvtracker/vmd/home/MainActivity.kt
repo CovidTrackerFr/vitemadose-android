@@ -62,6 +62,10 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         switchFilter(FilterType.FILTER_AVAILABLE_ID)
     }
 
+    override val onRemoveDisclaimerClick: (() -> Unit) = {
+        presenter.removeDisclaimer()
+    }
+
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
     private val textWatcher = object : TextWatcher {

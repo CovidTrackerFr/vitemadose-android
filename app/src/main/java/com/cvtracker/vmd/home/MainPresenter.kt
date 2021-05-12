@@ -2,6 +2,7 @@ package com.cvtracker.vmd.home
 
 import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
+import com.cvtracker.vmd.data.Disclaimer
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.*
@@ -19,6 +20,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     companion object{
         var DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
+        var disclaimer: Disclaimer? = null
         const val BASE_URL = "https://vitemadose.covidtracker.fr"
     }
 
@@ -82,7 +84,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         }
 
                         /** Add header to show last updated view **/
-                        list.add(DisplayItem.LastUpdated(it.lastUpdated))
+                        list.add(DisplayItem.LastUpdated(it.lastUpdated, disclaimer))
 
                         /** Update available vaccine filter type **/
                         updateVaccineFilters(it.availableCenters)
@@ -263,5 +265,9 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         if (!PrefHelper.chronodoseOnboardingDisplayed) {
             view.showChronodoseOnboarding()
         }
+    }
+
+    override fun removeDisclaimer(){
+        disclaimer = null
     }
 }

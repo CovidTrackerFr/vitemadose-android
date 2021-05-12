@@ -7,7 +7,7 @@ import java.util.*
 
 sealed class DisplayItem {
 
-    class LastUpdated(val date: Date) : DisplayItem()
+    class LastUpdated(val date: Date, var disclaimer: Disclaimer? = null) : DisplayItem()
 
     class Center(
         @SerializedName("departement")

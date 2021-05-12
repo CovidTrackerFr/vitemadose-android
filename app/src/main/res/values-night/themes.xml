@@ -16,10 +16,17 @@
         <item name="separatorColor">@color/silver</item>
         <item name="iconTintColor">@color/grey_5</item>
         <item name="backgroundColor">@color/thunder</item>
-        <item name="backgroundCardColor">#3a3a3a</item>
+        <item name="backgroundCardColor">@color/mine_shaft_light</item>
         <item name="backgroundCardColorSecondary">@color/scorpion</item>
         <item name="colorControlActivated">@color/white</item>
         <item name="chronodoseBackgroundColor">@color/crail</item>
         <item name="chronodoseTextColor">@color/white</item>
+
+        <item name="disclaimerInfoTextColor">@color/grey_5</item>
+        <item name="disclaimerInfoBackgroundColor">@color/mine_shaft_light</item>
+        <item name="disclaimerWarningTextColor">@color/grey_5</item>
+        <item name="disclaimerWarningBackgroundColor">@color/shadow</item>
+        <item name="disclaimerErrorTextColor">@color/grey_5</item>
+        <item name="disclaimerErrorBackgroundColor">@color/crail</item>
     </style>
 </resources>

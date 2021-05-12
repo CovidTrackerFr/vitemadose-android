@@ -84,5 +84,7 @@ interface MainContract {
         fun getFilters(): List<FilterType.FilterSection>
 
         fun displayChronodoseOnboardingIfNeeded()
+
+        fun removeDisclaimer()
     }
 }

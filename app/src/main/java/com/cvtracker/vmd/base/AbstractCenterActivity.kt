@@ -20,6 +20,8 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
     abstract val onSlotsFilterClick: (() -> Unit)?
 
+    abstract val onRemoveDisclaimerClick: (() -> Unit)?
+
     override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
         appBarLayout.setExpanded(true, true)
         centersRecyclerView.adapter = CenterAdapter(
@@ -30,7 +32,8 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
             onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
             onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) },
             onChronodoseFilterClick = onChronodoseFilterClick,
-            onSlotsFilterClick = onSlotsFilterClick
+            onSlotsFilterClick = onSlotsFilterClick,
+            onRemoveDisclaimerClick = onRemoveDisclaimerClick
         )
 
         /** set up filter state **/
