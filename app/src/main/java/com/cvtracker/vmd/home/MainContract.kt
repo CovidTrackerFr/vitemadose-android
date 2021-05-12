@@ -77,12 +77,14 @@ interface MainContract {
 
         fun handleDeepLink(data: String)
 
-        fun updateFilters(filters: List<FilterType.FilterSection>)
+        fun updateFilters(filters: List<FilterType.FilterSection>, needRefresh: Boolean = true)
 
-        fun resetFilters()
+        fun resetFilters(needRefresh: Boolean = true)
 
         fun getFilters(): List<FilterType.FilterSection>
 
         fun displayChronodoseOnboardingIfNeeded()
+
+        fun removeDisclaimer()
     }
 }

@@ -5,10 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
+import androidx.fragment.app.FragmentManager
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.Bookmark
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottomsheet_center_bookmark.*
+import timber.log.Timber
 
 class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
 
@@ -66,6 +68,15 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
                 .setNegativeButton(R.string.notification_disclaimer_cancel) { _, _ ->
                 }
                 .show()
+    }
+
+    /** This is a little hack to prevent some IllegalStateException **/
+    override fun show(manager: FragmentManager, tag: String?) {
+        try {
+            super.show(manager, tag)
+        } catch (e: IllegalStateException) {
+            Timber.e(e)
+        }
     }
 
     companion object {

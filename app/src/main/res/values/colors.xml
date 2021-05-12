@@ -13,8 +13,12 @@
     <color name="crail">#bc3f48</color>
     <color name="limegreen">#3CB371</color>
     <color name="mine_shaft">#252525</color>
+    <color name="mine_shaft_light">#3a3a3a</color>
     <color name="scorpion">#5E5E5E</color>
     <color name="thunder">#211E1F</color>
+    <color name="crete">#766329</color>
+    <color name="half_colonial_white">#fdf2d1</color>
+    <color name="shadow">#807145</color>
 
     <color name="grey_2">#F3F3F3</color>
     <color name="grey_3">#ECECEC</color>

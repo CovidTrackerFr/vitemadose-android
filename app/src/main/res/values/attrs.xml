@@ -7,4 +7,10 @@
     <attr name="backgroundCardColorSecondary" format="color"/>
     <attr name="chronodoseBackgroundColor" format="color"/>
     <attr name="chronodoseTextColor" format="color"/>
+    <attr name="disclaimerInfoBackgroundColor" format="color"/>
+    <attr name="disclaimerInfoTextColor" format="color"/>
+    <attr name="disclaimerWarningBackgroundColor" format="color"/>
+    <attr name="disclaimerWarningTextColor" format="color"/>
+    <attr name="disclaimerErrorBackgroundColor" format="color"/>
+    <attr name="disclaimerErrorTextColor" format="color"/>
 </resources>
