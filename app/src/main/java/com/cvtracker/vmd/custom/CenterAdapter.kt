@@ -226,7 +226,7 @@ class CenterAdapter(
             LayoutInflater.from(context)
                 .inflate(R.layout.item_last_updated, parent, false)
         ) {
-        fun bind(item: DisplayItem.LastUpdated) {
+        fun bind(item: DisplayItem.LastUpdated, position: Int) {
             with(itemView) {
                 lastUpdated.text = context.getString(
                     R.string.last_updated,
@@ -242,8 +242,8 @@ class CenterAdapter(
                     disclaimerCardView.setCardBackgroundColor(disclaimer.severity.backgroundColor(context))
                     removeDisclaimerView.imageTintList = ColorStateList.valueOf(disclaimer.severity.textColor(context))
                     removeDisclaimerView.setOnClickListener {
-                        disclaimerCardView.hide()
                         item.disclaimer = null
+                        notifyItemChanged(position)
                         onRemoveDisclaimerClick?.invoke()
                     }
                     disclaimerCardView.show()
@@ -323,7 +323,7 @@ class CenterAdapter(
                 holder.bind(items[position] as DisplayItem.AvailableCenterHeader)
             }
             is LastUpdatedViewHolder -> {
-                holder.bind(items[position] as DisplayItem.LastUpdated)
+                holder.bind(items[position] as DisplayItem.LastUpdated, position)
             }
         }
     }
