@@ -62,5 +62,6 @@ class ItemStat(
     @PluralsRes val plurals: Int,
     @DrawableRes val icon: Int,
     val countString: String,
-    val count: Int
+    val count: Int,
+    val color: Int? = null
 )

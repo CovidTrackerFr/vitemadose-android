@@ -154,6 +154,8 @@ sealed class DisplayItem {
 
     class AvailableCenterHeader(
         val slotsCount: Int,
-        val chronodoseCount: Int) : DisplayItem()
+        var isSlotFilterSelected: Boolean,
+        val chronodoseCount: Int,
+        var isChronodoseFilterSelected: Boolean) : DisplayItem()
 
 }
