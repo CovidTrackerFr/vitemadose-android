@@ -162,8 +162,6 @@ sealed class DisplayItem {
         }
     }
 
-    class UnavailableCenterHeader(val hasAvailableCenters: Boolean) : DisplayItem()
-
     class AvailableCenterHeader(
         val placesCount: Int,
         val slotsCount: Int,

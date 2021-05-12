@@ -103,9 +103,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                                 list.addAll(preparedAvailableCenters)
 
                                 if (preparedUnavailableCenters.isNotEmpty()) {
-                                    /** Add the header with unavailable centers **/
-                                    list.add(DisplayItem.UnavailableCenterHeader(preparedAvailableCenters.isNotEmpty()))
-
                                     /** Add unavailable centers **/
                                     list.addAll(preparedUnavailableCenters)
                                 }

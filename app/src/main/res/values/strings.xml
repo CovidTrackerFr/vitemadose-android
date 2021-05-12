@@ -37,8 +37,6 @@
         <item quantity="other">%s créneaux</item>
     </plurals>
     <string name="disponibilities_placeholder">%s Lieux avec des disponibilités</string>
-    <string name="no_slots_available_center_header_others">Autres lieux sans créneau de vaccination détecté</string>
-    <string name="no_slots_available_center_header">Aucun lieu avec des disponibilités.\nLieux sans créneau de vaccination détecté</string>
     <string name="appointment_by_phone_only">Réservation par tél uniquement</string>
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Consulter ce lieu</string>
