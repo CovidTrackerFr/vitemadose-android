@@ -50,7 +50,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                     ).let {
                         val list = mutableListOf<DisplayItem>()
 
-                        fun prepareCenters(centers: MutableList<DisplayItem.Center>): List<DisplayItem.Center> {
+                        fun prepareCenters(centers: MutableList<DisplayItem.Center>): MutableList<DisplayItem.Center> {
                             /** Set up distance when city search **/
                             if (isCitySearch) {
                                 centers.onEach { it.calculateDistance(entry as SearchEntry.City) }
@@ -69,17 +69,9 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                                     .firstOrNull { center.id == it.centerId }?.bookmark
                                     ?: Bookmark.NONE
                             }
-                            filterSections.forEach { section ->
-                                section.filters.forEach { filter ->
-                                    if(section.defaultState.not() && filter.enabled) {
-                                        /** We want to remove items which do not match the predicate, ie a filter **/
-                                        centers.removeAll { filter.predicate(it).not() }
-                                    }else if(section.defaultState && !filter.enabled) {
-                                        /** We want to remove items which do match the predicate **/
-                                        centers.removeAll(filter.predicate)
-                                    }
-                                }
-                            }
+                            applyFilters(centers, filterSections.filter {
+                                it.primaryFilter.not()
+                            })
                             return centers
                         }
 
@@ -89,16 +81,22 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         /** Update available vaccine filter type **/
                         updateVaccineFilters(it.availableCenters)
 
+                        /** First pass preparing centers status, and secondary filters **/
                         val preparedAvailableCenters = prepareCenters(it.availableCenters)
                         val preparedUnavailableCenters = prepareCenters(it.unavailableCenters)
 
                         /** Add statistics header **/
                         list.add(
-                                DisplayItem.AvailableCenterHeader(
-                                        preparedAvailableCenters.size,
-                                        preparedAvailableCenters.sumBy { it.appointmentCount },
-                                        preparedAvailableCenters.sumBy { it.chronodoseCount })
+                            DisplayItem.AvailableCenterHeader(
+                                preparedAvailableCenters.sumBy { it.appointmentCount },
+                                preparedAvailableCenters.sumBy { it.chronodoseCount })
                         )
+
+                        /** Second pass, primary filters.
+                         * Primary filters modify the list but we have to keep the statistics info (above) for the header
+                         * That's why we do it here **/
+                        applyFilters(preparedAvailableCenters, filterSections.filter { it.primaryFilter })
+                        applyFilters(preparedUnavailableCenters, filterSections.filter { it.primaryFilter })
 
                         when (sortType) {
                             SortType.ByDate -> {
@@ -211,6 +209,20 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         }
     }
 
+    private fun applyFilters(centers: MutableList<DisplayItem.Center>, filtersList: List<FilterType.FilterSection>){
+        filtersList.forEach { section ->
+            section.filters.forEach { filter ->
+                if(section.defaultState.not() && filter.enabled) {
+                    /** We want to remove items which do not match the predicate, ie a filter **/
+                    centers.removeAll { filter.predicate(it).not() }
+                }else if(section.defaultState && !filter.enabled) {
+                    /** We want to remove items which do match the predicate **/
+                    centers.removeAll(filter.predicate)
+                }
+            }
+        }
+    }
+
     private fun updateVaccineFilters(centers: List<DisplayItem.Center>){
         /** Retrieve all vaccine type **/
         val mapVaccine = mutableMapOf<String, Boolean>()
@@ -231,6 +243,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             id = FILTER_VACCINE_TYPE,
             displayTitle = "Types de vaccins",
             defaultState = true,
+            primaryFilter = false,
             filters = mapVaccine.map { entry ->
                 FilterType.Filter(entry.key, entry.value){
                     it.vaccineType?.toList()?.contains(entry.key) ?: false
