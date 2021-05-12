@@ -62,7 +62,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             /** Sort results **/
                             centers.sortWith(sortType.comparator)
                             centers.onEach { center ->
-                                center.available = center.appointmentCount > 0
                                 center.bookmark = centersBookmark
                                     .firstOrNull { center.id == it.centerId }?.bookmark
                                     ?: Bookmark.NONE
