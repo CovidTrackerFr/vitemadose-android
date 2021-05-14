@@ -5,14 +5,12 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
+import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.master.PrefHelper
-import kotlinx.android.synthetic.main.activity_about.*
 import kotlinx.android.synthetic.main.activity_about.toolbar
 import kotlinx.android.synthetic.main.activity_chronodose_onboarding.*
-import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
 class ChronodoseOnboardingActivity : AppCompatActivity() {
@@ -24,11 +22,29 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
 
         toolbar.setTitle(R.string.chronodose_onboarding_title)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        val isActivityOpenedFromAboutScreen = intent?.extras?.get("FROM_ABOUT")
+        if(isActivityOpenedFromAboutScreen == true){
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            continueAfterOnBoarding.hide()
+        } else {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        }
 
         PrefHelper.chronodoseOnboardingDisplayed = true
         continueAfterOnBoarding.setOnClickListener {
             onBackPressed()
+        }
+    }
+
+
+    //Only used when activity is displayed from About activity
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
     }
 
