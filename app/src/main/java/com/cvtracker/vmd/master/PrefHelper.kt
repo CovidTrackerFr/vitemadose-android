@@ -19,6 +19,7 @@ object PrefHelper {
     private const val PREF_CHRONODOSE_ONBOARDING_DISPLAYED = "PREF_CHRONODOSE_ONBOARDING_DISPLAYED"
     private const val PREF_SEARCH_ENTRY = "PREF_SEARCH_ENTRY"
     private const val PREF_CENTERS_BOOKMARK = "PREF_CENTERS_BOOKMARK"
+    private const val PREF_PRIMARY_SORT = "PREF_PRIMARY_SORT"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
@@ -29,6 +30,12 @@ object PrefHelper {
         get() = sharedPrefs.getBoolean(PREF_CHRONODOSE_ONBOARDING_DISPLAYED, false)
         set(value) {
             sharedPrefs.edit().putBoolean(PREF_CHRONODOSE_ONBOARDING_DISPLAYED, value).apply()
+        }
+
+    var primarySort: SortType
+        get() = SortType.fromInt(sharedPrefs.getInt(PREF_PRIMARY_SORT, SortType.ByDate.value))
+        set(value) {
+            sharedPrefs.edit().putInt(PREF_PRIMARY_SORT, value.value).apply()
         }
 
     var favEntry: SearchEntry?

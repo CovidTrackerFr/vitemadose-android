@@ -17,7 +17,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private var jobSearch: Job? = null
     private var jobCenters: Job? = null
 
-    private var selectedSortType: SortType? = null
     private var filterSections = FilterType.getDefault()
 
     companion object{
@@ -40,7 +39,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         jobCenters = GlobalScope.launch(Dispatchers.Main) {
             PrefHelper.favEntry?.let { entry ->
                 try {
-                    val sortType = selectedSortType ?: entry.defaultSortType
+                    val sortType = PrefHelper.primarySort
                     val isCitySearch = entry is SearchEntry.City
 
                     view.removeEmptyStateIfNeeded()
@@ -152,8 +151,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             PrefHelper.favEntry = searchEntry
             view.showCenters(emptyList(), null)
         }
-        selectedSortType = null
-        resetFilters(needRefresh = false)
         loadCenters()
     }
 
@@ -162,8 +159,8 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     }
 
     override fun onSortChanged(sortType: SortType) {
-        selectedSortType = sortType
         view.showCenters(emptyList(), sortType)
+        PrefHelper.primarySort = sortType
         loadCenters()
     }
 

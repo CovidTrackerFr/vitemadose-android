@@ -23,12 +23,6 @@ sealed class SearchEntry {
             is City -> this.departmentCode
         }
 
-    val defaultSortType : SortType
-        get() = when(this){
-            is Department -> SortType.ByDate
-            is City -> SortType.ByDate
-        }
-
     override fun toString(): String {
         return "$entryCode - $entryName"
     }
