@@ -4,36 +4,35 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
+import com.cvtracker.vmd.custom.view_holder.AvailableCenterHeaderViewHolder
+import com.cvtracker.vmd.custom.view_holder.CenterViewHolder
+import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.*
+import com.cvtracker.vmd.extensions.hide
+import com.cvtracker.vmd.extensions.launchWebUrl
+import com.cvtracker.vmd.extensions.show
 import com.cvtracker.vmd.master.IntentHelper
 import com.cvtracker.vmd.master.SortType
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
 abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCompatActivity(),
-    CenterContract.View {
+        CenterContract.View, CenterViewHolder.Listener {
 
     abstract val presenter: T
 
-    abstract val onChronodoseFilterClick: (() -> Unit)?
+    open var availableCenterHeaderListener: AvailableCenterHeaderViewHolder.Listener? = null
 
-    abstract val onSlotsFilterClick: (() -> Unit)?
-
-    abstract val onRemoveDisclaimerClick: (() -> Unit)?
+    open var lastUpdatedListener: LastUpdatedViewHolder.Listener? = null
 
     override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
         appBarLayout.setExpanded(true, true)
         centersRecyclerView.adapter = CenterAdapter(
-            context = this,
-            items = list,
-            onClicked = { presenter.onCenterClicked(it) },
-            onBookmarkClicked = { center, position -> showBookmarkBottomSheet(center, position) },
-            onAddressClicked = { IntentHelper.startMapsActivity(this, it) },
-            onPhoneClicked = { IntentHelper.startPhoneActivity(this, it) },
-            onChronodoseFilterClick = onChronodoseFilterClick,
-            onSlotsFilterClick = onSlotsFilterClick,
-            onRemoveDisclaimerClick = onRemoveDisclaimerClick
+                context = this,
+                items = list,
+                centerListener = this,
+                availableCenterHeaderListener = availableCenterHeaderListener,
+                lastUpdatedListener = lastUpdatedListener
         )
 
         /** set up filter state **/
@@ -52,7 +51,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
                 listener = {
                     presenter.onBookmarkClicked(center, it)
                     this@AbstractCenterActivity.centersRecyclerView.adapter?.notifyItemChanged(
-                        position
+                            position
                     )
                 }
                 show(it, tag)
@@ -70,9 +69,28 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
     override fun showCentersError() {
         Snackbar.make(
-            findViewById(R.id.container),
-            getString(R.string.centers_error),
-            Snackbar.LENGTH_SHORT
+                findViewById(R.id.container),
+                getString(R.string.centers_error),
+                Snackbar.LENGTH_SHORT
         ).show()
+    }
+
+
+    /** CenterViewHolder.Listener **/
+
+    override fun onClicked(center: DisplayItem.Center) {
+        presenter.onCenterClicked(center)
+    }
+
+    override fun onBookmarkClicked(center: DisplayItem.Center, position: Int) {
+        showBookmarkBottomSheet(center, position)
+    }
+
+    override fun onAddressClicked(address: String) {
+        IntentHelper.startMapsActivity(this, address)
+    }
+
+    override fun onPhoneClicked(phoneNumber: String) {
+        IntentHelper.startPhoneActivity(this, phoneNumber)
     }
 }

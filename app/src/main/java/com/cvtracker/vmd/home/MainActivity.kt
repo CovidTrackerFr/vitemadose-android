@@ -27,6 +27,8 @@ import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.FiltersDialogView
+import com.cvtracker.vmd.custom.view_holder.AvailableCenterHeaderViewHolder
+import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
@@ -46,7 +48,8 @@ import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
 
-class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View {
+class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View,
+        AvailableCenterHeaderViewHolder.Listener, LastUpdatedViewHolder.Listener {
 
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
@@ -54,23 +57,9 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
-    override val onChronodoseFilterClick: (() -> Unit) = {
-        switchFilter(
-            filterId = FilterType.FILTER_CHRONODOSE_ID,
-            excludedFilterId = FilterType.FILTER_AVAILABLE_ID
-        )
-    }
+    override var availableCenterHeaderListener: AvailableCenterHeaderViewHolder.Listener? = this
+    override var lastUpdatedListener: LastUpdatedViewHolder.Listener? = this
 
-    override val onSlotsFilterClick: (() -> Unit) = {
-        switchFilter(
-            filterId = FilterType.FILTER_AVAILABLE_ID,
-            excludedFilterId = FilterType.FILTER_CHRONODOSE_ID
-        )
-    }
-
-    override val onRemoveDisclaimerClick: (() -> Unit) = {
-        presenter.removeDisclaimer()
-    }
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
@@ -353,5 +342,28 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             noCentersView.hide()
             resetFiltersView.hide()
         }
+    }
+
+
+    /** AvailableCenterHeaderViewHolder.Listener **/
+
+    override fun onChronodoseFilterClick() {
+        switchFilter(
+                filterId = FilterType.FILTER_CHRONODOSE_ID,
+                excludedFilterId = FilterType.FILTER_AVAILABLE_ID
+        )
+    }
+
+    override fun onSlotsFilterClick() {
+        switchFilter(
+                filterId = FilterType.FILTER_AVAILABLE_ID,
+                excludedFilterId = FilterType.FILTER_CHRONODOSE_ID
+        )
+    }
+
+    /** LastUpdatedViewHolder.Listener **/
+
+    override fun onRemoveDisclaimerClick() {
+        presenter.removeDisclaimer()
     }
 }
