@@ -223,8 +223,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     override fun removeEmptyStateIfNeeded() {
         bookmarkIconView.show()
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
-        mainView.show()
-
         presenter.displayChronodoseOnboardingIfNeeded()
     }
 
