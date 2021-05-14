@@ -228,6 +228,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override fun showEmptyState() {
         bookmarkIconView.hide()
+        mainView.hide()
         stubEmptyState.setOnInflateListener { stub, inflated ->
             emptyStateSelectedDepartment.setOnEditorActionListener(onEditorActionListener)
             SpannableString(inflated.emptyStateBaselineTextView.text).apply {
