@@ -69,7 +69,7 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
                 id = "",
                 vaccineType = listOf("Pfizer-BioNTech"),
                 schedules = listOf(DisplayItem.Center.Schedule("chronodose", 4)),
-                available = true
+                appointmentByPhoneOnly = false
         )
     }
 }

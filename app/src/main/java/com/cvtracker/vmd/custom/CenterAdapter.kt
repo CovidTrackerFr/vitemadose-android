@@ -2,7 +2,6 @@ package com.cvtracker.vmd.custom
 
 import android.content.Context
 import android.content.res.ColorStateList
-import android.text.format.DateFormat
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -20,8 +19,6 @@ import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.android.synthetic.main.item_available_center_header.view.*
 import kotlinx.android.synthetic.main.item_center.view.*
 import kotlinx.android.synthetic.main.item_last_updated.view.*
-import kotlinx.android.synthetic.main.item_unavailable_center_header.view.*
-import java.util.*
 
 class CenterAdapter(
     private val context: Context,
@@ -41,8 +38,7 @@ class CenterAdapter(
         const val TYPE_CENTER = 0
         const val TYPE_CENTER_UNAVAILABLE = 1
         const val TYPE_AVAILABLE_HEADER = 3
-        const val TYPE_UNAVAILABLE_HEADER = 4
-        const val TYPE_LAST_UPDATED = 5
+        const val TYPE_LAST_UPDATED = 4
     }
 
     open inner class CenterViewHolder(
@@ -54,16 +50,12 @@ class CenterAdapter(
         fun bind(center: DisplayItem.Center, position: Int) {
             with(itemView) {
                 centerNameView.text = center.name
-                if (center.available && center.url.isNotBlank() && center.nextSlot != null) {
-                    dateView.text = try {
-                        DateFormat.format("EEEE d MMM à k'h'mm", center.nextSlot).toString()
-                            .capitalize(Locale.FRANCE) + center.formattedDistance
-                    } catch (e: Exception) {
-                        ""
-                    }
-                } else {
-                    dateView.text = context.getString(R.string.no_slots_available) + center.formattedDistance
-                }
+
+                dateView.text = when {
+                    center.available && center.url.isNotBlank() && center.nextSlot != null -> center.formattedNextSlot
+                    center.available && center.isValidAppointmentByPhoneOnly -> context.getString(R.string.appointment_by_phone_only)
+                    else -> context.getString(R.string.no_slots_available)
+                } + center.formattedDistance
 
                 center.metadata?.address?.let { address ->
                     centerAddressView.text = center.formattedAddress
@@ -102,6 +94,7 @@ class CenterAdapter(
                 })
 
                 checkButton.setOnClickListener { onClicked.invoke(center) }
+                callButton.setOnClickListener { center.metadata?.phoneFormatted?.let { onPhoneClicked.invoke(it) } }
                 bookmarkView.setOnClickListener { onBookmarkClicked.invoke(center, position) }
 
                 val slotsToShow = if(center.isChronodose) center.chronodoseCount else center.appointmentCount
@@ -129,14 +122,25 @@ class CenterAdapter(
                     }
                 )
 
-                if (center.available) {
+                if (center.available && center.isValidAppointmentByPhoneOnly) {
+                    cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
+                    centreAvailableSpecificViews.hide()
+                    callButton.text = context.getString(R.string.call_center, center.metadata?.phoneFormatted)
+                    callButton.show()
+                    checkButton.hide()
+                    bookmarkView.hide()
+                } else if (center.available) {
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
                     centreAvailableSpecificViews.show()
+                    callButton.hide()
                     checkButton.hide()
+                    bookmarkView.show()
                 } else {
                     cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColorSecondary))
                     centreAvailableSpecificViews.hide()
                     checkButton.show()
+                    callButton.hide()
+                    bookmarkView.show()
                 }
 
                 if (center.isChronodose) {
@@ -207,23 +211,6 @@ class CenterAdapter(
                     position
                 }
                 notifyItemChanged(position)
-            }
-        }
-    }
-
-    inner class UnavailableCenterHeaderViewHolder(context: Context, parent: ViewGroup) :
-        RecyclerView.ViewHolder(
-            LayoutInflater.from(context)
-                .inflate(R.layout.item_unavailable_center_header, parent, false)
-        ) {
-        fun bind(header: DisplayItem.UnavailableCenterHeader) {
-            with(itemView) {
-                sectionLibelleView.setText(
-                    when {
-                        header.hasAvailableCenters -> R.string.no_slots_available_center_header_others
-                        else -> R.string.no_slots_available_center_header
-                    }
-                )
             }
         }
     }
@@ -309,8 +296,6 @@ class CenterAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_CENTER -> CenterViewHolder(context, parent)
-            TYPE_CENTER_UNAVAILABLE -> CenterViewHolder(context, parent)
-            TYPE_UNAVAILABLE_HEADER -> UnavailableCenterHeaderViewHolder(context, parent)
             TYPE_AVAILABLE_HEADER -> AvailableCenterHeaderViewHolder(context, parent)
             TYPE_LAST_UPDATED -> LastUpdatedViewHolder(context, parent)
             else -> throw IllegalArgumentException("Type not supported")
@@ -318,15 +303,8 @@ class CenterAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (val result = items[position]) {
-            is DisplayItem.Center -> {
-                if (result.available) {
-                    TYPE_CENTER
-                } else {
-                    TYPE_CENTER_UNAVAILABLE
-                }
-            }
-            is DisplayItem.UnavailableCenterHeader -> TYPE_UNAVAILABLE_HEADER
+        return when (items[position]) {
+            is DisplayItem.Center -> TYPE_CENTER
             is DisplayItem.AvailableCenterHeader -> TYPE_AVAILABLE_HEADER
             is DisplayItem.LastUpdated -> TYPE_LAST_UPDATED
         }
@@ -336,9 +314,6 @@ class CenterAdapter(
         when (holder) {
             is CenterViewHolder -> {
                 holder.bind(items[position] as DisplayItem.Center, position)
-            }
-            is UnavailableCenterHeaderViewHolder -> {
-                holder.bind(items[position] as DisplayItem.UnavailableCenterHeader)
             }
             is AvailableCenterHeaderViewHolder -> {
                 holder.bind(items[position] as DisplayItem.AvailableCenterHeader, position)
