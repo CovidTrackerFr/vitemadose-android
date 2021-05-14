@@ -17,7 +17,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private var jobSearch: Job? = null
     private var jobCenters: Job? = null
 
-    private var filterSections = FilterType.getDefault()
+    private var filterSections = FilterType.getDefault(PrefHelper.filters)
 
     companion object{
         var DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
@@ -260,10 +260,12 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         )
         filterSections.removeAll { it.id == FILTER_VACCINE_TYPE }
         filterSections.add(section)
+        filterSections = FilterType.fromFilterPref(PrefHelper.filters, filterSections)
     }
 
     override fun updateFilters(filters: List<FilterType.FilterSection>, needRefresh: Boolean){
         filterSections = filters.toMutableList()
+        PrefHelper.filters = FilterType.toFilterPref(filterSections)
         view.updateFilterState(isDefaultFilters())
         if(needRefresh) {
             loadCenters()

@@ -20,6 +20,7 @@ object PrefHelper {
     private const val PREF_SEARCH_ENTRY = "PREF_SEARCH_ENTRY"
     private const val PREF_CENTERS_BOOKMARK = "PREF_CENTERS_BOOKMARK"
     private const val PREF_PRIMARY_SORT = "PREF_PRIMARY_SORT"
+    private const val PREF_FILTERS = "PREF_FILTERS"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
@@ -36,6 +37,23 @@ object PrefHelper {
         get() = SortType.fromInt(sharedPrefs.getInt(PREF_PRIMARY_SORT, SortType.ByDate.value))
         set(value) {
             sharedPrefs.edit().putInt(PREF_PRIMARY_SORT, value.value).apply()
+        }
+
+    var filters: Set<FilterPref>
+        get() = try {
+            /** Try parsing with FilterPref class then **/
+            val myType = object : TypeToken<Set<FilterPref>>() {}.type
+            gson.fromJson(sharedPrefs.getString(PREF_FILTERS, "[]"), myType)
+        } catch (e: JsonParseException) {
+            emptySet()
+        }
+        set(value) {
+            val json = try {
+                gson.toJson(value)
+            } catch (e: Exception) {
+                null
+            }
+            json?.let { sharedPrefs.edit().putString(PREF_FILTERS, it).apply() }
         }
 
     var favEntry: SearchEntry?
