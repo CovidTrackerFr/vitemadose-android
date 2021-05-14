@@ -3,7 +3,7 @@ package com.cvtracker.vmd.custom
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cvtracker.vmd.custom.view_holder.AvailableCenterHeaderViewHolder
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.custom.view_holder.CenterViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.Bookmark
@@ -14,7 +14,7 @@ class CenterAdapter(
         private val context: Context,
         private val items: List<DisplayItem>,
         private val centerListener: CenterViewHolder.Listener? = null,
-        private val availableCenterHeaderListener: AvailableCenterHeaderViewHolder.Listener? = null,
+        private val statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = null,
         private val lastUpdatedListener: LastUpdatedViewHolder.Listener? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -37,7 +37,7 @@ class CenterAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_CENTER -> CenterViewHolder(context, parent, this, centerListener)
-            TYPE_AVAILABLE_HEADER -> AvailableCenterHeaderViewHolder(context, parent, this, availableCenterHeaderListener)
+            TYPE_AVAILABLE_HEADER -> StatisticsHeaderViewHolder(context, parent, this, statisticsHeaderListener)
             TYPE_LAST_UPDATED -> LastUpdatedViewHolder(context, parent, this, lastUpdatedListener)
             else -> throw IllegalArgumentException("Type not supported")
         }
@@ -46,7 +46,7 @@ class CenterAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is CenterViewHolder -> holder.bind(items[position] as DisplayItem.Center, position)
-            is AvailableCenterHeaderViewHolder -> holder.bind(items[position] as DisplayItem.AvailableCenterHeader, position)
+            is StatisticsHeaderViewHolder -> holder.bind(items[position] as DisplayItem.AvailableCenterHeader, position)
             is LastUpdatedViewHolder -> holder.bind(items[position] as DisplayItem.LastUpdated, position)
         }
     }

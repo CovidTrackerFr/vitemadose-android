@@ -27,7 +27,7 @@ import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.FiltersDialogView
-import com.cvtracker.vmd.custom.view_holder.AvailableCenterHeaderViewHolder
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
@@ -38,7 +38,6 @@ import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_bookmark.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.appBarLayout
 import kotlinx.android.synthetic.main.activity_main.centersRecyclerView
@@ -49,7 +48,7 @@ import kotlinx.android.synthetic.main.empty_state.view.*
 
 
 class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View,
-        AvailableCenterHeaderViewHolder.Listener, LastUpdatedViewHolder.Listener {
+        StatisticsHeaderViewHolder.Listener, LastUpdatedViewHolder.Listener {
 
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
@@ -57,7 +56,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
-    override var availableCenterHeaderListener: AvailableCenterHeaderViewHolder.Listener? = this
+    override var statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = this
     override var lastUpdatedListener: LastUpdatedViewHolder.Listener? = this
 
 
@@ -345,7 +344,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     }
 
 
-    /** AvailableCenterHeaderViewHolder.Listener **/
+    /** StatisticsHeaderViewHolder.Listener **/
 
     override fun onChronodoseFilterClick() {
         switchFilter(

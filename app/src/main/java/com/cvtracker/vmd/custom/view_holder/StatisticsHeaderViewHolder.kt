@@ -8,14 +8,14 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.ItemStat
 import com.cvtracker.vmd.extensions.color
 import com.cvtracker.vmd.extensions.colorAttr
-import kotlinx.android.synthetic.main.item_available_center_header.view.*
+import kotlinx.android.synthetic.main.item_statistics_header.view.*
 
-class AvailableCenterHeaderViewHolder(
+class StatisticsHeaderViewHolder(
         context: Context,
         parent: ViewGroup,
         adapter: CenterAdapter,
         private val listener: Listener?
-) : AbstractViewHolder<DisplayItem.AvailableCenterHeader>(context, parent, adapter, R.layout.item_available_center_header) {
+) : AbstractViewHolder<DisplayItem.AvailableCenterHeader>(context, parent, adapter, R.layout.item_statistics_header) {
 
     interface Listener {
         fun onChronodoseFilterClick()

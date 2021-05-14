@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
-import com.cvtracker.vmd.custom.view_holder.AvailableCenterHeaderViewHolder
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.custom.view_holder.CenterViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.DisplayItem
@@ -21,7 +21,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
     abstract val presenter: T
 
-    open var availableCenterHeaderListener: AvailableCenterHeaderViewHolder.Listener? = null
+    open var statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = null
 
     open var lastUpdatedListener: LastUpdatedViewHolder.Listener? = null
 
@@ -31,7 +31,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
                 context = this,
                 items = list,
                 centerListener = this,
-                availableCenterHeaderListener = availableCenterHeaderListener,
+                availableCenterHeaderListener = statisticsHeaderListener,
                 lastUpdatedListener = lastUpdatedListener
         )
 
