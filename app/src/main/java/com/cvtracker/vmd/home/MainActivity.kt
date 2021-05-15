@@ -27,6 +27,8 @@ import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.FiltersDialogView
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
+import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
@@ -36,7 +38,6 @@ import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.activity_bookmark.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.appBarLayout
 import kotlinx.android.synthetic.main.activity_main.centersRecyclerView
@@ -46,7 +47,8 @@ import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
 
-class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View {
+class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View,
+        StatisticsHeaderViewHolder.Listener, LastUpdatedViewHolder.Listener {
 
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
@@ -54,23 +56,9 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
-    override val onChronodoseFilterClick: (() -> Unit) = {
-        switchFilter(
-            filterId = FilterType.FILTER_CHRONODOSE_ID,
-            excludedFilterId = FilterType.FILTER_AVAILABLE_ID
-        )
-    }
+    override var statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = this
+    override var lastUpdatedListener: LastUpdatedViewHolder.Listener? = this
 
-    override val onSlotsFilterClick: (() -> Unit) = {
-        switchFilter(
-            filterId = FilterType.FILTER_AVAILABLE_ID,
-            excludedFilterId = FilterType.FILTER_CHRONODOSE_ID
-        )
-    }
-
-    override val onRemoveDisclaimerClick: (() -> Unit) = {
-        presenter.removeDisclaimer()
-    }
 
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
@@ -353,5 +341,28 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             noCentersView.hide()
             resetFiltersView.hide()
         }
+    }
+
+
+    /** StatisticsHeaderViewHolder.Listener **/
+
+    override fun onChronodoseFilterClick() {
+        switchFilter(
+                filterId = FilterType.FILTER_CHRONODOSE_ID,
+                excludedFilterId = FilterType.FILTER_AVAILABLE_ID
+        )
+    }
+
+    override fun onSlotsFilterClick() {
+        switchFilter(
+                filterId = FilterType.FILTER_AVAILABLE_ID,
+                excludedFilterId = FilterType.FILTER_CHRONODOSE_ID
+        )
+    }
+
+    /** LastUpdatedViewHolder.Listener **/
+
+    override fun onRemoveDisclaimerClick() {
+        presenter.removeDisclaimer()
     }
 }

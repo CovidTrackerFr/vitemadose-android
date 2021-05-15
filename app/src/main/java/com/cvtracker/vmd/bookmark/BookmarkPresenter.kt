@@ -30,13 +30,11 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
 
                     DataManager.getCentersBookmark(centersBookmark).let {
                         fun prepareCenters(
-                            centers: MutableList<DisplayItem.Center>,
-                            available: Boolean
+                            centers: MutableList<DisplayItem.Center>
                         ): List<DisplayItem.Center> {
                             centers.sortWith(SortType.ByDate.comparator)
                             return centers
                                 .onEach { center ->
-                                    center.available = available
                                     center.bookmark = centersBookmark
                                         .firstOrNull { center.id == it.centerId }?.bookmark
                                         ?: Bookmark.NONE
@@ -46,10 +44,10 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
                         val list = mutableListOf<DisplayItem>()
 
                         /** Add available centers **/
-                        list.addAll(prepareCenters(it.availableCenters, true))
+                        list.addAll(prepareCenters(it.availableCenters))
 
                         /** Add unavailable centers **/
-                        list.addAll(prepareCenters(it.unavailableCenters, false))
+                        list.addAll(prepareCenters(it.unavailableCenters))
 
                         if(list.isEmpty()){
                             view.showNoBookmark(true)

@@ -66,7 +66,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             /** Sort results **/
                             centers.sortWith(sortType.comparator)
                             centers.onEach { center ->
-                                center.available = center.appointmentCount > 0
                                 center.bookmark = centersBookmark
                                     .firstOrNull { center.id == it.centerId }?.bookmark
                                     ?: Bookmark.NONE
@@ -119,9 +118,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                                 list.addAll(preparedAvailableCenters)
 
                                 if (preparedUnavailableCenters.isNotEmpty()) {
-                                    /** Add the header with unavailable centers **/
-                                    list.add(DisplayItem.UnavailableCenterHeader(preparedAvailableCenters.isNotEmpty()))
-
                                     /** Add unavailable centers **/
                                     list.addAll(preparedUnavailableCenters)
                                 }

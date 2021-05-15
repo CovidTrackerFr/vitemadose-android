@@ -10,8 +10,6 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.activity_about.toolbar
-import kotlinx.android.synthetic.main.activity_chronodose_onboarding.*
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
 
@@ -24,12 +22,29 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
 
         toolbar.setTitle(R.string.chronodose_onboarding_title)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        initUI()
 
         PrefHelper.chronodoseOnboardingDisplayed = true
-        continueAfterOnBoarding.setOnClickListener {
-            onBackPressed()
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun initUI() {
+
+        centersRecyclerView.adapter = CenterAdapter(
+                context = this,
+                items = listOf(fakeCenter)
+        )
     }
 
     companion object {
@@ -50,7 +65,7 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
                 id = "",
                 vaccineType = listOf("Pfizer-BioNTech"),
                 schedules = listOf(DisplayItem.Center.Schedule("chronodose", 4)),
-                available = true
+                appointmentByPhoneOnly = false
         )
     }
 }

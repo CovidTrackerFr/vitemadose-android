@@ -20,7 +20,7 @@ sealed class SearchEntry {
     val entryDepartmentCode: String
         get() = when (this) {
             is Department -> this.departmentCode
-            is City -> this.department?.departmentCode ?: ""
+            is City -> this.departmentCode
         }
 
     val defaultSortType : SortType
@@ -46,7 +46,7 @@ sealed class SearchEntry {
         @SerializedName("nom")
         val name: String,
         @SerializedName("centre")
-        val center: Center,
+        val center: Center?,
         @SerializedName("codesPostaux")
         val postalCodeList: List<String>,
         @SerializedName("departement")
@@ -64,13 +64,19 @@ sealed class SearchEntry {
             val coordinates: List<Double>,
         )
 
-        val latitude: Double
-            get() = center.coordinates[1]
+        val latitude: Double?
+            get() = center?.coordinates?.get(1) ?: relativeOutreMerEntry?.latitude
 
-        val longitude: Double
-            get() = center.coordinates[0]
+        val longitude: Double?
+            get() = center?.coordinates?.get(0) ?: relativeOutreMerEntry?.longitude
+
+        val departmentCode: String
+            get() = department?.departmentCode ?: relativeOutreMerEntry?.departmentCode ?: ""
+
+        private val relativeOutreMerEntry: OutreMerEntry?
+            get() = OutreMerEntry.fromCode(code)
 
         val isValid: Boolean
-            get() = department != null
+            get() = departmentCode.isNotBlank()
     }
 }
