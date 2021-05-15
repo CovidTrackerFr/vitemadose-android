@@ -347,7 +347,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
-                app:tint="?attr/iconTintColor"/>
+                app:tint="?attr/iconTintColor"
+                android:contentDescription="@string/a11y_add_to_bookmarked"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/centreAvailableSpecificViews"

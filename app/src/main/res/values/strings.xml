@@ -88,6 +88,11 @@
     <string name="reset_filters">Réinitialiser les filtres</string>
     <string name="a11y_doctolib_maiia_ordoclic_keldoc">Doctolib - Maiia - Ordoclic - Keldoc</string>
     <string name="a11y_appointment_show_all_informations">Afficher plus d\'informations</string>
-    <string name="a11y_add_to_bookmarked">Configurer le suivi de ce rendez-vous</string>
+    <string name="a11y_add_to_bookmarked">Configurer le suivi de ce centre</string>
     <string name="before_going_further">Avant d\'aller plus loin</string>
+    <string name="a11y_hide_disclaimer_message">Masquer ce message d\'alerte</string>
+    <string name="a11y_filter_results">Filtrer les résultats</string>
+    <string name="no_center_to_display">Aucun centre à afficher</string>
+    <string name="a11y_more_informations">Plus d\'informations</string>
+    <string name="a11y_see_bookmarked">Voir mes centres suivis</string>
 </resources>

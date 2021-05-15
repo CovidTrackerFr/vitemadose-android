@@ -253,7 +253,7 @@ class CenterAdapter(
                     removeDisclaimerView.imageTintList = ColorStateList.valueOf(disclaimer.severity.textColor(context))
                     removeDisclaimerView.setOnClickListener {
                         item.disclaimer = null
-                        notifyItemChanged(position)
+                        disclaimerCardView.hide()
                         onRemoveDisclaimerClick?.invoke()
                     }
                     disclaimerCardView.show()

@@ -89,6 +89,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/mainContent"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -142,7 +143,8 @@
                 app:layout_constraintStart_toEndOf="@id/sortSwitchView"
                 app:layout_constraintTop_toTopOf="@id/refreshLayout"
                 app:srcCompat="@drawable/ic_tune_black_24dp"
-                app:tint="@color/sort_text_selector" />
+                app:tint="@color/sort_text_selector"
+                android:contentDescription="@string/a11y_filter_results"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/noCentersView"
@@ -151,14 +153,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                app:layout_constraintVertical_bias="0.8"
                 android:paddingHorizontal="16dp"
                 android:paddingVertical="0dp"
-                android:text="Aucun centre à afficher"
+                android:text="@string/no_center_to_display"
                 android:textSize="22sp"
                 app:layout_constraintBottom_toTopOf="@id/resetFiltersView"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="packed" />
+                app:layout_constraintTop_toBottomOf="@id/filterView"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/resetFiltersView"
@@ -187,7 +187,8 @@
             android:elevation="20dp"
             android:padding="15dp"
             app:srcCompat="@drawable/ic_bookmarks_black_24dp"
-            app:tint="@color/mine_shaft" />
+            app:tint="@color/mine_shaft"
+            android:contentDescription="@string/a11y_see_bookmarked"/>
 
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/aboutIconView"
@@ -198,7 +199,8 @@
             android:elevation="20dp"
             android:padding="14dp"
             app:srcCompat="@drawable/ic_info_black"
-            app:tint="@color/mine_shaft" />
+            app:tint="@color/mine_shaft"
+            android:contentDescription="@string/a11y_more_informations"/>
 
     <ViewStub
         android:id="@+id/stubEmptyState"

@@ -69,8 +69,10 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
     override fun showNoBookmark(visible: Boolean) {
         if (visible) {
             bookmarkEmptyState.show()
+            centersRecyclerView.hide()
         } else {
             bookmarkEmptyState.hide()
+            centersRecyclerView.show()
         }
     }
 

@@ -32,7 +32,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="@string/liens" />
+                android:text="@string/liens"
+                android:accessibilityHeading="true"/>
 
             <androidx.cardview.widget.CardView
                 style="@style/CustomCardView"
@@ -125,7 +126,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/stats"
-                android:visibility="gone" />
+                android:visibility="gone"
+                android:accessibilityHeading="true"/>
 
             <LinearLayout
                 android:id="@+id/statFirstLineView"
