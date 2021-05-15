@@ -22,52 +22,60 @@
                 android:text="@string/before_going_further"
                 style="@style/TextStyle_header"
                 android:gravity="center"
-                android:padding="30sp"
+                android:padding="16dp"
                 />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/chronodoses_message"
-                style="@style/TextStyle_center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/chronodose_onboarding_message"
-                android:textSize="18sp"
-                app:layout_constraintTop_toBottomOf="@id/beforeTitle"
-                android:layout_margin="16dp"
-                android:elevation="4dp"
-                android:background="@drawable/background_on_boarding_chronodose"/>
+    <LinearLayout
+        android:id="@+id/chronodoses_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/beforeTitle"
+        android:orientation="vertical"
+        android:layout_margin="16dp"
+        android:paddingVertical="16dp"
+        android:elevation="4dp"
+        android:background="@drawable/background_on_boarding_chronodose"
+        android:gravity="center">
+        <androidx.appcompat.widget.AppCompatTextView
+            style="@style/TextStyle_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp"
+            android:text="@string/chronodose_onboarding_message"
+            android:textSize="16sp"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/chronodoses_message_2"
-                style="@style/TextStyle_center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/chronodose_onboarding_message_2"
-                android:textStyle="italic"
-                app:layout_constraintTop_toBottomOf="@id/chronodoses_message" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chronodoses_message_2"
+            style="@style/TextStyle_center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="4dp"
+            android:text="@string/chronodose_onboarding_message_2"
+            android:textSize="16sp"/>
 
+        <TextView
+            android:id="@+id/chronodoseTitleView"
+            android:drawableStart="@drawable/ic_lightning_charge_fill"
+            android:drawableEnd="@drawable/ic_lightning_charge_fill"
+            android:drawableTint="?attr/chronodoseTextColor"
+            android:background="?attr/chronodoseBackgroundColor"
+            android:includeFontPadding="false"
+            android:gravity="center"
+            android:text="@string/chronodoses_disponibles"
+            android:textColor="?attr/chronodoseTextColor"
+            android:fontFamily="@font/sf_pro_bold"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingHorizontal="50dp"
+            android:paddingVertical="4dp"
+            android:layout_marginTop="8dp"
+            app:layout_constraintTop_toBottomOf="@id/chronodoses_message_2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"/>
 
-
-            <TextView
-                android:id="@+id/chronodoseTitleView"
-                android:drawableStart="@drawable/ic_lightning_charge_fill"
-                android:drawableEnd="@drawable/ic_lightning_charge_fill"
-                android:drawableTint="?attr/chronodoseTextColor"
-                android:background="?attr/chronodoseBackgroundColor"
-                android:includeFontPadding="false"
-                android:gravity="center"
-                android:text="@string/chronodoses_disponibles"
-                android:textColor="?attr/chronodoseTextColor"
-                android:fontFamily="@font/sf_pro_bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="50dp"
-                android:paddingVertical="4dp"
-                app:layout_constraintTop_toBottomOf="@id/chronodoses_message_2"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"/>
+    </LinearLayout>
 
 
         <Button
@@ -78,7 +86,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/chronodoseTitleView"
+            app:layout_constraintTop_toBottomOf="@id/chronodoses_message"
             app:layout_constraintVertical_bias="0.25" />
 
 
