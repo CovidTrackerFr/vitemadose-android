@@ -271,7 +271,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
-                android:text="@string/appointement"
+                android:text="@string/make_appointment"
+                app:backgroundTint="@color/danube"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/checkButton"
+                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView" />
+
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/callButton"
+                style="@style/RegularButton"
+                android:visibility="visible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="@string/call_center"
                 app:backgroundTint="@color/danube"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"

@@ -43,11 +43,7 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
 
         centersRecyclerView.adapter = CenterAdapter(
                 context = this,
-                items = listOf(fakeCenter),
-                onClicked = { /* fake listener */ },
-                onBookmarkClicked = { _, _ -> /* fake listener */ },
-                onAddressClicked = { /* fake listener */ },
-                onPhoneClicked = { /* fake listener */ }
+                items = listOf(fakeCenter)
         )
     }
 
@@ -69,7 +65,7 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
                 id = "",
                 vaccineType = listOf("Pfizer-BioNTech"),
                 schedules = listOf(DisplayItem.Center.Schedule("chronodose", 4)),
-                available = true
+                appointmentByPhoneOnly = false
         )
     }
 }
