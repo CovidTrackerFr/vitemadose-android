@@ -4,9 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
-import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.custom.view_holder.CenterViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.launchWebUrl
@@ -31,7 +31,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
                 context = this,
                 items = list,
                 centerListener = this,
-                availableCenterHeaderListener = statisticsHeaderListener,
+                statisticsHeaderListener = statisticsHeaderListener,
                 lastUpdatedListener = lastUpdatedListener
         )
 
