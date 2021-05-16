@@ -24,7 +24,6 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_about)
-        window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
         toolbar.setTitle(R.string.about)
         setSupportActionBar(toolbar)

@@ -6,20 +6,12 @@ plugins {
     id("com.google.gms.google-services").version(Versions.googleServicesPlugin).apply(false)
     id("com.google.firebase.crashlytics").version(Versions.firebaseCrashlytics).apply(false)
     id("com.google.firebase.appdistribution").version(Versions.firebaseAppDistribution).apply(false)
+    id("com.google.android.gms.oss-licenses-plugin").version(Versions.ossLicensesPlugin).apply(false)
 }
 
 allprojects {
     repositories {
         google()
         jcenter()
-    }
-}
-
-buildscript {
-    repositories {
-        google()
-    }
-    dependencies {
-        classpath("com.google.android.gms:oss-licenses-plugin:0.10.4")
     }
 }

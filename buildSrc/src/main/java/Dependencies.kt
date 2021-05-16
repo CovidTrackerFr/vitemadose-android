@@ -1,6 +1,7 @@
 object Versions {
     const val androidPlugin = "4.2.0"
     const val kotlin = "1.4.32"
+    const val ossLicensesPlugin = "0.10.4"
     const val googleServicesPlugin = "4.3.4"
     const val firebaseCrashlytics = "2.3.0"
     const val firebaseAppDistribution = "2.0.1"
