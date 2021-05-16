@@ -32,6 +32,9 @@ object Libs {
     //Log
     const val timber = "com.jakewharton.timber:timber:_"
 
+    //Open Source mention
+    const val ossLicenses = "com.google.android.gms:play-services-oss-licenses:_"
+
     // Network
     const val retrofit = "com.squareup.retrofit2:retrofit:2.6.0"
     const val retrofitGson = "com.squareup.retrofit2:converter-gson:2.6.0"

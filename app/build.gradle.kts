@@ -8,6 +8,7 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.firebase.appdistribution")
+    id("com.google.android.gms.oss-licenses-plugin")
 }
 
 android {
@@ -98,6 +99,7 @@ dependencies {
     implementation(Libs.browser)
 
     implementation(Libs.timber)
+    implementation(Libs.ossLicenses)
 
     implementation(platform(Libs.firebaseBom))
     implementation(Libs.firebaseAnalytics)
