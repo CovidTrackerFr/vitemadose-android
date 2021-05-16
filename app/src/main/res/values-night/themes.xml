@@ -6,6 +6,7 @@
         <item name="android:textColorSecondary">@color/grey_5</item>
         <item name="android:textColorTertiary">@color/silver</item>
         <!-- Primary brand color. -->
+        <item name="colorAccent">@color/crail</item>
         <item name="colorPrimary">@color/crail</item>
         <item name="colorOnPrimary">@color/thunder</item>
         <!-- Status bar color. -->

@@ -6,6 +6,7 @@
         <item name="android:textColorSecondary">@color/scorpion</item>
         <item name="android:textColorTertiary">@color/gray</item>
         <!-- Primary brand color. -->
+        <item name="colorAccent">@color/roman</item>
         <item name="colorPrimary">@color/roman</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Status bar color. -->
@@ -28,5 +29,9 @@
         <item name="disclaimerWarningBackgroundColor">@color/half_colonial_white</item>
         <item name="disclaimerErrorTextColor">@color/roman</item>
         <item name="disclaimerErrorBackgroundColor">@color/vanilla_ice</item>
+    </style>
+
+    <style name="Theme.ViteMaDose.WithoutBackground" parent="Theme.ViteMaDose">
+        <item name="android:windowBackground">?attr/backgroundColor</item>
     </style>
 </resources>

@@ -28,7 +28,6 @@ class BookmarkActivity : AbstractCenterActivity<BookmarkContract.Presenter>(), B
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bookmark)
         setResult(RESULT_CANCELED)
-        window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
         toolbar.setTitle(R.string.bookmark)
         setSupportActionBar(toolbar)
