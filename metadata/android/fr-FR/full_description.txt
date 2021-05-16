@@ -1,3 +1,3 @@
-Vite Ma Dose de Vaccin ! est un outil permettant de détecter les rendez-vous de vaccination. Cette application rapide, simple et fiable permet de trouver l'ensemble des rendez-vous de vaccination disponibles sur les plateformes de réservation comme Doctolib, Maiia, Keldoc ou Ordoclic, sous réserve d’éligibilité.
+Vite Ma Dose de Vaccin ! est un outil permettant de détecter les rendez-vous de vaccination. Cette application rapide, simple et fiable permet de trouver l'ensemble des rendez-vous de vaccination disponibles sur les plateformes de réservation comme Doctolib, Maiia, Keldoc, Ordoclic, MaPharma ou AvecMonDoc, sous réserve d’éligibilité.
 
 Vite Ma Dose de Vaccin ! ne collecte aucune donnée personnelle. Ce point d’entrée unique vous met simplement en relation avec l’une des plateformes de réservation, sur laquelle vous pouvez vous inscrire à un créneau dans un centre de vaccination. L’application est gratuite, indépendante, et open-source.
