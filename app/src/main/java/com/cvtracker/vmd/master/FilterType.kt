@@ -6,7 +6,7 @@ class FilterType {
 
     companion object {
 
-        private fun getDefault() = mutableListOf(appointmentFilterType)
+        private fun getDefault() = mutableListOf(appointmentFilterType, distanceFilterType)
         fun getDefault(filterPref: Set<FilterPref>): MutableList<FilterSection> {
             return fromFilterPref(filterPref, getDefault())
         }
@@ -40,6 +40,7 @@ class FilterType {
 
         const val FILTER_APPOINTMENT = "FILTER_APPOINTMENT"
         const val FILTER_VACCINE_TYPE = "FILTER_VACCINE_TYPE"
+        const val FILTER_DISTANCE = "FILTER_DISTANCE"
 
         const val FILTER_CHRONODOSE_ID = "FILTER_CHRONODOSE_ID"
         const val FILTER_AVAILABLE_ID = "FILTER_AVAILABLE_ID"
@@ -57,6 +58,17 @@ class FilterType {
                     it.available
                 }
             ))
+
+        val distanceFilterType = FilterSection(
+                id = FILTER_DISTANCE,
+                displayTitle = "Distance",
+                defaultState = false,
+                primaryFilter = true,
+                filters = listOf(
+                        FilterSeekBar("", false, null, 5, 100, 50) {
+                            it.distance != null // todo
+                        }
+                ))
     }
 
     class FilterSection(
@@ -71,10 +83,20 @@ class FilterType {
         }
     }
 
-    class Filter(
-        val displayTitle: String,
-        var enabled: Boolean,
-        val id: String? = null,
-        val predicate: (DisplayItem.Center) -> Boolean
+    open class Filter(
+            val displayTitle: String,
+            var enabled: Boolean,
+            val id: String? = null,
+            val predicate: (DisplayItem.Center) -> Boolean
     )
+
+    class FilterSeekBar(
+            displayTitle: String,
+            enabled: Boolean,
+            id: String? = null,
+            var minValue: Int,
+            var maxValue: Int,
+            var value: Int,
+            predicate: (DisplayItem.Center) -> Boolean
+    ) : Filter(displayTitle, enabled, id, predicate)
 }
