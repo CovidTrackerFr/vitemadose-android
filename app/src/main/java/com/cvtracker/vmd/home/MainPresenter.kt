@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.home
 
+import com.cvtracker.vmd.R
 import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.Disclaimer
@@ -243,7 +244,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         /** Create our filter vaccine with the map **/
         val section = FilterType.FilterSection(
             id = FILTER_VACCINE_TYPE_SECTION,
-            displayTitle = "Types de vaccins",
+            displayTitle = ViteMaDoseApp.get().getString(R.string.filter_vaccine_type),
             defaultState = true,
             primaryFilter = false,
             filters = mapVaccine.map { entry ->

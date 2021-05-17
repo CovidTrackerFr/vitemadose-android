@@ -1,12 +1,12 @@
 package com.cvtracker.vmd.master
 
+import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayItem
 
 class FilterType {
 
     companion object {
 
-        private fun getDefault() = mutableListOf(appointmentFilterType, distanceFilterType)
         fun getDefault(filterPref: Set<FilterPref>): MutableList<FilterSection> {
             return fromFilterPref(filterPref, getDefault())
         }
@@ -49,31 +49,33 @@ class FilterType {
 
         const val DEFAULT_DISTANCE = 50
 
-        private val appointmentFilterType = FilterSection(
-            id = FILTER_APPOINTMENT_SECTION,
-            displayTitle = null,
-            defaultState = false,
-            primaryFilter = true,
-            filters = listOf(
-                Filter("Chronodoses uniquement", false, FILTER_CHRONODOSE_ID) { center, filter ->
-                    center.isChronodose
-                },
-                Filter("Centres disponibles uniquement", false, FILTER_AVAILABLE_ID) { center, filter ->
-                    center.available
-                }
-            ))
+        private fun getDefault() = mutableListOf<FilterSection>().apply {
+            add(FilterSection(
+                    id = FILTER_APPOINTMENT_SECTION,
+                    displayTitle = null,
+                    defaultState = false,
+                    primaryFilter = true,
+                    filters = listOf(
+                            Filter(ViteMaDoseApp.get().getString(R.string.filter_chronodose_only), false, FILTER_CHRONODOSE_ID) { center, filter ->
+                                center.isChronodose
+                            },
+                            Filter(ViteMaDoseApp.get().getString(R.string.filter_available_centers_only), false, FILTER_AVAILABLE_ID) { center, filter ->
+                                center.available
+                            }
+                    )))
 
-        private val distanceFilterType = FilterSection(
-                id = FILTER_DISTANCE_SECTION,
-                displayTitle = "Distance",
-                defaultState = true,
-                defaultParam = DEFAULT_DISTANCE,
-                primaryFilter = false,
-                filters = listOf(
-                        FilterSeekBar("Distance", true, null, 5, 100) { center, filter ->
-                            center.distance?.let { it < filter.param } ?: true
-                        }
-                ))
+            add(FilterSection(
+                    id = FILTER_DISTANCE_SECTION,
+                    displayTitle = ViteMaDoseApp.get().getString(R.string.filter_distance),
+                    defaultState = true,
+                    defaultParam = DEFAULT_DISTANCE,
+                    primaryFilter = false,
+                    filters = listOf(
+                            FilterSeekBar(ViteMaDoseApp.get().getString(R.string.filter_distance), true, null, 5, 100, ({ filter -> "${filter.param} km" })) { center, filter ->
+                                center.distance?.let { it < filter.param } ?: true
+                            }
+                    )))
+        }
     }
 
     class FilterSection(
@@ -103,6 +105,11 @@ class FilterType {
             id: String? = null,
             var minValue: Int,
             var maxValue: Int,
+            private val valueFormatter: (Filter) -> String,
             predicate: (DisplayItem.Center, Filter) -> Boolean
-    ) : Filter(displayTitle, enabled, id, DEFAULT_DISTANCE, predicate)
+    ) : Filter(displayTitle, enabled, id, DEFAULT_DISTANCE, predicate) {
+
+        val formattedValue: String
+            get() = valueFormatter.invoke(this)
+    }
 }

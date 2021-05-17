@@ -68,7 +68,6 @@ class ViteMaDoseApp : Application() {
         private const val URL_BASE_KEY = "url_base"
         private const val PATH_DATA_DEPARTMENT_KEY = "path_data_department"
         private const val PATH_STATS_KEY = "path_stats"
-        private const val CITY_SEARCH_MAX_DISTANCE_KEY = "vaccination_centres_list_radius_in_km"
         private const val DISCLAIMER_ENABLED_KEY = "data_disclaimer_enabled"
         private const val DISCLAIMER_MESSAGE_KEY = "data_disclaimer_message"
         private const val DISCLAIMER_SEVERITY_KEY = "data_disclaimer_severity"

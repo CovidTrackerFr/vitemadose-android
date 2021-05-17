@@ -68,12 +68,12 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
 
             seekbarView.max = filter.maxValue - filter.minValue
             seekbarView.progress = filter.param - filter.minValue
-            valueTextView.text = "${filter.param} km"
+            valueTextView.text = filter.formattedValue
             seekbarView.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                     filter.param = filter.minValue + progress
-                    valueTextView.text = "${filter.param} km"
+                    valueTextView.text = filter.formattedValue
                     newFilters.onEach {
                         it.filters.find { it.displayTitle == filter.displayTitle }?.param = filter.param
                     }
