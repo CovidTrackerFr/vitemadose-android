@@ -87,4 +87,8 @@
     <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme et sans critère d\'éligibilité.\n\nVous pouvez être alerté de leurs disponibilités en activant les notifications.</string>
     <string name="chronodose_onboarding_message_2">Les centres disposant de chronodoses sont affichés avec un bandeau rouge comme ci-dessous :</string>
     <string name="reset_filters">Réinitialiser les filtres</string>
+    <string name="continuer">Continuer</string>
+    <string name="before_going_further">Avant d\'aller plus loin</string>
+    <string name="qu_est_ce_qu_une_chronodose">Qu\'est ce qu\'une chronodose ?</string>
+    <string name="on_boarding_bookmark_tips">Vous pouvez être alertés de leurs disponibilités en activant les notifications</string>
 </resources>
