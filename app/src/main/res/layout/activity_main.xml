@@ -15,192 +15,167 @@
         android:background="?attr/backgroundColor">
 
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/headerLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:fitsSystemWindows="true"
-                app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
-                tools:context=".home.MainActivity">
-
-                <androidx.appcompat.widget.AppCompatImageView
-                    android:id="@+id/logoView"
-                    android:layout_width="150dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    android:adjustViewBounds="true"
-                    android:paddingBottom="8dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:srcCompat="@drawable/ic_vmd_logo" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingBottom="4dp">
-
-                <View
-                    android:id="@+id/backgroundSelectorView"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    app:layout_constraintBottom_toBottomOf="@id/departmentSelector"
-                    app:layout_constraintTop_toTopOf="parent" />
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/departmentSelector"
-                    style="@style/CustomCardView"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:layout_marginEnd="4dp"
-                    android:background="@android:color/transparent"
-                    app:cardCornerRadius="8dp"
-                    app:contentPadding="0dp"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintWidth_max="260dp">
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/RegularTextInputLayout"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:background="@android:color/transparent"
-                        app:hintEnabled="false">
-
-                        <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                            android:id="@+id/selectedDepartment"
-                            style="@style/TextStyle_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:completionThreshold="1000"
-                            android:hint="@string/choose_department_title"
-                            android:imeOptions="actionSearch"
-                            android:inputType="textCapSentences|textNoSuggestions"
-                            android:textSize="16sp" />
-                    </com.google.android.material.textfield.TextInputLayout>
-                </androidx.cardview.widget.CardView>
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-        </com.google.android.material.appbar.AppBarLayout>
-
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/mainContent"
+            android:id="@+id/headerLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+            android:fitsSystemWindows="true"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            tools:context=".home.MainActivity">
 
-            <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/refreshLayout"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/centersRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:clipToPadding="false"
-                    android:paddingTop="50dp"
-                    android:paddingBottom="12dp"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-            </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-            <com.cvtracker.vmd.custom.SortSwitchView
-                android:id="@+id/sortSwitchView"
-                android:layout_width="0dp"
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/logoView"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="4dp"
-                android:elevation="10dp"
-                android:visibility="gone"
-                app:layout_constraintEnd_toStartOf="@id/filterView"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/refreshLayout"
-                app:layout_constraintWidth_max="250dp" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/filterView"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_gravity="end"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="2dp"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:elevation="2dp"
-                android:padding="0dp"
-                android:visibility="gone"
-                app:backgroundTint="@color/filter_background_selector"
-                app:elevation="2dp"
-                app:fabSize="mini"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@id/sortSwitchView"
-                app:layout_constraintTop_toTopOf="@id/refreshLayout"
-                app:srcCompat="@drawable/ic_tune_black_24dp"
-                app:tint="@color/sort_text_selector"
-                android:contentDescription="@string/a11y_filter_results"/>
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/noCentersView"
-                android:visibility="gone"
-                style="@style/TextStyle_baseline_small"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:paddingHorizontal="16dp"
-                android:paddingVertical="0dp"
-                android:text="@string/no_center_to_display"
-                android:textSize="22sp"
-                app:layout_constraintBottom_toTopOf="@id/resetFiltersView"
-                app:layout_constraintTop_toBottomOf="@id/filterView"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/resetFiltersView"
-                android:visibility="gone"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:backgroundTint="?attr/backgroundCardColor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="@string/reset_filters"
-                app:cornerRadius="4dp"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="8dp"
+                android:adjustViewBounds="true"
+                android:paddingBottom="8dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/noCentersView" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_vmd_logo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/bookmarkIconView"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
-            android:layout_gravity="start"
-            android:layout_marginStart="2dp"
-            android:background="@drawable/selectable_background"
-            android:elevation="20dp"
-            android:padding="15dp"
-            app:srcCompat="@drawable/ic_bookmarks_black_24dp"
-            app:tint="@color/mine_shaft"
-            android:contentDescription="@string/a11y_see_bookmarked"/>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="4dp">
 
-        <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/aboutIconView"
-            android:layout_width="56dp"
-            android:layout_height="56dp"
+            <View
+                android:id="@+id/backgroundSelectorView"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintBottom_toBottomOf="@id/departmentSelector"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/departmentSelector"
+                style="@style/CustomCardView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="4dp"
+                android:layout_marginEnd="4dp"
+                android:background="@android:color/transparent"
+                app:cardCornerRadius="8dp"
+                app:contentPadding="0dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintWidth_max="260dp">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    style="@style/RegularTextInputLayout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    app:hintEnabled="false">
+
+                    <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                        android:id="@+id/selectedDepartment"
+                        style="@style/TextStyle_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:completionThreshold="1000"
+                        android:hint="@string/choose_department_title"
+                        android:imeOptions="actionSearch"
+                        android:inputType="textCapSentences|textNoSuggestions"
+                        android:textSize="16sp" />
+                </com.google.android.material.textfield.TextInputLayout>
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainContent"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appBarLayout">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/centersRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="50dp"
+                android:paddingBottom="12dp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+        <com.cvtracker.vmd.custom.SortSwitchView
+            android:id="@+id/sortSwitchView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="4dp"
+            android:elevation="10dp"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@id/filterView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/refreshLayout"
+            app:layout_constraintWidth_max="250dp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/filterView"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:layout_gravity="end"
-            android:background="@drawable/selectable_background"
-            android:elevation="20dp"
-            android:padding="14dp"
-            app:srcCompat="@drawable/ic_info_black"
-            app:tint="@color/mine_shaft"
-            android:contentDescription="@string/a11y_more_informations"/>
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="2dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/a11y_filter_results"
+            android:elevation="2dp"
+            android:padding="0dp"
+            android:visibility="gone"
+            app:backgroundTint="@color/filter_background_selector"
+            app:elevation="2dp"
+            app:fabSize="mini"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/sortSwitchView"
+            app:layout_constraintTop_toTopOf="@id/refreshLayout"
+            app:srcCompat="@drawable/ic_tune_black_24dp"
+            app:tint="@color/sort_text_selector" />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/noCentersView"
+            style="@style/TextStyle_baseline_small"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="0dp"
+            android:text="@string/no_center_to_display"
+            android:textSize="22sp"
+            android:visibility="gone"
+            app:layout_constraintBottom_toTopOf="@id/resetFiltersView"
+            app:layout_constraintTop_toBottomOf="@id/filterView" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/resetFiltersView"
+            android:visibility="gone"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:backgroundTint="?attr/backgroundCardColor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/reset_filters"
+            app:cornerRadius="4dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/noCentersView" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ViewStub
         android:id="@+id/stubEmptyState"
@@ -208,6 +183,29 @@
         android:layout_height="match_parent"
         android:layout="@layout/empty_state" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/bookmarkIconView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="start"
+        android:layout_marginStart="2dp"
+        android:background="@drawable/selectable_background"
+        android:contentDescription="@string/a11y_see_bookmarked"
+        android:elevation="20dp"
+        android:padding="15dp"
+        app:srcCompat="@drawable/ic_bookmarks_black_24dp"
+        app:tint="@color/mine_shaft" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/aboutIconView"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
+        android:layout_gravity="end"
+        android:background="@drawable/selectable_background"
+        android:contentDescription="@string/a11y_more_informations"
+        android:elevation="20dp"
+        android:padding="14dp"
+        app:srcCompat="@drawable/ic_info_black"
+        app:tint="@color/mine_shaft" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

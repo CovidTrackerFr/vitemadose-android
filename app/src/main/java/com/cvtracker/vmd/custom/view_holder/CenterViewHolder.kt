@@ -2,9 +2,11 @@ package com.cvtracker.vmd.custom.view_holder
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.ACCESSIBILITY_SERVICE
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.Bookmark
@@ -14,6 +16,7 @@ import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
 import kotlinx.android.synthetic.main.item_center.view.*
+
 
 class CenterViewHolder(
         context: Context,
@@ -145,7 +148,14 @@ class CenterViewHolder(
                 } else {
                     position
                 }
-                updateAppointmentCardUI(position, center)
+
+                val am = context.getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
+                val isExploreByTouchEnabled: Boolean = am.isTouchExplorationEnabled
+                if(isExploreByTouchEnabled){
+                    updateAppointmentCardUI(position, center)
+                } else {
+                    adapter.notifyItemChanged(position)
+                }
             }
         }
     }
