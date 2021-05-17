@@ -15,7 +15,7 @@ class FilterType {
             val result: HashSet<FilterPref> = hashSetOf()
             filterSections.forEach { section ->
                 section.filters.forEach { filter ->
-                    result.add(FilterPref(section.id, filter.displayTitle, filter.enabled))
+                    result.add(FilterPref(section.id, filter.displayTitle, filter.enabled, filter.param))
                 }
             }
             return result
@@ -32,41 +32,46 @@ class FilterType {
                 section.filters.forEach { filter ->
                     filter.enabled =
                         filterPref.find { it.sectionId == section.id && it.name == filter.displayTitle }?.enabled
-                            ?: filter.enabled
+                            ?: section.defaultState
+                    filter.param = filterPref.find { it.sectionId == section.id && it.name == filter.displayTitle }?.param
+                        ?: section.defaultParam
                 }
             }
             return filterSections
         }
 
-        const val FILTER_APPOINTMENT = "FILTER_APPOINTMENT"
-        const val FILTER_VACCINE_TYPE = "FILTER_VACCINE_TYPE"
-        const val FILTER_DISTANCE = "FILTER_DISTANCE"
+        const val FILTER_APPOINTMENT_SECTION = "FILTER_APPOINTMENT_SECTION"
+        const val FILTER_VACCINE_TYPE_SECTION = "FILTER_VACCINE_TYPE_SECTION"
+        const val FILTER_DISTANCE_SECTION = "FILTER_DISTANCE_SECTION"
 
         const val FILTER_CHRONODOSE_ID = "FILTER_CHRONODOSE_ID"
         const val FILTER_AVAILABLE_ID = "FILTER_AVAILABLE_ID"
 
-        val appointmentFilterType = FilterSection(
-            id = FILTER_APPOINTMENT,
+        const val DEFAULT_DISTANCE = 50
+
+        private val appointmentFilterType = FilterSection(
+            id = FILTER_APPOINTMENT_SECTION,
             displayTitle = null,
             defaultState = false,
             primaryFilter = true,
             filters = listOf(
-                Filter("Chronodoses uniquement", false, FILTER_CHRONODOSE_ID) {
-                    it.isChronodose
+                Filter("Chronodoses uniquement", false, FILTER_CHRONODOSE_ID) { center, filter ->
+                    center.isChronodose
                 },
-                Filter("Centres disponibles uniquement", false, FILTER_AVAILABLE_ID) {
-                    it.available
+                Filter("Centres disponibles uniquement", false, FILTER_AVAILABLE_ID) { center, filter ->
+                    center.available
                 }
             ))
 
-        val distanceFilterType = FilterSection(
-                id = FILTER_DISTANCE,
+        private val distanceFilterType = FilterSection(
+                id = FILTER_DISTANCE_SECTION,
                 displayTitle = "Distance",
-                defaultState = false,
-                primaryFilter = true,
+                defaultState = true,
+                defaultParam = DEFAULT_DISTANCE,
+                primaryFilter = false,
                 filters = listOf(
-                        FilterSeekBar("", false, null, 5, 100, 50) {
-                            it.distance != null // todo
+                        FilterSeekBar("Distance", true, null, 5, 100) { center, filter ->
+                            center.distance?.let { it < filter.param } ?: true
                         }
                 ))
     }
@@ -75,6 +80,7 @@ class FilterType {
         val id: String,
         val displayTitle: String?,
         val defaultState: Boolean,
+        val defaultParam: Int = 0,
         val primaryFilter: Boolean,
         val filters: List<Filter>
     ){
@@ -87,7 +93,8 @@ class FilterType {
             val displayTitle: String,
             var enabled: Boolean,
             val id: String? = null,
-            val predicate: (DisplayItem.Center) -> Boolean
+            var param: Int = 0,
+            val predicate: (DisplayItem.Center, Filter) -> Boolean,
     )
 
     class FilterSeekBar(
@@ -96,7 +103,6 @@ class FilterType {
             id: String? = null,
             var minValue: Int,
             var maxValue: Int,
-            var value: Int,
-            predicate: (DisplayItem.Center) -> Boolean
-    ) : Filter(displayTitle, enabled, id, predicate)
+            predicate: (DisplayItem.Center, Filter) -> Boolean
+    ) : Filter(displayTitle, enabled, id, DEFAULT_DISTANCE, predicate)
 }

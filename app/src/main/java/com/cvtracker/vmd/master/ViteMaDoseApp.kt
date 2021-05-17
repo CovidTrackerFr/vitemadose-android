@@ -45,10 +45,6 @@ class ViteMaDoseApp : Application() {
                 DataManager.PATH_STATS = it
                 Timber.d("RemoteConfig set PATH_STATS = $it")
             }
-            getDouble(CITY_SEARCH_MAX_DISTANCE_KEY).takeIf { it > 0.0f }?.let {
-                MainPresenter.DISPLAY_CENTER_MAX_DISTANCE_IN_KM = it.toFloat()
-                Timber.d("RemoteConfig set CITY_SEARCH_MAX_DISTANCE_KEY = $it")
-            }
             val disclaimerEnabled = getBoolean(DISCLAIMER_ENABLED_KEY)
             val disclaimerMessage = getString(DISCLAIMER_MESSAGE_KEY)
             if(disclaimerEnabled && disclaimerMessage.isNotBlank()){

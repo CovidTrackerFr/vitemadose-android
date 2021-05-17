@@ -19,7 +19,7 @@
         style="@style/TextStyle_baseline_small"
         android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:gravity="end"
+        android:gravity="center"
         android:textSize="15sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

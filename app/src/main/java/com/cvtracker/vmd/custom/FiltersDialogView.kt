@@ -34,13 +34,13 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
                 container.addView(sectionView)
             }
 
-            if (it.id == FilterType.FILTER_VACCINE_TYPE) {
+            if (it.id == FilterType.FILTER_VACCINE_TYPE_SECTION) {
                 val chipHolder = LayoutInflater.from(context).inflate(R.layout.item_chip_holder, null) as ConstraintLayout
                 it.filters
                         .sortedBy { it.displayTitle }
                         .forEach { chipHolder.flow.addView(getFilterItemView(it, R.layout.item_filter_chip)) }
                 container.addView(chipHolder)
-            } else if (it.id == FilterType.FILTER_DISTANCE) {
+            } else if (it.id == FilterType.FILTER_DISTANCE_SECTION) {
                 it.filters.forEach { container.addView(getFilterItemSeekbarView(it as FilterType.FilterSeekBar)) }
             } else {
                 it.filters.forEach { container.addView(getFilterItemView(it, R.layout.item_filter)) }
@@ -67,13 +67,16 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
             id = View.generateViewId()
 
             seekbarView.max = filter.maxValue - filter.minValue
-            seekbarView.progress = filter.value - filter.minValue
-            valueTextView.text = "${filter.value} km"
+            seekbarView.progress = filter.param - filter.minValue
+            valueTextView.text = "${filter.param} km"
             seekbarView.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
                 override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
-                    filter.value = filter.minValue + progress
-                    valueTextView.text = "${filter.value} km"
+                    filter.param = filter.minValue + progress
+                    valueTextView.text = "${filter.param} km"
+                    newFilters.onEach {
+                        it.filters.find { it.displayTitle == filter.displayTitle }?.param = filter.param
+                    }
                 }
 
                 override fun onStartTrackingTouch(seekBar: SeekBar?) {
