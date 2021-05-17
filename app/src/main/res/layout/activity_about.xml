@@ -184,6 +184,17 @@
                 android:text="@string/disclaimer"
                 android:textColor="?android:attr/textColorTertiary" />
 
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/ossView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:fontFamily="@font/sf_pro_rounded"
+                android:includeFontPadding="false"
+                android:paddingBottom="12dp"
+                android:text="@string/read_oss"
+                android:textColor="?android:attr/textColorLink" />
+
         </LinearLayout>
 
     </ScrollView>

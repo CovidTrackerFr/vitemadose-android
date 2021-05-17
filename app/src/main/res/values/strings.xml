@@ -51,6 +51,7 @@
     <string name="stats">Statistiques</string>
     <string name="disclaimer">Vite Ma Dose n\'est pas un outil officiel, n\'est pas exhaustif et ne remplace pas une recherche manuelle notamment dans le cas où aucun créneau de vaccination disponible n’est proposé sur notre application.</string>
     <string name="carte_des_centres">Carte des centres</string>
+    <string name="read_oss"><u>Consulter les licenses open sources</u></string>
     <string name="vaccintracker">VaccinTracker</string>
     <string name="share">Partager</string>
     <string name="faq">FAQ</string>
@@ -78,6 +79,10 @@
     <string name="notifications_activated">notifications activées</string>
     <string name="empty_string" />
     <string name="filters_title">Filtrer les résultats</string>
+    <string name="filter_distance">Distance</string>
+    <string name="filter_vaccine_type">Types de vaccins</string>
+    <string name="filter_chronodose_only">Chronodoses uniquement</string>
+    <string name="filter_available_centers_only">Centres disponibles uniquement</string>
     <string name="validate">valider</string>
     <string name="cancel">annuler</string>
     <string name="apply">appliquer</string>

@@ -15,14 +15,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ViteMaDose">
 
-        <meta-data android:name="google_analytics_adid_collection_enabled" android:value="false" />
-        <meta-data android:name="google_analytics_default_allow_ad_personalization_signals" android:value="false" />
+        <meta-data
+            android:name="google_analytics_adid_collection_enabled"
+            android:value="false" />
+        <meta-data
+            android:name="google_analytics_default_allow_ad_personalization_signals"
+            android:value="false" />
 
         <activity
-            android:windowSoftInputMode="adjustPan"
             android:name=".home.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="sensorPortrait">
+            android:screenOrientation="sensorPortrait"
+            android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,11 +35,15 @@
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="https" />
                 <data android:host="vitemadose.covidtracker.fr" />
-                <data android:path="" tools:ignore="AppLinkUrlError" />
+                <data
+                    android:path=""
+                    tools:ignore="AppLinkUrlError" />
                 <data android:path="/" />
                 <data android:path="/bookmarks" />
                 <data android:pathPattern="/bookmark/.*/.*/.*/.*" />
@@ -45,17 +53,24 @@
 
         <activity
             android:name=".about.AboutActivity"
-            android:screenOrientation="sensorPortrait"/>
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
         <activity
             android:name=".bookmark.BookmarkActivity"
-            android:screenOrientation="sensorPortrait"/>
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
         <activity
             android:name=".onboarding.ChronodoseOnboardingActivity"
-            android:screenOrientation="sensorPortrait"/>
+            android:screenOrientation="sensorPortrait"
+            android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
-        <receiver android:name=".master.SilentRedirectReceiver"/>
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
+
+        <receiver android:name=".master.SilentRedirectReceiver" />
 
         <service
             android:name=".master.ViteMaDoseMessagingService"
