@@ -8,6 +8,7 @@ import android.widget.LinearLayout
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.forEachIndexed
 import com.cvtracker.vmd.R
+import com.cvtracker.vmd.master.PrefHelper
 import com.cvtracker.vmd.master.SortType
 import kotlinx.android.synthetic.main.view_sort_switch.view.*
 import kotlinx.android.synthetic.main.view_sort_switch_item.view.*
@@ -33,7 +34,7 @@ class SortSwitchView @JvmOverloads constructor(context: Context, attrs: Attribut
                 LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
             )
         }
-        updateSelectedFilterIndex(0)
+        updateSelectedFilterIndex(PrefHelper.primarySort.value)
     }
 
     private fun updateSelectedFilterIndex(indexSelected: Int) {

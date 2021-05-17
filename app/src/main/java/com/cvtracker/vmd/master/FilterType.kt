@@ -6,7 +6,37 @@ class FilterType {
 
     companion object {
 
-        fun getDefault() = mutableListOf(appointmentFilterType)
+        private fun getDefault() = mutableListOf(appointmentFilterType)
+        fun getDefault(filterPref: Set<FilterPref>): MutableList<FilterSection> {
+            return fromFilterPref(filterPref, getDefault())
+        }
+
+        fun toFilterPref(filterSections: MutableList<FilterSection>): Set<FilterPref> {
+            val result: HashSet<FilterPref> = hashSetOf()
+            filterSections.forEach { section ->
+                section.filters.forEach { filter ->
+                    result.add(FilterPref(section.id, filter.displayTitle, filter.enabled))
+                }
+            }
+            return result
+        }
+
+        fun fromFilterPref(
+            filterPref: Set<FilterPref>,
+            filterSections: MutableList<FilterSection>
+        ): MutableList<FilterSection> {
+            if (filterPref.isEmpty()) {
+                return filterSections
+            }
+            filterSections.forEach { section ->
+                section.filters.forEach { filter ->
+                    filter.enabled =
+                        filterPref.find { it.sectionId == section.id && it.name == filter.displayTitle }?.enabled
+                            ?: filter.enabled
+                }
+            }
+            return filterSections
+        }
 
         const val FILTER_APPOINTMENT = "FILTER_APPOINTMENT"
         const val FILTER_VACCINE_TYPE = "FILTER_VACCINE_TYPE"
