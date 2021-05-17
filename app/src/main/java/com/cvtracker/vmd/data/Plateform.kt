@@ -9,7 +9,8 @@ enum class Plateform(val id: String, val label: String, @DrawableRes val logo: I
     MAIIA("Maiia", "Maiia.com", R.drawable.logo_maiia),
     ORDOCLIC("Ordoclic", "Ordoclic.fr", R.drawable.logo_ordoclic),
     PANDALAB("Pandalab", "Pandalab.fr", R.drawable.logo_pandalab),
-    MAPHARMA("Mapharma", "mapharma.net", R.drawable.logo_mapharma);
+    MAPHARMA("Mapharma", "mapharma.net", R.drawable.logo_mapharma),
+    AVECMONDOC("AvecMonDoc", "avecmondoc.com", R.drawable.logo_avecmondoc);
 
     companion object {
         fun fromId(id: String): Plateform? = values().firstOrNull { it.id == id }
