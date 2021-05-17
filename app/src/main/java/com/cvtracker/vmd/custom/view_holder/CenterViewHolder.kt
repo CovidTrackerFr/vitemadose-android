@@ -52,7 +52,7 @@ class CenterViewHolder(
                 centerAddressView.setOnClickListener(null)
             }
 
-            center.vaccineType?.let { vaccine ->
+            center.vaccineType?.takeIf { it.isNotEmpty() }?.let { vaccine ->
                 centerVaccineView.text = vaccine.joinToString(separator = " | ")
                 iconVaccineView.show()
                 centerVaccineView.show()
