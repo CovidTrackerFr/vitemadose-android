@@ -11,10 +11,7 @@ import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.color
-import com.cvtracker.vmd.extensions.colorAttr
-import com.cvtracker.vmd.extensions.hide
-import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.extensions.*
 import kotlinx.android.synthetic.main.item_center.view.*
 
 
@@ -85,13 +82,14 @@ class CenterViewHolder(
             bookmarkView.setOnClickListener { listener?.onBookmarkClicked(center, position) }
 
             val slotsToShow = if (center.isChronodose) center.chronodoseCount else center.appointmentCount
-            appointmentsCountView.text =
-                    String.format(
-                            context.resources.getQuantityString(
-                                    R.plurals.shot_disponibilities,
-                                    slotsToShow, slotsToShow
-                            )
+            appointmentsCountView.text = if(slotsToShow > 0) {
+                String.format(
+                    context.resources.getQuantityString(
+                        R.plurals.shot_disponibilities,
+                        slotsToShow, slotsToShow
                     )
+                )
+            } else ""
 
             bookmarkView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
                     when (center.bookmark) {
@@ -111,11 +109,12 @@ class CenterViewHolder(
 
             if (center.available && center.isValidAppointmentByPhoneOnly) {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
-                centreAvailableSpecificViews.hide()
+                centreAvailableSpecificViews.mask()
                 callButton.text = context.getString(R.string.call_center, center.metadata?.phoneFormatted)
                 callButton.show()
                 checkButton.hide()
                 bookmarkView.hide()
+                bottomSeparatorView.hide()
             } else if (center.available) {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
                 centreAvailableSpecificViews.show()
