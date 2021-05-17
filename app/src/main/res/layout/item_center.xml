@@ -19,8 +19,10 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/appointmentGlobalLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:importantForAccessibility="yes">
 
             <androidx.constraintlayout.widget.Guideline
                 android:id="@+id/guidelineIcons"
@@ -57,7 +59,8 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:layout_height="30dp"/>
+                android:layout_height="30dp"
+                android:importantForAccessibility="no"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/chronodoseTitleView"
@@ -118,7 +121,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/dateView"
-                tools:text="Centre de vaccination de Pontarlier" />
+                tools:text="Centre de vaccination de Pontarlier"
+                android:importantForAccessibility="yes"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconPlaceView"
@@ -166,7 +170,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerAddressView"
-                tools:text="Moderna" />
+                tools:text="Moderna"
+                android:importantForAccessibility="yes"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconTypeView"
@@ -190,7 +195,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerVaccineView"
-                tools:text="Pharmacie" />
+                tools:text="Pharmacie"
+                android:importantForAccessibility="yes"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/businessHoursView"
@@ -203,7 +209,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerTypeView"
-                tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h" />
+                tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h"
+                android:importantForAccessibility="yes"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconBusinessHoursView"
@@ -238,7 +245,8 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/businessHoursView"
-                tools:text="02 25 25 25 25" />
+                tools:text="02 25 25 25 25"
+                android:importantForAccessibility="yes"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/checkButton"
@@ -336,7 +344,8 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintTop_toTopOf="@id/dateView"
                 app:srcCompat="@drawable/ic_expand_more_black_24dp"
-                app:tint="?attr/iconTintColor" />
+                app:tint="?attr/iconTintColor"
+                android:contentDescription="@string/a11y_appointment_show_all_informations"/>
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bookmarkView"
@@ -353,7 +362,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
-                app:tint="?attr/iconTintColor" />
+                app:tint="?attr/iconTintColor"
+                android:contentDescription="@string/a11y_add_to_bookmarked"/>
 
             <androidx.constraintlayout.widget.Group
                 android:id="@+id/centreAvailableSpecificViews"
