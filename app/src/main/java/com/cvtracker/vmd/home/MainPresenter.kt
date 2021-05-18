@@ -12,6 +12,7 @@ import com.cvtracker.vmd.master.FilterType.Companion.FILTER_CHRONODOSE_ID
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_VACCINE_TYPE_SECTION
 import kotlinx.coroutines.*
 import timber.log.Timber
+import java.util.*
 
 class MainPresenter(override val view: MainContract.View) : AbstractCenterPresenter(view), MainContract.Presenter {
 
@@ -293,6 +294,12 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     }
 
     override fun removeDisclaimer(){
-        disclaimer = null
+        disclaimer?.let {
+            val calendar = Calendar.getInstance()
+            calendar.add(Calendar.DAY_OF_YEAR, it.repeatDays.toInt())
+            PrefHelper.disclaimerNextRepeatTimestamp = calendar.timeInMillis
+            PrefHelper.disclaimerNextRepeatMessage = it.message
+            disclaimer = null
+        }
     }
 }

@@ -21,6 +21,8 @@ object PrefHelper {
     private const val PREF_CENTERS_BOOKMARK = "PREF_CENTERS_BOOKMARK"
     private const val PREF_PRIMARY_SORT = "PREF_PRIMARY_SORT"
     private const val PREF_FILTERS = "PREF_FILTERS"
+    private const val PREF_DISCLAIMER_REPEAT = "PREF_DISCLAIMER_REPEAT"
+    private const val PREF_DISCLAIMER_MESSAGE = "PREF_DISCLAIMER_MESSAGE"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
@@ -103,6 +105,18 @@ object PrefHelper {
                 null
             }
             json?.let { sharedPrefs.edit().putString(PREF_CENTERS_BOOKMARK, it).apply() }
+        }
+
+    var disclaimerNextRepeatTimestamp: Long
+        get() = sharedPrefs.getLong(PREF_DISCLAIMER_REPEAT, 0)
+        set(value) {
+            sharedPrefs.edit().putLong(PREF_DISCLAIMER_REPEAT, value).apply()
+        }
+
+    var disclaimerNextRepeatMessage: String?
+        get() = sharedPrefs.getString(PREF_DISCLAIMER_MESSAGE, null)
+        set(value) {
+            sharedPrefs.edit().putString(PREF_DISCLAIMER_MESSAGE, value).apply()
         }
 
     fun updateBookmark(center: DisplayItem.Center) {

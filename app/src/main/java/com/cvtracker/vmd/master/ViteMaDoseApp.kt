@@ -49,18 +49,36 @@ class ViteMaDoseApp : Application() {
                 CHRONODOSE_MIN_COUNT = it.toInt()
                 Timber.d("RemoteConfig set CHRONODOSE_MIN_COUNT = $it")
             }
+            setUpDisclaimerFromConfig(this)
+        }
+    }
+
+    private fun setUpDisclaimerFromConfig(firebaseRemoteConfig: FirebaseRemoteConfig) {
+        firebaseRemoteConfig.apply {
             val disclaimerEnabled = getBoolean(DISCLAIMER_ENABLED_KEY)
             val disclaimerMessage = getString(DISCLAIMER_MESSAGE_KEY)
+            val disclaimerRepeatDays = getLong(DISCLAIMER_REPEAT_KEY)
             if(disclaimerEnabled && disclaimerMessage.isNotBlank()){
                 val severity = try {
                     DisclaimerSeverity.valueOf(getString(DISCLAIMER_SEVERITY_KEY).toUpperCase(Locale.getDefault()))
                 }catch (e: IllegalArgumentException){
                     DisclaimerSeverity.INFO
                 }
-                MainPresenter.disclaimer = Disclaimer(severity, disclaimerMessage)
-                Timber.d("RemoteConfig set DisclaimerMessage = $severity/$disclaimerMessage")
-            }else{
-                Timber.d("RemoteConfig set DisclaimerMessage = NULL")
+                val configDisclaimer = Disclaimer(severity, disclaimerMessage, disclaimerRepeatDays)
+
+                MainPresenter.disclaimer = when{
+                    configDisclaimer.message != PrefHelper.disclaimerNextRepeatMessage -> {
+                        /** Remote Config come with a new message **/
+                        Timber.d("RemoteConfig set DisclaimerMessage because of new message = $severity/$disclaimerMessage/$disclaimerRepeatDays")
+                        configDisclaimer
+                    }
+                    PrefHelper.disclaimerNextRepeatTimestamp < Date().time -> {
+                        /** It's time to repeat latest closed message **/
+                        Timber.d("RemoteConfig set DisclaimerMessage because of repeat message = $severity/$disclaimerMessage/$disclaimerRepeatDays")
+                        configDisclaimer
+                    }
+                    else -> null
+                }
             }
         }
     }
@@ -78,6 +96,7 @@ class ViteMaDoseApp : Application() {
         private const val DISCLAIMER_ENABLED_KEY = "data_disclaimer_enabled"
         private const val DISCLAIMER_MESSAGE_KEY = "data_disclaimer_message"
         private const val DISCLAIMER_SEVERITY_KEY = "data_disclaimer_severity"
+        private const val DISCLAIMER_REPEAT_KEY = "data_disclaimer_repeat_days"
 
         fun get() = instance
     }
