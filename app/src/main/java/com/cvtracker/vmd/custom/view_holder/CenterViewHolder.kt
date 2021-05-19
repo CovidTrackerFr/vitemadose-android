@@ -2,28 +2,22 @@ package com.cvtracker.vmd.custom.view_holder
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Context.ACCESSIBILITY_SERVICE
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
-import android.view.accessibility.AccessibilityManager
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.color
-import com.cvtracker.vmd.extensions.colorAttr
-import com.cvtracker.vmd.extensions.hide
-import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.util.isTalkbackEnabled
 import kotlinx.android.synthetic.main.item_center.view.*
 
-
 class CenterViewHolder(
-        context: Context,
-        parent: ViewGroup,
-        adapter: CenterAdapter,
-        private val listener: Listener?
+    context: Context,
+    parent: ViewGroup,
+    adapter: CenterAdapter,
+    private val listener: Listener?
 ) : AbstractViewHolder<DisplayItem.Center>(context, parent, adapter, R.layout.item_center) {
 
     interface Listener {
@@ -96,19 +90,19 @@ class CenterViewHolder(
             } else ""
 
             bookmarkView.setCompoundDrawablesRelativeWithIntrinsicBounds(0, 0,
-                    when (center.bookmark) {
-                        Bookmark.NOTIFICATION_CHRONODOSE -> R.drawable.ic_lightning_charge_fill_24dp
-                        Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
-                        Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
-                        else -> R.drawable.ic_bookmark_border_24_dp
-                    }, 0)
+                when (center.bookmark) {
+                    Bookmark.NOTIFICATION_CHRONODOSE -> R.drawable.ic_lightning_charge_fill_24dp
+                    Bookmark.NOTIFICATION -> R.drawable.ic_notifications_24dp
+                    Bookmark.FAVORITE -> R.drawable.ic_bookmark_24dp
+                    else -> R.drawable.ic_bookmark_border_24_dp
+                }, 0)
             bookmarkView.setText(
-                    when {
-                        center.available -> R.string.empty_string
-                        center.bookmark == Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notifications_chronodose_activated
-                        center.bookmark == Bookmark.NOTIFICATION -> R.string.notifications_activated
-                        else -> R.string.activate_notifs
-                    }
+                when {
+                    center.available -> R.string.empty_string
+                    center.bookmark == Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notifications_chronodose_activated
+                    center.bookmark == Bookmark.NOTIFICATION -> R.string.notifications_activated
+                    else -> R.string.activate_notifs
+                }
             )
 
             if (center.available && center.isValidAppointmentByPhoneOnly) {
