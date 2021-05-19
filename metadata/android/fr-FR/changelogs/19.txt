@@ -1,0 +1,3 @@
+- Amélioration de l'accessibilité de l'application
+- Les filtres sont désormais persistants
+- Option pour régler la distance de recherche dans le cas d'une ville
