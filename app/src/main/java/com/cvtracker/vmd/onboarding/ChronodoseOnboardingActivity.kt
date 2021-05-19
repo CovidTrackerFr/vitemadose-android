@@ -23,7 +23,7 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chronodose_onboarding)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
-        toolbar.setTitle(R.string.chronodose_onboarding_title)
+        toolbar.setTitle(R.string.before_going_further)
         setSupportActionBar(toolbar)
         val isActivityOpenedFromAboutScreen = intent?.extras?.get("FROM_ABOUT")
         if(isActivityOpenedFromAboutScreen == true){
