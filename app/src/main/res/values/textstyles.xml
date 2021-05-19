@@ -14,7 +14,6 @@
         <item name="fontFamily">@font/sf_pro</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/crail</item>
-
     </style>
 
     <style name="TextStyle_baseline">

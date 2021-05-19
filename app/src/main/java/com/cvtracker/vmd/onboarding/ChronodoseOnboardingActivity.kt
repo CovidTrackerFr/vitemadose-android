@@ -5,13 +5,11 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.custom.CenterAdapter
-import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.colorAttr
+import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.master.PrefHelper
-import kotlinx.android.synthetic.main.activity_about.*
-import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
+import kotlinx.android.synthetic.main.activity_about.toolbar
+import kotlinx.android.synthetic.main.activity_chronodose_onboarding.*
 
 class ChronodoseOnboardingActivity : AppCompatActivity() {
 
@@ -20,11 +18,19 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chronodose_onboarding)
         window.setBackgroundDrawable(ColorDrawable(colorAttr(R.attr.backgroundColor)))
 
-        toolbar.setTitle(R.string.chronodose_onboarding_title)
         setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        initUI()
+        val isActivityOpenedFromAboutScreen = intent?.extras?.get("FROM_ABOUT")
+        if(isActivityOpenedFromAboutScreen == true){
+            supportActionBar?.setDisplayHomeAsUpEnabled(true)
+            toolbar.setTitle(R.string.chronodose_onboarding_title)
+            continueAfterOnBoarding.hide()
+        } else {
+            supportActionBar?.setDisplayHomeAsUpEnabled(false)
+            toolbar.setTitle(R.string.before_going_further)
+        }
+        continueAfterOnBoarding.setOnClickListener {
+            onBackPressed()
+        }
 
         PrefHelper.chronodoseOnboardingDisplayed = true
     }
@@ -37,35 +43,5 @@ class ChronodoseOnboardingActivity : AppCompatActivity() {
             }
             else -> super.onOptionsItemSelected(item)
         }
-    }
-
-    private fun initUI() {
-
-        centersRecyclerView.adapter = CenterAdapter(
-                context = this,
-                items = listOf(fakeCenter)
-        )
-    }
-
-    companion object {
-        private val fakeCenter = DisplayItem.Center(
-                department = "35",
-                name = "Centre de vaccination COVID",
-                url = "http",
-                platform = "Doctolib",
-                metadata = DisplayItem.Center.Metadata(
-                        address = "1 Rue Georges Clemenceau, 35400 Saint-Malo",
-                        businessHours = null,
-                        phoneNumber = null
-                ),
-                location = null,
-                nextSlot = Date(Date().time + 12 * 60 * 60 * 1000),
-                appointmentCount = 30,
-                type = "",
-                id = "",
-                vaccineType = listOf("Pfizer-BioNTech"),
-                schedules = listOf(DisplayItem.Center.Schedule("chronodose", 4)),
-                appointmentByPhoneOnly = false
-        )
     }
 }

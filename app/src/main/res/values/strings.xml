@@ -88,17 +88,23 @@
     <string name="apply">appliquer</string>
     <string name="chronodoses_disponibles">Chronodoses disponibles</string>
     <string name="chronodose_onboarding_title">Chronodoses</string>
-    <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme et sans critère d\'éligibilité.\n\nVous pouvez être alerté de leurs disponibilités en activant les notifications.</string>
+    <string name="chronodose_onboarding_message">Les chronodoses sont des doses de vaccin réservables à court terme et sans critère d\'éligibilité.\n</string>
     <string name="chronodose_onboarding_message_2">Les centres disposant de chronodoses sont affichés avec un bandeau rouge comme ci-dessous :</string>
     <string name="reset_filters">Réinitialiser les filtres</string>
     <string name="continuer">Continuer</string>
+    <string name="before_going_further">Avant d\'aller plus loin</string>
+    <string name="qu_est_ce_qu_une_chronodose">Qu\'est ce qu\'une chronodose ?</string>
+    <string name="on_boarding_bookmark_tips">Vous pouvez être alertés de leurs disponibilités en activant les notifications</string>
+
+    <!--Accessibility (a11y)-->
     <string name="a11y_doctolib_maiia_ordoclic_keldoc">Doctolib - Maiia - Ordoclic - Keldoc</string>
     <string name="a11y_appointment_show_all_informations">Afficher plus d\'informations</string>
     <string name="a11y_add_to_bookmarked">Configurer le suivi de ce centre</string>
-    <string name="before_going_further">Avant d\'aller plus loin</string>
     <string name="a11y_hide_disclaimer_message">Masquer ce message d\'alerte</string>
     <string name="a11y_filter_results">Filtrer les résultats</string>
     <string name="no_center_to_display">Aucun centre à afficher</string>
     <string name="a11y_more_informations">Plus d\'informations</string>
     <string name="a11y_see_bookmarked">Voir mes centres suivis</string>
+    <string name="a11y_on_boarding_bookmark_tips_message">Vous pourrez être alerté de leurs disponibilités en appuyant sur le bouton nommé : Configurer le suivi de ce centre</string>
+    <string name="a11y_on_boarding_chronodose_available_label">Vous reconnaitrez une chronodose grâce au libellé : Chronodoses disponibles</string>
 </resources>

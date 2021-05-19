@@ -30,7 +30,9 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         chronodoseView.setOnClickListener {
-            startActivity(Intent(this, ChronodoseOnboardingActivity::class.java))
+            val chronodoseOnBoardingIntent = Intent(this, ChronodoseOnboardingActivity::class.java)
+            chronodoseOnBoardingIntent.putExtra("FROM_ABOUT",true)
+            startActivity(chronodoseOnBoardingIntent)
         }
 
         faqView.setOnClickListener {

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:gravity="center_horizontal"
+    android:orientation="vertical">
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
@@ -11,53 +14,149 @@
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="@string/before_going_further" />
 
-    <ScrollView
-        android:id="@+id/scrollView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:background="?attr/backgroundColor"
-        android:overScrollMode="ifContentScrolls"
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineLeft"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="32dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guidelineRight"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintGuide_end="32dp" />
+
+    <TextView
+        android:id="@+id/title"
+        style="@style/TextStyle_header"
+        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_marginVertical="16dp"
+        android:gravity="center_horizontal"
+        android:text="@string/qu_est_ce_qu_une_chronodose"
+        app:layout_constraintBottom_toTopOf="@id/onBoardingTitle"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintVertical_bias="0.25"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <TextView
+        android:id="@+id/onBoardingTitle"
+        style="@style/TextStyle_center"
+        android:layout_width="0dp"
+        android:layout_marginVertical="16dp"
+        android:layout_height="wrap_content"
+        android:text="@string/chronodose_onboarding_message"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/sampleAppointmentCard"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/sampleAppointmentCard"
+        style="@style/CustomCardView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:clickable="false"
+        app:cardCornerRadius="8dp"
+        app:contentPadding="0dp"
+        app:layout_constraintEnd_toEndOf="@id/guidelineRight"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintTop_toBottomOf="@id/onBoardingTitle"
+        app:layout_constraintBottom_toTopOf="@id/bookmarkTipsMessage"
+        android:importantForAccessibility="yes"
+        android:contentDescription="@string/a11y_on_boarding_chronodose_available_label">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chronodoseTitleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/chronodoseBackgroundColor"
+                android:drawableStart="@drawable/ic_lightning_charge_fill"
+                android:drawableEnd="@drawable/ic_lightning_charge_fill"
+                android:drawableTint="?attr/chronodoseTextColor"
+                android:fontFamily="@font/sf_pro_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:paddingHorizontal="50dp"
+                android:paddingVertical="4dp"
+                android:text="@string/chronodoses_disponibles"
+                android:textSize="16sp"
+                android:textColor="?attr/chronodoseTextColor"
+                android:importantForAccessibility="no"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="20dp" />
+
+            <ImageView
+                android:id="@+id/bookmarkView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom|end"
+                android:layout_marginBottom="10dp"
+                android:drawablePadding="6dp"
+                android:fontFamily="@font/sf_pro_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:padding="8dp"
+                android:src="@drawable/ic_bookmark_border_24_dp"
+                app:textAllCaps="true"
+                app:tint="?attr/iconTintColor"/>
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+    <ImageView
+        android:id="@+id/arrow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="3dp"
+        android:src="@drawable/ic_arrow"
+        android:translationY="-30dp"
+        app:layout_constraintEnd_toEndOf="@id/sampleAppointmentCard"
+        app:layout_constraintTop_toBottomOf="@id/sampleAppointmentCard" />
+
+    <TextView
+        android:id="@+id/bookmarkTipsMessage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="16dp"
+        android:text="@string/on_boarding_bookmark_tips"
+        style="@style/TextStyle_header_about"
+        android:textColor="@color/danube"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar">
+        app:layout_constraintTop_toBottomOf="@id/sampleAppointmentCard"
+        app:layout_constraintStart_toStartOf="@id/guidelineLeft"
+        app:layout_constraintEnd_toStartOf="@id/arrow"
+        android:contentDescription="@string/a11y_on_boarding_bookmark_tips_message"
+        android:gravity="end"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/chronodoses_message"
-                style="@style/TextStyle_center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/chronodose_onboarding_message"
-                android:textSize="18sp"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/chronodoses_message_2"
-                style="@style/TextStyle_center"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="@string/chronodose_onboarding_message_2"
-                android:textStyle="italic"
-                app:layout_constraintTop_toBottomOf="@id/chronodoses_message" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/centersRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clipToPadding="false"
-                android:paddingTop="12dp"
-                android:paddingBottom="12dp"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@id/chronodoses_message_2" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </ScrollView>
+    <Button
+        android:id="@+id/continueAfterOnBoarding"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:text="@string/continuer"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/bookmarkTipsMessage"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
