@@ -295,8 +295,8 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun removeDisclaimer(){
         disclaimer?.let {
-            PrefHelper.disclaimerLastCloseTimestamp = Date().time
-            PrefHelper.disclaimerLastMessage = it.message
+            PrefHelper.lastDisclaimerClosedTimestamp = Date().time
+            PrefHelper.lastDisclaimerClosedMessage = it.message
             disclaimer = null
         }
     }

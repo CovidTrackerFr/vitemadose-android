@@ -66,12 +66,12 @@ class ViteMaDoseApp : Application() {
                 }
                 val configDisclaimer = Disclaimer(severity, disclaimerMessage, disclaimerRepeatDays)
                 val minTimestampToRepeat = Calendar.getInstance().apply {
-                    timeInMillis = PrefHelper.disclaimerLastCloseTimestamp
+                    timeInMillis = PrefHelper.lastDisclaimerClosedTimestamp
                     add(Calendar.DAY_OF_YEAR, disclaimerRepeatDays.toInt())
                 }.timeInMillis
 
                 MainPresenter.disclaimer = when{
-                    configDisclaimer.message != PrefHelper.disclaimerLastMessage -> {
+                    configDisclaimer.message != PrefHelper.lastDisclaimerClosedMessage -> {
                         /** Remote Config come with a new message **/
                         Timber.d("RemoteConfig set DisclaimerMessage because of new message = $severity/$disclaimerMessage/$disclaimerRepeatDays")
                         configDisclaimer
