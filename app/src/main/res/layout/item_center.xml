@@ -49,51 +49,51 @@
                 android:id="@+id/chronodoseView"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:constraint_referenced_ids="backgroundChronodoseView, chronodoseTitleView"/>
+                app:constraint_referenced_ids="backgroundChronodoseView, chronodoseTitleView" />
 
             <View
                 android:id="@+id/backgroundChronodoseView"
-                app:layout_constraintHeight_min="38dp"
                 android:layout_width="0dp"
-                android:background="?attr/chronodoseBackgroundColor"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 android:layout_height="30dp"
-                android:importantForAccessibility="no"/>
+                android:background="?attr/chronodoseBackgroundColor"
+                android:importantForAccessibility="no"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHeight_min="38dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/chronodoseTitleView"
-                android:drawableStart="@drawable/ic_lightning_charge_fill"
-                android:drawableEnd="@drawable/ic_lightning_charge_fill"
-                android:drawableTint="?attr/chronodoseTextColor"
-                android:includeFontPadding="false"
-                app:layout_constraintVertical_chainStyle="packed"
-                android:gravity="center"
-                android:drawablePadding="12dp"
-                android:text="@string/chronodoses_disponibles"
-                android:textColor="?attr/chronodoseTextColor"
-                android:fontFamily="@font/sf_pro_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="@id/backgroundChronodoseView"
+                android:drawableStart="@drawable/ic_lightning_charge_fill"
+                android:drawableEnd="@drawable/ic_lightning_charge_fill"
+                android:drawablePadding="12dp"
+                android:drawableTint="?attr/chronodoseTextColor"
+                android:fontFamily="@font/sf_pro_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:text="@string/chronodoses_disponibles"
+                android:textColor="?attr/chronodoseTextColor"
                 app:layout_constraintBottom_toTopOf="@id/chronodoseDescriptionView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toTopOf="@id/backgroundChronodoseView"
+                app:layout_constraintVertical_chainStyle="packed" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/chronodoseDescriptionView"
-                android:gravity="center"
-                android:visibility="gone"
-                android:text="Ouvert à tous"
-                android:textColor="@color/roman"
-                android:fontFamily="@font/sf_pro"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/chronodoseTitleView"
+                android:fontFamily="@font/sf_pro"
+                android:gravity="center"
+                android:text="Ouvert à tous"
+                android:textColor="@color/roman"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@id/backgroundChronodoseView"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/chronodoseTitleView" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/dateView"
@@ -116,13 +116,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="?attr/selectableItemBackground"
+                android:importantForAccessibility="yes"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/dateView"
-                tools:text="Centre de vaccination de Pontarlier"
-                android:importantForAccessibility="yes"/>
+                tools:text="Centre de vaccination de Pontarlier" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconPlaceView"
@@ -166,12 +166,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
+                android:importantForAccessibility="yes"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerAddressView"
-                tools:text="Moderna"
-                android:importantForAccessibility="yes"/>
+                tools:text="Moderna" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconTypeView"
@@ -191,12 +191,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
+                android:importantForAccessibility="yes"
                 app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerVaccineView"
-                tools:text="Pharmacie"
-                android:importantForAccessibility="yes"/>
+                tools:text="Pharmacie" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/businessHoursView"
@@ -205,12 +205,12 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
+                android:importantForAccessibility="yes"
                 app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/centerTypeView"
-                tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h"
-                android:importantForAccessibility="yes"/>
+                tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h" />
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/iconBusinessHoursView"
@@ -241,66 +241,65 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:background="?attr/selectableItemBackground"
+                android:importantForAccessibility="yes"
                 app:layout_constraintEnd_toEndOf="@id/dateView"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@id/guidelineIcons"
                 app:layout_constraintTop_toBottomOf="@id/businessHoursView"
-                tools:text="02 25 25 25 25"
-                android:importantForAccessibility="yes"/>
+                tools:text="02 25 25 25 25" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/checkButton"
                 style="@style/RegularButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
                 android:text="@string/check_center"
-                android:visibility="gone"
-                app:layout_constraintBottom_toTopOf="@id/bookButton"
+                android:visibility="visible"
                 app:backgroundTint="@color/blue_dark"
+                app:layout_constraintBottom_toTopOf="@id/callButton"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@id/phoneView"
-                app:layout_goneMarginBottom="50dp"
+                app:layout_constraintVertical_bias="0"
                 tools:visibility="visible" />
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bookButton"
-                style="@style/RegularButton"
-                android:visibility="visible"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="@string/make_appointment"
-                app:backgroundTint="@color/danube"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/checkButton"
-                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView" />
-
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/callButton"
                 style="@style/RegularButton"
-                android:visibility="visible"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
                 android:text="@string/call_center"
+                android:visibility="visible"
                 app:backgroundTint="@color/danube"
-                app:layout_goneMarginBottom="10dp"
+                app:layout_constraintBottom_toTopOf="@id/bookButton"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
                 app:layout_constraintTop_toBottomOf="@id/checkButton"
-                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView" />
+                app:layout_goneMarginTop="10dp" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/bookButton"
+                style="@style/RegularButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/make_appointment"
+                android:visibility="gone"
+                app:backgroundTint="@color/danube"
+                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/callButton"
+                app:layout_goneMarginTop="10dp" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/appointmentsCountView"
+                app:layout_goneMarginBottom="16dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="?android:attr/textColorSecondary"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_marginBottom="10dp"
+                android:textColor="?android:attr/textColorSecondary"
+                app:layout_constraintBottom_toTopOf="@id/checkSpacerView"
                 app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="@id/guidelineStart"
@@ -335,42 +334,49 @@
                 app:layout_constraintTop_toTopOf="@id/appointmentsCountView"
                 tools:src="@drawable/logo_doctolib" />
 
+            <View
+                android:id="@+id/checkSpacerView"
+                app:layout_constraintTop_toBottomOf="@id/appointmentsCountView"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"/>
+
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/moreView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/a11y_appointment_show_all_informations"
                 android:padding="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/dateView"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:layout_constraintTop_toTopOf="@id/dateView"
                 app:srcCompat="@drawable/ic_expand_more_black_24dp"
-                app:tint="?attr/iconTintColor"
-                android:contentDescription="@string/a11y_appointment_show_all_informations"/>
+                app:tint="?attr/iconTintColor" />
 
             <androidx.appcompat.widget.AppCompatTextView
                 android:id="@+id/bookmarkView"
-                app:textAllCaps="true"
-                android:fontFamily="@font/sf_pro_bold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                android:padding="8dp"
-                android:drawablePadding="6dp"
-                android:includeFontPadding="false"
-                android:gravity="center"
                 android:layout_marginBottom="10dp"
+                android:background="?attr/selectableItemBackground"
+                android:contentDescription="@string/a11y_add_to_bookmarked"
+                android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
+                android:drawablePadding="6dp"
+                android:fontFamily="@font/sf_pro_bold"
+                android:gravity="center"
+                android:includeFontPadding="false"
+                android:padding="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
-                app:tint="?attr/iconTintColor"
-                android:contentDescription="@string/a11y_add_to_bookmarked"/>
+                app:textAllCaps="true"
+                app:tint="?attr/iconTintColor" />
 
             <androidx.constraintlayout.widget.Group
-                android:id="@+id/centreAvailableSpecificViews"
+                android:id="@+id/checkSpecificViews"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                app:constraint_referenced_ids="bookButton,appointmentsCountView" />
+                app:constraint_referenced_ids="checkButton,checkSpacerView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

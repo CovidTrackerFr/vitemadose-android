@@ -107,24 +107,28 @@ class CenterViewHolder(
 
             if (center.available && center.isValidAppointmentByPhoneOnly) {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
-                centreAvailableSpecificViews.mask()
+                bookButton.hide()
+                appointmentsCountView.mask()
                 callButton.text = context.getString(R.string.call_center, center.metadata?.phoneFormatted)
                 callButton.show()
-                checkButton.hide()
+                checkSpecificViews.hide()
                 bookmarkView.hide()
                 bottomSeparatorView.hide()
             } else if (center.available) {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColor))
-                centreAvailableSpecificViews.show()
+                bookButton.show()
+                appointmentsCountView.show()
                 callButton.hide()
-                checkButton.hide()
+                checkSpecificViews.hide()
                 bookmarkView.show()
             } else {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColorSecondary))
-                centreAvailableSpecificViews.hide()
-                checkButton.show()
+                bookButton.hide()
+                appointmentsCountView.mask()
+                checkSpecificViews.show()
                 callButton.hide()
                 bookmarkView.show()
+                bottomSeparatorView.hide()
             }
 
             if (center.isChronodose) {
