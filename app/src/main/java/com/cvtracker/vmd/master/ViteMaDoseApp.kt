@@ -45,6 +45,10 @@ class ViteMaDoseApp : Application() {
                 DataManager.PATH_STATS = it
                 Timber.d("RemoteConfig set PATH_STATS = $it")
             }
+            getLong(CHRONODOSE_MIN_COUNT_KEY).takeIf { it >= 1 }?.let {
+                CHRONODOSE_MIN_COUNT = it.toInt()
+                Timber.d("RemoteConfig set CHRONODOSE_MIN_COUNT = $it")
+            }
             val disclaimerEnabled = getBoolean(DISCLAIMER_ENABLED_KEY)
             val disclaimerMessage = getString(DISCLAIMER_MESSAGE_KEY)
             if(disclaimerEnabled && disclaimerMessage.isNotBlank()){
@@ -63,11 +67,14 @@ class ViteMaDoseApp : Application() {
 
     companion object {
 
+        var CHRONODOSE_MIN_COUNT = 1
+
         private lateinit var instance: ViteMaDoseApp
 
         private const val URL_BASE_KEY = "url_base"
         private const val PATH_DATA_DEPARTMENT_KEY = "path_data_department"
         private const val PATH_STATS_KEY = "path_stats"
+        private const val CHRONODOSE_MIN_COUNT_KEY = "chronodose_min_count"
         private const val DISCLAIMER_ENABLED_KEY = "data_disclaimer_enabled"
         private const val DISCLAIMER_MESSAGE_KEY = "data_disclaimer_message"
         private const val DISCLAIMER_SEVERITY_KEY = "data_disclaimer_severity"
