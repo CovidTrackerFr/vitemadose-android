@@ -2,9 +2,11 @@ package com.cvtracker.vmd.custom.view_holder
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Context.ACCESSIBILITY_SERVICE
 import android.content.res.ColorStateList
 import android.view.View
 import android.view.ViewGroup
+import android.view.accessibility.AccessibilityManager
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.Bookmark
@@ -14,6 +16,7 @@ import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
 import kotlinx.android.synthetic.main.item_center.view.*
+
 
 class CenterViewHolder(
         context: Context,
@@ -60,6 +63,7 @@ class CenterViewHolder(
 
             center.platformEnum?.let { partner ->
                 partnerImageView.setImageResource(partner.logo)
+                partnerImageView.contentDescription = partner.label
                 bottomSeparatorView.show()
                 partnerImageView.show()
             } ?: run {
@@ -136,64 +140,73 @@ class CenterViewHolder(
 
     private fun setupExpandedState(itemView: View, center: DisplayItem.Center, position: Int) {
         with(itemView) {
-            if (adapter.expandedPosition == position) {
-                moreView.rotation = 180f
-
-                center.typeLabel?.let { type ->
-                    centerTypeView.text = type
-                    centerTypeView.show()
-                    iconTypeView.show()
-                } ?: run {
-                    centerTypeView.hide()
-                    iconTypeView.hide()
-                }
-
-                center.metadata?.phoneFormatted?.let { phoneNumber ->
-                    phoneView.setOnClickListener { listener?.onPhoneClicked(phoneNumber) }
-                    phoneView.show()
-                    phoneView.text = phoneNumber
-                    iconPhoneView.show()
-                } ?: run {
-                    phoneView.hide()
-                    iconPhoneView.hide()
-                }
-
-                center.metadata?.businessHours?.description?.let { hours ->
-                    businessHoursView.show()
-                    businessHoursView.text = hours
-                    iconBusinessHoursView.show()
-                } ?: run {
-                    businessHoursView.hide()
-                    iconBusinessHoursView.hide()
-                }
-            } else {
-                moreView.rotation = 0f
-                centerTypeView.hide()
-                iconTypeView.hide()
-                businessHoursView.hide()
-                iconBusinessHoursView.hide()
-                phoneView.hide()
-                iconPhoneView.hide()
-            }
-
-            if (center.hasMoreInfoToShow) {
-                moreView.show()
-            } else {
-                moreView.hide()
-            }
+            updateAppointmentCardUI(position, center)
 
             moreView.setOnClickListener {
                 adapter.expandedPosition = if (adapter.expandedPosition == position) {
                     -1
                 } else {
-                    val oldPosition = adapter.expandedPosition
-                    if (oldPosition >= 0) {
-                        adapter.notifyItemChanged(oldPosition)
-                    }
                     position
                 }
-                adapter.notifyItemChanged(position)
+
+                val am = context.getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
+                val isExploreByTouchEnabled: Boolean = am.isTouchExplorationEnabled
+                if(isExploreByTouchEnabled){
+                    updateAppointmentCardUI(position, center)
+                } else {
+                    adapter.notifyItemChanged(position)
+                }
             }
+        }
+    }
+
+    private fun View.updateAppointmentCardUI(
+        position: Int,
+        center: DisplayItem.Center
+    ) {
+        if (adapter.expandedPosition == position) {
+            moreView.rotation = 180f
+            center.typeLabel?.let { type ->
+                centerTypeView.text = type
+                centerTypeView.show()
+                iconTypeView.show()
+            } ?: run {
+                centerTypeView.hide()
+                iconTypeView.hide()
+            }
+
+            center.metadata?.phoneFormatted?.let { phoneNumber ->
+                phoneView.setOnClickListener { listener?.onPhoneClicked(phoneNumber) }
+                phoneView.show()
+                phoneView.text = phoneNumber
+                iconPhoneView.show()
+            } ?: run {
+                phoneView.hide()
+                iconPhoneView.hide()
+            }
+
+            center.metadata?.businessHours?.description?.let { hours ->
+                businessHoursView.show()
+                businessHoursView.text = hours
+                iconBusinessHoursView.show()
+            } ?: run {
+                businessHoursView.hide()
+                iconBusinessHoursView.hide()
+            }
+        } else {
+            moreView.rotation = 0f
+            centerTypeView.hide()
+            iconTypeView.hide()
+            businessHoursView.hide()
+            iconBusinessHoursView.hide()
+            phoneView.hide()
+            iconPhoneView.hide()
+        }
+
+        if (center.hasMoreInfoToShow) {
+            moreView.show()
+        } else {
+            moreView.hide()
         }
     }
 }

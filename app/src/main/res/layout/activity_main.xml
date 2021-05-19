@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:background="?attr/backgroundColor">
 
+
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
@@ -88,6 +89,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/mainContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
@@ -131,6 +133,7 @@
             android:layout_marginStart="4dp"
             android:layout_marginTop="2dp"
             android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/a11y_filter_results"
             android:elevation="2dp"
             android:padding="0dp"
             android:visibility="gone"
@@ -145,19 +148,17 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/noCentersView"
-            android:visibility="gone"
             style="@style/TextStyle_baseline_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            app:layout_constraintVertical_bias="0.8"
             android:paddingHorizontal="16dp"
             android:paddingVertical="0dp"
-            android:text="Aucun centre à afficher"
+            android:text="@string/no_center_to_display"
             android:textSize="22sp"
+            android:visibility="gone"
             app:layout_constraintBottom_toTopOf="@id/resetFiltersView"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintTop_toBottomOf="@id/filterView" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/resetFiltersView"
@@ -189,6 +190,7 @@
         android:layout_gravity="start"
         android:layout_marginStart="2dp"
         android:background="@drawable/selectable_background"
+        android:contentDescription="@string/a11y_see_bookmarked"
         android:elevation="20dp"
         android:padding="15dp"
         app:srcCompat="@drawable/ic_bookmarks_black_24dp"
@@ -200,6 +202,7 @@
         android:layout_height="56dp"
         android:layout_gravity="end"
         android:background="@drawable/selectable_background"
+        android:contentDescription="@string/a11y_more_informations"
         android:elevation="20dp"
         android:padding="14dp"
         app:srcCompat="@drawable/ic_info_black"

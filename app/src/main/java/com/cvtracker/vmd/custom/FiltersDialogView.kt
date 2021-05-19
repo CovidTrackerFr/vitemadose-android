@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
+import android.widget.SeekBar
 import androidx.annotation.LayoutRes
 import androidx.appcompat.widget.AppCompatCheckBox
 import androidx.appcompat.widget.AppCompatTextView
@@ -12,6 +13,7 @@ import com.cvtracker.vmd.R
 import com.cvtracker.vmd.master.FilterType
 import kotlinx.android.synthetic.main.alert_dialog_filters.view.container
 import kotlinx.android.synthetic.main.item_chip_holder.view.*
+import kotlinx.android.synthetic.main.item_filter_seekbar.view.*
 
 class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null): ConstraintLayout(context, attrs) {
 
@@ -32,14 +34,16 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
                 container.addView(sectionView)
             }
 
-            if(it.id == FilterType.FILTER_VACCINE_TYPE){
-                val chipHolder =  LayoutInflater.from(context).inflate(R.layout.item_chip_holder, null) as ConstraintLayout
+            if (it.id == FilterType.FILTER_VACCINE_TYPE_SECTION) {
+                val chipHolder = LayoutInflater.from(context).inflate(R.layout.item_chip_holder, null) as ConstraintLayout
                 it.filters
-                    .sortedBy { it.displayTitle }
-                    .forEach { chipHolder.flow.addView(getFilterItemView(it, R.layout.item_filter_chip)) }
+                        .sortedBy { it.displayTitle }
+                        .forEach { chipHolder.flow.addView(getFilterItemView(it, R.layout.item_filter_chip)) }
                 container.addView(chipHolder)
-            }else{
-                it.filters.forEach { container.addView(getFilterItemView(it, R.layout.item_filter))}
+            } else if (it.id == FilterType.FILTER_DISTANCE_SECTION) {
+                it.filters.forEach { container.addView(getFilterItemSeekbarView(it as FilterType.FilterSeekBar)) }
+            } else {
+                it.filters.forEach { container.addView(getFilterItemView(it, R.layout.item_filter)) }
             }
         }
     }
@@ -55,6 +59,34 @@ class FiltersDialogView @JvmOverloads constructor(context: Context, attrs: Attri
                     it.filters.find { it.displayTitle == buttonView.text }?.enabled = isChecked
                 }
             }
+        }
+    }
+
+    private fun getFilterItemSeekbarView(filter: FilterType.FilterSeekBar): View {
+        return (LayoutInflater.from(context).inflate(R.layout.item_filter_seekbar, null)).apply {
+            id = View.generateViewId()
+
+            seekbarView.max = filter.maxValue - filter.minValue
+            seekbarView.progress = filter.param - filter.minValue
+            valueTextView.text = filter.formattedValue
+            seekbarView.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
+
+                override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
+                    filter.param = filter.minValue + progress
+                    valueTextView.text = filter.formattedValue
+                    newFilters.onEach {
+                        it.filters.find { it.displayTitle == filter.displayTitle }?.param = filter.param
+                    }
+                }
+
+                override fun onStartTrackingTouch(seekBar: SeekBar?) {
+                    // do noting
+                }
+
+                override fun onStopTrackingTouch(seekBar: SeekBar?) {
+                    // do noting
+                }
+            })
         }
     }
 }

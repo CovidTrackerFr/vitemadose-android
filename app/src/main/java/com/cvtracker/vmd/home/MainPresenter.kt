@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.home
 
+import com.cvtracker.vmd.R
 import com.cvtracker.vmd.base.AbstractCenterPresenter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.Disclaimer
@@ -8,7 +9,7 @@ import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.*
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_AVAILABLE_ID
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_CHRONODOSE_ID
-import com.cvtracker.vmd.master.FilterType.Companion.FILTER_VACCINE_TYPE
+import com.cvtracker.vmd.master.FilterType.Companion.FILTER_VACCINE_TYPE_SECTION
 import kotlinx.coroutines.*
 import timber.log.Timber
 
@@ -20,7 +21,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private var filterSections = FilterType.getDefault(PrefHelper.filters)
 
     companion object{
-        var DISPLAY_CENTER_MAX_DISTANCE_IN_KM = 50f
         var disclaimer: Disclaimer? = null
         const val BASE_URL = "https://vitemadose.covidtracker.fr"
     }
@@ -55,9 +55,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             /** Set up distance when city search **/
                             if (isCitySearch) {
                                 centers.onEach { it.calculateDistance(entry as SearchEntry.City) }
-                                centers.removeAll {
-                                    (it.distance ?: 0f) > DISPLAY_CENTER_MAX_DISTANCE_IN_KM
-                                }
                             }
 
                             val centersBookmark = PrefHelper.centersBookmark
@@ -131,6 +128,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             }
                         }
 
+                        view.updateFilterState(isDefaultFilters())
                         view.showCenters(list, if (isCitySearch) sortType else null)
                         AnalyticsHelper.logEventSearch(entry, it, sortType)
                     }
@@ -220,12 +218,16 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     private fun applyFilters(centers: MutableList<DisplayItem.Center>, filtersList: List<FilterType.FilterSection>){
         filtersList.forEach { section ->
             section.filters.forEach { filter ->
-                if(section.defaultState.not() && filter.enabled) {
-                    /** We want to remove items which do not match the predicate, ie a filter **/
-                    centers.removeAll { filter.predicate(it).not() }
-                }else if(section.defaultState && !filter.enabled) {
-                    /** We want to remove items which do match the predicate **/
-                    centers.removeAll(filter.predicate)
+                when{
+                    (filter.enabled && section.id == FilterType.FILTER_DISTANCE_SECTION) ||
+                    section.defaultState.not() && filter.enabled -> {
+                        /** We want to remove items which do not match the predicate, ie a filter **/
+                        centers.removeAll { filter.predicate(it, filter).not() }
+                    }
+                    section.defaultState && !filter.enabled -> {
+                        /** We want to remove items which do match the predicate **/
+                        centers.removeAll { filter.predicate(it, filter) }
+                    }
                 }
             }
         }
@@ -239,26 +241,19 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             mapVaccine[it] = true
         }
 
-        /** Update our map with the current filters **/
-        filterSections.find { it.id == FILTER_VACCINE_TYPE }?.filters?.map {
-            if(mapVaccine[it.displayTitle] != null){
-                mapVaccine[it.displayTitle] = it.enabled
-            }
-        }
-
-        /** Finally create our filter vaccine with the map **/
+        /** Create our filter vaccine with the map **/
         val section = FilterType.FilterSection(
-            id = FILTER_VACCINE_TYPE,
-            displayTitle = "Types de vaccins",
+            id = FILTER_VACCINE_TYPE_SECTION,
+            displayTitle = ViteMaDoseApp.get().getString(R.string.filter_vaccine_type),
             defaultState = true,
             primaryFilter = false,
             filters = mapVaccine.map { entry ->
-                FilterType.Filter(entry.key, entry.value){
-                    it.vaccineType?.toList()?.contains(entry.key) ?: false
+                FilterType.Filter(entry.key, entry.value){ center, filter ->
+                    center.vaccineType?.toList()?.contains(entry.key) ?: false
                 }
             }
         )
-        filterSections.removeAll { it.id == FILTER_VACCINE_TYPE }
+        filterSections.removeAll { it.id == FILTER_VACCINE_TYPE_SECTION }
         filterSections.add(section)
         filterSections = FilterType.fromFilterPref(PrefHelper.filters, filterSections)
     }
@@ -274,14 +269,18 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun resetFilters(needRefresh: Boolean) {
         filterSections.onEach { section ->
-            section.filters.onEach { it.enabled = section.defaultState }
+            section.filters.onEach {
+                it.enabled = section.defaultState
+                it.param = section.defaultParam
+            }
         }
         updateFilters(filterSections, needRefresh)
     }
 
     private fun isDefaultFilters(): Boolean {
         return (filterSections.find { section ->
-            section.filters.find { it.enabled != section.defaultState } != null
+            section.filters.find { it.enabled != section.defaultState } != null ||
+                    section.filters.find { it.param != section.defaultParam } != null
         }) == null
     }
 

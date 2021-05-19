@@ -30,10 +30,22 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setUpViews() {
         when (arguments?.getSerializable(EXTRA_CURRENT_BOOKMARK) as? Bookmark) {
-            Bookmark.NOTIFICATION_CHRONODOSE -> notificationChronodoseView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_lightning_charge_fill_24dp, 0, R.drawable.ic_done_black_24dp, 0)
-            Bookmark.NOTIFICATION -> notificationView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_notifications_24dp, 0, R.drawable.ic_done_black_24dp, 0)
-            Bookmark.FAVORITE -> favoriteView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_24dp, 0, R.drawable.ic_done_black_24dp, 0)
-            Bookmark.NONE -> noneView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_border_24_dp, 0, R.drawable.ic_done_black_24dp, 0)
+            Bookmark.NOTIFICATION_CHRONODOSE -> {
+                notificationChronodoseView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_lightning_charge_fill_24dp, 0, R.drawable.ic_done_black_24dp, 0)
+                notificationChronodoseView.isSelected = true
+            }
+            Bookmark.NOTIFICATION -> {
+                notificationView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_notifications_24dp, 0, R.drawable.ic_done_black_24dp, 0)
+                notificationView.isSelected = true
+            }
+            Bookmark.FAVORITE -> {
+                favoriteView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_24dp, 0, R.drawable.ic_done_black_24dp, 0)
+                favoriteView.isSelected = true
+            }
+            Bookmark.NONE -> {
+                noneView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_bookmark_border_24_dp, 0, R.drawable.ic_done_black_24dp, 0)
+                noneView.isSelected = true
+            }
         }
 
         notificationChronodoseView.setOnClickListener {
