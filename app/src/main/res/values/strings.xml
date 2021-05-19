@@ -37,7 +37,7 @@
         <item quantity="other">%s créneaux</item>
     </plurals>
     <string name="disponibilities_placeholder">%s Lieux avec des disponibilités</string>
-    <string name="appointment_by_phone_only">Réservation par tél uniquement</string>
+    <string name="appointment_by_phone_only">RDV par tél uniquement</string>
     <string name="no_slots_available">Aucun RDV détecté</string>
     <string name="check_center">Consulter ce lieu</string>
     <string name="partner_placeholder">avec</string>

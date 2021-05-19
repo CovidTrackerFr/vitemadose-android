@@ -148,6 +148,8 @@
 
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/noCentersView"
+            app:layout_constraintVertical_bias="0.7"
+            app:layout_constraintVertical_chainStyle="packed"
             style="@style/TextStyle_baseline_small"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
