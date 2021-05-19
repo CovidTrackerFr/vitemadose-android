@@ -36,6 +36,7 @@
         android:id="@+id/title"
         style="@style/TextStyle_header"
         android:layout_height="wrap_content"
+        android:layout_width="0dp"
         android:layout_marginVertical="16dp"
         android:gravity="center_horizontal"
         android:text="@string/qu_est_ce_qu_une_chronodose"
@@ -65,14 +66,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="16dp"
-
         android:clickable="false"
         app:cardCornerRadius="8dp"
         app:contentPadding="0dp"
         app:layout_constraintEnd_toEndOf="@id/guidelineRight"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintTop_toBottomOf="@id/onBoardingTitle"
-        app:layout_constraintBottom_toTopOf="@id/bookmarkTipsMessage">
+        app:layout_constraintBottom_toTopOf="@id/bookmarkTipsMessage"
+        android:importantForAccessibility="yes"
+        android:contentDescription="@string/a11y_on_boarding_chronodose_available_label">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -93,7 +95,9 @@
                 android:paddingHorizontal="50dp"
                 android:paddingVertical="4dp"
                 android:text="@string/chronodoses_disponibles"
-                android:textColor="?attr/chronodoseTextColor" />
+                android:textSize="16sp"
+                android:textColor="?attr/chronodoseTextColor"
+                android:importantForAccessibility="no"/>
 
             <View
                 android:layout_width="0dp"
@@ -112,7 +116,8 @@
                 android:padding="8dp"
                 android:src="@drawable/ic_bookmark_border_24_dp"
                 app:textAllCaps="true"
-                app:tint="?attr/iconTintColor" />
+                app:tint="?attr/iconTintColor"
+                android:importantForAccessibility="yes"/>
         </LinearLayout>
 
 
@@ -124,9 +129,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="3dp"
-        android:rotationX="180"
         android:src="@drawable/ic_arrow"
-        android:translationY="-24dp"
+        android:translationY="-30dp"
         app:layout_constraintEnd_toEndOf="@id/sampleAppointmentCard"
         app:layout_constraintTop_toBottomOf="@id/sampleAppointmentCard" />
 
@@ -142,6 +146,7 @@
         app:layout_constraintTop_toBottomOf="@id/sampleAppointmentCard"
         app:layout_constraintStart_toStartOf="@id/guidelineLeft"
         app:layout_constraintEnd_toStartOf="@id/arrow"
+        android:contentDescription="@string/a11y_on_boarding_bookmark_tips_message"
         android:gravity="end"/>
 
     <Button
