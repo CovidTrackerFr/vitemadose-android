@@ -15,6 +15,7 @@ import com.cvtracker.vmd.extensions.color
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.util.isTalkbackEnabled
 import kotlinx.android.synthetic.main.item_center.view.*
 
 
@@ -149,9 +150,7 @@ class CenterViewHolder(
                     position
                 }
 
-                val am = context.getSystemService(ACCESSIBILITY_SERVICE) as AccessibilityManager
-                val isExploreByTouchEnabled: Boolean = am.isTouchExplorationEnabled
-                if(isExploreByTouchEnabled){
+                if(context.isTalkbackEnabled()){
                     updateAppointmentCardUI(position, center)
                 } else {
                     adapter.notifyItemChanged(position)

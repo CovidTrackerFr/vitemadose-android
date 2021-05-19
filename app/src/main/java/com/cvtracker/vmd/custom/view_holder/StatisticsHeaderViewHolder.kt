@@ -8,6 +8,7 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.ItemStat
 import com.cvtracker.vmd.extensions.color
 import com.cvtracker.vmd.extensions.colorAttr
+import com.cvtracker.vmd.util.isTalkbackEnabled
 import kotlinx.android.synthetic.main.item_statistics_header.view.*
 
 class StatisticsHeaderViewHolder(
@@ -34,11 +35,13 @@ class StatisticsHeaderViewHolder(
                             color = color(R.color.danube)
                     )
             )
-            setOnClickListener {
-                data.isSlotFilterSelected = !data.isSlotFilterSelected
-                data.isChronodoseFilterSelected = false
-                adapter.notifyItemChanged(position)
-                listener?.onSlotsFilterClick()
+            if(!context.isTalkbackEnabled()) {
+                setOnClickListener {
+                    data.isSlotFilterSelected = !data.isSlotFilterSelected
+                    data.isChronodoseFilterSelected = false
+                    adapter.notifyItemChanged(position)
+                    listener?.onSlotsFilterClick()
+                }
             }
         }
         itemView.secondStatView.apply {
@@ -52,11 +55,13 @@ class StatisticsHeaderViewHolder(
                             color = colorAttr(R.attr.colorPrimary)
                     )
             )
-            setOnClickListener {
-                data.isChronodoseFilterSelected = !data.isChronodoseFilterSelected
-                data.isSlotFilterSelected = false
-                adapter.notifyItemChanged(position)
-                listener?.onChronodoseFilterClick()
+            if(!context.isTalkbackEnabled()) {
+                setOnClickListener {
+                    data.isChronodoseFilterSelected = !data.isChronodoseFilterSelected
+                    data.isSlotFilterSelected = false
+                    adapter.notifyItemChanged(position)
+                    listener?.onChronodoseFilterClick()
+                }
             }
         }
     }

@@ -61,7 +61,8 @@
                 app:tint="@color/crete"
                 app:srcCompat="@drawable/ic_cancel_black_24dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/a11y_hide_disclaimer_message"/>
+                android:contentDescription="@string/a11y_hide_disclaimer_message"
+                android:importantForAccessibility="no"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
