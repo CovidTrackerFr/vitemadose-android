@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:shortcutId="bookmark"
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutShortLabel="@string/bookmark"
+        android:shortcutLongLabel="@string/bookmark">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetPackage="com.cvtracker.vmd2"
+            android:targetClass="com.cvtracker.vmd.bookmark.BookmarkActivity"
+            android:data="cvtrackervmd://bookmark" />
+
+    </shortcut>
+
+</shortcuts>
