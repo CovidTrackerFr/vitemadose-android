@@ -107,13 +107,13 @@ object PrefHelper {
             json?.let { sharedPrefs.edit().putString(PREF_CENTERS_BOOKMARK, it).apply() }
         }
 
-    var disclaimerNextRepeatTimestamp: Long
+    var disclaimerLastCloseTimestamp: Long
         get() = sharedPrefs.getLong(PREF_DISCLAIMER_REPEAT, 0)
         set(value) {
             sharedPrefs.edit().putLong(PREF_DISCLAIMER_REPEAT, value).apply()
         }
 
-    var disclaimerNextRepeatMessage: String?
+    var disclaimerLastMessage: String?
         get() = sharedPrefs.getString(PREF_DISCLAIMER_MESSAGE, null)
         set(value) {
             sharedPrefs.edit().putString(PREF_DISCLAIMER_MESSAGE, value).apply()

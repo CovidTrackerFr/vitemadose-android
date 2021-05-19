@@ -295,10 +295,8 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun removeDisclaimer(){
         disclaimer?.let {
-            val calendar = Calendar.getInstance()
-            calendar.add(Calendar.DAY_OF_YEAR, it.repeatDays.toInt())
-            PrefHelper.disclaimerNextRepeatTimestamp = calendar.timeInMillis
-            PrefHelper.disclaimerNextRepeatMessage = it.message
+            PrefHelper.disclaimerLastCloseTimestamp = Date().time
+            PrefHelper.disclaimerLastMessage = it.message
             disclaimer = null
         }
     }
