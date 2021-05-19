@@ -116,8 +116,7 @@
                 android:padding="8dp"
                 android:src="@drawable/ic_bookmark_border_24_dp"
                 app:textAllCaps="true"
-                app:tint="?attr/iconTintColor"
-                android:importantForAccessibility="yes"/>
+                app:tint="?attr/iconTintColor"/>
         </LinearLayout>
 
 

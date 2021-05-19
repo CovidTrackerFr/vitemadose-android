@@ -32,7 +32,8 @@ class AboutActivity : AppCompatActivity(), AboutContract.View {
         chronodoseView.setOnClickListener {
             val chronodoseOnBoardingIntent = Intent(this, ChronodoseOnboardingActivity::class.java)
             chronodoseOnBoardingIntent.putExtra("FROM_ABOUT",true)
-            startActivity(chronodoseOnBoardingIntent)        }
+            startActivity(chronodoseOnBoardingIntent)
+        }
 
         faqView.setOnClickListener {
             launchWebUrl(URL_FAQ)
