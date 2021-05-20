@@ -2,17 +2,17 @@
 <shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
 
     <shortcut
-        android:shortcutId="bookmark"
         android:enabled="true"
         android:icon="@mipmap/ic_launcher"
-        android:shortcutShortLabel="@string/bookmark"
-        android:shortcutLongLabel="@string/bookmark">
+        android:shortcutId="bookmark"
+        android:shortcutLongLabel="@string/bookmark"
+        android:shortcutShortLabel="@string/bookmark">
 
         <intent
             android:action="android.intent.action.VIEW"
-            android:targetPackage="com.cvtracker.vmd2.dev"
-            android:targetClass="com.cvtracker.vmd.bookmark.BookmarkActivity"
-            android:data="cvtrackervmd://bookmark" />
+            android:data="https://vitemadose.covidtracker.fr/bookmarks"
+            android:targetClass="com.cvtracker.vmd.home.MainActivity"
+            android:targetPackage="com.cvtracker.vmd2.dev" />
 
     </shortcut>
 
