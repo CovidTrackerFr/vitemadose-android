@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <shortcut
+        android:enabled="true"
+        android:icon="@mipmap/ic_launcher"
+        android:shortcutId="bookmark"
+        android:shortcutLongLabel="@string/bookmark"
+        android:shortcutShortLabel="@string/bookmark">
+
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:data="https://vitemadose.covidtracker.fr/bookmarks"
+            android:targetClass="com.cvtracker.vmd.home.MainActivity"
+            android:targetPackage="com.cvtracker.vmd2.dev" />
+
+    </shortcut>
+
+</shortcuts>
