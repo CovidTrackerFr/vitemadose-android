@@ -2,22 +2,20 @@ package com.cvtracker.vmd.about
 
 import android.content.ActivityNotFoundException
 import android.content.Intent
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayStat
-import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.master.AbstractVMDActivity
 import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_about.*
 
 
-class AboutActivity : AppCompatActivity(), AboutContract.View {
+class AboutActivity : AbstractVMDActivity(), AboutContract.View {
 
     private val presenter: AboutContract.Presenter = AboutPresenter(this)
 

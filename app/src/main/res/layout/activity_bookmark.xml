@@ -35,10 +35,8 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="12dp"
-            app:spanCount="@integer/column"
             tools:listitem="@layout/item_center"
-            tools:itemCount="7"
-            app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager" />
+            tools:itemCount="7"/>
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

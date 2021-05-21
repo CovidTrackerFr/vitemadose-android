@@ -3,15 +3,15 @@ package com.cvtracker.vmd.onboarding
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.appcompat.app.AppCompatActivity
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.extensions.colorAttr
 import com.cvtracker.vmd.extensions.hide
+import com.cvtracker.vmd.master.AbstractVMDActivity
 import com.cvtracker.vmd.master.PrefHelper
 import kotlinx.android.synthetic.main.activity_about.toolbar
 import kotlinx.android.synthetic.main.activity_chronodose_onboarding.*
 
-class ChronodoseOnboardingActivity : AppCompatActivity() {
+class ChronodoseOnboardingActivity : AbstractVMDActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
