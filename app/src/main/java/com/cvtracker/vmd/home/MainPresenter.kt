@@ -185,6 +185,9 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                     list.addAll(DataManager.getCitiesByName(search))
                 }
                 view.setupSelector(list)
+                if(list.size > 0){
+                    view.displaySelectorDropdown()
+                }
             } catch (e: CancellationException) {
                 /** Coroutine has been canceled => Ignore **/
             } catch (e: Exception) {

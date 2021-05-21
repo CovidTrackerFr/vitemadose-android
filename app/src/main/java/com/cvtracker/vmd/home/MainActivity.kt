@@ -27,8 +27,8 @@ import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.FiltersDialogView
-import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
@@ -39,10 +39,6 @@ import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.appBarLayout
-import kotlinx.android.synthetic.main.activity_main.centersRecyclerView
-import kotlinx.android.synthetic.main.activity_main.container
-import kotlinx.android.synthetic.main.activity_main.refreshLayout
 import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
@@ -204,6 +200,14 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
                 presenter.onSearchEntrySelected(parent.getItemAtPosition(position) as SearchEntry)
                 resetSelectorState()
             }
+        }
+    }
+
+    override fun displaySelectorDropdown() {
+        arrayOf(
+            emptyStateSelectedDepartment,
+            selectedDepartment
+        ).firstOrNull { it?.isAttachedToWindow == true }?.let {
             it.showDropDown()
         }
     }
