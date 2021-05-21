@@ -25,6 +25,12 @@ interface MainContract {
         fun setupSelector(items: List<SearchEntry>)
 
         /**
+         * Setup department selectors with retrieved departments
+         */
+        fun displaySelectorDropdown()
+
+
+        /**
          * Notify an error occurs while retrieving suggestions
          */
         fun showSearchError()
