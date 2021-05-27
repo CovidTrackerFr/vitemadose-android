@@ -25,7 +25,6 @@
         <activity
             android:name=".home.MainActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="sensorPortrait"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -54,17 +53,14 @@
 
         <activity
             android:name=".about.AboutActivity"
-            android:screenOrientation="sensorPortrait"
             android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
         <activity
             android:name=".bookmark.BookmarkActivity"
-            android:screenOrientation="sensorPortrait"
             android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
         <activity
             android:name=".onboarding.ChronodoseOnboardingActivity"
-            android:screenOrientation="sensorPortrait"
             android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
         <activity

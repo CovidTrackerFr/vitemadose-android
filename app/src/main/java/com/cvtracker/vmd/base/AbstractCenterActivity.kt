@@ -1,6 +1,6 @@
 package com.cvtracker.vmd.base
 
-import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
@@ -11,12 +11,13 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.master.AbstractVMDActivity
 import com.cvtracker.vmd.master.IntentHelper
 import com.cvtracker.vmd.master.SortType
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_main.*
 
-abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCompatActivity(),
+abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AbstractVMDActivity(),
         CenterContract.View, CenterViewHolder.Listener {
 
     abstract val presenter: T
@@ -27,6 +28,7 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : AppCom
 
     override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
         appBarLayout.setExpanded(true, true)
+        centersRecyclerView.layoutManager = StaggeredGridLayoutManager(resources.getInteger(R.integer.column), StaggeredGridLayoutManager.VERTICAL)
         centersRecyclerView.adapter = CenterAdapter(
                 context = this,
                 items = list,
