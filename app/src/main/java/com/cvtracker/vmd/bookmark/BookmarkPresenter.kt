@@ -6,16 +6,15 @@ import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.master.DataManager
 import com.cvtracker.vmd.master.PrefHelper
 import com.cvtracker.vmd.master.SortType
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCenterPresenter(view), BookmarkContract.Presenter {
 
-    private var jobBookmarks: Job? = null
-
     override fun loadBookmarks(department: String?, centerId: String?) {
-        jobBookmarks?.cancel()
-        jobBookmarks = GlobalScope.launch(Dispatchers.Main) {
+        launch(Dispatchers.Main) {
             val centersBookmark = PrefHelper.centersBookmark
                     .filter { department == null || department == it.department }
                     .filter { centerId == null || centerId == it.centerId }
