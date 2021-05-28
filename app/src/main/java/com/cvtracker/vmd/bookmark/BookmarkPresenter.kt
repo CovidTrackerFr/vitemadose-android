@@ -8,13 +8,17 @@ import com.cvtracker.vmd.master.PrefHelper
 import com.cvtracker.vmd.master.SortType
 import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
 class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCenterPresenter(view), BookmarkContract.Presenter {
 
+    private var jobBookmarks: Job? = null
+
     override fun loadBookmarks(department: String?, centerId: String?) {
-        launch(Dispatchers.Main) {
+        jobBookmarks?.cancel()
+        jobBookmarks = launch(Dispatchers.Main) {
             val centersBookmark = PrefHelper.centersBookmark
                     .filter { department == null || department == it.department }
                     .filter { centerId == null || centerId == it.centerId }

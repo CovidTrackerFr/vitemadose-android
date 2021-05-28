@@ -10,14 +10,14 @@ import com.cvtracker.vmd.master.*
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_AVAILABLE_ID
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_CHRONODOSE_ID
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_VACCINE_TYPE_SECTION
-import kotlinx.coroutines.CancellationException
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
 import timber.log.Timber
 import java.util.*
 
 class MainPresenter(override val view: MainContract.View) : AbstractCenterPresenter(view), MainContract.Presenter {
+
+    private var jobSearch: Job? = null
+    private var jobCenters: Job? = null
 
     private var filterSections = FilterType.getDefault(PrefHelper.filters)
 
@@ -36,7 +36,8 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     }
 
     override fun loadCenters() {
-        launch(Dispatchers.Main) {
+        jobCenters?.cancel()
+        jobCenters = launch(Dispatchers.Main) {
             PrefHelper.favEntry?.let { entry ->
                 try {
                     val sortType = PrefHelper.primarySort
@@ -163,12 +164,13 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     }
 
     override fun onSearchUpdated(search: String) {
+        jobSearch?.cancel()
         if (search.length < 2) {
             /** reset entry list **/
             view.setupSelector(emptyList())
             return
         }
-        launch(Dispatchers.Main) {
+        jobSearch = launch(Dispatchers.Main) {
             /** Wait a bit then we are sure the user want to do this one **/
             delay(250)
             val list = mutableListOf<SearchEntry>()
