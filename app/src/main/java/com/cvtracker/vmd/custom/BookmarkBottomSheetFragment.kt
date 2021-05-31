@@ -30,10 +30,7 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
 
     private fun setUpViews() {
         when (arguments?.getSerializable(EXTRA_CURRENT_BOOKMARK) as? Bookmark) {
-            Bookmark.NOTIFICATION_CHRONODOSE -> {
-                notificationChronodoseView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_lightning_charge_fill_24dp, 0, R.drawable.ic_done_black_24dp, 0)
-                notificationChronodoseView.isSelected = true
-            }
+            Bookmark.NOTIFICATION_CHRONODOSE,
             Bookmark.NOTIFICATION -> {
                 notificationView.setCompoundDrawablesRelativeWithIntrinsicBounds(R.drawable.ic_notifications_24dp, 0, R.drawable.ic_done_black_24dp, 0)
                 notificationView.isSelected = true
@@ -48,9 +45,6 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
 
-        notificationChronodoseView.setOnClickListener {
-            displayConfirmDialog(Bookmark.NOTIFICATION_CHRONODOSE)
-        }
         notificationView.setOnClickListener {
             displayConfirmDialog(Bookmark.NOTIFICATION)
         }
@@ -65,14 +59,9 @@ class BookmarkBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     private fun displayConfirmDialog(bookmark: Bookmark) {
-        val message = when (bookmark) {
-            Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notification_chronodose_disclaimer_message
-            else -> R.string.notification_disclaimer_message
-        }
-
         AlertDialog.Builder(requireContext())
                 .setTitle(R.string.notification_disclaimer_title)
-                .setMessage(message)
+                .setMessage(R.string.notification_disclaimer_message)
                 .setPositiveButton(R.string.notification_disclaimer_compris) { _, _ ->
                     dismissAllowingStateLoss()
                     listener?.invoke(bookmark)

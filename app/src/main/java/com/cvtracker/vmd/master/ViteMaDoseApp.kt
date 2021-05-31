@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.master
 
 import android.app.Application
+import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.Disclaimer
 import com.cvtracker.vmd.data.DisclaimerSeverity
 import com.cvtracker.vmd.home.MainPresenter
@@ -29,6 +30,21 @@ class ViteMaDoseApp : Application() {
                 }
             }
         }
+
+        migrateChronodoseNotificationsIfNeeded()
+    }
+
+    private fun migrateChronodoseNotificationsIfNeeded() {
+        val chronodoseBookmarks = PrefHelper.centersBookmark.filter { it.bookmark == Bookmark.NOTIFICATION_CHRONODOSE }.toMutableList()
+        chronodoseBookmarks.forEach {
+            // unsubscribe from chronodose firebase notification
+            FcmHelper.unsubscribeFromDepartmentAndCenterId(it.department, it.centerId, true)
+            // subscribe to classical center notification
+            FcmHelper.subscribeWithDepartmentAndCenterId(it.department, it.centerId, false)
+            // update the local pref
+            PrefHelper.updateBookmark(it.centerId, it.department, Bookmark.NOTIFICATION)
+        }
+
     }
 
     private fun loadCacheFirebaseConfig() {
