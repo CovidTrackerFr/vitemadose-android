@@ -7,18 +7,6 @@
     android:padding="16dp">
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/notificationChronodoseView"
-        style="@style/TextStyle_baseline_small"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:drawableStart="@drawable/ic_lightning_charge_fill_24dp"
-        android:includeFontPadding="false"
-        android:paddingVertical="16dp"
-        android:text="@string/bookmark_notification_chronodose"
-        app:drawableTint="?android:attr/textColorPrimary" />
-
-    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/notificationView"
         style="@style/TextStyle_baseline_small"
         android:layout_width="match_parent"
