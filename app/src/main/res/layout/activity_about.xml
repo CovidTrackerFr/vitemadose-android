@@ -51,20 +51,6 @@
                     android:orientation="vertical">
 
                     <androidx.appcompat.widget.AppCompatTextView
-                        android:id="@+id/chronodoseView"
-                        style="@style/TextStyle_baseline_small"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:drawableStart="@drawable/ic_lightning_charge_fill_24dp"
-                        android:text="@string/chronodose_onboarding_title"
-                        app:drawableTint="?android:attr/textColorPrimary" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="?attr/separatorColor" />
-
-                    <androidx.appcompat.widget.AppCompatTextView
                         android:id="@+id/faqView"
                         style="@style/TextStyle_baseline_small"
                         android:layout_width="match_parent"

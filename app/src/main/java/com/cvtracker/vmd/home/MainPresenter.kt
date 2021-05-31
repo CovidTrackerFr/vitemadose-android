@@ -7,8 +7,6 @@ import com.cvtracker.vmd.data.Disclaimer
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.master.*
-import com.cvtracker.vmd.master.FilterType.Companion.FILTER_AVAILABLE_ID
-import com.cvtracker.vmd.master.FilterType.Companion.FILTER_CHRONODOSE_ID
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_VACCINE_TYPE_SECTION
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -84,22 +82,10 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         val preparedUnavailableCenters = prepareCenters(it.unavailableCenters)
 
                         /** Add statistics header **/
-                        val isChronodoseFilterSelected = filterSections
-                            .flatMap { it.filters }
-                            .find { it.id == FILTER_CHRONODOSE_ID }
-                            ?.enabled ?: false
-
-                        val isAvailableCentersFilterSelected = filterSections
-                            .flatMap { it.filters }
-                            .find { it.id == FILTER_AVAILABLE_ID }
-                            ?.enabled ?: false
-
                         list.add(
                             DisplayItem.AvailableCenterHeader(
                                 preparedAvailableCenters.sumBy { it.appointmentCount },
-                                isAvailableCentersFilterSelected,
-                                preparedAvailableCenters.filter { it.isChronodose }.sumBy { it.chronodoseCount },
-                                isChronodoseFilterSelected
+                                preparedAvailableCenters.count(),
                             )
                         )
 
@@ -289,12 +275,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     }
 
     override fun getFilters() = filterSections
-
-    override fun displayChronodoseOnboardingIfNeeded() {
-        if (!PrefHelper.chronodoseOnboardingDisplayed) {
-            view.showChronodoseOnboarding()
-        }
-    }
 
     override fun removeDisclaimer(){
         disclaimer?.let {

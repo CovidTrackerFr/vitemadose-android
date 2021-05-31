@@ -44,7 +44,6 @@ class FilterType {
         const val FILTER_VACCINE_TYPE_SECTION = "FILTER_VACCINE_TYPE_SECTION"
         const val FILTER_DISTANCE_SECTION = "FILTER_DISTANCE_SECTION"
 
-        const val FILTER_CHRONODOSE_ID = "FILTER_CHRONODOSE_ID"
         const val FILTER_AVAILABLE_ID = "FILTER_AVAILABLE_ID"
 
         const val DEFAULT_DISTANCE = 50
@@ -56,9 +55,6 @@ class FilterType {
                     defaultState = false,
                     primaryFilter = true,
                     filters = listOf(
-                            Filter(ViteMaDoseApp.get().getString(R.string.filter_chronodose_only), false, FILTER_CHRONODOSE_ID) { center, filter ->
-                                center.isChronodose
-                            },
                             Filter(ViteMaDoseApp.get().getString(R.string.filter_available_centers_only), false, FILTER_AVAILABLE_ID) { center, filter ->
                                 center.available
                             }

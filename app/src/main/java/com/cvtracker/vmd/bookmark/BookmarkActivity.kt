@@ -1,12 +1,14 @@
 package com.cvtracker.vmd.bookmark
 
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.MenuItem
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.extensions.*
+import com.cvtracker.vmd.extensions.dpToPx
+import com.cvtracker.vmd.extensions.hide
+import com.cvtracker.vmd.extensions.show
+import com.cvtracker.vmd.extensions.topPadding
 import kotlinx.android.synthetic.main.activity_about.toolbar
 import kotlinx.android.synthetic.main.activity_bookmark.*
 import kotlinx.android.synthetic.main.activity_bookmark.centersRecyclerView
