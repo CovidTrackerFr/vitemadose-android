@@ -37,7 +37,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun loadCenters() {
         jobCenters?.cancel()
-        jobCenters = GlobalScope.launch(Dispatchers.Main) {
+        jobCenters = launch(Dispatchers.Main) {
             PrefHelper.favEntry?.let { entry ->
                 try {
                     val sortType = PrefHelper.primarySort
@@ -170,7 +170,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
             view.setupSelector(emptyList())
             return
         }
-        jobSearch = GlobalScope.launch(Dispatchers.Main) {
+        jobSearch = launch(Dispatchers.Main) {
             /** Wait a bit then we are sure the user want to do this one **/
             delay(250)
             val list = mutableListOf<SearchEntry>()
