@@ -6,7 +6,6 @@ import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.view_holder.CenterViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
-import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.hide
 import com.cvtracker.vmd.extensions.launchWebUrl
@@ -22,8 +21,6 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : Abstra
 
     abstract val presenter: T
 
-    open var statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = null
-
     open var lastUpdatedListener: LastUpdatedViewHolder.Listener? = null
 
     override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
@@ -33,7 +30,6 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : Abstra
                 context = this,
                 items = list,
                 centerListener = this,
-                statisticsHeaderListener = statisticsHeaderListener,
                 lastUpdatedListener = lastUpdatedListener
         )
 

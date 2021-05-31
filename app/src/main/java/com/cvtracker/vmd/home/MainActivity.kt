@@ -28,13 +28,11 @@ import com.cvtracker.vmd.bookmark.BookmarkActivity
 import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.custom.FiltersDialogView
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
-import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.FilterType
 import com.cvtracker.vmd.master.SortType
-import com.cvtracker.vmd.onboarding.ChronodoseOnboardingActivity
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -43,8 +41,7 @@ import kotlinx.android.synthetic.main.empty_state.*
 import kotlinx.android.synthetic.main.empty_state.view.*
 
 
-class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View,
-        StatisticsHeaderViewHolder.Listener, LastUpdatedViewHolder.Listener {
+class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContract.View, LastUpdatedViewHolder.Listener {
 
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
@@ -52,7 +49,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override val presenter: MainContract.Presenter = MainPresenter(this)
 
-    override var statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = this
     override var lastUpdatedListener: LastUpdatedViewHolder.Listener? = this
 
 
@@ -216,7 +212,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         bookmarkIconView.show()
         mainContent.show()
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
-        presenter.displayChronodoseOnboardingIfNeeded()
     }
 
     override fun showEmptyState() {
@@ -241,10 +236,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             }
         }
         stubEmptyState.inflate()
-    }
-
-    override fun showChronodoseOnboarding() {
-        startActivity(Intent(this, ChronodoseOnboardingActivity::class.java))
     }
 
     override fun displaySelectedSearchEntry(entry: SearchEntry?) {
@@ -347,23 +338,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             noCentersView.hide()
             resetFiltersView.hide()
         }
-    }
-
-
-    /** StatisticsHeaderViewHolder.Listener **/
-
-    override fun onChronodoseFilterClick() {
-        switchFilter(
-                filterId = FilterType.FILTER_CHRONODOSE_ID,
-                excludedFilterId = FilterType.FILTER_AVAILABLE_ID
-        )
-    }
-
-    override fun onSlotsFilterClick() {
-        switchFilter(
-                filterId = FilterType.FILTER_AVAILABLE_ID,
-                excludedFilterId = FilterType.FILTER_CHRONODOSE_ID
-        )
     }
 
     /** LastUpdatedViewHolder.Listener **/

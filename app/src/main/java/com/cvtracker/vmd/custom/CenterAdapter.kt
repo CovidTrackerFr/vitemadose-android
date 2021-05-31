@@ -3,9 +3,9 @@ package com.cvtracker.vmd.custom
 import android.content.Context
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.custom.view_holder.CenterViewHolder
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
+import com.cvtracker.vmd.custom.view_holder.StatisticsHeaderViewHolder
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.master.PrefHelper
@@ -14,7 +14,6 @@ class CenterAdapter(
         private val context: Context,
         private val items: List<DisplayItem>,
         private val centerListener: CenterViewHolder.Listener? = null,
-        private val statisticsHeaderListener: StatisticsHeaderViewHolder.Listener? = null,
         private val lastUpdatedListener: LastUpdatedViewHolder.Listener? = null
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -37,7 +36,7 @@ class CenterAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             TYPE_CENTER -> CenterViewHolder(context, parent, this, centerListener)
-            TYPE_AVAILABLE_HEADER -> StatisticsHeaderViewHolder(context, parent, this, statisticsHeaderListener)
+            TYPE_AVAILABLE_HEADER -> StatisticsHeaderViewHolder(context, parent, this)
             TYPE_LAST_UPDATED -> LastUpdatedViewHolder(context, parent, this, lastUpdatedListener)
             else -> throw IllegalArgumentException("Type not supported")
         }

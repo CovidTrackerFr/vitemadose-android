@@ -3,7 +3,6 @@ package com.cvtracker.vmd.data
 import android.location.Location
 import android.telephony.PhoneNumberUtils
 import android.text.format.DateFormat
-import com.cvtracker.vmd.master.ViteMaDoseApp
 import com.google.gson.annotations.SerializedName
 import java.util.*
 
@@ -43,7 +42,7 @@ sealed class DisplayItem {
     ) : DisplayItem() {
 
         val isChronodose: Boolean
-            get() = chronodoseCount >= ViteMaDoseApp.CHRONODOSE_MIN_COUNT
+            get() = false
 
         val chronodoseCount: Int
             get() = (schedules?.find { it.name == "chronodose" }?.total ?: 0)
@@ -168,8 +167,7 @@ sealed class DisplayItem {
 
     class AvailableCenterHeader(
         val slotsCount: Int,
-        var isSlotFilterSelected: Boolean,
-        val chronodoseCount: Int,
-        var isChronodoseFilterSelected: Boolean) : DisplayItem()
+        val placesCount: Int
+    ) : DisplayItem()
 
 }
