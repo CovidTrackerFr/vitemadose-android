@@ -15,6 +15,10 @@ object FcmHelper {
         subscribeToTopic(topicForCenter(center, chronodose))
     }
 
+    fun subscribeWithDepartmentAndCenterId(department: String, centerId: String?, chronodose: Boolean) {
+        subscribeToTopic(topicWithDepartmentAndCenterId(department, centerId, chronodose))
+    }
+
     fun unsubscribeFromCenter(center: DisplayItem.Center, chronodose: Boolean) {
         unsubscribeFromTopic(topicForCenter(center, chronodose))
     }
