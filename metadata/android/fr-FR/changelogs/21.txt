@@ -1,0 +1,3 @@
+- Adieu les chronodoses !
+- Amélioration de l'accessibilité
+- Amélioration du support des tablettes
