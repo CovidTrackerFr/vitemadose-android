@@ -55,6 +55,8 @@
     <string name="vaccintracker">VaccinTracker</string>
     <string name="share">Partager</string>
     <string name="faq">FAQ</string>
+    <string name="contributors">Contributeurs</string>
+    <string name="contributors_description">ViteMaDose est un project <font color="#AE50C2">opensource</font>,construit par ses <font color="#DC5A60">génereux contributeurs </font>:</string>
 
     <string name="app_update_downloading">Téléchargement de la mise à jour…</string>
     <string name="app_update_pending">Préparation de la mise à jour.</string>

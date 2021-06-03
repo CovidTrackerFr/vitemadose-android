@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
 import com.cvtracker.vmd.R
+import com.cvtracker.vmd.contributor.ContributorBottomSheet
 import com.cvtracker.vmd.data.DisplayStat
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
@@ -55,6 +56,10 @@ class AboutActivity : AbstractVMDActivity(), AboutContract.View {
                     Snackbar.LENGTH_SHORT
                 ).show()
             }
+        }
+
+        contributorsView.setOnClickListener {
+            ContributorBottomSheet().show(supportFragmentManager, "ContributorBottomSheet")
         }
 
         presenter.loadStats()
