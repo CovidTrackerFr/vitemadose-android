@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.data
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 
 data class ContributorResponse(
@@ -21,7 +22,8 @@ data class Contributor(
     val links: List<Link>
 ) {
 
-    val displayName: String get() = name ?: pseudo ?: "Unknown"
+    val displayName: String
+        get() = (name ?: pseudo ?: "Unknown").split(" ").joinToString(" ") { it.capitalize(Locale.ROOT) }
 
     data class Link(
         @SerializedName("site")

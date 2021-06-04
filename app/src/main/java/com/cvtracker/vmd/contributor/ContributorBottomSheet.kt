@@ -1,16 +1,13 @@
 package com.cvtracker.vmd.contributor
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
+import androidx.fragment.app.DialogFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.cvtracker.vmd.R
-import com.cvtracker.vmd.about.AboutContract
-import com.cvtracker.vmd.about.AboutPresenter
 import com.cvtracker.vmd.custom.ContributorAdapter
 import com.cvtracker.vmd.data.Contributor
 import com.cvtracker.vmd.extensions.launchWebUrl
@@ -20,6 +17,11 @@ import timber.log.Timber
 
 class ContributorBottomSheet : BottomSheetDialogFragment(), ContributorContract.View {
     private val presenter: ContributorContract.Presenter by lazy { ContributorPresenter(this) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NORMAL, R.style.Theme_Design_BottomSheetDialog)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_contributor, container, false)
@@ -54,5 +56,10 @@ class ContributorBottomSheet : BottomSheetDialogFragment(), ContributorContract.
                     ?.let { activity?.launchWebUrl(it) }
             }
         }
+    }
+
+    companion object {
+        const val TAG = "ContributorBottomSheet"
+        fun newInstance() = ContributorBottomSheet()
     }
 }

@@ -59,7 +59,7 @@ class AboutActivity : AbstractVMDActivity(), AboutContract.View {
         }
 
         contributorsView.setOnClickListener {
-            ContributorBottomSheet().show(supportFragmentManager, "ContributorBottomSheet")
+            ContributorBottomSheet.newInstance().show(supportFragmentManager, ContributorBottomSheet.TAG)
         }
 
         presenter.loadStats()

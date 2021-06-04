@@ -26,7 +26,7 @@ object DataManager {
     var URL_BASE = "https://vitemadose.gitlab.io"
     var PATH_DATA_DEPARTMENT = "/vitemadose/{code}.json"
     var PATH_STATS = "/vitemadose/stats.json"
-    val CONTRIBUTORS = "vitemadose/contributors_all.json"
+    val CONTRIBUTORS = "/vitemadose/contributors_all.json"
 
     var URL_CITIES_BY_NAME = "https://geo.api.gouv.fr/communes?nom={NAME}&fields=codesPostaux,centre,departement&limit=15"
     var URL_CITIES_BY_POSTAL_CODE = "https://geo.api.gouv.fr/communes?codePostal={POSTAL_CODE}&fields=codesPostaux,centre,departement&limit=15"
@@ -157,6 +157,6 @@ object DataManager {
     }
 
     suspend fun getContributors(): List<Contributor> {
-        return service.getContributors(CONTRIBUTORS).contributors
+        return service.getContributors(CONTRIBUTORS).contributors.sortedBy { it.displayName }
     }
 }
