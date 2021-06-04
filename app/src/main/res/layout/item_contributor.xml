@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:background="@drawable/contributor_item_background"
+	android:gravity="center"
+	android:orientation="horizontal"
+	android:padding="8dp"
+	>
+
+	<androidx.appcompat.widget.AppCompatImageView
+		android:id="@+id/contributor_avatar"
+		android:layout_width="50dp"
+		android:layout_height="50dp"
+		tools:src="@tools:sample/avatars"
+		/>
+
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_marginStart="8dp"
+		android:layout_weight="1"
+		android:orientation="vertical"
+		>
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/contributor_name"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/black"
+			android:textSize="25sp"
+			android:textStyle="bold"
+			tools:text="Name"
+			/>
+
+		<androidx.appcompat.widget.AppCompatTextView
+			android:id="@+id/contributor_teams"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textColor="@color/black"
+			android:textSize="20sp"
+			tools:text="scrap, web, infra"
+			/>
+	</LinearLayout>
+</LinearLayout>

@@ -1,7 +1,7 @@
 package com.cvtracker.vmd.master
 
 import com.cvtracker.vmd.data.CenterResponse
-import com.cvtracker.vmd.data.Contributor
+import com.cvtracker.vmd.data.ContributorResponse
 import com.cvtracker.vmd.data.SearchEntry
 import com.cvtracker.vmd.data.StatsResponse
 import retrofit2.http.GET
@@ -18,5 +18,5 @@ interface RetrofitService {
     suspend fun getCities(@Url url: String): List<SearchEntry.City>
 
     @GET
-    suspend fun getContributors(@Url url: String): List<Contributor>
+    suspend fun getContributors(@Url url: String): ContributorResponse
 }

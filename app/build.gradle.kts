@@ -4,6 +4,7 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.plugin.serialization")
     id("kotlin-android")
+    id("kotlin-kapt")
     id("kotlin-android-extensions")
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
@@ -100,6 +101,8 @@ dependencies {
 
     implementation(Libs.timber)
     implementation(Libs.ossLicenses)
+    implementation(Libs.glide)
+    kapt(Libs.glideCompiler)
 
     implementation(platform(Libs.firebaseBom))
     implementation(Libs.firebaseAnalytics)

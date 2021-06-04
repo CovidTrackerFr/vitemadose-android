@@ -157,6 +157,6 @@ object DataManager {
     }
 
     suspend fun getContributors(): List<Contributor> {
-        return service.getContributors(CONTRIBUTORS)
+        return service.getContributors(CONTRIBUTORS).contributors
     }
 }

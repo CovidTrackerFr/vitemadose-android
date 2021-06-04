@@ -12,6 +12,10 @@ interface ContributorContract {
     }
 
     interface Presenter {
+        val view: View
+
         fun loadContributors()
+
+        fun cancel()
     }
 }
