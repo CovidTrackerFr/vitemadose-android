@@ -36,6 +36,10 @@ object Libs {
     //Open Source mention
     const val ossLicenses = "com.google.android.gms:play-services-oss-licenses:_"
 
+    //image
+    const val glide = "com.github.bumptech.glide:glide:4.12.0"
+    const val glideCompiler = "com.github.bumptech.glide:compiler:4.12.0"
+
     // Network
     const val retrofit = "com.squareup.retrofit2:retrofit:2.6.0"
     const val retrofitGson = "com.squareup.retrofit2:converter-gson:2.6.0"

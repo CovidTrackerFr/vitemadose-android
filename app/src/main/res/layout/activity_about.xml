@@ -101,6 +101,20 @@
                         android:text="@string/share"
                         app:drawableTint="?android:attr/textColorPrimary" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:background="?attr/separatorColor" />
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/contributorsView"
+                        style="@style/TextStyle_baseline_small"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:drawableStart="@drawable/ic_baseline_group_24"
+                        android:text="@string/contributors"
+                        app:drawableTint="?android:attr/textColorPrimary" />
+
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>

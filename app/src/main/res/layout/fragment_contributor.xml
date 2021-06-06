@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content"
+	android:orientation="vertical"
+	android:background="@drawable/contributor_background"
+	android:padding="10dp"
+	>
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/contributor_title"
+		style="@style/TextStyle_header"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:text="@string/contributors"
+		android:textColor="@color/black"
+		android:textSize="30sp"
+		/>
+
+	<androidx.appcompat.widget.AppCompatTextView
+		android:id="@+id/contributor_description"
+		style="@style/TextStyle_stats_description"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:textColor="@color/black"
+		android:text="@string/contributors_description"
+		android:textSize="20sp"
+		/>
+
+	<androidx.recyclerview.widget.RecyclerView
+		android:id="@+id/contributor_list"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		tools:listitem="@layout/item_contributor"
+		/>
+
+	<com.google.android.material.progressindicator.LinearProgressIndicator
+		android:id="@+id/contributor_loading"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:indeterminate="true"
+		/>
+</LinearLayout>

@@ -3,10 +3,7 @@ package com.cvtracker.vmd.master
 import com.cvtracker.vmd.BuildConfig
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.ValidatorAdapterFactory
-import com.cvtracker.vmd.data.CenterBookmark
-import com.cvtracker.vmd.data.CenterResponse
-import com.cvtracker.vmd.data.SearchEntry
-import com.cvtracker.vmd.data.StatsResponse
+import com.cvtracker.vmd.data.*
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonParseException
@@ -29,6 +26,7 @@ object DataManager {
     var URL_BASE = "https://vitemadose.gitlab.io"
     var PATH_DATA_DEPARTMENT = "/vitemadose/{code}.json"
     var PATH_STATS = "/vitemadose/stats.json"
+    val CONTRIBUTORS = "/vitemadose/contributors_all.json"
 
     var URL_CITIES_BY_NAME = "https://geo.api.gouv.fr/communes?nom={NAME}&fields=codesPostaux,centre,departement&limit=15"
     var URL_CITIES_BY_POSTAL_CODE = "https://geo.api.gouv.fr/communes?codePostal={POSTAL_CODE}&fields=codesPostaux,centre,departement&limit=15"
@@ -156,5 +154,9 @@ object DataManager {
     suspend fun getCitiesByName(name: String): List<SearchEntry.City> {
         return service.getCities(URL_CITIES_BY_NAME.replace("{NAME}", name))
                 .filter { it.isValid }
+    }
+
+    suspend fun getContributors(): List<Contributor> {
+        return service.getContributors(CONTRIBUTORS).contributors.sortedBy { it.displayName }
     }
 }
