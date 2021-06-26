@@ -1,5 +1,5 @@
 object Versions {
-    const val androidPlugin = "4.2.0"
+    const val androidPlugin = "4.2.1"
     const val kotlin = "1.4.32"
     const val ossLicensesPlugin = "0.10.4"
     const val googleServicesPlugin = "4.3.4"
