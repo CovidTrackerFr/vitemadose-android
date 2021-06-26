@@ -1,0 +1,2 @@
+- Ajout de la plateforme "MeSoigner.fr"
+- Écran des contributeurs au projet
