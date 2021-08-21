@@ -68,22 +68,6 @@
             android:theme="@style/Theme.ViteMaDose.WithoutBackground" />
 
         <receiver android:name=".master.SilentRedirectReceiver" />
-
-        <service
-            android:name=".master.ViteMaDoseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_icon"
-            android:resource="@drawable/ic_vmd_logo_notification" />
-        <meta-data
-            android:name="com.google.firebase.messaging.default_notification_color"
-            android:resource="@color/crail" />
-
     </application>
 
 </manifest>

@@ -1,8 +1,6 @@
 package com.cvtracker.vmd.master
 
 import com.cvtracker.vmd.data.DisplayItem
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import timber.log.Timber
 
 object FcmHelper {

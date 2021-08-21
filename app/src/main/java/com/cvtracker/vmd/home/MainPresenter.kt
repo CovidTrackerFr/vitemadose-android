@@ -117,7 +117,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
                         view.updateFilterState(isDefaultFilters())
                         view.showCenters(list, if (isCitySearch) sortType else null)
-                        AnalyticsHelper.logEventSearch(entry, it, sortType)
                     }
                 } catch (e: CancellationException) {
                     /** Coroutine has been canceled => Ignore **/
@@ -198,8 +197,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                     val type = params[3]
 
                     view.showBookmarks(department, centerId)
-
-                    AnalyticsHelper.logEventNotificationOpen(department, centerId, topic, type)
                 }
             }
         }

@@ -13,9 +13,6 @@ import androidx.core.app.NotificationManagerCompat
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.home.MainActivity
 import com.cvtracker.vmd.home.MainPresenter
-import com.google.firebase.messaging.FirebaseMessagingService
-import com.google.firebase.messaging.RemoteMessage
-
 
 @SuppressLint("MissingFirebaseInstanceTokenRefresh")
 class ViteMaDoseMessagingService : FirebaseMessagingService() {
@@ -36,8 +33,6 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
         val type = data["type"] ?: ""
 
         sendNotification(this, title, body, department, centerId, topic, type)
-
-        AnalyticsHelper.logEventNotificationReceive(department, centerId, topic, type)
     }
 
     private fun sendNotification(

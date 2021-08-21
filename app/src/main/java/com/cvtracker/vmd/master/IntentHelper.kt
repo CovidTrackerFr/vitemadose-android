@@ -7,8 +7,6 @@ import android.net.Uri
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.data.DisplayItem
 import com.google.android.material.snackbar.Snackbar
-import com.google.firebase.ktx.Firebase
-import com.google.firebase.messaging.ktx.messaging
 import kotlinx.android.synthetic.main.activity_main.*
 import timber.log.Timber
 import java.net.URLEncoder

@@ -21,13 +21,6 @@ object Libs {
     const val swipeRefreshLayout = "androidx.swiperefreshlayout:swiperefreshlayout:_"
     const val browser = "androidx.browser:browser:_"
 
-    // Play Services
-    const val firebaseBom = "com.google.firebase:firebase-bom:_"
-    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
-    const val firebaseMessaging = "com.google.firebase:firebase-messaging-ktx"
-    const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
-    const val firebaseRemoteConfig = "com.google.firebase:firebase-config-ktx"
-
     const val playCore = "com.google.android.play:core:_"
 
     //Log

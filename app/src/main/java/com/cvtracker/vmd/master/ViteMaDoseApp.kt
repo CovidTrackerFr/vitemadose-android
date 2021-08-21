@@ -5,9 +5,6 @@ import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.Disclaimer
 import com.cvtracker.vmd.data.DisclaimerSeverity
 import com.cvtracker.vmd.home.MainPresenter
-import com.google.firebase.remoteconfig.BuildConfig
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import timber.log.Timber
 import java.util.*
 

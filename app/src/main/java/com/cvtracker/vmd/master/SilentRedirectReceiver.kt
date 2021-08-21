@@ -42,7 +42,5 @@ class SilentRedirectReceiver : BroadcastReceiver() {
 
         /** Rollback to favorite only **/
         PrefHelper.updateBookmark(centerId, department, Bookmark.FAVORITE)
-
-        AnalyticsHelper.logEventNotificationUnsubscribe(department, centerId, topic, type)
     }
 }
