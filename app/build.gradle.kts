@@ -13,27 +13,27 @@ plugins {
 }
 
 android {
-    compileSdkVersion(Versions.compileSdkVersion)
+    compileSdk = Versions.compileSdkVersion
 
     defaultConfig {
         applicationId = "com.cvtracker.vmd2"
-        setMinSdkVersion(Versions.minSdkVersion)
-        setTargetSdkVersion(Versions.targetSdkVersion)
+        minSdk = Versions.minSdkVersion
+        targetSdk = Versions.targetSdkVersion
         versionCode = 22
         versionName = "1.3.6"
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
+        targetCompatibility = JavaVersion.VERSION_11
     }
 
     signingConfigs {
         create("release") {
             storeFile = file("../keystores/vitemadose_upload_key.jks")
-            storePassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_STORE_PASSWORD")
-            keyAlias = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_ALIAS")
-            keyPassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_KEY_PASSWORD")
+            storePassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_STORE_PASSWORD", null)
+            keyAlias = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_ALIAS", null)
+            keyPassword = gradleLocalProperties(rootDir).getProperty("KEYSTORE_VITEMADOSE_KEY_PASSWORD", null)
 
             firebaseAppDistribution {
                 groups = "androidtesters"
@@ -50,19 +50,17 @@ android {
     buildTypes {
         getByName("release") {
             signingConfig = signingConfigs.getByName("release")
-            isZipAlignEnabled = true
             isMinifyEnabled = true
             proguardFiles(getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro")
         }
 
         getByName("debug") {
             signingConfig = signingConfigs.getByName("debug")
-            isZipAlignEnabled = true
             isMinifyEnabled = false
         }
     }
 
-    flavorDimensions("env")
+    flavorDimensions.add("env")
 
     productFlavors {
         create("dev") {
@@ -82,7 +80,7 @@ android {
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = "1.8"
+        jvmTarget = "11"
     }
 }
 
