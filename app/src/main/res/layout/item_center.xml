@@ -340,7 +340,7 @@
                 app:layout_constraintTop_toBottomOf="@id/appointmentsCountView"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:layout_width="match_parent"
-                android:layout_height="50dp"/>
+                android:layout_height="1dp"/>
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/moreView"
@@ -372,12 +372,6 @@
                 app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
                 app:textAllCaps="true"
                 app:tint="?attr/iconTintColor" />
-
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/checkSpecificViews"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:constraint_referenced_ids="checkButton,checkSpacerView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

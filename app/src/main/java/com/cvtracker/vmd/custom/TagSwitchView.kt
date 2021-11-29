@@ -10,37 +10,37 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.forEachIndexed
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.master.PrefHelper
-import com.cvtracker.vmd.master.SortType
+import com.cvtracker.vmd.master.TagType
 
-class SortSwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+class TagSwitchView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     ConstraintLayout(context, attrs) {
 
-    var onSortChangedListener: ((SortType) -> Unit)? = null
+    var onTagTypeChangedListener: ((TagType) -> Unit)? = null
 
     init {
         LayoutInflater.from(context).inflate(R.layout.view_sort_switch, this, true)
-        SortType.values().forEachIndexed { index, filter ->
+        TagType.values().forEachIndexed { index, filter ->
             val view = LayoutInflater.from(context)
                 .inflate(R.layout.view_sort_switch_item, findViewById(R.id.container), false).apply {
                     setOnClickListener {
-                        updateSelectedFilterIndex(index)
-                        onSortChangedListener?.invoke(filter)
+                        updateSelectedTagType(filter)
+                        onTagTypeChangedListener?.invoke(filter)
                     }
-                    findViewById<TextView>(R.id.sortNameView).setText(filter.displayTitle)
+                    findViewById<TextView>(R.id.sortNameView).setText(filter.titleRes)
                 }
             findViewById<ViewGroup>(R.id.container).addView(
                 view,
                 LinearLayout.LayoutParams(0, ViewGroup.LayoutParams.WRAP_CONTENT, 1f)
             )
         }
-        updateSelectedFilterIndex(PrefHelper.primarySort.value)
+        updateSelectedFilterIndex(PrefHelper.tagType.ordinal)
     }
 
     private fun updateSelectedFilterIndex(indexSelected: Int) {
         findViewById<ViewGroup>(R.id.container).forEachIndexed { index, view -> view.isSelected = (index == indexSelected) }
     }
 
-    fun updateSelectedSort(filter: SortType) {
-        updateSelectedFilterIndex(SortType.values().indexOf(filter))
+    fun updateSelectedTagType(filter: TagType) {
+        updateSelectedFilterIndex(TagType.values().indexOf(filter))
     }
 }

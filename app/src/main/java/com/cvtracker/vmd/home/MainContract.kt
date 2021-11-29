@@ -2,8 +2,9 @@ package com.cvtracker.vmd.home
 
 import com.cvtracker.vmd.base.CenterContract
 import com.cvtracker.vmd.data.SearchEntry
+import com.cvtracker.vmd.data.TabHeaderItem
 import com.cvtracker.vmd.master.FilterType
-import com.cvtracker.vmd.master.SortType
+import com.cvtracker.vmd.master.TagType
 
 interface MainContract {
 
@@ -42,6 +43,8 @@ interface MainContract {
         fun showFiltersDialog(filterSections: MutableList<FilterType.FilterSection>)
 
         fun updateFilterState(defaultFilters: Boolean)
+
+        fun showTabs(listTabHeader: List<TabHeaderItem>)
     }
 
     interface Presenter : CenterContract.Presenter {
@@ -74,7 +77,7 @@ interface MainContract {
         /**
          * Called when the filter has been modified
          */
-        fun onSortChanged(sortType: SortType)
+        fun onTagTypeChanged(tagType: TagType)
 
         fun handleDeepLink(data: String)
 

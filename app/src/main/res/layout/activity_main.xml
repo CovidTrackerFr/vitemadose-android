@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:background="?attr/backgroundColor">
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/headerLayout"
             android:layout_width="match_parent"
@@ -40,7 +39,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingBottom="4dp">
+            android:paddingBottom="0dp">
 
             <View
                 android:id="@+id/backgroundSelectorView"
@@ -96,32 +95,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/refreshLayout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/centersRecyclerView"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:paddingTop="50dp"
-                android:paddingBottom="12dp"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
-
-        <com.cvtracker.vmd.custom.SortSwitchView
+        <com.cvtracker.vmd.custom.TagSwitchView
             android:id="@+id/sortSwitchView"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:elevation="10dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:layout_constraintEnd_toStartOf="@id/filterView"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@id/refreshLayout"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_max="250dp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -130,51 +114,45 @@
             android:layout_height="40dp"
             android:layout_gravity="end"
             android:layout_marginStart="4dp"
-            android:layout_marginTop="2dp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:contentDescription="@string/a11y_filter_results"
             android:elevation="2dp"
             android:padding="0dp"
-            android:visibility="gone"
+            android:visibility="invisible"
             app:backgroundTint="@color/filter_background_selector"
             app:elevation="2dp"
             app:fabSize="mini"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/sortSwitchView"
-            app:layout_constraintTop_toTopOf="@id/refreshLayout"
+            app:layout_constraintTop_toTopOf="@id/sortSwitchView"
+            app:layout_constraintBottom_toBottomOf="@id/sortSwitchView"
             app:srcCompat="@drawable/ic_tune_black_24dp"
             app:tint="@color/sort_text_selector" />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/noCentersView"
-            app:layout_constraintVertical_bias="0.7"
-            app:layout_constraintVertical_chainStyle="packed"
-            style="@style/TextStyle_baseline_small"
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:visibility="invisible"
+            android:elevation="2dp"
+            android:layout_marginTop="4dp"
+            app:tabMode="scrollable"
+            app:layout_constraintTop_toBottomOf="@+id/sortSwitchView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="0dp"
-            android:text="@string/no_center_to_display"
-            android:textSize="22sp"
-            android:visibility="gone"
-            app:layout_constraintBottom_toTopOf="@id/resetFiltersView"
-            app:layout_constraintTop_toBottomOf="@id/filterView" />
+            android:layout_height="wrap_content"/>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/resetFiltersView"
-            android:visibility="gone"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:backgroundTint="?attr/backgroundCardColor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/reset_filters"
-            app:cornerRadius="4dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/refreshLayout"
+            app:layout_constraintTop_toBottomOf="@id/tabLayout"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/noCentersView" />
+            android:layout_width="match_parent"
+            android:layout_height="0dp">
+
+            <androidx.viewpager2.widget.ViewPager2
+                android:id="@+id/centersPagerView"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingBottom="12dp"/>
+
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

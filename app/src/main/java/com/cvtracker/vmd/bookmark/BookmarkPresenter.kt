@@ -55,7 +55,7 @@ class BookmarkPresenter(override val view: BookmarkContract.View) : AbstractCent
                         if(list.isEmpty()){
                             view.showNoBookmark(true)
                         }else {
-                            view.showCenters(list, null)
+                            view.showCenters(listOf(list), null)
                         }
                     }
                 } catch (e: CancellationException) {
