@@ -13,7 +13,8 @@ enum class Plateform(val id: String, val label: String, @DrawableRes val logo: I
     AVECMONDOC("AvecMonDoc", "avecmondoc.com", R.drawable.logo_avecmondoc),
     CLIKODOC("Clikodoc", "clikodoc.com", R.drawable.logo_clikodoc),
     MESOIGNER("mesoigner", "mesoigner.fr", R.drawable.logo_mesoigner),
-    VALWIN("Valwin", "valwin.fr", R.drawable.logo_valwin);
+    VALWIN("Valwin", "valwin.fr", R.drawable.logo_valwin),
+    BIMEDOC("Bimedoc", "bimedoc.fr", R.drawable.logo_bimedoc);
 
     companion object {
         fun fromId(id: String): Plateform? = values().firstOrNull { it.id == id }
