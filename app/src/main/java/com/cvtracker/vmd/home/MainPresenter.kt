@@ -99,10 +99,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         }
     }
 
-    /**
-     * getCenters list based on @param dateKey and @param tagKey
-     * This method will basically rework the data from global @param response to provide daily data
-     */
+    /** Build display list for the given @param response **/
     private fun buildCentersList(
         response: CenterResponse,
         entry: SearchEntry
@@ -141,6 +138,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         return list
     }
 
+    /** Prepare centers, calculating distance, applying filters **/
     private fun prepareCenters(centers: MutableList<DisplayItem.Center>, entry: SearchEntry): MutableList<DisplayItem.Center> {
         /** Set up distance when city search **/
         if (entry is SearchEntry.City) {
@@ -250,6 +248,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                 FILTER_VACCINE_TYPE_SECTION -> {
                     centers.removeAll { center ->
                         val filters = section.filters.filter { center.vaccineType?.contains(it.displayTitle) ?: false }
+                        /** We want to remove centers with vaccineList items ALL disabled **/
                         if(filters.isEmpty()){
                             false
                         }else {

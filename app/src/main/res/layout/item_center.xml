@@ -1,380 +1,375 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:layout_marginHorizontal="10dp"
+    android:layout_marginBottom="2dp"
+    android:id="@+id/cardView"
+    style="@style/CustomCardView"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="10dp"
-    android:paddingBottom="2dp">
+    app:cardCornerRadius="8dp"
+    app:contentPadding="0dp"
+    app:layout_constraintEnd_toEndOf="parent"
+    app:layout_constraintStart_toStartOf="parent"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
-        style="@style/CustomCardView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/appointmentGlobalLayout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardCornerRadius="8dp"
-        app:contentPadding="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:importantForAccessibility="yes">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/appointmentGlobalLayout"
-            android:layout_width="match_parent"
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineIcons"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:importantForAccessibility="yes">
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="48dp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineIcons"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="48dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineStart"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_begin="10dp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineStart"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_begin="10dp" />
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guidelineEnd"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_constraintGuide_end="10dp" />
 
-            <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guidelineEnd"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                app:layout_constraintGuide_end="10dp" />
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/chronodoseView"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:constraint_referenced_ids="backgroundChronodoseView, chronodoseTitleView" />
 
-            <androidx.constraintlayout.widget.Group
-                android:id="@+id/chronodoseView"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:constraint_referenced_ids="backgroundChronodoseView, chronodoseTitleView" />
+        <View
+            android:id="@+id/backgroundChronodoseView"
+            android:layout_width="0dp"
+            android:layout_height="30dp"
+            android:background="?attr/chronodoseBackgroundColor"
+            android:importantForAccessibility="no"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_min="38dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            <View
-                android:id="@+id/backgroundChronodoseView"
-                android:layout_width="0dp"
-                android:layout_height="30dp"
-                android:background="?attr/chronodoseBackgroundColor"
-                android:importantForAccessibility="no"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHeight_min="38dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chronodoseTitleView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/ic_lightning_charge_fill"
+            android:drawableEnd="@drawable/ic_lightning_charge_fill"
+            android:drawablePadding="12dp"
+            android:drawableTint="?attr/chronodoseTextColor"
+            android:fontFamily="@font/sf_pro_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:text="@string/chronodoses_disponibles"
+            android:textColor="?attr/chronodoseTextColor"
+            app:layout_constraintBottom_toTopOf="@id/chronodoseDescriptionView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/backgroundChronodoseView"
+            app:layout_constraintVertical_chainStyle="packed" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/chronodoseTitleView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:drawableStart="@drawable/ic_lightning_charge_fill"
-                android:drawableEnd="@drawable/ic_lightning_charge_fill"
-                android:drawablePadding="12dp"
-                android:drawableTint="?attr/chronodoseTextColor"
-                android:fontFamily="@font/sf_pro_bold"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:text="@string/chronodoses_disponibles"
-                android:textColor="?attr/chronodoseTextColor"
-                app:layout_constraintBottom_toTopOf="@id/chronodoseDescriptionView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@id/backgroundChronodoseView"
-                app:layout_constraintVertical_chainStyle="packed" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/chronodoseDescriptionView"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/sf_pro"
+            android:gravity="center"
+            android:text="Ouvert à tous"
+            android:textColor="@color/roman"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/backgroundChronodoseView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/chronodoseTitleView" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/chronodoseDescriptionView"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/sf_pro"
-                android:gravity="center"
-                android:text="Ouvert à tous"
-                android:textColor="@color/roman"
-                android:visibility="gone"
-                app:layout_constraintBottom_toBottomOf="@id/backgroundChronodoseView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/chronodoseTitleView" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/dateView"
+            style="@style/TextStyle_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="4dp"
+            android:gravity="start"
+            app:layout_constraintBottom_toTopOf="@+id/centerNameView"
+            app:layout_constraintEnd_toStartOf="@id/moreView"
+            app:layout_constraintStart_toStartOf="@id/iconPlaceView"
+            app:layout_constraintTop_toBottomOf="@+id/backgroundChronodoseView"
+            tools:text="Lundi 27 septembre à 8h30" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/dateView"
-                style="@style/TextStyle_date"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="4dp"
-                android:gravity="start"
-                app:layout_constraintBottom_toTopOf="@+id/centerNameView"
-                app:layout_constraintEnd_toStartOf="@id/moreView"
-                app:layout_constraintStart_toStartOf="@id/iconPlaceView"
-                app:layout_constraintTop_toBottomOf="@+id/backgroundChronodoseView"
-                tools:text="Lundi 27 septembre à 8h30" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/centerNameView"
+            style="@style/TextStyle_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:importantForAccessibility="yes"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="@id/dateView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+            app:layout_constraintTop_toBottomOf="@id/dateView"
+            tools:text="Centre de vaccination de Pontarlier" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/centerNameView"
-                style="@style/TextStyle_center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="?attr/selectableItemBackground"
-                android:importantForAccessibility="yes"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@id/dateView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/dateView"
-                tools:text="Centre de vaccination de Pontarlier" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconPlaceView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/centerNameView"
+            app:srcCompat="@drawable/ic_place"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconPlaceView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toTopOf="@id/centerNameView"
-                app:srcCompat="@drawable/ic_place"
-                app:tint="?attr/iconTintColor" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/centerAddressView"
+            style="@style/TextStyle_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackground"
+            app:layout_constraintEnd_toEndOf="@id/dateView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+            app:layout_constraintTop_toBottomOf="@id/centerNameView"
+            tools:text="2 rue Victor Hugo\n12345 Ville" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/centerAddressView"
-                style="@style/TextStyle_center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackground"
-                app:layout_constraintEnd_toEndOf="@id/dateView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/centerNameView"
-                tools:text="2 rue Victor Hugo\n12345 Ville" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconVaccineView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/centerVaccineView"
+            app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/centerVaccineView"
+            app:srcCompat="@drawable/ic_vaccine"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconVaccineView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                app:layout_constraintBottom_toBottomOf="@id/centerVaccineView"
-                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toTopOf="@id/centerVaccineView"
-                app:srcCompat="@drawable/ic_vaccine"
-                app:tint="?attr/iconTintColor" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/centerVaccineView"
+            style="@style/TextStyle_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:importantForAccessibility="yes"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+            app:layout_constraintTop_toBottomOf="@id/centerAddressView"
+            tools:text="Moderna" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/centerVaccineView"
-                style="@style/TextStyle_center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:importantForAccessibility="yes"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/centerAddressView"
-                tools:text="Moderna" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconTypeView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
+            app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/centerTypeView"
+            app:srcCompat="@drawable/ic_bag_plus_fill"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconTypeView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="@id/centerTypeView"
-                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toTopOf="@id/centerTypeView"
-                app:srcCompat="@drawable/ic_bag_plus_fill"
-                app:tint="?attr/iconTintColor" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/centerTypeView"
+            style="@style/TextStyle_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:importantForAccessibility="yes"
+            app:layout_constraintEnd_toEndOf="@id/dateView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+            app:layout_constraintTop_toBottomOf="@id/centerVaccineView"
+            tools:text="Pharmacie" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/centerTypeView"
-                style="@style/TextStyle_center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:importantForAccessibility="yes"
-                app:layout_constraintEnd_toEndOf="@id/dateView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/centerVaccineView"
-                tools:text="Pharmacie" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/businessHoursView"
+            style="@style/TextStyle_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:importantForAccessibility="yes"
+            app:layout_constraintEnd_toEndOf="@id/dateView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+            app:layout_constraintTop_toBottomOf="@id/centerTypeView"
+            tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/businessHoursView"
-                style="@style/TextStyle_center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:importantForAccessibility="yes"
-                app:layout_constraintEnd_toEndOf="@id/dateView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/centerTypeView"
-                tools:text="Lundi :  fermé\nMardi : 10h-18h\nMercredi : 10h-18h\nJeudi : 10h-18h" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconBusinessHoursView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="3dp"
+            app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/businessHoursView"
+            app:srcCompat="@drawable/ic_clock_fill"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconBusinessHoursView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="3dp"
-                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toTopOf="@id/businessHoursView"
-                app:srcCompat="@drawable/ic_clock_fill"
-                app:tint="?attr/iconTintColor" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/iconPhoneView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="4dp"
+            app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toTopOf="@id/phoneView"
+            app:srcCompat="@drawable/ic_phone"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/iconPhoneView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="4dp"
-                app:layout_constraintEnd_toStartOf="@id/guidelineIcons"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toTopOf="@id/phoneView"
-                app:srcCompat="@drawable/ic_phone"
-                app:tint="?attr/iconTintColor" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/phoneView"
+            style="@style/TextStyle_center"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:background="?attr/selectableItemBackground"
+            android:importantForAccessibility="yes"
+            app:layout_constraintEnd_toEndOf="@id/dateView"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@id/guidelineIcons"
+            app:layout_constraintTop_toBottomOf="@id/businessHoursView"
+            tools:text="02 25 25 25 25" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/phoneView"
-                style="@style/TextStyle_center"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
-                android:background="?attr/selectableItemBackground"
-                android:importantForAccessibility="yes"
-                app:layout_constraintEnd_toEndOf="@id/dateView"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toEndOf="@id/guidelineIcons"
-                app:layout_constraintTop_toBottomOf="@id/businessHoursView"
-                tools:text="02 25 25 25 25" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/checkButton"
+            style="@style/RegularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/check_center"
+            android:visibility="visible"
+            app:backgroundTint="@color/blue_dark"
+            app:layout_constraintBottom_toTopOf="@id/callButton"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/phoneView"
+            app:layout_constraintVertical_bias="0"
+            tools:visibility="visible" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/checkButton"
-                style="@style/RegularButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:text="@string/check_center"
-                android:visibility="visible"
-                app:backgroundTint="@color/blue_dark"
-                app:layout_constraintBottom_toTopOf="@id/callButton"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toBottomOf="@id/phoneView"
-                app:layout_constraintVertical_bias="0"
-                tools:visibility="visible" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/callButton"
+            style="@style/RegularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/call_center"
+            android:visibility="visible"
+            app:backgroundTint="@color/danube"
+            app:layout_constraintBottom_toTopOf="@id/bookButton"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/checkButton"
+            app:layout_goneMarginTop="10dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/callButton"
-                style="@style/RegularButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/call_center"
-                android:visibility="visible"
-                app:backgroundTint="@color/danube"
-                app:layout_constraintBottom_toTopOf="@id/bookButton"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toBottomOf="@id/checkButton"
-                app:layout_goneMarginTop="10dp" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/bookButton"
+            style="@style/RegularButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/make_appointment"
+            android:visibility="gone"
+            app:backgroundTint="@color/danube"
+            app:layout_constraintBottom_toTopOf="@id/appointmentsCountView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/callButton"
+            app:layout_goneMarginTop="10dp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/bookButton"
-                style="@style/RegularButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/make_appointment"
-                android:visibility="gone"
-                app:backgroundTint="@color/danube"
-                app:layout_constraintBottom_toTopOf="@id/appointmentsCountView"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/callButton"
-                app:layout_goneMarginTop="10dp" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/appointmentsCountView"
+            app:layout_goneMarginBottom="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:textColor="?android:attr/textColorSecondary"
+            app:layout_constraintBottom_toTopOf="@id/checkSpacerView"
+            app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toStartOf="@id/guidelineStart"
+            app:layout_constraintTop_toBottomOf="@id/bookButton"
+            tools:text="20 doses" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/appointmentsCountView"
-                app:layout_goneMarginBottom="16dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:textColor="?android:attr/textColorSecondary"
-                app:layout_constraintBottom_toTopOf="@id/checkSpacerView"
-                app:layout_constraintEnd_toStartOf="@id/bottomSeparatorView"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toStartOf="@id/guidelineStart"
-                app:layout_constraintTop_toBottomOf="@id/bookButton"
-                tools:text="20 doses" />
+        <View
+            android:id="@+id/bottomSeparatorView"
+            android:layout_width="1dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="4dp"
+            android:layout_marginBottom="3dp"
+            android:background="@color/grey_5"
+            app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
+            app:layout_constraintEnd_toStartOf="@id/partnerImageView"
+            app:layout_constraintStart_toEndOf="@id/appointmentsCountView"
+            app:layout_constraintTop_toTopOf="@id/appointmentsCountView" />
 
-            <View
-                android:id="@+id/bottomSeparatorView"
-                android:layout_width="1dp"
-                android:layout_height="0dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="3dp"
-                android:layout_marginEnd="4dp"
-                android:layout_marginBottom="3dp"
-                android:background="@color/grey_5"
-                app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
-                app:layout_constraintEnd_toStartOf="@id/partnerImageView"
-                app:layout_constraintStart_toEndOf="@id/appointmentsCountView"
-                app:layout_constraintTop_toTopOf="@id/appointmentsCountView" />
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/partnerImageView"
+            android:layout_width="wrap_content"
+            android:maxWidth="110dp"
+            android:layout_height="28dp"
+            android:layout_marginStart="6dp"
+            android:adjustViewBounds="true"
+            android:scaleType="centerInside"
+            app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintStart_toEndOf="@id/bottomSeparatorView"
+            app:layout_constraintTop_toTopOf="@id/appointmentsCountView"
+            tools:src="@drawable/logo_doctolib" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/partnerImageView"
-                android:layout_width="wrap_content"
-                android:maxWidth="110dp"
-                android:layout_height="28dp"
-                android:layout_marginStart="6dp"
-                android:adjustViewBounds="true"
-                android:scaleType="centerInside"
-                app:layout_constraintBottom_toBottomOf="@id/appointmentsCountView"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                app:layout_constraintHorizontal_chainStyle="packed"
-                app:layout_constraintStart_toEndOf="@id/bottomSeparatorView"
-                app:layout_constraintTop_toTopOf="@id/appointmentsCountView"
-                tools:src="@drawable/logo_doctolib" />
+        <View
+            android:id="@+id/checkSpacerView"
+            app:layout_constraintTop_toBottomOf="@id/appointmentsCountView"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"/>
 
-            <View
-                android:id="@+id/checkSpacerView"
-                app:layout_constraintTop_toBottomOf="@id/appointmentsCountView"
-                app:layout_constraintBottom_toBottomOf="parent"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"/>
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/moreView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="@string/a11y_appointment_show_all_informations"
+            android:padding="4dp"
+            app:layout_constraintBottom_toBottomOf="@id/dateView"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:layout_constraintTop_toTopOf="@id/dateView"
+            app:srcCompat="@drawable/ic_expand_more_black_24dp"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/moreView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="@string/a11y_appointment_show_all_informations"
-                android:padding="4dp"
-                app:layout_constraintBottom_toBottomOf="@id/dateView"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                app:layout_constraintTop_toTopOf="@id/dateView"
-                app:srcCompat="@drawable/ic_expand_more_black_24dp"
-                app:tint="?attr/iconTintColor" />
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/bookmarkView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/a11y_add_to_bookmarked"
+            android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
+            android:drawablePadding="6dp"
+            android:fontFamily="@font/sf_pro_bold"
+            android:gravity="center"
+            android:includeFontPadding="false"
+            android:padding="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
+            app:textAllCaps="true"
+            app:tint="?attr/iconTintColor" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/bookmarkView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:background="?attr/selectableItemBackground"
-                android:contentDescription="@string/a11y_add_to_bookmarked"
-                android:drawableEnd="@drawable/ic_bookmark_border_24_dp"
-                android:drawablePadding="6dp"
-                android:fontFamily="@font/sf_pro_bold"
-                android:gravity="center"
-                android:includeFontPadding="false"
-                android:padding="8dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@id/guidelineEnd"
-                app:textAllCaps="true"
-                app:tint="?attr/iconTintColor" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
