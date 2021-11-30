@@ -13,6 +13,7 @@ import android.text.SpannableString
 import android.text.TextWatcher
 import android.text.style.ForegroundColorSpan
 import android.view.Gravity
+import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
@@ -20,19 +21,24 @@ import android.widget.AutoCompleteTextView
 import android.widget.TextView
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
-import androidx.recyclerview.widget.RecyclerView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.content.ContextCompat
+import androidx.core.view.doOnPreDraw
+import androidx.core.view.isInvisible
+import androidx.viewpager2.widget.ViewPager2
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
 import com.cvtracker.vmd.base.AbstractCenterActivity
 import com.cvtracker.vmd.bookmark.BookmarkActivity
-import com.cvtracker.vmd.custom.CenterAdapter
+import com.cvtracker.vmd.custom.CustomTabMediator
 import com.cvtracker.vmd.custom.FiltersDialogView
 import com.cvtracker.vmd.custom.view_holder.LastUpdatedViewHolder
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.data.SearchEntry
+import com.cvtracker.vmd.data.TabHeaderItem
 import com.cvtracker.vmd.extensions.*
 import com.cvtracker.vmd.master.FilterType
-import com.cvtracker.vmd.master.SortType
+import com.cvtracker.vmd.master.TagType
 import com.cvtracker.vmd.util.VMDAppUpdate
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -51,7 +57,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override var lastUpdatedListener: LastUpdatedViewHolder.Listener? = this
 
-
     private val appUpdateChecker: VMDAppUpdate by lazy { VMDAppUpdate(this, container) }
 
     private val textWatcher = object : TextWatcher {
@@ -65,6 +70,8 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             (presenter as MainPresenter).onSearchUpdated(s?.toString()?.trim().orEmpty())
         }
     }
+
+    private var tabMediator: CustomTabMediator? = null
 
     private val onEditorActionListener = TextView.OnEditorActionListener { v, actionId, event ->
         var handled = false
@@ -88,7 +95,6 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         appUpdateChecker.checkUpdates()
         initSelectors()
 
-        refreshLayout.setProgressViewOffset(false, resources.dpToPx(10f), resources.dpToPx(60f))
         refreshLayout.setOnRefreshListener {
             presenter.loadCenters()
         }
@@ -100,24 +106,22 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             startActivity(Intent(this, AboutActivity::class.java))
         }
 
-        sortSwitchView.onSortChangedListener = { filter ->
-            presenter.onSortChanged(filter)
+        sortSwitchView.onTagTypeChangedListener = { filter ->
+            presenter.onTagTypeChanged(filter)
         }
         filterView.setOnClickListener {
             showFiltersDialog(presenter.getFilters().toMutableList())
         }
 
-        centersRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
-                super.onScrollStateChanged(recyclerView, newState)
-                if (newState == RecyclerView.SCROLL_STATE_DRAGGING && selectedDepartment.isFocused) {
-                    /** selector was focused and a scroll is detected, reset the selector **/
-                    resetSelectorState()
-                }
+        centersPagerView.offscreenPageLimit = 2
+        centersPagerView.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {
+                super.onPageScrollStateChanged(state)
+                /** selector was focused and a touch is detected outside, reset the selector **/
+                refreshLayout.isEnabled = (state == ViewPager2.SCROLL_STATE_IDLE)
             }
         })
 
-        centersRecyclerView.topPadding = resources.dpToPx(60f)
         presenter.loadInitialState()
         presenter.loadCenters()
 
@@ -125,6 +129,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             /** Manage colors when switching between collapsed and expanded state **/
             val progress = (-verticalOffset / headerLayout.measuredHeight.toFloat()) * 1.25f
             headerLayout.alpha = 1 - progress
+            mainContent.translationY = (verticalOffset / headerLayout.measuredHeight.toFloat())* (sortSwitchView.measuredHeight + dpToPx(4f))
             sortSwitchView.alpha = 1 - progress
             filterView.alpha = 1 - progress
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
@@ -173,6 +178,13 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         selectedDepartment.setOnEditorActionListener(onEditorActionListener)
     }
 
+    override fun dispatchTouchEvent(ev: MotionEvent?): Boolean {
+        if(selectedDepartment.isFocused && ev != null && !selectedDepartment.isViewInBounds(ev.x.toInt(), ev.y.toInt())){
+            resetSelectorState()
+        }
+        return super.dispatchTouchEvent(ev)
+    }
+
     private fun resetSelectorState() {
         selectedDepartment.clearFocus()
         selectedDepartment.hideKeyboard()
@@ -211,6 +223,16 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     override fun removeEmptyStateIfNeeded() {
         bookmarkIconView.show()
         mainContent.show()
+        /** Set the mainContent height based to the available height
+         * This is useful as we setup a translationY on mainContent while appBar collapses **/
+        val params = (mainContent.layoutParams as CoordinatorLayout.LayoutParams)
+        if(params.height == CoordinatorLayout.LayoutParams.MATCH_PARENT) {
+            container.doOnPreDraw {
+                if (container.measuredHeight > 0) {
+                    params.height = container.measuredHeight + dpToPx(4f)
+                }
+            }
+        }
         emptyStateContainer?.parent?.let { (it as ViewGroup).removeView(emptyStateContainer) }
     }
 
@@ -266,7 +288,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == REQUEST_CODE_BOOKMARKS && resultCode == RESULT_OK) {
-            (centersRecyclerView.adapter as? CenterAdapter)?.refreshBookmarkState()
+            presenter.loadCenters()
         }
     }
 
@@ -318,29 +340,23 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         presenter.updateFilters(filters)
     }
 
-    override fun showCenters(list: List<DisplayItem>, sortType: SortType?) {
-        super.showCenters(list, sortType)
-        showPlaceholderEmptyList(list.lastOrNull() is DisplayItem.AvailableCenterHeader)
-    }
-
-    private fun showPlaceholderEmptyList(show: Boolean){
-        if(show) {
-            noCentersView.show()
-            if (filterView.isSelected) {
-                resetFiltersView.show()
-                resetFiltersView.setOnClickListener {
-                    presenter.resetFilters()
-                }
-            } else {
-                resetFiltersView.hide()
-            }
-        }else{
-            noCentersView.hide()
-            resetFiltersView.hide()
+    override fun showTabs(listTabHeader: List<TabHeaderItem>) {
+        tabMediator?.detach()
+        tabMediator = CustomTabMediator(tabLayout, centersPagerView, true) { tab, position ->
+            tab.text = listTabHeader[position].header
+            (tab.view.getChildAt(1) as? TextView)?.setTextColor(if (listTabHeader[position].count > 0) {
+                ContextCompat.getColorStateList(this, R.color.selector_tab_view)
+            }else {
+                ColorStateList.valueOf(color(R.color.grey_10))
+            })
         }
+        tabMediator?.attach()
     }
 
-    /** LastUpdatedViewHolder.Listener **/
+    override fun showCenters(list: List<List<DisplayItem>>, tagType: TagType?) {
+        super.showCenters(list, tagType)
+        tabLayout.isInvisible = list.isEmpty()
+    }
 
     override fun onRemoveDisclaimerClick() {
         presenter.removeDisclaimer()

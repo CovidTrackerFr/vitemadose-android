@@ -31,20 +31,21 @@ class ViteMaDoseApp : Application() {
             }
         }
 
-        migrateChronodoseNotificationsIfNeeded()
+        migrateNotificationsIfNeeded()
     }
 
-    private fun migrateChronodoseNotificationsIfNeeded() {
-        val chronodoseBookmarks = PrefHelper.centersBookmark.filter { it.bookmark == Bookmark.NOTIFICATION_CHRONODOSE }.toMutableList()
-        chronodoseBookmarks.forEach {
+    private fun migrateNotificationsIfNeeded() {
+        val notificationsBookmark = PrefHelper.centersBookmark.filter {
+            it.bookmark == Bookmark.NOTIFICATION_CHRONODOSE || it.bookmark == Bookmark.NOTIFICATION
+        }
+        notificationsBookmark.forEach {
             // unsubscribe from chronodose firebase notification
             FcmHelper.unsubscribeFromDepartmentAndCenterId(it.department, it.centerId, true)
-            // subscribe to classical center notification
-            FcmHelper.subscribeWithDepartmentAndCenterId(it.department, it.centerId, false)
+            // unsubscribe from regular firebase notification
+            FcmHelper.unsubscribeFromDepartmentAndCenterId(it.department, it.centerId, false)
             // update the local pref
-            PrefHelper.updateBookmark(it.centerId, it.department, Bookmark.NOTIFICATION)
+            PrefHelper.updateBookmark(it.centerId, it.department, Bookmark.FAVORITE)
         }
-
     }
 
     private fun loadCacheFirebaseConfig() {

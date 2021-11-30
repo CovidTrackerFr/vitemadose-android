@@ -10,7 +10,7 @@ sealed class DisplayItem {
 
     class LastUpdated(val date: Date, var disclaimer: Disclaimer? = null) : DisplayItem()
 
-    class Center(
+    data class Center(
         @SerializedName("departement")
         val department: String,
         @SerializedName("nom")
@@ -26,7 +26,7 @@ sealed class DisplayItem {
         @SerializedName("prochain_rdv")
         val nextSlot: Date?,
         @SerializedName("appointment_count")
-        val appointmentCount: Int,
+        var appointmentCount: Int,
         @SerializedName("appointment_by_phone_only")
         val appointmentByPhoneOnly: Boolean,
         @SerializedName("type")
@@ -36,10 +36,12 @@ sealed class DisplayItem {
         @SerializedName("vaccine_type")
         val vaccineType: List<String>?,
         @SerializedName("appointment_schedules")
-        val schedules: List<Schedule>?,
-        var distance: Float? = null,
-        var bookmark: Bookmark = Bookmark.NONE
+        val schedules: List<Schedule>?
     ) : DisplayItem() {
+
+        var distance: Float? = null
+
+        var bookmark: Bookmark = Bookmark.NONE
 
         val isChronodose: Boolean
             get() = false

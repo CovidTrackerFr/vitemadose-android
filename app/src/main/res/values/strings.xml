@@ -11,6 +11,8 @@
     <string name="bookmark_none">Non suivi</string>
     <string name="sort_by_date">Au plus tôt</string>
     <string name="sort_by_proximity">Au plus proche</string>
+    <string name="tag_type_first_shot">Première dose</string>
+    <string name="tag_type_third_shot">Dose de rappel</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="centers">
         <item quantity="one">lieu\nde vaccination</item>
@@ -35,6 +37,10 @@
     <plurals name="shot_disponibilities">
         <item quantity="one">%s créneau</item>
         <item quantity="other">%s créneaux</item>
+    </plurals>
+    <plurals name="shot_disponibilities_found">
+        <item quantity="one">%s créneau trouvé</item>
+        <item quantity="other">%s créneaux trouvés</item>
     </plurals>
     <string name="disponibilities_placeholder">%s Lieux avec des disponibilités</string>
     <string name="appointment_by_phone_only">RDV par tél uniquement</string>

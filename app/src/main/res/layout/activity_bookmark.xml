@@ -29,12 +29,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/appBarLayout">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/centersRecyclerView"
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/centersPagerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="12dp"
             tools:listitem="@layout/item_center"
             tools:itemCount="7"/>
 
@@ -81,6 +80,7 @@
             app:layout_constraintTop_toBottomOf="@id/bookmarkNoneView" />
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:visibility="gone"
             android:id="@+id/bookmarkNotificationView"
             style="@style/TextStyle_center"
             android:layout_width="match_parent"
@@ -97,6 +97,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/bookmarkNotificationChronodoseView"
             style="@style/TextStyle_center"
+            android:visibility="gone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:drawableStart="@drawable/ic_lightning_charge_fill_24dp"

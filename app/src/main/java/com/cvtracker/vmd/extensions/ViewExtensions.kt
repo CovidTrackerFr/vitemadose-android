@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.content.res.Resources
+import android.graphics.Rect
 import android.net.Uri
 import android.util.TypedValue
 import android.view.View
@@ -17,6 +18,10 @@ import androidx.annotation.Px
 import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.cvtracker.vmd.R
+
+fun Activity.dpToPx(valueInDp: Float): Int {
+    return (valueInDp * resources.displayMetrics.density).toInt()
+}
 
 fun View.dpToPx(valueInDp: Float): Int {
     return (valueInDp * context.resources.displayMetrics.density).toInt()
@@ -58,6 +63,15 @@ fun View.hide() {
 
 fun View.mask() {
     visibility = View.INVISIBLE
+}
+
+fun View.isViewInBounds(x: Int, y: Int): Boolean {
+    val outRect = Rect()
+    val location = IntArray(2)
+    getDrawingRect(outRect)
+    getLocationOnScreen(location)
+    outRect.offset(location[0], location[1])
+    return outRect.contains(x, y)
 }
 
 fun Resources.dpToPx(dp: Float): Int {

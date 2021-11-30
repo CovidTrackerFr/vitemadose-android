@@ -1,12 +1,11 @@
 package com.cvtracker.vmd.home
 
+import android.text.format.DateFormat
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.base.AbstractCenterPresenter
-import com.cvtracker.vmd.data.Bookmark
-import com.cvtracker.vmd.data.Disclaimer
-import com.cvtracker.vmd.data.DisplayItem
-import com.cvtracker.vmd.data.SearchEntry
+import com.cvtracker.vmd.data.*
 import com.cvtracker.vmd.master.*
+import com.cvtracker.vmd.master.FilterType.Companion.FILTER_DISTANCE_SECTION
 import com.cvtracker.vmd.master.FilterType.Companion.FILTER_VACCINE_TYPE_SECTION
 import kotlinx.coroutines.*
 import timber.log.Timber
@@ -16,6 +15,8 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     private var jobSearch: Job? = null
     private var jobCenters: Job? = null
+
+    private val sortType = SortType.ByProximity
 
     private var filterSections = FilterType.getDefault(PrefHelper.filters)
 
@@ -38,7 +39,6 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         jobCenters = launch(Dispatchers.Main) {
             PrefHelper.favEntry?.let { entry ->
                 try {
-                    val sortType = PrefHelper.primarySort
                     val isCitySearch = entry is SearchEntry.City
 
                     view.removeEmptyStateIfNeeded()
@@ -47,77 +47,45 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                     DataManager.getCenters(
                         departmentCode = entry.entryDepartmentCode,
                         useNearDepartment = isCitySearch
-                    ).let {
-                        val list = mutableListOf<DisplayItem>()
+                    ).let { response ->
 
-                        fun prepareCenters(centers: MutableList<DisplayItem.Center>): MutableList<DisplayItem.Center> {
-                            /** Set up distance when city search **/
-                            if (isCitySearch) {
-                                centers.onEach { it.calculateDistance(entry as SearchEntry.City) }
+                        val calendar = Calendar.getInstance()
+                        calendar.add(Calendar.DAY_OF_YEAR, -1)
+
+                        val listTitleHeaders = mutableListOf<String>()
+                        val listTabHeader = mutableListOf<TabHeaderItem>()
+                        val flattenAvailableCenters = mutableListOf<DisplayItem.Center>()
+
+                        val listCenterByDays = withContext(Dispatchers.IO) {
+                            /** Construct filtered response list **/
+                            val filteredResponseList = (0 until 60).map {
+                                calendar.add(Calendar.DAY_OF_YEAR, 1)
+                                val dateKey = DateFormat.format("yyyy-MM-dd", calendar).toString()
+                                val filteredResponse = response.applyDailyFilters(dateKey, PrefHelper.tagType.key)
+                                listTitleHeaders.add(DateFormat.format("d MMM", calendar).toString())
+                                flattenAvailableCenters.addAll(filteredResponse.availableCenters)
+                                filteredResponse
                             }
 
-                            val centersBookmark = PrefHelper.centersBookmark
+                            /** Update available vaccine filter type **/
+                            updateVaccineFilters(flattenAvailableCenters)
 
-                            /** Sort results **/
-                            centers.sortWith(sortType.comparator)
-                            centers.onEach { center ->
-                                center.bookmark = centersBookmark
-                                    .firstOrNull { center.id == it.centerId }?.bookmark
-                                    ?: Bookmark.NONE
-                            }
-                            applyFilters(centers, filterSections.filter {
-                                it.primaryFilter.not()
-                            })
-                            return centers
-                        }
-
-                        /** Add header to show last updated view **/
-                        list.add(DisplayItem.LastUpdated(it.lastUpdated, disclaimer))
-
-                        /** Update available vaccine filter type **/
-                        updateVaccineFilters(it.availableCenters)
-
-                        /** First pass preparing centers status, and secondary filters **/
-                        val preparedAvailableCenters = prepareCenters(it.availableCenters)
-                        val preparedUnavailableCenters = prepareCenters(it.unavailableCenters)
-
-                        /** Add statistics header **/
-                        list.add(
-                            DisplayItem.AvailableCenterHeader(
-                                preparedAvailableCenters.sumBy { it.appointmentCount },
-                                preparedAvailableCenters.count(),
-                            )
-                        )
-
-                        /** Second pass, primary filters.
-                         * Primary filters modify the list but we have to keep the statistics info (above) for the header
-                         * That's why we do it here **/
-                        applyFilters(preparedAvailableCenters, filterSections.filter { it.primaryFilter })
-                        applyFilters(preparedUnavailableCenters, filterSections.filter { it.primaryFilter })
-
-                        when (sortType) {
-                            SortType.ByDate -> {
-                                /** Add available centers **/
-                                list.addAll(preparedAvailableCenters)
-
-                                if (preparedUnavailableCenters.isNotEmpty()) {
-                                    /** Add unavailable centers **/
-                                    list.addAll(preparedUnavailableCenters)
-                                }
-                            }
-                            SortType.ByProximity -> {
-                                val centers = mutableListOf<DisplayItem.Center>().apply {
-                                    addAll(preparedAvailableCenters)
-                                    addAll(preparedUnavailableCenters)
-                                    sortWith(SortType.ByProximity.comparator)
-                                }
-                                list.addAll(centers)
+                            /** Build display list **/
+                            filteredResponseList.mapIndexed { index, centerResponse ->
+                                val list = buildCentersList(centerResponse, entry)
+                                listTabHeader.add(
+                                    TabHeaderItem(
+                                        header = listTitleHeaders[index],
+                                        count = list.filterIsInstance<DisplayItem.AvailableCenterHeader>().sumBy { it.slotsCount }
+                                    ))
+                                list
                             }
                         }
 
                         view.updateFilterState(isDefaultFilters())
-                        view.showCenters(list, if (isCitySearch) sortType else null)
-                        AnalyticsHelper.logEventSearch(entry, it, sortType)
+                        view.showCenters(listCenterByDays, PrefHelper.tagType)
+                        view.showTabs(listTabHeader)
+                        AnalyticsHelper.logEventSearch(entry, response, sortType)
                     }
                 } catch (e: CancellationException) {
                     /** Coroutine has been canceled => Ignore **/
@@ -131,10 +99,74 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         }
     }
 
+    /** Build display list for the given @param response **/
+    private fun buildCentersList(
+        response: CenterResponse,
+        entry: SearchEntry
+    ): List<DisplayItem>{
+
+        /** Here is the magic ! **/
+        val availableCenters = response.availableCenters
+        val unavailableCenters = response.unavailableCenters
+
+        val list = mutableListOf<DisplayItem>()
+
+        /** Add header to show last updated view **/
+        list.add(DisplayItem.LastUpdated(response.lastUpdated, disclaimer))
+
+        /** First pass preparing centers status, and secondary filters **/
+        val preparedAvailableCenters = prepareCenters(availableCenters, entry)
+        val preparedUnavailableCenters = prepareCenters(unavailableCenters, entry)
+
+        /** Add statistics header **/
+        list.add(
+            DisplayItem.AvailableCenterHeader(
+                preparedAvailableCenters.sumBy { it.appointmentCount },
+                preparedAvailableCenters.count(),
+            )
+        )
+
+        /** Second pass, primary filters.
+         * Primary filters modify the list but we have to keep the statistics info (above) for the header
+         * That's why we do it here **/
+        applyFilters(preparedAvailableCenters, filterSections.filter { it.primaryFilter })
+        applyFilters(preparedUnavailableCenters, filterSections.filter { it.primaryFilter })
+
+        list.addAll(preparedAvailableCenters)
+        list.addAll(preparedUnavailableCenters)
+
+        return list
+    }
+
+    /** Prepare centers, calculating distance, applying filters **/
+    private fun prepareCenters(centers: MutableList<DisplayItem.Center>, entry: SearchEntry): MutableList<DisplayItem.Center> {
+        /** Set up distance when city search **/
+        if (entry is SearchEntry.City) {
+            centers.onEach {
+                it.calculateDistance(entry)
+            }
+        }
+
+        val centersBookmark = PrefHelper.centersBookmark
+
+        /** Sort results **/
+        centers.sortWith(sortType.comparator)
+        centers.onEach { center ->
+            center.bookmark = centersBookmark
+                .firstOrNull { center.id == it.centerId }?.bookmark
+                ?: Bookmark.NONE
+        }
+        applyFilters(centers, filterSections.filter {
+            it.primaryFilter.not()
+        })
+        return centers
+    }
+
+
     override fun onSearchEntrySelected(searchEntry: SearchEntry) {
         if (searchEntry.entryCode != PrefHelper.favEntry?.entryCode) {
             PrefHelper.favEntry = searchEntry
-            view.showCenters(emptyList(), null)
+            view.showCenters(emptyList(), PrefHelper.tagType)
         }
         loadCenters()
     }
@@ -143,9 +175,9 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
         return PrefHelper.favEntry
     }
 
-    override fun onSortChanged(sortType: SortType) {
-        view.showCenters(emptyList(), sortType)
-        PrefHelper.primarySort = sortType
+    override fun onTagTypeChanged(tagType: TagType) {
+        PrefHelper.tagType = tagType
+        view.showCenters(emptyList(), PrefHelper.tagType)
         loadCenters()
     }
 
@@ -207,16 +239,32 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     private fun applyFilters(centers: MutableList<DisplayItem.Center>, filtersList: List<FilterType.FilterSection>){
         filtersList.forEach { section ->
-            section.filters.forEach { filter ->
-                when{
-                    (filter.enabled && section.id == FilterType.FILTER_DISTANCE_SECTION) ||
-                    section.defaultState.not() && filter.enabled -> {
-                        /** We want to remove items which do not match the predicate, ie a filter **/
+            when (section.id) {
+                FILTER_DISTANCE_SECTION -> {
+                    section.filters.filter { it.enabled }.forEach { filter ->
                         centers.removeAll { filter.predicate(it, filter).not() }
                     }
-                    section.defaultState && !filter.enabled -> {
-                        /** We want to remove items which do match the predicate **/
-                        centers.removeAll { filter.predicate(it, filter) }
+                }
+                FILTER_VACCINE_TYPE_SECTION -> {
+                    centers.removeAll { center ->
+                        val filters = section.filters.filter { center.vaccineType?.contains(it.displayTitle) ?: false }
+                        /** We want to remove centers with vaccineList items ALL disabled **/
+                        if(filters.isEmpty()){
+                            false
+                        }else {
+                            filters.all {
+                                if (it.enabled.not()) it.predicate(center,it) else it.predicate(center, it).not()
+                            }
+                        }
+                    }
+                }
+                else -> {
+                    section.filters.forEach { filter ->
+                        if(section.defaultState.not() && filter.enabled){
+                            centers.removeAll { filter.predicate(it, filter).not() }
+                        }else if(section.defaultState && !filter.enabled){
+                            centers.removeAll { filter.predicate(it, filter) }
+                        }
                     }
                 }
             }

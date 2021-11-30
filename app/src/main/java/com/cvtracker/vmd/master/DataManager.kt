@@ -18,13 +18,13 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
-import java.util.Locale.filter
 
 object DataManager {
 
     /** Theses urls could be override at startup via the Firebase Remote config **/
     var URL_BASE = "https://vitemadose.gitlab.io"
     var PATH_DATA_DEPARTMENT = "/vitemadose/{code}.json"
+    var PATH_DATA_DEPARTMENT_DAILY = "/vitemadose/{code}/creneaux-quotidiens.json"
     var PATH_STATS = "/vitemadose/stats.json"
     val CONTRIBUTORS = "/vitemadose/contributors_all.json"
 
@@ -94,13 +94,33 @@ object DataManager {
 
     suspend fun getCenters(departmentCode: String, useNearDepartment: Boolean): CenterResponse {
         val response = service.getCenters(URL_BASE + PATH_DATA_DEPARTMENT.replace("{code}", departmentCode))
-        if(useNearDepartment) {
+        if (useNearDepartment) {
             /** We load centers from departments near the current department
              * as some centers from an other department could be close to the city currently focused */
             nearDepartmentsMap?.get(departmentCode)?.forEach { nearDepartmentCode ->
                 response.aggregate(
                     service.getCenters(
                         URL_BASE + PATH_DATA_DEPARTMENT.replace(
+                            "{code}",
+                            nearDepartmentCode
+                        )
+                    )
+                )
+            }
+        }
+        response.dailyAvailability = getDailyCenters(departmentCode, useNearDepartment)
+        return response
+    }
+
+    private suspend fun getDailyCenters(departmentCode: String, useNearDepartment: Boolean): DailyCenterResponse {
+        val response = service.getDailyCentersAvailability(URL_BASE + PATH_DATA_DEPARTMENT_DAILY.replace("{code}", departmentCode))
+        if (useNearDepartment) {
+            /** We load centers from departments near the current department
+             * as some centers from an other department could be close to the city currently focused */
+            nearDepartmentsMap?.get(departmentCode)?.forEach { nearDepartmentCode ->
+                response.aggregate(
+                    service.getDailyCentersAvailability(
+                        URL_BASE + PATH_DATA_DEPARTMENT_DAILY.replace(
                             "{code}",
                             nearDepartmentCode
                         )

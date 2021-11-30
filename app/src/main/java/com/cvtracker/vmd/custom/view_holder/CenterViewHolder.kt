@@ -22,7 +22,7 @@ class CenterViewHolder(
 
     interface Listener {
         fun onClicked (center: DisplayItem.Center)
-        fun onBookmarkClicked (center: DisplayItem.Center, position: Int)
+        fun onBookmarkClicked (adapter: CenterAdapter, center: DisplayItem.Center, position: Int)
         fun onAddressClicked (address: String)
         fun onPhoneClicked (phoneNumber: String)
     }
@@ -33,7 +33,7 @@ class CenterViewHolder(
 
             @SuppressLint("SetTextI18n")
             dateView.text = when {
-                center.available && center.url.isNotBlank() && center.nextSlot != null -> center.formattedNextSlot
+                center.available && center.url.isNotBlank() && center.nextSlot != null -> context.resources.getQuantityString(R.plurals.shot_disponibilities_found, center.appointmentCount, center.appointmentCount)
                 center.available && center.isValidAppointmentByPhoneOnly -> context.getString(R.string.appointment_by_phone_only)
                 else -> context.getString(R.string.no_slots_available)
             } + center.formattedDistance
@@ -77,7 +77,7 @@ class CenterViewHolder(
 
             checkButton.setOnClickListener { listener?.onClicked(center) }
             callButton.setOnClickListener { center.metadata?.phoneFormatted?.let { listener?.onPhoneClicked(it) } }
-            bookmarkView.setOnClickListener { listener?.onBookmarkClicked(center, position) }
+            bookmarkView.setOnClickListener { listener?.onBookmarkClicked(adapter, center, position) }
 
             val slotsToShow = if (center.isChronodose) center.chronodoseCount else center.appointmentCount
             appointmentsCountView.text = if(slotsToShow > 0) {
@@ -101,7 +101,7 @@ class CenterViewHolder(
                     center.available -> R.string.empty_string
                     center.bookmark == Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notifications_chronodose_activated
                     center.bookmark == Bookmark.NOTIFICATION -> R.string.notifications_activated
-                    else -> R.string.activate_notifs
+                    else -> R.string.empty_string
                 }
             )
 
@@ -111,7 +111,7 @@ class CenterViewHolder(
                 appointmentsCountView.mask()
                 callButton.text = context.getString(R.string.call_center, center.metadata?.phoneFormatted)
                 callButton.show()
-                checkSpecificViews.hide()
+                checkButton.hide()
                 bookmarkView.hide()
                 bottomSeparatorView.hide()
             } else if (center.available) {
@@ -119,13 +119,13 @@ class CenterViewHolder(
                 bookButton.show()
                 appointmentsCountView.show()
                 callButton.hide()
-                checkSpecificViews.hide()
+                checkButton.hide()
                 bookmarkView.show()
             } else {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColorSecondary))
                 bookButton.hide()
                 appointmentsCountView.mask()
-                checkSpecificViews.show()
+                checkButton.show()
                 callButton.hide()
                 bookmarkView.show()
                 bottomSeparatorView.hide()
