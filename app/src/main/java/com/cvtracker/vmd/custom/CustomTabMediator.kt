@@ -9,7 +9,6 @@ import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import com.google.android.material.tabs.TabLayoutMediator
 import java.lang.ref.WeakReference
-import kotlin.math.abs
 import kotlin.math.min
 
 /*
@@ -166,7 +165,9 @@ class CustomTabMediator(
                 // onPageSelected() instead.
                 val updateIndicator =
                     !(scrollState == ViewPager2.SCROLL_STATE_SETTLING && previousScrollState == ViewPager2.SCROLL_STATE_IDLE)
-                tabLayout.setScrollPosition(position, positionOffset, updateText, updateIndicator)
+                if(updateIndicator) {
+                    tabLayout.setScrollPosition(position, positionOffset, updateText, updateIndicator)
+                }
             }
         }
 
@@ -203,7 +204,7 @@ class CustomTabMediator(
     ) :
         OnTabSelectedListener {
         override fun onTabSelected(tab: TabLayout.Tab) {
-            viewPager.setCurrentItem(tab.position, abs(tab.position - viewPager.currentItem) < 3)
+            viewPager.setCurrentItem(tab.position, true)
         }
 
         override fun onTabUnselected(tab: TabLayout.Tab) {
