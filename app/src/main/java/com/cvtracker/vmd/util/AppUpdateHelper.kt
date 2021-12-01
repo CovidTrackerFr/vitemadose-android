@@ -1,6 +1,7 @@
 package com.cvtracker.vmd.util
 
 import android.app.Activity
+import android.content.IntentSender
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.InstallState
 import com.google.android.play.core.install.InstallStateUpdatedListener
@@ -101,12 +102,17 @@ class AppUpdateHelper(private val activity: Activity, private val callback: AppU
                     }
 
                     Timber.d("Request App update")
-                    appUpdateManager.startUpdateFlowForResult(
-                            appUpdateInfo,
-                            updateType,
-                            activity,
-                            APP_UPDATE_INTENT_REQUEST_CODE
-                    )
+                    try {
+                        appUpdateManager.startUpdateFlowForResult(
+                                appUpdateInfo,
+                                updateType,
+                                activity,
+                                APP_UPDATE_INTENT_REQUEST_CODE
+                        )
+                    } catch (e: IntentSender.SendIntentException){
+                        /** A very few crashs comes with this exception **/
+                        Timber.e(e)
+                    }
                 }
             }
         }

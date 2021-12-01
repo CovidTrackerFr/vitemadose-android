@@ -130,7 +130,7 @@ sealed class DisplayItem {
                 get() {
                     return phoneNumber?.let {
                         PhoneNumberUtils.formatNumber(it, Locale.getDefault().country)
-                            .replace("+33 ", "0")
+                            ?.replace("+33 ", "0") ?: phoneNumber
                     }
                 }
 

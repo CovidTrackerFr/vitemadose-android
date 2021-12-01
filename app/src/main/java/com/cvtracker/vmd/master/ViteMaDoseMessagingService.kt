@@ -73,10 +73,16 @@ class ViteMaDoseMessagingService : FirebaseMessagingService() {
             .addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
             .setData(Uri.parse("${MainPresenter.BASE_URL}/bookmark/$department/$centerId/$topic/$type"))
 
-        val pendingIntent = PendingIntent.getActivity(context, notificationId, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val notificationFlags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+
+        val pendingIntent = PendingIntent.getActivity(context, notificationId, intent, notificationFlags)
 
         val intentAction = SilentRedirectReceiver.buildIntent(this, department, centerId, topic, type, notificationId)
-        val actionPendingIntent = PendingIntent.getBroadcast(this, notificationId, intentAction, PendingIntent.FLAG_UPDATE_CURRENT)
+        val actionPendingIntent = PendingIntent.getBroadcast(this, notificationId, intentAction, notificationFlags)
 
         val (channelId: String, iconResId: Int) = if(FcmHelper.isTopicChronodose(topic)){
             NOTIFICATION_CHANNEL_ID_CHRONODOSE to R.drawable.ic_lightning_charge_fill_24dp
