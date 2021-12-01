@@ -1,0 +1,3 @@
+- Vue Calendrier afin de pouvoir facilement rechercher les disponibilités par jour
+- Filtre rapide "Première dose" / "Dose de rappel"
+- Ajout des plateformes "Bimedoc" et "Valwin"
