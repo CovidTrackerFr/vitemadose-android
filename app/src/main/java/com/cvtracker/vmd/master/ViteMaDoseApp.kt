@@ -36,15 +36,13 @@ class ViteMaDoseApp : Application() {
 
     private fun migrateNotificationsIfNeeded() {
         val notificationsBookmark = PrefHelper.centersBookmark.filter {
-            it.bookmark == Bookmark.NOTIFICATION_CHRONODOSE || it.bookmark == Bookmark.NOTIFICATION
+            it.bookmark == Bookmark.NOTIFICATION_CHRONODOSE
         }
         notificationsBookmark.forEach {
             // unsubscribe from chronodose firebase notification
             FcmHelper.unsubscribeFromDepartmentAndCenterId(it.department, it.centerId, true)
-            // unsubscribe from regular firebase notification
-            FcmHelper.unsubscribeFromDepartmentAndCenterId(it.department, it.centerId, false)
             // update the local pref
-            PrefHelper.updateBookmark(it.centerId, it.department, Bookmark.FAVORITE)
+            PrefHelper.updateBookmark(it.centerId, it.department, Bookmark.NOTIFICATION)
         }
     }
 

@@ -125,7 +125,6 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/sortSwitchView"
             app:layout_constraintTop_toTopOf="@id/sortSwitchView"
-            app:layout_constraintBottom_toBottomOf="@id/sortSwitchView"
             app:srcCompat="@drawable/ic_tune_black_24dp"
             app:tint="@color/sort_text_selector" />
 
@@ -135,7 +134,7 @@
             android:elevation="2dp"
             android:layout_marginTop="4dp"
             app:tabMode="scrollable"
-            app:layout_constraintTop_toBottomOf="@+id/sortSwitchView"
+            app:layout_constraintTop_toBottomOf="@+id/filterView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 

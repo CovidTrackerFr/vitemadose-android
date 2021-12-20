@@ -10,6 +10,7 @@ import com.cvtracker.vmd.custom.CenterAdapter
 import com.cvtracker.vmd.data.Bookmark
 import com.cvtracker.vmd.data.DisplayItem
 import com.cvtracker.vmd.extensions.*
+import com.cvtracker.vmd.master.PrefHelper
 import com.cvtracker.vmd.util.isTalkbackEnabled
 import kotlinx.android.synthetic.main.item_center.view.*
 
@@ -33,7 +34,11 @@ class CenterViewHolder(
 
             @SuppressLint("SetTextI18n")
             dateView.text = when {
-                center.available && center.url.isNotBlank() && center.nextSlot != null -> context.resources.getQuantityString(R.plurals.shot_disponibilities_found, center.appointmentCount, center.appointmentCount)
+                center.available && center.url.isNotBlank() && center.nextSlot != null -> if (PrefHelper.isNewSystem) {
+                    context.resources.getQuantityString(R.plurals.shot_disponibilities_found, center.appointmentCount, center.appointmentCount)
+                } else {
+                    center.formattedNextSlot
+                }
                 center.available && center.isValidAppointmentByPhoneOnly -> context.getString(R.string.appointment_by_phone_only)
                 else -> context.getString(R.string.no_slots_available)
             } + center.formattedDistance
@@ -101,7 +106,7 @@ class CenterViewHolder(
                     center.available -> R.string.empty_string
                     center.bookmark == Bookmark.NOTIFICATION_CHRONODOSE -> R.string.notifications_chronodose_activated
                     center.bookmark == Bookmark.NOTIFICATION -> R.string.notifications_activated
-                    else -> R.string.empty_string
+                    else -> R.string.activate_notifs
                 }
             )
 
@@ -111,7 +116,7 @@ class CenterViewHolder(
                 appointmentsCountView.mask()
                 callButton.text = context.getString(R.string.call_center, center.metadata?.phoneFormatted)
                 callButton.show()
-                checkButton.hide()
+                checkSpecificViews.hide()
                 bookmarkView.hide()
                 bottomSeparatorView.hide()
             } else if (center.available) {
@@ -119,13 +124,13 @@ class CenterViewHolder(
                 bookButton.show()
                 appointmentsCountView.show()
                 callButton.hide()
-                checkButton.hide()
+                checkSpecificViews.hide()
                 bookmarkView.show()
             } else {
                 cardView.setCardBackgroundColor(colorAttr(R.attr.backgroundCardColorSecondary))
                 bookButton.hide()
                 appointmentsCountView.mask()
-                checkButton.show()
+                checkSpecificViews.show()
                 callButton.hide()
                 bookmarkView.show()
                 bottomSeparatorView.hide()

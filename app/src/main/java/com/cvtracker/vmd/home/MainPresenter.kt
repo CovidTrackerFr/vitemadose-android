@@ -57,14 +57,20 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         val flattenAvailableCenters = mutableListOf<DisplayItem.Center>()
 
                         val listCenterByDays = withContext(Dispatchers.IO) {
-                            /** Construct filtered response list **/
-                            val filteredResponseList = (0 until 60).map {
-                                calendar.add(Calendar.DAY_OF_YEAR, 1)
-                                val dateKey = DateFormat.format("yyyy-MM-dd", calendar).toString()
-                                val filteredResponse = response.applyDailyFilters(dateKey, PrefHelper.tagType.key)
-                                listTitleHeaders.add(DateFormat.format("d MMM", calendar).toString())
-                                flattenAvailableCenters.addAll(filteredResponse.availableCenters)
-                                filteredResponse
+                            val filteredResponseList = if(PrefHelper.isNewSystem){
+                                /** Construct filtered response list based on the day **/
+                                 (0 until 60).map {
+                                    calendar.add(Calendar.DAY_OF_YEAR, 1)
+                                    val dateKey = DateFormat.format("yyyy-MM-dd", calendar).toString()
+                                    val filteredResponse = response.applyDailyFilters(dateKey, PrefHelper.tagType.key)
+                                    listTitleHeaders.add(DateFormat.format("d MMM", calendar).toString())
+                                    flattenAvailableCenters.addAll(filteredResponse.availableCenters)
+                                    filteredResponse
+                                }
+                            }else {
+                                /** The regular response not filtered **/
+                                listTitleHeaders.add("Tout")
+                                listOf(response)
                             }
 
                             /** Update available vaccine filter type **/
@@ -83,8 +89,8 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                         }
 
                         view.updateFilterState(isDefaultFilters())
-                        view.showCenters(listCenterByDays, PrefHelper.tagType)
-                        view.showTabs(listTabHeader)
+                        view.showCenters(listCenterByDays, if(PrefHelper.isNewSystem) PrefHelper.tagType else null)
+                        view.showTabs(if(PrefHelper.isNewSystem) listTabHeader else null)
                         AnalyticsHelper.logEventSearch(entry, response, sortType)
                     }
                 } catch (e: CancellationException) {
@@ -166,7 +172,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
     override fun onSearchEntrySelected(searchEntry: SearchEntry) {
         if (searchEntry.entryCode != PrefHelper.favEntry?.entryCode) {
             PrefHelper.favEntry = searchEntry
-            view.showCenters(emptyList(), PrefHelper.tagType)
+            view.showCenters(emptyList(), if(PrefHelper.isNewSystem) PrefHelper.tagType else null)
         }
         loadCenters()
     }
@@ -177,7 +183,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
 
     override fun onTagTypeChanged(tagType: TagType) {
         PrefHelper.tagType = tagType
-        view.showCenters(emptyList(), PrefHelper.tagType)
+        view.showCenters(emptyList(), if(PrefHelper.isNewSystem) PrefHelper.tagType else null)
         loadCenters()
     }
 

@@ -61,6 +61,7 @@
     <string name="vaccintracker">VaccinTracker</string>
     <string name="share">Partager</string>
     <string name="faq">FAQ</string>
+    <string name="newSystem">Mode Calendrier</string>
     <string name="contributors">Contributeurs</string>
     <string name="contributors_description">ViteMaDose est un project <font color="#AE50C2">opensource</font>,construit par ses <font color="#DC5A60">génereux contributeurs </font>:</string>
 
@@ -74,7 +75,7 @@
     <string name="notification">Notification</string>
     <string name="notification_disclaimer_title">Note</string>
     <string name="notification_chronodose_disclaimer_message">Vous recevrez une notification à chaque fois que le centre proposera <b>de nouveau des chronodoses</b>.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
-    <string name="notification_disclaimer_message">Vous recevrez une notification à chaque fois que le centre sera <b>de nouveau disponible</b> à la réservation.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
+    <string name="notification_disclaimer_message">Vous recevrez une notification à chaque fois que le centre sera <b>de nouveau disponible</b> à la réservation <b>quel que soit le type de créneau</b>.\n\nNous ne pouvons pas vous garantir la disponibilité du centre lors de votre consultation.</string>
     <string name="notification_disclaimer_compris">J\'ai compris</string>
     <string name="notification_disclaimer_cancel">Annuler</string>
     <string name="notification_disable_notifications">Arrêter notifications</string>

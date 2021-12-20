@@ -44,7 +44,7 @@ interface MainContract {
 
         fun updateFilterState(defaultFilters: Boolean)
 
-        fun showTabs(listTabHeader: List<TabHeaderItem>)
+        fun showTabs(listTabHeader: List<TabHeaderItem>?)
     }
 
     interface Presenter : CenterContract.Presenter {
