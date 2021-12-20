@@ -10,6 +10,7 @@ import com.cvtracker.vmd.data.DisplayStat
 import com.cvtracker.vmd.extensions.launchWebUrl
 import com.cvtracker.vmd.extensions.show
 import com.cvtracker.vmd.master.AbstractVMDActivity
+import com.cvtracker.vmd.master.PrefHelper
 import com.google.android.gms.oss.licenses.OssLicensesMenuActivity
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.android.synthetic.main.activity_about.*
@@ -26,6 +27,12 @@ class AboutActivity : AbstractVMDActivity(), AboutContract.View {
         toolbar.setTitle(R.string.about)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
+        newSystem.isChecked = PrefHelper.isNewSystem
+        newSystem.setOnCheckedChangeListener { _, isChecked ->
+            PrefHelper.isNewSystem = isChecked
+            setResult(RESULT_OK)
+        }
 
         faqView.setOnClickListener {
             launchWebUrl(URL_FAQ)

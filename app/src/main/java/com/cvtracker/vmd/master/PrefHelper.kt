@@ -25,6 +25,7 @@ object PrefHelper {
     private const val PREF_FILTERS = "PREF_FILTERS"
     private const val PREF_DISCLAIMER_REPEAT = "PREF_DISCLAIMER_REPEAT"
     private const val PREF_DISCLAIMER_MESSAGE = "PREF_DISCLAIMER_MESSAGE"
+    private const val PREF_NEW_SYSTEM = "PREF_NEW_SYSTEM"
 
     private val sharedPrefs: SharedPreferences
         get() = ViteMaDoseApp.get().getSharedPreferences(PREF_VITEMADOSE, Context.MODE_PRIVATE)
@@ -126,6 +127,12 @@ object PrefHelper {
         get() = sharedPrefs.getString(PREF_DISCLAIMER_MESSAGE, null)
         set(value) {
             sharedPrefs.edit().putString(PREF_DISCLAIMER_MESSAGE, value).apply()
+        }
+
+    var isNewSystem: Boolean
+        get() = sharedPrefs.getBoolean(PREF_NEW_SYSTEM, true)
+        set(value) {
+            sharedPrefs.edit().putBoolean(PREF_NEW_SYSTEM, value).apply()
         }
 
     fun updateBookmark(center: DisplayItem.Center) {

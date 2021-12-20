@@ -25,6 +25,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.doOnPreDraw
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.viewpager2.widget.ViewPager2
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.about.AboutActivity
@@ -51,6 +52,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     companion object {
         const val REQUEST_CODE_BOOKMARKS = 121
+        const val REQUEST_CODE_ABOUT = 123
     }
 
     override val presenter: MainContract.Presenter = MainPresenter(this)
@@ -103,7 +105,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
             showBookmarks()
         }
         aboutIconView.setOnClickListener {
-            startActivity(Intent(this, AboutActivity::class.java))
+            startActivityForResult(Intent(this, AboutActivity::class.java), REQUEST_CODE_ABOUT)
         }
 
         sortSwitchView.onTagTypeChangedListener = { filter ->
@@ -287,7 +289,7 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE_BOOKMARKS && resultCode == RESULT_OK) {
+        if ((requestCode == REQUEST_CODE_BOOKMARKS || requestCode == REQUEST_CODE_ABOUT) && resultCode == RESULT_OK) {
             presenter.loadCenters()
         }
     }
@@ -340,17 +342,22 @@ class MainActivity : AbstractCenterActivity<MainContract.Presenter>(), MainContr
         presenter.updateFilters(filters)
     }
 
-    override fun showTabs(listTabHeader: List<TabHeaderItem>) {
-        tabMediator?.detach()
-        tabMediator = CustomTabMediator(tabLayout, centersPagerView, true) { tab, position ->
-            tab.text = listTabHeader[position].header
-            (tab.view.getChildAt(1) as? TextView)?.setTextColor(if (listTabHeader[position].count > 0) {
-                ContextCompat.getColorStateList(this, R.color.selector_tab_view)
-            }else {
-                ColorStateList.valueOf(color(R.color.grey_10))
-            })
+    override fun showTabs(listTabHeader: List<TabHeaderItem>?) {
+        if (listTabHeader != null) {
+            tabLayout.isVisible = true
+            tabMediator?.detach()
+            tabMediator = CustomTabMediator(tabLayout, centersPagerView, true) { tab, position ->
+                tab.text = listTabHeader[position].header
+                (tab.view.getChildAt(1) as? TextView)?.setTextColor(if (listTabHeader[position].count > 0) {
+                    ContextCompat.getColorStateList(this, R.color.selector_tab_view)
+                }else {
+                    ColorStateList.valueOf(color(R.color.grey_10))
+                })
+            }
+            tabMediator?.attach()
+        } else {
+            tabLayout.isVisible = false
         }
-        tabMediator?.attach()
     }
 
     override fun showCenters(list: List<List<DisplayItem>>, tagType: TagType?) {
