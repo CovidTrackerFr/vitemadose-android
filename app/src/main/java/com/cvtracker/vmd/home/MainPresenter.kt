@@ -70,6 +70,7 @@ class MainPresenter(override val view: MainContract.View) : AbstractCenterPresen
                             }else {
                                 /** The regular response not filtered **/
                                 listTitleHeaders.add("Tout")
+                                flattenAvailableCenters.addAll(response.availableCenters)
                                 listOf(response)
                             }
 

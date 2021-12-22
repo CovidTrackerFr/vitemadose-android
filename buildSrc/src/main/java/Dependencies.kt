@@ -1,10 +1,10 @@
 object Versions {
-    const val androidPlugin = "7.0.3"
-    const val kotlin = "1.6.0"
+    const val androidPlugin = "7.0.4"
+    const val kotlin = "1.6.10"
     const val ossLicensesPlugin = "0.10.4"
-    const val googleServicesPlugin = "4.3.4"
-    const val firebaseCrashlytics = "2.3.0"
-    const val firebaseAppDistribution = "2.0.1"
+    const val googleServicesPlugin = "4.3.10"
+    const val firebaseCrashlytics = "2.8.1"
+    const val firebaseAppDistribution = "2.2.0"
 
     const val compileSdkVersion = 31
     const val minSdkVersion = 21
