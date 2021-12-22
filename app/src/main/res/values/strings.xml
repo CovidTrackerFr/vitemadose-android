@@ -11,8 +11,9 @@
     <string name="bookmark_none">Non suivi</string>
     <string name="sort_by_date">Au plus tôt</string>
     <string name="sort_by_proximity">Au plus proche</string>
-    <string name="tag_type_first_shot">Première dose</string>
-    <string name="tag_type_third_shot">Dose de rappel</string>
+    <string name="tag_type_first_shot">Première\ndose</string>
+    <string name="tag_type_third_shot">Dose de\nrappel</string>
+    <string name="tag_type_kid">5-11\nans</string>
     <string name="last_updated">Dernière mise à jour : %s</string>
     <plurals name="centers">
         <item quantity="one">lieu\nde vaccination</item>

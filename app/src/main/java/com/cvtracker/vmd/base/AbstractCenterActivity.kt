@@ -1,5 +1,6 @@
 package com.cvtracker.vmd.base
 
+import androidx.constraintlayout.widget.ConstraintLayout
 import com.cvtracker.vmd.R
 import com.cvtracker.vmd.custom.BookmarkBottomSheetFragment
 import com.cvtracker.vmd.custom.CenterAdapter
@@ -38,9 +39,11 @@ abstract class AbstractCenterActivity<out T : CenterContract.Presenter> : Abstra
 
         /** set up filter state **/
         if (tagType != null) {
+            (filterView?.layoutParams as? ConstraintLayout.LayoutParams)?.verticalBias = 0.5f
             sortSwitchView?.show()
             sortSwitchView?.updateSelectedTagType(tagType)
         } else {
+            (filterView?.layoutParams as? ConstraintLayout.LayoutParams)?.verticalBias = 0f
             sortSwitchView?.hide()
         }
         filterView?.show()
