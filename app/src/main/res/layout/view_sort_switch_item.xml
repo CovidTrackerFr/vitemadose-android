@@ -18,8 +18,6 @@
         android:layout_height="wrap_content"
         android:duplicateParentState="true"
         android:gravity="center"
-        android:paddingTop="4dp"
-        android:paddingBottom="4dp"
         android:textColor="@color/sort_text_selector"
         android:textSize="15sp"
         app:layout_constraintHorizontal_bias="0"
