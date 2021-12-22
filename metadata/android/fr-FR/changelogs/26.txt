@@ -1,0 +1,3 @@
+- Filtre pour les créneaux 5-11 ans
+- Retour des notifications globales : Attention celle ci interviendront quelque soit le type de créneau
+- Option pour désactiver le mode Calendrier

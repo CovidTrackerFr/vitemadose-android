@@ -19,8 +19,8 @@ android {
         applicationId = "com.cvtracker.vmd2"
         minSdk = Versions.minSdkVersion
         targetSdk = Versions.targetSdkVersion
-        versionCode = 25
-        versionName = "1.4.2"
+        versionCode = 26
+        versionName = "1.4.3"
     }
 
     compileOptions {
